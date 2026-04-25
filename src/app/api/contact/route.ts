@@ -53,6 +53,7 @@ export async function POST(req: NextRequest) {
 
   console.log("[lumus:contact]", {
     receivedAt: new Date().toISOString(),
+    forward: process.env.CONTACT_RECIPIENT ?? "(unset — logging only)",
     name,
     email,
     service,

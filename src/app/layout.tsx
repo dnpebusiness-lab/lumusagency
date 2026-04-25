@@ -20,7 +20,8 @@ const dmSans = DM_Sans({
   display: "swap",
 });
 
-const SITE_URL = "https://lumus.agency";
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "https://lumus.agency";
 const SITE_NAME = "Lumus Agency";
 const DEFAULT_TITLE = "Lumus Agency — We light the way.";
 const DEFAULT_DESCRIPTION =

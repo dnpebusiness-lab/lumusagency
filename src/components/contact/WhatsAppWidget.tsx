@@ -1,7 +1,8 @@
 import type { SVGProps } from "react";
 import { ArrowUpRight } from "lucide-react";
 
-const WHATSAPP_NUMBER = "353871234567";
+const WHATSAPP_NUMBER =
+  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "353871234567";
 const PREFILL =
   "Hi Lumus — I'd like to talk about a project.";
 

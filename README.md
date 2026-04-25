@@ -155,23 +155,66 @@ Requires Node.js 18.18+ (Next.js 14 baseline).
 
 ---
 
+## Environment
+
+All variables are optional — the site builds and runs with zero env config.
+See `.env.example` for the full list.
+
+| Variable | Scope | Default | Purpose |
+| --- | --- | --- | --- |
+| `NEXT_PUBLIC_SITE_URL` | client + server | `https://lumus.agency` | Used by `metadataBase`, `sitemap.ts`, `robots.ts`, and OG canonical URLs |
+| `NEXT_PUBLIC_WHATSAPP_NUMBER` | client | `353871234567` | E.164 number (no leading `+`) shown by the contact `WhatsAppWidget` |
+| `CONTACT_RECIPIENT` | server | unset | Echoed in the `/api/contact` log payload — wire to a real provider before launch |
+
+`/api/contact` currently validates the payload and logs it to the
+server console (`[lumus:contact] …`). Connect it to your provider of
+choice (Resend, Postmark, SendGrid, Slack webhook, CRM…) before you go
+live.
+
+---
+
 ## Deploy
 
 Optimised for **Vercel** (zero-config Next.js 14 App Router).
 
-```bash
-# locally
-npm run build && npm run start
+### Local production smoke-test
 
-# Vercel
-# - import the repo
-# - framework preset: Next.js
-# - environment variables: none required (yet)
+```bash
+npm install
+npm run lint
+npm run typecheck
+npm run build
+npm run start          # serves the built app on http://localhost:3000
 ```
 
-The `POST /api/contact` route currently validates and logs the payload
-to the server console. Wire it to your transactional email or CRM
-provider before launch.
+### Deploy to Vercel (recommended)
+
+1. Push this repo to GitHub / GitLab / Bitbucket.
+2. In Vercel, **New Project → Import** the repo.
+3. Framework preset: **Next.js** (auto-detected).
+4. Root directory: project root. Build command: `npm run build`.
+   Output directory: leave blank (Next handles it).
+5. Add environment variables in **Project → Settings → Environment Variables**:
+   - `NEXT_PUBLIC_SITE_URL` = production canonical, e.g. `https://lumus.agency`
+   - `NEXT_PUBLIC_WHATSAPP_NUMBER` = E.164 with no `+`, e.g. `353871234567`
+   - `CONTACT_RECIPIENT` = where contact submissions should land
+6. Add the `lumus.agency` domain in **Project → Settings → Domains** and
+   point its DNS at Vercel.
+7. Trigger a deploy — every push to `main` ships, every other branch
+   gets a preview URL.
+
+Once live, verify:
+- `/sitemap.xml` lists the five public routes
+- `/robots.txt` allows `/` and disallows `/api/`
+- `/icon`, `/apple-icon`, `/opengraph-image` render the brand artwork
+- The contact form returns `{ ok: true }` and the server log shows
+  `[lumus:contact]` with the submitted fields
+
+### Deploy elsewhere
+
+The app is a stock Next.js 14 App Router project — any Node 18.18+ host
+that can run `npm run build && npm run start` (or a static export with
+your own contact backend) will serve it.
 
 ---
 
