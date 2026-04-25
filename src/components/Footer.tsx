@@ -2,6 +2,7 @@ import Link from "next/link";
 import { SectionLabel } from "./SectionLabel";
 import { GoldDivider } from "./GoldDivider";
 import { InstagramIcon, LinkedInIcon, BehanceIcon } from "./SocialIcons";
+import { Reveal } from "./Reveal";
 
 const NAV = [
   { label: "The Agency", href: "/agency" },
@@ -23,7 +24,7 @@ export function Footer() {
     <footer className="relative bg-black text-white">
       <GoldDivider />
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 pt-24 pb-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+        <Reveal stagger={0.12} y={50} className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           <div className="lg:col-span-6">
             <SectionLabel>We light the way</SectionLabel>
             <h2 className="mt-8 font-display text-5xl md:text-6xl lg:text-7xl leading-[0.95]">
@@ -88,11 +89,11 @@ export function Footer() {
               ))}
             </div>
           </div>
-        </div>
+        </Reveal>
 
         <GoldDivider className="mt-24" />
 
-        <div className="mt-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-[11px] uppercase tracking-cta text-white/50">
+        <Reveal y={20} className="mt-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-[11px] uppercase tracking-cta text-white/50">
           <p>
             © {year} Lumus Agency — Crafted in Galway.
           </p>
@@ -103,7 +104,7 @@ export function Footer() {
             </span>
             <span>— light.</span>
           </p>
-        </div>
+        </Reveal>
       </div>
     </footer>
   );
