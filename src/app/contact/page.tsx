@@ -6,9 +6,17 @@ import { WhatsAppWidget } from "@/components/contact/WhatsAppWidget";
 import { Reveal } from "@/components/Reveal";
 
 export const metadata: Metadata = {
-  title: "Contact — Lumus Agency",
+  title: "Contact",
   description:
     "Tell us about the brand, the audience and the ambition. Replies within one working day, from Galway.",
+  alternates: { canonical: "/contact" },
+  openGraph: {
+    title: "Contact — Lumus Agency",
+    description:
+      "Start a project with Lumus. Replies within one working day, from Galway.",
+    url: "/contact",
+    type: "website",
+  },
 };
 
 export default function ContactPage() {

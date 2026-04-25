@@ -4,9 +4,17 @@ import { WorkGrid } from "@/components/work/WorkGrid";
 import { FinalCTA } from "@/components/home/FinalCTA";
 
 export const metadata: Metadata = {
-  title: "Work — Lumus Agency",
+  title: "Work",
   description:
     "Selected projects from the Lumus archive. Editorial brands, websites, social and motion crafted in Galway.",
+  alternates: { canonical: "/work" },
+  openGraph: {
+    title: "Work — Lumus Agency",
+    description:
+      "Selected projects: editorial brands, websites, social and motion crafted in Galway.",
+    url: "/work",
+    type: "website",
+  },
 };
 
 export default function WorkPage() {

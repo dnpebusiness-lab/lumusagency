@@ -4,9 +4,17 @@ import { ServiceBlock, type Service } from "@/components/services/ServiceBlock";
 import { FinalCTA } from "@/components/home/FinalCTA";
 
 export const metadata: Metadata = {
-  title: "Services — Lumus Agency",
+  title: "Services",
   description:
     "Branding, web design, social media and motion graphics. Four disciplines, one editorial voice — crafted with intent by Lumus Agency.",
+  alternates: { canonical: "/services" },
+  openGraph: {
+    title: "Services — Lumus Agency",
+    description:
+      "Branding, web design, social media and motion graphics. Four disciplines, one editorial voice.",
+    url: "/services",
+    type: "website",
+  },
 };
 
 const SERVICES: Service[] = [
