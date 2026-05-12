@@ -105,7 +105,8 @@ summary.list-menu__item { padding-right: 2.7rem; }
   }
 
   /* ── Logo ── */
-  .header__heading {
+  .header__heading,
+  .header > .header__heading-link {
     grid-area: logo;
     justify-self: start;
     align-self: center;
@@ -312,7 +313,8 @@ summary.list-menu__item { padding-right: 2.7rem; }
   }
 
   /* Logo — centro fisso */
-  .header__heading {
+  .header__heading,
+  .header > .header__heading-link {
     grid-area: logo;
     justify-self: center;
     align-self: center;
@@ -504,6 +506,7 @@ summary.list-menu__item { padding-right: 2.7rem; }
   }
 {%- endstyle -%}
 
+<script src="{{ 'header-drawer.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'details-disclosure.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'details-modal.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
