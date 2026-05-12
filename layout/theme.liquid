@@ -257,18 +257,10 @@ a, button, .card-wrapper, [role="button"] {
 <!-- MOCHA BEANS CHATBOT WIDGET START -->
 <div id="mb">
 <style>
-@font-face {
-  font-family: "DIN";
-  src: url("data:font/otf;base64,...INCOLLA_QUI_IL_TUO_BASE64_DIN_ESISTENTE...") format("opentype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: block;
-}
-
 #mb {
   --red:#D0382E; --navy:#102C33; --grey:#B1B2B0; --lgrey:#EFEEEC;
   --cream:#F4F1EC; --white:#FFFFFF; --online:#3DBA6F;
-  --font: "DIN-Chat", "Helvetica Neue", Helvetica, sans-serif;
+  --font: "Helvetica Neue", Helvetica, sans-serif;
   --ease:cubic-bezier(0.22,1,0.36,1);
   --shadow:0 32px 80px rgba(16,44,51,.22),0 6px 24px rgba(16,44,51,.10);
   --sfab:0 8px 32px rgba(208,56,46,.45);
@@ -557,13 +549,6 @@ btnSend.addEventListener("click",function(e){e.stopPropagation();if(inp.value.tr
   Header CSS rimosso — ora vive in sections/header.liquid
 ================================================================ -->
 <style>
-@font-face {
-  font-family: "DIN";
-  src: url("data:font/otf;base64,...INCOLLA_QUI_IL_TUO_BASE64_DIN_ESISTENTE...") format("opentype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: block;
-}
 
 :root {
   --cream : #F4F1EC;
@@ -607,7 +592,7 @@ body, h1, h2, h3, h4, h5, h6,
 p, a, span, li, button, input, textarea, select,
 .card__heading, .card__information,
 .full-unstyled-link, .price, .button, .link {
-  font-family: "DIN", "Helvetica Neue", Helvetica, din, sans-serif !important;
+  font-family: "Helvetica Neue", Helvetica, sans-serif !important;
 }
 h1, h2, h3, h4, .card__heading, .title {
   letter-spacing: 0.08em;
@@ -639,7 +624,7 @@ main button.button {
   gap: 8px !important;
   position: relative !important;
   overflow: hidden !important;
-  font-family: "DIN", sans-serif !important;
+  font-family: "Helvetica Neue", Helvetica, sans-serif !important;
   font-size: 10px !important;
   letter-spacing: 0.22em !important;
   text-transform: uppercase !important;
@@ -736,7 +721,7 @@ a:not(.button):not(.card-wrapper):not(.full-unstyled-link):not([id]):not([class*
 /* ================================================================
    FOOTER
 ================================================================ */
-.footer, footer { background-color: var(--navy) !important; font-family: "DIN", sans-serif !important; }
+.footer, footer { background-color: var(--navy) !important; font-family: "Helvetica Neue", Helvetica, sans-serif !important; }
 .footer a, footer a { color: rgba(255,255,255,0.4) !important; transition: color 0.3s ease !important; text-decoration: none !important; }
 .footer a:hover, footer a:hover { color: rgba(255,255,255,0.9) !important; }
 .footer a::after, footer a::after { display: none !important; }
@@ -779,7 +764,7 @@ a:not(.button):not(.card-wrapper):not(.full-unstyled-link):not([id]):not([class*
   animation: apulse 2.2s ease-in-out infinite 0.35s;
 }
 #mb-arrow-txt {
-  font-family: "DIN", sans-serif;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: 8px; letter-spacing: 0.3em;
   text-transform: uppercase;
   color: rgba(16,44,51,0.38);
@@ -844,7 +829,7 @@ a:not(.button):not(.card-wrapper):not(.full-unstyled-link):not([id]):not([class*
 .mb-prog-bar.on { background: var(--red); }
 
 .mb-q {
-  font-family: "DIN", sans-serif;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: clamp(18px, 3vw, 30px);
   letter-spacing: 0.07em;
   text-transform: uppercase;
@@ -886,13 +871,13 @@ a:not(.button):not(.card-wrapper):not(.full-unstyled-link):not([id]):not([class*
 .mb-opt:hover { transform: translateY(-2px) !important; }
 .mb-opt-l, .mb-opt-s { position: relative !important; z-index: 1 !important; transition: color 0.3s ease !important; }
 .mb-opt-l {
-  font-family: "DIN", sans-serif;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: 12px; letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--navy); margin-bottom: 4px;
 }
 .mb-opt-s {
-  font-family: "DIN", sans-serif;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: 9px; letter-spacing: 0.12em;
   text-transform: uppercase;
   color: rgba(16,44,51,0.35);
@@ -912,25 +897,25 @@ a:not(.button):not(.card-wrapper):not(.full-unstyled-link):not([id]):not([class*
 @media (max-width: 600px) { .mb-res-row { grid-template-columns: 1fr; } }
 
 .mb-eyebrow {
-  font-family: "DIN", sans-serif;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: 9px; letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--red); margin-bottom: 8px;
 }
 .mb-res-name {
-  font-family: "DIN", sans-serif;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: clamp(22px, 4vw, 40px);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--navy); line-height: 1; margin-bottom: 6px;
 }
 .mb-res-price {
-  font-family: "DIN", sans-serif;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: 11px; letter-spacing: 0.1em;
   color: rgba(16,44,51,0.32); margin-bottom: 14px;
 }
 .mb-res-desc {
-  font-family: "DIN", sans-serif;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: 13px; line-height: 1.7;
   color: rgba(16,44,51,0.6);
   border-left: 2px solid var(--red);
@@ -938,13 +923,13 @@ a:not(.button):not(.card-wrapper):not(.full-unstyled-link):not([id]):not([class*
 }
 .mb-res-right { display: flex; flex-direction: column; gap: 20px; padding-top: 4px; }
 .mb-meta-lbl {
-  font-family: "DIN", sans-serif;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: 9px; letter-spacing: 0.2em;
   text-transform: uppercase; color: var(--grey);
   display: block; margin-bottom: 5px;
 }
 .mb-meta-val {
-  font-family: "DIN", sans-serif;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: 13px; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--navy);
 }
@@ -957,7 +942,7 @@ a:not(.button):not(.card-wrapper):not(.full-unstyled-link):not([id]):not([class*
   display: block !important; text-align: center !important;
   padding: 14px 24px !important;
   background: var(--navy) !important; color: var(--cream) !important;
-  font-family: "DIN", sans-serif !important;
+  font-family: "Helvetica Neue", Helvetica, sans-serif !important;
   font-size: 10px !important; letter-spacing: 0.22em !important;
   text-transform: uppercase !important;
   text-decoration: none !important;
@@ -978,7 +963,7 @@ a:not(.button):not(.card-wrapper):not(.full-unstyled-link):not([id]):not([class*
   text-align: center !important; padding: 12px 24px !important;
   border: 1.5px solid rgba(16,44,51,0.12) !important;
   color: rgba(16,44,51,0.38) !important;
-  font-family: "DIN", sans-serif !important;
+  font-family: "Helvetica Neue", Helvetica, sans-serif !important;
   font-size: 10px !important; letter-spacing: 0.22em !important;
   text-transform: uppercase !important;
   transition: all 0.3s ease !important;
@@ -1026,7 +1011,7 @@ a:not(.button):not(.card-wrapper):not(.full-unstyled-link):not([id]):not([class*
   position: fixed;
   bottom: 32px; right: 32px;
   z-index: 500;
-  font-family: "DIN", sans-serif;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: 10px; letter-spacing: 0.22em;
   color: rgba(16,44,51,0.35);
   opacity: 0;
