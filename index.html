@@ -838,6 +838,50 @@
     .lead{padding:32px 24px}
   }
 
+  /* ── ANIMATION EXTRAS ── */
+  .btn:hover{transform:translateY(-2px)}
+  .btn-primary:hover{box-shadow:0 8px 28px rgba(212,160,23,0.22)}
+  .reveal.s1{transition-delay:.12s}
+  .reveal.s2{transition-delay:.25s}
+  .reveal.s3{transition-delay:.38s}
+  .nav-links a{transition:color .3s ease}
+  .step{overflow:hidden}
+  .step::after{
+    content:'';position:absolute;top:0;left:0;right:0;height:1px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+    transform:translateX(-100%);transition:transform .8s cubic-bezier(.2,.8,.2,1);
+  }
+  .step:hover::after{transform:translateX(0)}
+  .pin-card{transition:border-color .5s ease,transform .5s cubic-bezier(.2,.8,.2,1)}
+  .pin-card:hover{border-color:var(--gold);transform:translateY(-4px)}
+  .faq-a p{
+    opacity:0;transform:translateY(8px);
+    transition:opacity .45s ease .14s,transform .5s cubic-bezier(.2,.8,.2,1) .14s;
+  }
+  .faq-item.open .faq-a p{opacity:1;transform:none}
+
+  /* ── FORM: BN-FIELD ── */
+  .bn-field{display:flex;flex-direction:column;gap:10px;margin-bottom:22px;position:relative}
+  .bn-field label{font-size:10px;letter-spacing:0.35em;text-transform:uppercase;color:var(--text-dim);font-weight:500}
+  .bn-field input,.bn-field textarea,.bn-field select{
+    background:transparent;border:none;border-bottom:1px solid var(--border-soft);
+    padding:12px 0;color:var(--white);font-family:'DM Sans',sans-serif;font-size:16px;
+    font-weight:300;transition:border-color .4s ease;outline:none;width:100%;
+  }
+  .bn-field input:focus,.bn-field textarea:focus,.bn-field select:focus{border-color:var(--gold)}
+  .bn-field::after{
+    content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--gold);
+    transition:width .5s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 8px rgba(212,160,23,0.5);
+  }
+  .bn-field:focus-within::after{width:100%}
+  .bn-field select option{background:var(--black)}
+  .bn-field textarea{resize:vertical;min-height:80px}
+  .bn-form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  @media(max-width:600px){.bn-form-row{grid-template-columns:1fr}}
+  .bn-form-actions{display:flex;justify-content:space-between;align-items:center;margin-top:32px;flex-wrap:wrap;gap:16px}
+  .bn-form-note{font-size:11px;color:var(--text-dim);letter-spacing:0.05em}
+  .bn-form-global-err{font-size:13px;color:#e05252;margin-bottom:16px}
+
   /* ── REDUCED MOTION ── */
   @media (prefers-reduced-motion:reduce){
     *,*::before,*::after{
@@ -847,6 +891,7 @@
     }
     .hero h1 .line > span{transform:none;opacity:1}
     .hero-sub,.hero-ctas,.hero-trust,.hero-meta,.scroll-hint{opacity:1;transform:none}
+    .faq-a p{opacity:1;transform:none;transition:none}
   }
 
 </style></head>
@@ -909,7 +954,7 @@
       <span class="line"><span>someone else <em>will.</em></span></span>
     </h1>
     <p class="hero-sub">
-      We design brands, websites and digital presence for restaurants, hospitality and local businesses in Galway — so the right people find you, trust you, and get in touch.
+      We design brands and websites for restaurants, hospitality and local businesses in Galway — so the right customers find you, trust you, and get in touch.
     </p>
     <div class="hero-ctas">
       <a href="#booknow" class="btn btn-primary" data-magnet="">
@@ -926,8 +971,8 @@
       <span>No agencies, no layers</span>
     </div>
     <div class="hero-meta">
-      <p>Est. <strong>2024</strong> · Galway</p>
-      <p>Direct <strong>expert</strong> work</p>
+      <p>Based in <strong>Galway</strong> · Ireland</p>
+      <p>Direct contact · <strong>no layers</strong></p>
     </div>
   </div>
   <div class="scroll-hint">
@@ -979,7 +1024,7 @@
       <div class="split-panel solution reveal d2">
         <div class="corner"></div>
         <div class="split-tag">How Lumus helps</div>
-        <h3>What Lumus does differently.</h3>
+        <h3>What makes Lumus different.</h3>
         <ul class="split-list">
           <li><span class="mark"></span>A brand identity that feels considered, not generic.</li>
           <li><span class="mark"></span>A website built around your customer's real decision path.</li>
@@ -1047,24 +1092,24 @@
       <p class="s-sub">One point of contact. Agreed milestones. You always know what's happening and what comes next — no chasing, no vague updates, no invoices that don't match the brief.</p>
     </div>
 
-    <div class="process reveal d1">
-      <div class="step">
+    <div class="process">
+      <div class="step reveal">
         <span class="step-num">01</span>
         <div class="step-dur">Step 1 · Discovery</div>
         <h4>Clarify</h4>
         <p>A focused 30-minute call. We listen first. You leave with a clear written brief, a timeline and a fixed price — before anything starts.</p>
       </div>
-      <div class="step">
+      <div class="step reveal s1">
         <span class="step-num">02</span>
         <div class="step-dur">Step 2 · Build</div>
         <h4>Craft</h4>
         <p>One clear direction — not twelve options to choose between. You see the work as it develops and give feedback at agreed checkpoints. No disappearing acts.</p>
       </div>
-      <div class="step">
+      <div class="step reveal s2">
         <span class="step-num">03</span>
         <div class="step-dur">Step 3 · Launch</div>
         <h4>Convert</h4>
-        <p>Launch day, then a two-week window to tweak anything based on how real visitors use the site. After that, the work keeps delivering without a monthly retainer.</p>
+        <p>You go live. A two-week review window is included — we fine-tune based on real visitor behaviour. After that, no retainer, no contract.</p>
       </div>
     </div>
   </div>
@@ -1074,30 +1119,30 @@
 <section class="s" id="why">
   <div class="shell">
     <div class="s-head reveal">
-      <div class="eyebrow">Why clients choose Lumus</div>
-      <h2 class="s-title">Why clients choose<br>Lumus over an <em>agency.</em></h2>
+      <div class="eyebrow">The Lumus difference</div>
+      <h2 class="s-title">Direct work,<br>no agency <em>overhead.</em></h2>
     </div>
 
-    <div class="why4 reveal d1">
-      <div class="why-card">
+    <div class="why4">
+      <div class="why-card reveal">
         <span class="why-num">01</span>
         <h4>Direct communication</h4>
         <p>You speak to the person doing the work — not an account manager who relays messages and loses half the context every time.</p>
       </div>
-      <div class="why-card">
+      <div class="why-card reveal s1">
         <span class="why-num">02</span>
         <h4>Clear timelines</h4>
         <p>Every project has agreed milestones. You get a date, and we hit it — or we tell you why ahead of time, not after.</p>
       </div>
-      <div class="why-card">
+      <div class="why-card reveal s2">
         <span class="why-num">03</span>
-        <h4>Built for growth</h4>
-        <p>Every design decision is made with your customers in mind — not aesthetics for aesthetics' sake. Good-looking and built to convert.</p>
+        <h4>Designed to convert</h4>
+        <p>Every design decision is made with your customers in mind — not aesthetics for aesthetics' sake. Good-looking and built to earn enquiries.</p>
       </div>
-      <div class="why-card">
+      <div class="why-card reveal s3">
         <span class="why-num">04</span>
         <h4>Selective projects</h4>
-        <p>We take on a limited number of projects at a time. If we're not the right fit for what you need, we'll say so before you spend anything.</p>
+        <p>We take on a limited number of projects at a time. If we're not the right fit for what you need, we'll tell you before you spend anything.</p>
       </div>
     </div>
   </div>
@@ -1115,8 +1160,8 @@
   .lw-rule{width:100%;height:1px;background:rgba(212,160,23,.25);margin-bottom:64px}
   .lw-rule-bottom{width:100%;height:1px;background:rgba(212,160,23,.25);margin-top:64px}
   .lw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(212,160,23,.25);border:1px solid rgba(212,160,23,.25)}
-  .lw-card{background:#111;display:flex;flex-direction:column;position:relative;overflow:hidden;text-decoration:none;transition:background .4s}
-  .lw-card:hover{background:#161616}
+  .lw-card{background:#111;display:flex;flex-direction:column;position:relative;overflow:hidden;text-decoration:none;transition:background .4s ease,transform .5s cubic-bezier(.16,1,.3,1)}
+  .lw-card:hover{background:#161616;transform:translateY(-3px)}
   .lw-img-wrap{position:relative;overflow:hidden;aspect-ratio:3/2}
   .lw-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 2.5s cubic-bezier(.16,1,.3,1),filter .6s;filter:grayscale(40%) brightness(.85)}
   .lw-card:hover .lw-img{transform:scale(1.06);filter:grayscale(0) brightness(.9)}
@@ -1138,7 +1183,7 @@
       <span class="lw-eyebrow">Selected Work</span>
       <h2 class="lw-title">What we build.<br><em>How it looks.</em></h2>
     </div>
-    <p class="lw-note">Concept projects built across real hospitality and local business sectors. Each one shows a specific approach — not a generic template.</p>
+    <p class="lw-note">Concept builds across hospitality and local business. Each shows a specific approach — not a template.</p>
   </div>
   <div class="lw-rule"></div>
   <div class="lw-grid">
@@ -1222,8 +1267,8 @@
 <section class="s" id="faq">
   <div class="shell">
     <div class="s-head reveal" style="text-align:center;margin-left:auto;margin-right:auto">
-      <div class="eyebrow" style="justify-content:center">Questions</div>
-      <h2 class="s-title" style="text-align:center">Questions you probably<br>have before <em>getting in touch.</em></h2>
+      <div class="eyebrow" style="justify-content:center">FAQ</div>
+      <h2 class="s-title" style="text-align:center">Honest answers to<br>the usual <em>questions.</em></h2>
     </div>
 
     <div class="faq reveal d1">
@@ -1293,7 +1338,7 @@
     <!-- Form -->
     <div class="lead reveal d2" id="bn-form">
       <div class="lead-head">
-        <h5>Send an enquiry</h5>
+        <h5>Tell us what you need</h5>
         <span class="head-meta">We reply within 1 business day</span>
       </div>
 
@@ -1301,7 +1346,7 @@
         <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)"></div>
         <span style="font-size:28px;color:var(--gold);display:block;margin-bottom:20px">✦</span>
         <h3 style="font-family:'Cormorant Garamond',serif;font-size:clamp(26px,4vw,40px);font-weight:500;margin-bottom:12px;letter-spacing:-0.02em">You're <em>booked in.</em></h3>
-        <p style="font-size:15px;color:var(--text);line-height:1.8;max-width:400px;margin:0 auto">We'll be in touch within 24 hours to confirm your slot. Get ready — your brand is about to look a lot better.</p>
+        <p style="font-size:15px;color:var(--text);line-height:1.8;max-width:400px;margin:0 auto">We'll be in touch within one business day to confirm your call. Look forward to speaking.</p>
       </div>
 
       <div data-fs-error class="bn-form-global-err"></div>
@@ -1369,7 +1414,7 @@
       <div class="foot-col">
         <h6>Studio</h6>
         <ul>
-          <li><a href="#services">Services</a></li>
+          <li><a href="#servicesPin">Services</a></li>
           <li><a href="#process">Process</a></li>
           <li><a href="#faq">FAQ</a></li>
           <li><a href="#booknow">Contact</a></li>
@@ -1482,34 +1527,6 @@
     document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   })();
 
-  /* ─── COUNTER ─── */
-  (function(){
-    const nums = document.querySelectorAll('.metric-num');
-    const format = (v, d)=> d ? v.toFixed(d) : Math.round(v).toString();
-    const io = new IntersectionObserver(entries=>{
-      entries.forEach(entry=>{
-        if (!entry.isIntersecting) return;
-        const el = entry.target;
-        const target = parseFloat(el.dataset.count);
-        const suffix = el.dataset.suffix || '';
-        const decimals = parseInt(el.dataset.decimals||'0',10);
-        const dur = 1600;
-        const start = performance.now();
-        const em = el.querySelector('em');
-        const sp = el.querySelector('.suffix');
-        sp.textContent = suffix;
-        function tick(now){
-          const t = Math.min(1, (now-start)/dur);
-          const ease = 1 - Math.pow(1-t, 4);
-          em.textContent = format(target*ease, decimals);
-          if (t<1) requestAnimationFrame(tick);
-        }
-        requestAnimationFrame(tick);
-        io.unobserve(el);
-      });
-    }, {threshold:0.4});
-    nums.forEach(n=>io.observe(n));
-  })();
 
   /* ─── FAQ ─── */
   (function(){
@@ -1520,52 +1537,6 @@
         a.style.maxHeight = open ? a.scrollHeight + 'px' : '0px';
       });
     });
-  })();
-
-  /* ─── SMOOTH SCROLL (Lenis-style) ─── */
-  (function(){
-    if (window.innerWidth < 900) return;
-    let target = window.scrollY, current = window.scrollY;
-    let raf;
-    function loop(){
-      current += (target - current) * 0.09;
-      if (Math.abs(target - current) < 0.4){ current = target; }
-      window.scrollTo(0, current);
-      raf = requestAnimationFrame(loop);
-    }
-    window.addEventListener('wheel', e=>{
-      // let browser handle; we just keep target in sync
-      target = window.scrollY;
-    }, {passive:true});
-    // Disabled active interpolation to avoid scroll fighting; rely on native + scroll-driven UI.
-  })();
-
-        words.push(null); curWord=''; curGold=gold; continue;
-      }
-      if(!curWord) curGold=gold;
-      curWord+=c;
-    }
-    if(curWord) words.push({w:curWord, g:curGold});
-    for(const item of words){
-      if(item===null){ html+=' '; continue; }
-      html+='<span class="ch-word">';
-      for(const c of item.w) html+=`<span class="ch${item.g?' gold':''}">${c}</span>`;
-      html+='</span>';
-    }
-    el.innerHTML = html;
-    const chars = el.querySelectorAll('.ch');
-    function update(){
-      const r = el.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const start = vh * 0.85;
-      const end = vh * 0.15;
-      const t = Math.max(0, Math.min(1, (start - r.top) / (start - end + r.height*0.6)));
-      const lit = Math.floor(t * chars.length);
-      chars.forEach((c,i)=>c.classList.toggle('lit', i < lit));
-    }
-    window.addEventListener('scroll', update, {passive:true});
-    window.addEventListener('resize', update);
-    update();
   })();
 
   /* ─── HORIZONTAL PIN SCROLL ─── */
@@ -1588,7 +1559,6 @@
     window.addEventListener('resize', update);
     update();
   })();
-  })();
 
   /* ─── PARALLAX ORB ─── */
   (function(){
@@ -1602,9 +1572,6 @@
     }, {passive:true});
   })();
 
-  })();
-</script>
-})();
 </script>
 <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 <script>
@@ -1612,41 +1579,6 @@
 window.formspree = window.formspree || function(){(formspree.q=formspree.q||[]).push(arguments)};
 formspree('initForm', { formElement: '#bnBookForm', formId: 'mbdqegwp' });
 
-/* ─── BOOK NOW SCROLL REVEAL ─── */
-(function(){
-  const ro = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        e.target.style.transitionDelay = (parseFloat(e.target.style.transitionDelay) || i * 0.08) + 's';
-        e.target.classList.add('bn-v');
-        ro.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.bn-r').forEach(el => ro.observe(el));
-})();
-
-/* ─── BOOK NOW COUNTERS ─── */
-(function(){
-  const co = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (!e.isIntersecting) return;
-      const el = e.target, target = +el.dataset.target, dur = 1500;
-      let start = null;
-      const step = ts => {
-        if (!start) start = ts;
-        const p = Math.min((ts - start) / dur, 1);
-        const ease = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.round(ease * target);
-        if (p < 1) requestAnimationFrame(step);
-        else el.textContent = target;
-      };
-      requestAnimationFrame(step);
-      co.unobserve(el);
-    });
-  }, { threshold: 0.5 });
-  document.querySelectorAll('[data-target]').forEach(el => co.observe(el));
-})();
 
 </script>
 
