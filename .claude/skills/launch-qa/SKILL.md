@@ -1,94 +1,100 @@
 # Skill: Launch QA
+## Project context
+Single-file landing page: `index.html`. No build step. No framework. Opens directly in a browser. All CSS and JS are inline. Google Analytics tag `G-V314F6G5YY` is present.
 
-## When to Use
-Run this skill before any website goes live, after a major redesign, or after content has been handed over from a client. Also run after deployment to catch environment-specific issues. Do not skip any section because the site "looks fine" — visual inspection misses most of what this skill catches.
+Known issues that must be verified on every QA run — these were identified during the initial audit and are pre-classified as failures until confirmed fixed:
 
-## Goal
-Ensure the site is free of broken functionality, placeholder content, missing metadata, accessibility blockers, and build errors before it is seen by real visitors or indexed by search engines.
+| Issue | Pre-classified severity |
+|---|---|
+| Founder portrait is a CSS shimmer placeholder | Critical |
+| Tweaks panel React code (claudeusercontent.com refs) present in file | Critical |
+| `<section id="services">` hidden with `display:none` | High |
+| No favicon linked in `<head>` | High |
+| No og:image meta tag | High |
+| No og:title or og:description meta tags | High |
+| hreflang points to `./it/index.html` which does not exist | High |
+| Nav "Book a call" button destination unverified | High |
+| Hero ghost button `href` unverified | High |
+| Portfolio "concept website" disclosure visible inline with work | High |
+| No schema markup | Medium |
+| No canonical tag | Medium |
+| No Twitter card meta tags | Medium |
 
-## Strict Rules
-- Every item in the checklist below must be checked and recorded — not skimmed
-- A "pass" requires evidence (e.g. screenshot, URL, validation result) — not assumption
-- Any Critical item blocks launch. No exceptions
-- Any placeholder text (Lorem ipsum, "Your Name Here", "Coming soon", "TBC", "Insert image") is a Critical failure regardless of location
-- A form that does not send or does not confirm submission is a Critical failure
-- A missing favicon is a High failure — it signals an unfinished site to users and some tools
-- Check on real mobile viewport (375px width) not just browser responsive mode if possible
+## When to use
+Run this skill before the page goes live, after any batch of changes, and after deployment to verify nothing broke in the environment. Do not skip sections because "it looks fine" — visual inspection misses most of what this skill catches.
 
-## What to Check
+## Strict rules
+- Every item in the checklist below must be checked and given a Pass / Fail / N/A
+- Critical failures block launch with no exceptions
+- High failures block launch unless the client has explicitly accepted the risk in writing
+- The tweaks panel code check: search the file for `claudeusercontent.com` — if found, it is a Critical failure regardless of whether the panel is visible
+- The founder portrait check: search for `shimmer` animation on `.founder-portrait::before` — if the real photo `<img>` is absent, it is Critical
+- Form submission must be tested with a real test entry — do not mark as Pass without a live test
+
+## What to check
+
+### Pre-classified failures (verify fixed)
+- [ ] Founder portrait: real `<img>` present inside `.founder-portrait`, shimmer removed
+- [ ] Tweaks panel: no `claudeusercontent.com` references anywhere in the file
+- [ ] Hidden services section: `<section id="services">` removed or `display:none` removed and content merged
+- [ ] Favicon: `<link rel="icon">` present in `<head>` with a real file reference
+- [ ] og:image, og:title, og:description: all three present in `<head>`
+- [ ] hreflang it-IT: either `./it/index.html` exists or hreflang tags removed
+- [ ] Nav "Book a call": `href` goes to a working calendar URL, mailto, or form anchor
+- [ ] Hero ghost button: `href` goes to a named, working destination
+- [ ] Portfolio "concept" note: rewritten or removed so it does not appear as a mid-page caveat
 
 ### Content
-- [ ] No Lorem ipsum or placeholder text anywhere (check all pages, footers, modals, tooltips)
-- [ ] No broken or dummy images (check src attributes, missing alt text, 404 image responses)
-- [ ] No "test", "sample", or "demo" content visible to users
-- [ ] All phone numbers, emails, and addresses are real and correct
-- [ ] All team names, bios, and photos are final and approved
-
-### Links & Navigation
-- [ ] All internal links resolve (no 404s)
-- [ ] All external links open correctly and use target="_blank" with rel="noopener"
-- [ ] Navigation works on mobile (hamburger menu opens and closes, all items tappable)
-- [ ] Logo links to homepage
-- [ ] 404 page exists and is branded
+- [ ] No Lorem ipsum or placeholder text anywhere
+- [ ] No "Photo coming", "TBC", "Insert image", or "Coming soon" visible
+- [ ] All phone numbers, email addresses, and the Galway address are real and correct
+- [ ] All nav links scroll to existing sections
 
 ### Forms
-- [ ] Every form submits successfully
-- [ ] Every form shows a confirmation message or redirects after submission
-- [ ] Form data reaches the intended destination (email inbox or CRM — verify with a test submission)
-- [ ] Required field validation works
-- [ ] No form sends to a placeholder or developer email address
+- [ ] Audit form submits successfully (test with a real entry)
+- [ ] Success state appears after submission (`.lead-success.show`)
+- [ ] Form data reaches the intended destination (email or CRM — verify with test)
+- [ ] Submit button label is specific ("Send my audit request" — not "Submit")
+- [ ] Required field validation works client-side
 
 ### Metadata & SEO
-- [ ] Every page has a unique title tag (not the default CMS title)
-- [ ] Every page has a meta description
-- [ ] Canonical tags are present and correct
-- [ ] robots.txt exists and does not block indexing of production pages
-- [ ] sitemap.xml exists and is linked in robots.txt
-- [ ] No noindex tags left from staging environment
-
-### Open Graph & Social
-- [ ] og:title present on all key pages
-- [ ] og:description present on all key pages
-- [ ] og:image present, minimum 1200×630px, not a placeholder
-- [ ] Twitter card meta tags present
-- [ ] Test with a link preview tool to confirm image and title render correctly
+- [ ] Title tag present, under 60 characters, includes Galway
+- [ ] Meta description present, under 155 characters
+- [ ] Canonical tag present
+- [ ] No `noindex` meta tag left from development
 
 ### Technical
-- [ ] Favicon present in browser tab (multiple sizes: 16×16, 32×32, 180×180 apple-touch-icon)
-- [ ] Site loads over HTTPS with valid certificate
-- [ ] No mixed content warnings (HTTP assets on an HTTPS page)
-- [ ] Console shows no JavaScript errors on page load
-- [ ] No build errors or warnings in the deployment log
-- [ ] Google Analytics or agreed tracking is firing (verify in real-time view or network tab)
+- [ ] Page loads over HTTPS (once hosted)
+- [ ] Console shows zero JavaScript errors on load
+- [ ] Google Analytics fires (check Network tab for `googletagmanager.com` request)
+- [ ] No references to `claudeusercontent.com` or `localhost` in the live file
+- [ ] File size is reasonable for a landing page (current: ~284KB — flag if above 500KB after images)
 
 ### Accessibility
-- [ ] All images have alt text (decorative images use alt="")
-- [ ] All form inputs have associated labels (not placeholder-only)
-- [ ] Focus states are visible on interactive elements (tab through the page)
-- [ ] Colour contrast on body text meets WCAG AA (4.5:1 minimum)
-- [ ] Page can be navigated by keyboard alone
+- [ ] All `<img>` tags have alt attributes (decorative images use `alt=""`)
+- [ ] All form inputs have associated `<label>` elements (not placeholder-only)
+- [ ] Focus states visible when tabbing through interactive elements
+- [ ] Gold text on dark background meets WCAG AA contrast (4.5:1) — the `--text` value `rgba(255,255,255,0.62)` on `#0A0A0A` passes; verify gold `#D4A017` on `#0A0A0A` for small body text
 
-### Mobile
-- [ ] Page layout does not break at 375px width
-- [ ] No horizontal scroll on any page
-- [ ] Tap targets are at least 44×44px
-- [ ] Font sizes are at minimum 15px for body copy
-- [ ] CTAs are visible without scrolling on mobile
+### Mobile (test at 375px)
+- [ ] No horizontal scroll
+- [ ] Hero CTAs visible without scrolling
+- [ ] Form inputs ≥16px font size (prevents iOS auto-zoom)
+- [ ] Tap targets ≥44px height on all buttons and links
+- [ ] Navigation hamburger opens and closes correctly
+- [ ] Text does not overlap or clip in any section
 
-## Output Format
-Produce a QA report with two sections:
-
+## Output format
 **Section 1 — Failures**
-List every failed item:
 
-**Item:** [checklist item name]
+**Item:** [name]
 **Status:** Critical / High / Low
-**Detail:** [what was found — exact URL, element, or screenshot reference]
-**Fix:** [what needs to be done before launch]
+**Detail:** [exact finding]
+**Fix:** [what to do]
 
 **Section 2 — Summary**
-- Total items checked
-- Critical failures (count) — blocks launch if > 0
-- High failures (count)
-- Low failures (count)
-- Launch recommendation: HOLD or CLEAR (with conditions if any)
+- Total items checked: N
+- Critical failures: N — launch is BLOCKED if > 0
+- High failures: N
+- Low failures: N
+- **Launch recommendation: HOLD / CLEAR** (with conditions if any)
