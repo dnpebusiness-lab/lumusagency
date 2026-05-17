@@ -480,7 +480,8 @@ em { font-style: italic; }
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 28px;
-  transition: border-color 0.3s, transform 0.3s var(--ease-out), box-shadow 0.3s;
+  cursor: default;
+  transition: border-color 0.25s, transform 0.25s var(--ease-out), box-shadow 0.25s;
 }
 .pain-card:hover {
   border-color: var(--border-hover);
@@ -566,7 +567,8 @@ em { font-style: italic; }
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 28px;
-  transition: border-color 0.3s, transform 0.3s var(--ease-out);
+  cursor: default;
+  transition: border-color 0.25s, transform 0.25s var(--ease-out);
 }
 .auto-card:hover {
   border-color: var(--border-hover);
@@ -691,7 +693,8 @@ em { font-style: italic; }
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 28px;
-  transition: border-color 0.3s, transform 0.3s var(--ease-out);
+  cursor: default;
+  transition: border-color 0.25s, transform 0.25s var(--ease-out);
 }
 .benefit-item:hover {
   border-color: var(--border-hover);
@@ -734,7 +737,8 @@ em { font-style: italic; }
   padding: 28px;
   position: relative;
   overflow: hidden;
-  transition: border-color 0.3s, transform 0.3s var(--ease-out), box-shadow 0.3s;
+  cursor: default;
+  transition: border-color 0.25s, transform 0.25s var(--ease-out), box-shadow 0.25s;
 }
 .service-card::before {
   content: '';
@@ -972,6 +976,36 @@ em { font-style: italic; }
 .stagger:nth-child(6) { transition-delay: 0.40s; }
 .stagger:nth-child(7) { transition-delay: 0.48s; }
 .stagger:nth-child(8) { transition-delay: 0.56s; }
+
+/* === FOCUS STATES (keyboard nav) === */
+.btn:focus-visible,
+.faq-item__q:focus-visible,
+.nav__logo:focus-visible,
+.nav__links a:focus-visible,
+.nav__toggle:focus-visible,
+.footer__nav a:focus-visible,
+.nav__mobile a:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* === ANIMATION POLISH (ui-ux-pro-max) === */
+/* Micro-interactions: 150-250ms per skill recommendation */
+.btn { transition-duration: 0.2s; }
+.nav__links a { transition-duration: 0.15s; }
+.solution__list li { transition-duration: 0.15s; }
+.faq-item__q { transition-duration: 0.15s; }
+
+/* Scroll reveal: GPU-friendly transform+opacity only */
+.reveal-item { will-change: opacity, transform; }
+.reveal-item.is-visible { will-change: auto; }
+
+/* Card hover — no layout shift, use transform only */
+.pain-card:hover,
+.auto-card:hover,
+.benefit-item:hover,
+.service-card:hover { outline: none; }
 
 /* === REDUCED MOTION === */
 @media (prefers-reduced-motion: reduce) {
