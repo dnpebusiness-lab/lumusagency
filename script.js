@@ -1,301 +1,355 @@
-/* ===================================================
-   LUMUS — AI Automation Agency
-   Animations & Interactions
-   =================================================== */
-
 (function () {
   'use strict';
 
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ── FOOTER YEAR ── */
-  const yearEl = document.getElementById('year');
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
+  /* ─── YEAR ─────────────────────────────────────── */
+  const yr = document.getElementById('year');
+  if (yr) yr.textContent = new Date().getFullYear();
 
-  /* ── NAV: scroll-aware + mobile toggle ── */
+  /* ─── NEURAL CANVAS ─────────────────────────────── */
+  (function initCanvas() {
+    if (reduced) return;
+    const canvas = document.getElementById('neuralCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let W, H, nodes, raf;
+
+    const COUNT  = 55;
+    const RADIUS = 145;
+    const SPEED  = 0.28;
+    const COLOR  = '67,97,238';
+
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+
+    function makeNodes() {
+      nodes = Array.from({ length: COUNT }, () => ({
+        x:  Math.random() * W,
+        y:  Math.random() * H,
+        vx: (Math.random() - 0.5) * SPEED,
+        vy: (Math.random() - 0.5) * SPEED,
+        r:  Math.random() * 1.5 + 0.8,
+      }));
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+
+      // Connections
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const d  = Math.sqrt(dx * dx + dy * dy);
+          if (d < RADIUS) {
+            const a = (1 - d / RADIUS) * 0.14;
+            ctx.strokeStyle = `rgba(${COLOR},${a})`;
+            ctx.lineWidth   = 0.8;
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Nodes
+      nodes.forEach(n => {
+        ctx.fillStyle = `rgba(${COLOR},0.45)`;
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        n.x += n.vx;
+        n.y += n.vy;
+        if (n.x < 0 || n.x > W) n.vx *= -1;
+        if (n.y < 0 || n.y > H) n.vy *= -1;
+      });
+
+      raf = requestAnimationFrame(draw);
+    }
+
+    resize();
+    makeNodes();
+    draw();
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => { resize(); makeNodes(); }, 200);
+    }, { passive: true });
+  })();
+
+  /* ─── NAV ───────────────────────────────────────── */
   (function initNav() {
-    const nav = document.getElementById('nav');
-    const toggle = nav ? nav.querySelector('.nav__toggle') : null;
+    const nav    = document.getElementById('nav');
+    const toggle = nav?.querySelector('.nav__toggle');
     const mobile = document.getElementById('navMobile');
-    let lastScroll = 0;
 
     window.addEventListener('scroll', () => {
-      const y = window.scrollY;
-      if (y > 40) nav.classList.add('nav--scrolled');
-      else nav.classList.remove('nav--scrolled');
-      lastScroll = y;
+      nav.classList.toggle('scrolled', window.scrollY > 40);
     }, { passive: true });
 
     if (toggle && mobile) {
       toggle.addEventListener('click', () => {
-        const expanded = toggle.getAttribute('aria-expanded') === 'true';
-        toggle.setAttribute('aria-expanded', String(!expanded));
-        mobile.setAttribute('aria-hidden', String(expanded));
-        mobile.classList.toggle('nav__mobile--open', !expanded);
+        const open = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!open));
+        mobile.setAttribute('aria-hidden', String(open));
+        mobile.classList.toggle('open', !open);
       });
-      mobile.querySelectorAll('a').forEach(a => {
-        a.addEventListener('click', () => {
-          toggle.setAttribute('aria-expanded', 'false');
-          mobile.setAttribute('aria-hidden', 'true');
-          mobile.classList.remove('nav__mobile--open');
-        });
-      });
+      mobile.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        toggle.setAttribute('aria-expanded', 'false');
+        mobile.setAttribute('aria-hidden', 'true');
+        mobile.classList.remove('open');
+      }));
     }
   })();
 
-  /* ── INTERSECTION OBSERVER: reveal on scroll ── */
-  (function initReveal() {
-    if (prefersReducedMotion) {
-      document.querySelectorAll('.reveal-item').forEach(el => {
-        el.classList.add('is-visible');
-      });
+  /* ─── HERO ENTRANCE ─────────────────────────────── */
+  (function initHeroEntrance() {
+    // Line-by-line headline reveal
+    const lines  = document.querySelectorAll('.line-inner');
+    const kicker = document.querySelector('.hero__kicker');
+    const sub    = document.querySelector('.hero__sub');
+    const ctas   = document.querySelector('.hero__ctas');
+
+    if (reduced) {
+      lines.forEach(l => l.classList.add('revealed'));
+      [kicker, sub, ctas].forEach(el => el && el.classList.add('visible'));
       return;
     }
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
+
+    // Kicker first
+    setTimeout(() => kicker && kicker.classList.add('visible'), 120);
+
+    // Headline lines staggered
+    lines.forEach((line, i) => {
+      setTimeout(() => line.classList.add('revealed'), 220 + i * 130);
+    });
+
+    // Sub + CTAs after headline
+    const totalLineDelay = 220 + lines.length * 130;
+    setTimeout(() => sub  && sub.classList.add('visible'),  totalLineDelay + 80);
+    setTimeout(() => ctas && ctas.classList.add('visible'), totalLineDelay + 200);
+  })();
+
+  /* ─── SCROLL REVEAL ─────────────────────────────── */
+  (function initReveal() {
+    const items = document.querySelectorAll('.js-reveal-item');
+    if (reduced) { items.forEach(el => el.classList.add('visible')); return; }
+
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          obs.unobserve(e.target);
         }
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-    document.querySelectorAll('.reveal-item').forEach(el => observer.observe(el));
+    items.forEach(el => obs.observe(el));
   })();
 
-  /* ── HERO ENTRANCE: stagger headline lines ── */
-  (function initHeroEntrance() {
-    const items = document.querySelectorAll('.hero .reveal-item');
-    if (prefersReducedMotion) return;
-    items.forEach((el, i) => {
-      el.style.transitionDelay = `${i * 0.1}s`;
-      setTimeout(() => el.classList.add('is-visible'), 100 + i * 100);
-    });
-  })();
-
-  /* ── WORKFLOW VISUAL: SVG connector lines ── */
+  /* ─── WORKFLOW SVG LINES + DATA PACKETS ─────────── */
   (function initWorkflow() {
-    const svg = document.getElementById('workflowSVG');
-    const workflow = document.getElementById('workflow');
-    if (!svg || !workflow) return;
+    const svg      = document.getElementById('workflowSVG');
+    const wrap     = document.getElementById('workflow');
+    if (!svg || !wrap) return;
 
-    function getCenter(el, parent) {
-      const eRect = el.getBoundingClientRect();
-      const pRect = parent.getBoundingClientRect();
-      return {
-        x: eRect.left + eRect.width / 2 - pRect.left,
-        y: eRect.top + eRect.height / 2 - pRect.top,
-      };
+    function centre(id) {
+      const el = document.getElementById(id);
+      if (!el) return null;
+      const er = el.getBoundingClientRect();
+      const wr = wrap.getBoundingClientRect();
+      return { x: er.left + er.width / 2 - wr.left, y: er.top + er.height / 2 - wr.top };
     }
 
-    function buildLines() {
+    function buildLine(x1, y1, x2, y2, idx, outgoing) {
+      const g   = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      const cpx = (x1 + x2) / 2;
+      const d   = `M${x1},${y1} Q${cpx},${y1} ${x2},${y2}`;
+      const col = outgoing ? '34,197,94' : '67,97,238';
+
+      // Base rail
+      const rail = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      rail.setAttribute('d', d);
+      rail.setAttribute('fill', 'none');
+      rail.setAttribute('stroke', `rgba(${col},0.1)`);
+      rail.setAttribute('stroke-width', '1');
+      g.appendChild(rail);
+
+      if (reduced) { svg.appendChild(g); return; }
+
+      // Flowing packet — 3 per line at offsets
+      [0, 0.33, 0.66].forEach((offset, pi) => {
+        const pkt = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        pkt.setAttribute('r', '2.5');
+        pkt.setAttribute('fill', `rgba(${col},0.9)`);
+        pkt.setAttribute('filter', `drop-shadow(0 0 3px rgba(${col},0.8))`);
+
+        const mot = document.createElementNS('http://www.w3.org/2000/svg', 'animateMotion');
+        mot.setAttribute('path', d);
+        mot.setAttribute('dur',  `${outgoing ? 1.6 : 2.0}s`);
+        mot.setAttribute('begin', `${idx * 0.4 + offset * (outgoing ? 1.6 : 2.0)}s`);
+        mot.setAttribute('repeatCount', 'indefinite');
+        mot.setAttribute('calcMode', 'linear');
+        pkt.appendChild(mot);
+        g.appendChild(pkt);
+      });
+
+      svg.appendChild(g);
+    }
+
+    function build() {
       svg.innerHTML = '';
-      const core = document.getElementById('wfCore');
+      const core = centre('wfCore');
       if (!core) return;
-      const coreC = getCenter(core, workflow);
-
-      const inputs = ['wfIn0', 'wfIn1', 'wfIn2'];
-      const outputs = ['wfOut0', 'wfOut1', 'wfOut2'];
-      const pairs = [
-        { from: inputs, to: outputs },
-      ];
-
-      inputs.forEach((id, i) => {
-        const el = document.getElementById(id);
-        if (!el) return;
-        const c = getCenter(el, workflow);
-        const path = createAnimatedPath(c.x, c.y, coreC.x, coreC.y, i * 0.4, false);
-        svg.appendChild(path);
+      ['wfIn0','wfIn1','wfIn2'].forEach((id, i) => {
+        const c = centre(id); if (!c) return;
+        buildLine(c.x, c.y, core.x, core.y, i, false);
       });
-
-      outputs.forEach((id, i) => {
-        const el = document.getElementById(id);
-        if (!el) return;
-        const c = getCenter(el, workflow);
-        const path = createAnimatedPath(coreC.x, coreC.y, c.x, c.y, i * 0.4 + 0.2, true);
-        svg.appendChild(path);
+      ['wfOut0','wfOut1','wfOut2'].forEach((id, i) => {
+        const c = centre(id); if (!c) return;
+        buildLine(core.x, core.y, c.x, c.y, i, true);
       });
     }
 
-    function createAnimatedPath(x1, y1, x2, y2, delay, isOutput) {
-      const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-
-      const cpX = (x1 + x2) / 2;
-      const d = `M ${x1} ${y1} Q ${cpX} ${y1} ${x2} ${y2}`;
-
-      // Static base line
-      const base = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      base.setAttribute('d', d);
-      base.setAttribute('fill', 'none');
-      base.setAttribute('stroke', 'rgba(79,110,247,0.12)');
-      base.setAttribute('stroke-width', '1');
-
-      // Animated flowing dot line
-      const flow = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      flow.setAttribute('d', d);
-      flow.setAttribute('fill', 'none');
-      flow.setAttribute('stroke', isOutput ? 'rgba(74,222,128,0.6)' : 'rgba(79,110,247,0.6)');
-      flow.setAttribute('stroke-width', '1.5');
-      flow.setAttribute('stroke-linecap', 'round');
-
-      const len = 120;
-      flow.setAttribute('stroke-dasharray', `8 ${len}`);
-      flow.setAttribute('stroke-dashoffset', `${len + 8}`);
-
-      if (!prefersReducedMotion) {
-        const anim = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
-        anim.setAttribute('attributeName', 'stroke-dashoffset');
-        anim.setAttribute('values', `${len + 8};${-(len + 8)}`);
-        anim.setAttribute('dur', `${isOutput ? 1.8 : 2}s`);
-        anim.setAttribute('begin', `${delay}s`);
-        anim.setAttribute('repeatCount', 'indefinite');
-        anim.setAttribute('calcMode', 'linear');
-        flow.appendChild(anim);
-      }
-
-      g.appendChild(base);
-      g.appendChild(flow);
-      return g;
-    }
-
-    buildLines();
-    window.addEventListener('resize', debounce(buildLines, 200));
+    build();
+    window.addEventListener('resize', debounce(build, 220), { passive: true });
   })();
 
-  /* ── WORKFLOW STATUS CYCLING ── */
-  (function initStatusCycle() {
-    if (prefersReducedMotion) return;
-    const statuses = [
-      { el: document.querySelector('#wfIn0 .wf-card__status'), values: ['Manual', 'Processing', 'Manual'], classes: ['wf-card__status--manual', 'wf-card__status--pending', 'wf-card__status--manual'] },
-      { el: document.querySelector('#wfIn1 .wf-card__status'), values: ['Manual', 'Processing', 'Manual'], classes: ['wf-card__status--manual', 'wf-card__status--pending', 'wf-card__status--manual'] },
-      { el: document.querySelector('#wfIn2 .wf-card__status'), values: ['Pending', 'Processing', 'Pending'], classes: ['wf-card__status--pending', 'wf-card__status--pending', 'wf-card__status--pending'] },
+  /* ─── BADGE STATUS CYCLE ────────────────────────── */
+  (function initBadgeCycle() {
+    if (reduced) return;
+    const badges = [
+      { id: 'wfIn0', states: [['Manual','wf-card__badge--manual'],['Processing','wf-card__badge--pending']] },
+      { id: 'wfIn1', states: [['Manual','wf-card__badge--manual'],['Processing','wf-card__badge--pending']] },
+      { id: 'wfIn2', states: [['Pending','wf-card__badge--pending'],['Processing','wf-card__badge--pending']] },
     ];
-
-    function cycle(item, step) {
-      if (!item.el) return;
-      const i = step % item.values.length;
-      item.el.textContent = item.values[i];
-      item.el.className = `wf-card__status ${item.classes[i]}`;
-    }
-
     let step = 0;
     setInterval(() => {
       step++;
-      statuses.forEach(item => cycle(item, step));
-    }, 2200);
+      badges.forEach(({ id, states }) => {
+        const el = document.querySelector(`#${id} .wf-card__badge`);
+        if (!el) return;
+        const [text, cls] = states[step % states.length];
+        el.textContent = text;
+        el.className   = `wf-card__badge ${cls}`;
+      });
+    }, 2000);
   })();
 
-  /* ── PROCESS TIMELINE: fill on scroll ── */
-  (function initProcessTimeline() {
-    const wrap = document.getElementById('processWrap');
-    const fill = document.getElementById('processTrackFill');
+  /* ─── PROCESS TIMELINE ──────────────────────────── */
+  (function initTimeline() {
+    const wrap  = document.getElementById('processWrap');
+    const fill  = document.getElementById('processTrackFill');
     const steps = document.querySelectorAll('.process__step');
-    if (!wrap || !fill || prefersReducedMotion) return;
+    if (!wrap || !fill || reduced) return;
 
-    const stepObs = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('step--active');
-        }
+    function update() {
+      const wr = wrap.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const progress = Math.min(1, Math.max(0, (vh - wr.top) / wr.height));
+      fill.style.height = `${progress * 100}%`;
+      steps.forEach((s, i) => {
+        if (progress >= i / steps.length + 0.1) s.classList.add('active');
       });
-    }, { threshold: 0.5 });
+    }
 
-    steps.forEach(step => stepObs.observe(step));
-
-    const trackObs = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        const rect = entry.boundingClientRect;
-        const viewH = window.innerHeight;
-        const progress = Math.min(1, Math.max(0, (viewH - rect.top) / (rect.height + viewH)));
-        fill.style.height = `${Math.round(progress * 100)}%`;
-      });
-    }, { threshold: Array.from({ length: 101 }, (_, i) => i / 100) });
-
-    trackObs.observe(wrap);
-
-    window.addEventListener('scroll', () => {
-      const rect = wrap.getBoundingClientRect();
-      const viewH = window.innerHeight;
-      const progress = Math.min(1, Math.max(0, (viewH - rect.top) / rect.height));
-      fill.style.height = `${Math.round(progress * 100)}%`;
-
-      steps.forEach((step, i) => {
-        const threshold = i / steps.length;
-        if (progress >= threshold + 0.15) {
-          step.classList.add('step--active');
-        }
-      });
-    }, { passive: true });
+    window.addEventListener('scroll', update, { passive: true });
+    update();
   })();
 
-  /* ── FAQ ACCORDION ── */
+  /* ─── 3D CARD TILT ──────────────────────────────── */
+  (function initTilt() {
+    if (reduced || window.matchMedia('(hover: none)').matches) return;
+
+    document.querySelectorAll('.js-tilt').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r  = card.getBoundingClientRect();
+        const x  = e.clientX - r.left - r.width  / 2;
+        const y  = e.clientY - r.top  - r.height / 2;
+        const rX = -(y / r.height) * 9;
+        const rY =  (x / r.width)  * 9;
+        card.style.transform = `perspective(700px) rotateX(${rX}deg) rotateY(${rY}deg) translateZ(6px)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
+    });
+  })();
+
+  /* ─── MAGNETIC BUTTONS ──────────────────────────── */
+  (function initMagnetic() {
+    if (reduced || window.matchMedia('(hover: none)').matches) return;
+
+    document.querySelectorAll('.js-magnetic').forEach(btn => {
+      btn.addEventListener('mousemove', e => {
+        const r  = btn.getBoundingClientRect();
+        const x  = e.clientX - r.left - r.width  / 2;
+        const y  = e.clientY - r.top  - r.height / 2;
+        btn.style.transform = `translate(${x * 0.28}px, ${y * 0.28}px) translateY(-2px)`;
+        btn.style.boxShadow = `0 12px 40px rgba(67,97,238,0.45)`;
+      });
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = '';
+        btn.style.boxShadow = '';
+      });
+    });
+  })();
+
+  /* ─── FAQ ACCORDION ─────────────────────────────── */
   (function initFAQ() {
     document.querySelectorAll('.faq-item__q').forEach(btn => {
       btn.addEventListener('click', () => {
-        const expanded = btn.getAttribute('aria-expanded') === 'true';
-        const answer = btn.nextElementSibling;
-
-        // Close all others
-        document.querySelectorAll('.faq-item__q').forEach(other => {
-          if (other !== btn) {
-            other.setAttribute('aria-expanded', 'false');
-            const otherA = other.nextElementSibling;
-            if (otherA) {
-              otherA.setAttribute('aria-hidden', 'true');
-              otherA.style.maxHeight = null;
-            }
-          }
+        const open = btn.getAttribute('aria-expanded') === 'true';
+        // Close all
+        document.querySelectorAll('.faq-item__q').forEach(b => {
+          b.setAttribute('aria-expanded', 'false');
+          const a = b.nextElementSibling;
+          if (a) { a.setAttribute('aria-hidden', 'true'); a.style.maxHeight = null; }
         });
-
-        btn.setAttribute('aria-expanded', String(!expanded));
-        if (answer) {
-          answer.setAttribute('aria-hidden', String(expanded));
-          if (!expanded) {
-            answer.style.maxHeight = answer.scrollHeight + 'px';
-          } else {
-            answer.style.maxHeight = null;
-          }
+        if (!open) {
+          btn.setAttribute('aria-expanded', 'true');
+          const ans = btn.nextElementSibling;
+          if (ans) { ans.setAttribute('aria-hidden', 'false'); ans.style.maxHeight = ans.scrollHeight + 'px'; }
         }
       });
     });
   })();
 
-  /* ── CTA BUTTON SWEEP EFFECT ── */
-  (function initButtonEffects() {
-    if (prefersReducedMotion) return;
-    document.querySelectorAll('.btn--primary').forEach(btn => {
-      btn.addEventListener('mouseenter', e => {
-        const rect = btn.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        btn.style.setProperty('--sweep-x', `${x}px`);
-        btn.style.setProperty('--sweep-y', `${y}px`);
-      });
-    });
-  })();
-
-  /* ── SMOOTH ANCHOR SCROLL ── */
+  /* ─── SMOOTH ANCHOR SCROLL ──────────────────────── */
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
-      const id = a.getAttribute('href').slice(1);
+      const id  = a.getAttribute('href').slice(1);
       if (!id) return;
-      const target = document.getElementById(id);
-      if (!target) return;
+      const el  = document.getElementById(id);
+      if (!el) return;
       e.preventDefault();
-      const offset = 72;
-      const top = target.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+      const top = el.getBoundingClientRect().top + window.scrollY - 72;
+      window.scrollTo({ top, behavior: reduced ? 'auto' : 'smooth' });
     });
   });
 
-  /* ── UTILITY: debounce ── */
-  function debounce(fn, delay) {
+  /* ─── SECTION SPOTLIGHT on scroll ──────────────── */
+  (function initSectionFade() {
+    if (reduced) return;
+    const sections = document.querySelectorAll('.section');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        e.target.style.opacity = e.isIntersecting ? '1' : '';
+      });
+    }, { threshold: 0.05 });
+    sections.forEach(s => obs.observe(s));
+  })();
+
+  /* ─── UTILITY ───────────────────────────────────── */
+  function debounce(fn, ms) {
     let t;
-    return (...args) => {
-      clearTimeout(t);
-      t = setTimeout(() => fn(...args), delay);
-    };
+    return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); };
   }
 
 })();
