@@ -30,6 +30,7 @@ from datetime import datetime
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from config.lumus_config import (
     CSV_COLUMNS,
+    EFFICIENCY,
     TARGET_LOCATIONS,
     TARGET_SECTORS,
 )
@@ -60,20 +61,20 @@ def create_blank_leads_file(filepath, seed_rows=True):
 
         if seed_rows:
             today = datetime.now().strftime("%d/%m/%Y")
-            # Create one placeholder row per location/sector combo
-            # These are your research targets — fill them in from Google Maps etc.
-            for location in TARGET_LOCATIONS:
-                for sector in TARGET_SECTORS:
-                    row = {col: "" for col in CSV_COLUMNS}
-                    row["Date Added"] = today
-                    row["Location"] = location
-                    row["Sector"] = sector
-                    row["Status"] = "New"
-                    row["Result"] = "Pending"
-                    writer.writerow(row)
+            limit = EFFICIENCY["max_leads_per_run"]
+            combos = [(loc, sec) for loc in TARGET_LOCATIONS for sec in TARGET_SECTORS]
+            for location, sector in combos[:limit]:
+                row = {col: "" for col in CSV_COLUMNS}
+                row["Date Added"] = today
+                row["Location"] = location
+                row["Sector"] = sector
+                row["Status"] = "New"
+                row["Result"] = "Pending"
+                writer.writerow(row)
 
+    limit = EFFICIENCY["max_leads_per_run"]
     print(f"[OK] Created new leads file: {filepath}")
-    print(f"     It contains {len(TARGET_LOCATIONS) * len(TARGET_SECTORS)} placeholder rows.")
+    print(f"     {limit} placeholder rows (max_leads_per_run={limit}).")
     print()
     print("NEXT STEPS:")
     print("  1. Open the CSV in Excel or Google Sheets")

@@ -60,11 +60,20 @@ SCORING_WEIGHTS = {
     "in_top_sectors": 10,
 }
 
-# Priority thresholds
+# Priority thresholds (0–10 scale displayed; internal score is 0–100)
 PRIORITY_THRESHOLDS = {
-    "hot": 70,       # Score >= 70 → Hot lead, contact immediately
-    "warm": 45,      # Score >= 45 → Warm lead, worth contacting
-    "cold": 0,       # Score < 45  → Cold, monitor or skip
+    "hot": 70,   # Score >= 70 → HOT, outreach generated
+    "warm": 45,  # Score >= 45 → WARM, outreach generated
+    "cold": 0,   # Score < 45  → skip outreach
+}
+
+# Efficiency defaults — controls how much work each run does
+EFFICIENCY = {
+    "max_leads_per_run": 5,          # Max new leads to seed per run
+    "outreach_min_score": 70,        # Only write outreach for HOT (score >= 70)
+    "audit_max_words": 150,          # Keep audit notes under this limit
+    "read_current_week_only": True,  # Don't scan full history unless asked
+    "use_summary_for_learning": True,# Step 5 reads summaries, not full CSV
 }
 
 # CSV column order — do not change without updating all scripts

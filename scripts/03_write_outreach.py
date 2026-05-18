@@ -33,6 +33,7 @@ from config.lumus_config import (
     AGENCY_NAME,
     AGENCY_WEBSITE,
     CSV_COLUMNS,
+    EFFICIENCY,
 )
 
 LEADS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "leads")
@@ -171,8 +172,13 @@ def process_outreach(filepath):
             continue
 
         score_str = row.get("Priority Score", "COLD")
-        if "COLD" in score_str:
-            continue  # Skip cold leads for outreach
+        # Extract numeric score
+        try:
+            numeric = int(score_str.split("(")[1].rstrip(")"))
+        except (IndexError, ValueError):
+            numeric = 0
+        if numeric < EFFICIENCY["outreach_min_score"]:
+            continue  # Only write outreach for HOT leads
 
         sector = row.get("Sector", "local business")
         location = row.get("Location", "your area")

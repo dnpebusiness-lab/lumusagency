@@ -70,16 +70,20 @@ def save_strategy(strategy):
         json.dump(strategy, f, indent=2)
 
 
-def load_all_leads():
-    all_rows = []
-    files = [f for f in os.listdir(LEADS_DIR) if f.startswith("leads_") and f.endswith(".csv")]
-    for fname in sorted(files):
-        with open(os.path.join(LEADS_DIR, fname), "r", encoding="utf-8") as f:
-            reader = csv.DictReader(f)
-            for row in reader:
-                if row.get("Business Name", "").strip():
-                    all_rows.append(dict(row))
-    return all_rows
+def load_leads_efficient(strategy):
+    """Load only current week's CSV. Merge prior stats from strategy instead of re-scanning history."""
+    files = sorted([f for f in os.listdir(LEADS_DIR) if f.startswith("leads_") and f.endswith(".csv")])
+    if not files:
+        return []
+    # Always load only the latest file
+    latest = os.path.join(LEADS_DIR, files[-1])
+    rows = []
+    with open(latest, "r", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            if row.get("Business Name", "").strip():
+                rows.append(dict(row))
+    return rows
 
 
 def compute_rates(rows):
@@ -186,13 +190,13 @@ def update_strategy(strategy, rows):
 
     strategy["dm_first"] = overall_rate < 0.05
 
-    # Totals
-    strategy["total_leads_all_time"] = len(rows)
-    strategy["total_contacted_all_time"] = contacted
-    strategy["total_replies_all_time"] = replied
-
+    # Accumulate totals (add this week's delta to stored lifetime totals)
+    prev_leads = strategy.get("total_leads_all_time", 0)
+    strategy["total_leads_all_time"] = prev_leads + len(rows) if prev_leads == 0 else max(prev_leads, len(rows))
+    strategy["total_contacted_all_time"] = strategy.get("total_contacted_all_time", 0) + contacted
+    strategy["total_replies_all_time"] = strategy.get("total_replies_all_time", 0) + replied
     won = sum(1 for r in rows if r.get("Status") == "Won")
-    strategy["total_won_all_time"] = won
+    strategy["total_won_all_time"] = strategy.get("total_won_all_time", 0) + won
 
     strategy["week"] = strategy.get("week", 0) + 1
     strategy["last_updated"] = datetime.now().strftime("%d/%m/%Y")
@@ -260,9 +264,9 @@ if __name__ == "__main__":
     print("-" * 40)
 
     strategy = load_strategy()
-    rows = load_all_leads()
+    rows = load_leads_efficient(strategy)
 
-    print(f"Loaded {len(rows)} total leads across all weeks")
+    print(f"Loaded {len(rows)} leads from current week (prior stats carried in strategy.json)")
 
     if len(rows) < 5:
         print()
