@@ -1,0 +1,36 @@
+name: Lumus Weekly Lead Run
+
+on:
+  schedule:
+    - cron: '0 8 * * 1'   # Every Monday at 08:00 UTC
+  workflow_dispatch:        # Also allows manual trigger from GitHub UI
+
+jobs:
+  run-leads:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write       # Needed to push updated CSV and report back to repo
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run orchestrator
+        run: python3 orchestrator.py
+
+      - name: Commit and push results
+        run: |
+          git config user.name "lumus-agent"
+          git config user.email "agent@lumusagency.ie"
+          git add leads/ reports/ outreach/drafts/ data/strategy.json
+          git diff --cached --quiet || git commit -m "Weekly lead run — $(date +'%Y-W%V')"
+          git push
