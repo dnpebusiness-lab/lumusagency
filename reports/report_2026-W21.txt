@@ -1,19 +1,68 @@
-LUMUS WEEKLY REPORT — 2026-W21
-Generated: 20/05/2026 22:33
 
-Leads found this run : 0
-Total in file        : 3
-HOT leads            : 1
-Contacted            : 0
-Replied              : 0 (0% reply rate)
-Positive             : 0
+LUMUS AGENCY — WEEKLY LEAD & OUTREACH REPORT
+Week: 2026-W21
+Generated: 20/05/2026 22:38
+============================================================
 
-Best sector          : N/A
+OVERVIEW
+--------
+Total leads found          : 11
+  HOT (contact immediately): 7
+  WARM (worth contacting)  : 2
+  COLD (monitor/skip)      : 2
 
-Most common problems:
-  (2x) No website
-  (2x) No Instagram
-  (1x) No Google Business Profile
+OUTREACH RESULTS
+----------------
+Total businesses contacted : 0
+Total replies received     : 0 (0.0% reply rate)
+  Positive replies         : 0 (0.0% positive rate)
+  Negative replies         : 0
+  No replies               : 0
+Meetings booked            : 0
+Proposals sent             : 0
+New clients won            : 0
+Lost                       : 0
 
-Recommendations:
-  → System performing at baseline — maintain current approach
+SECTOR PERFORMANCE
+------------------
+Best-performing sector     : Not enough data yet
+Worst-performing sector    : Not enough data yet
+Most recommended service   : Full Digital Presence Audit
+
+Breakdown by sector:
+
+OUTREACH ANGLE PERFORMANCE
+--------------------------
+Best outreach angle  : Not enough data yet
+Weakest angle        : Not enough data yet
+
+Breakdown by angle:
+
+COMMON OBJECTIONS
+-----------------
+  No objections recorded yet — update the Response column in the CSV
+
+WHAT WORKED THIS WEEK
+---------------------
+  Too early to identify patterns — keep sending and update the CSV
+
+WHAT DID NOT WORK
+-----------------
+
+WHAT TO IMPROVE NEXT WEEK
+-------------------------
+  → Reply rate is below 5% — revisit the subject lines and opening lines of emails
+  → Try shorter, more direct emails — under 150 words
+  → Few positive replies — review outreach angles and ensure they feel genuinely useful, not salesy
+
+NEXT WEEK'S ACTION PLAN
+-----------------------
+  1. Contact all 7 HOT leads first — prioritise phone or DM
+  2. Research and add 20–30 new leads from Google Maps and Instagram
+  3. Send Follow-Up 1 to any leads contacted last week with no reply
+  4. Send Follow-Up 2 to leads where Follow-Up 1 also had no reply
+  5. Review best-performing sector and focus extra research there next week
+  6. Update Status and Result columns in the CSV after every action============================================================
+End of Report — Lumus Agency
+Save this file and share with your team.
+============================================================

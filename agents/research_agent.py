@@ -1,120 +1,190 @@
 """
-Research Agent — finds local businesses matching Lumus target profile.
-Returns up to MAX_LEADS structured dicts ready for the audit agent.
+Research Agent — finds local businesses using Google Places API.
+
+Requires environment variable: GOOGLE_PLACES_API_KEY
+Get a free key at https://console.cloud.google.com/
+Enable: Places API (New) or Places API (Legacy)
+Free tier: 28,500 requests/month — far more than weekly needs.
 """
 
+import os
 import re
 import sys
-import os
 import time
+
+import requests
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from config.lumus_config import EFFICIENCY, TARGET_LOCATIONS, TARGET_SECTORS
 
 MAX_LEADS = EFFICIENCY["max_leads_per_run"]
 
-# Skip obvious chains
 CHAIN_KEYWORDS = [
     "mcdonalds", "supermacs", "costa", "starbucks", "subway", "kfc",
     "burger king", "dominos", "tesco", "lidl", "aldi", "spar", "centra",
 ]
+
+# Maps our sector labels to Google Places search terms
+SECTOR_QUERIES = {
+    "Café":              "cafe",
+    "Restaurant":        "restaurant",
+    "Pub":               "pub",
+    "B&B":               "bed and breakfast",
+    "Hotel":             "hotel",
+    "Barber":            "barber",
+    "Hair Salon":        "hair salon",
+    "Beauty Salon":      "beauty salon",
+    "Gym":               "gym",
+    "Clinic":            "clinic",
+    "Takeaway":          "takeaway",
+    "Independent Retail": "independent shop",
+}
+
+# Location → (lat, lng) for Places API bias
+LOCATION_COORDS = {
+    "Galway City":  (53.2707, -9.0568),
+    "Liosban":      (53.2650, -9.0800),
+    "Salthill":     (53.2620, -9.0820),
+    "Oranmore":     (53.2619, -8.9275),
+    "Westport":     (53.7998, -9.5183),
+    "Mayo":         (53.8600, -9.3000),
+    "Connaught":    (53.7500, -9.0000),
+}
+
+PLACES_TEXT_URL  = "https://maps.googleapis.com/maps/api/place/textsearch/json"
+PLACES_DETAIL_URL = "https://maps.googleapis.com/maps/api/place/details/json"
 
 
 def _is_chain(name: str) -> bool:
     return any(k in name.lower() for k in CHAIN_KEYWORDS)
 
 
-def _extract_website(result: dict) -> str:
-    href = result.get("href", "")
-    # Skip directory sites — we want the business's own site
-    skip = ["tripadvisor", "yelp", "facebook.com", "instagram.com",
-            "goldenpages", "booking.com", "google.com", "bing.com"]
-    if any(s in href for s in skip):
-        return ""
-    return href
-
-
-def search_businesses(location: str, sector: str, max_results: int = 3) -> list[dict]:
-    """Search DuckDuckGo for local businesses. Returns list of raw result dicts."""
+def _text_search(query: str, lat: float, lng: float, api_key: str) -> list[dict]:
+    params = {
+        "query": query,
+        "location": f"{lat},{lng}",
+        "radius": 8000,
+        "key": api_key,
+    }
     try:
-        from duckduckgo_search import DDGS
-    except ImportError:
-        print("[research] duckduckgo_search not installed — run: pip install duckduckgo-search")
+        r = requests.get(PLACES_TEXT_URL, params=params, timeout=10)
+        r.raise_for_status()
+        data = r.json()
+        if data.get("status") not in ("OK", "ZERO_RESULTS"):
+            print(f"  [research] Places API error: {data.get('status')} — {data.get('error_message', '')}")
+        return data.get("results", [])
+    except requests.RequestException as e:
+        print(f"  [research] Request failed: {e}")
         return []
 
-    query = f"{sector} {location} Ireland contact website"
-    results = []
+
+def _get_details(place_id: str, api_key: str) -> dict:
+    params = {
+        "place_id": place_id,
+        "fields": "name,formatted_phone_number,website,url",
+        "key": api_key,
+    }
     try:
-        with DDGS() as ddgs:
-            for r in ddgs.text(query, max_results=max_results * 2):
-                results.append(r)
-                if len(results) >= max_results * 2:
-                    break
-        time.sleep(1)  # polite delay
-    except Exception as e:
-        print(f"[research] Search failed for '{query}': {e}")
-        return []
-
-    return results
+        r = requests.get(PLACES_DETAIL_URL, params=params, timeout=10)
+        r.raise_for_status()
+        return r.json().get("result", {})
+    except requests.RequestException:
+        return {}
 
 
-def parse_result(raw: dict, sector: str, location: str) -> dict | None:
-    """Convert a raw search result into a structured lead dict."""
-    title = raw.get("title", "").strip()
-    body = raw.get("body", "").strip()
-    href = raw.get("href", "")
-
-    if not title or _is_chain(title):
+def _parse_place(place: dict, detail: dict, sector: str, location: str) -> dict | None:
+    name = place.get("name", "").strip()
+    if not name or _is_chain(name):
         return None
 
-    # Try to extract email from snippet
-    email_match = re.search(r"[\w.+-]+@[\w-]+\.[a-z]{2,}", body)
-    email = email_match.group(0) if email_match else ""
+    website = detail.get("website", "none") or "none"
+    # Strip tracking params — keep base URL only
+    website = re.sub(r"\?.*$", "", website).rstrip("/") or "none"
 
-    # Try to extract phone (Irish formats)
-    phone_match = re.search(r"(\+353|0)[\s\-]?\d{2,3}[\s\-]?\d{3,4}[\s\-]?\d{3,4}", body)
-    phone = phone_match.group(0) if phone_match else ""
+    phone = detail.get("formatted_phone_number", "") or ""
+    phone = re.sub(r"\s+", " ", phone).strip()
 
-    website = _extract_website(raw)
+    rating = place.get("rating", 0)
+    review_count = place.get("user_ratings_total", 0)
+    gbp_url = detail.get("url", "none") or "none"
+
+    notes_parts = []
+    if rating:
+        notes_parts.append(f"Google rating: {rating}/5 ({review_count} reviews)")
+    if review_count < 20:
+        notes_parts.append("few reviews")
 
     return {
-        "Business Name": title[:80],
+        "Business Name": name[:80],
         "Sector": sector,
         "Location": location,
-        "Website": website or "none",
+        "Website": website,
         "Instagram": "none",
-        "Google Business Profile": "none",
-        "Email": email,
+        "Google Business Profile": gbp_url,
+        "Email": "",
         "Phone": phone,
         "Main Weakness": "",
-        "Notes": body[:200],
+        "Notes": " | ".join(notes_parts)[:200],
+        "_rating": rating,
+        "_review_count": review_count,
     }
 
 
+def search_businesses(location: str, sector: str, api_key: str, max_results: int = 3) -> list[dict]:
+    coords = LOCATION_COORDS.get(location)
+    if not coords:
+        return []
+
+    query_term = SECTOR_QUERIES.get(sector, sector.lower())
+    query = f"{query_term} in {location} Ireland"
+    lat, lng = coords
+
+    raw = _text_search(query, lat, lng, api_key)
+    leads = []
+    for place in raw[:max_results * 2]:
+        if len(leads) >= max_results:
+            break
+        place_id = place.get("place_id", "")
+        detail = _get_details(place_id, api_key) if place_id else {}
+        time.sleep(0.1)  # stay well within rate limits
+        lead = _parse_place(place, detail, sector, location)
+        if lead:
+            leads.append(lead)
+
+    return leads
+
+
 def run(strategy: dict | None = None) -> list[dict]:
-    """
-    Main entry point. Returns up to MAX_LEADS new leads.
-    Uses strategy focus_sectors/focus_locations if available.
-    """
-    focus_sectors = (strategy or {}).get("focus_sectors", TARGET_SECTORS[:3])
+    api_key = os.environ.get("GOOGLE_PLACES_API_KEY", "")
+    if not api_key:
+        print(
+            "[research] GOOGLE_PLACES_API_KEY not set.\n"
+            "  1. Go to https://console.cloud.google.com/\n"
+            "  2. Create a project → enable 'Places API'\n"
+            "  3. Create an API key → set env var GOOGLE_PLACES_API_KEY=<key>\n"
+            "  Or add it to a .env file and load it before running."
+        )
+        return []
+
+    focus_sectors   = (strategy or {}).get("focus_sectors",   TARGET_SECTORS[:3])
     focus_locations = (strategy or {}).get("focus_locations", TARGET_LOCATIONS[:2])
 
     leads = []
-    seen_names = set()
+    seen_names: set[str] = set()
 
     for location in focus_locations:
         for sector in focus_sectors:
             if len(leads) >= MAX_LEADS:
                 break
-            raw_results = search_businesses(location, sector, max_results=2)
-            for raw in raw_results:
+            raw_leads = search_businesses(location, sector, api_key, max_results=2)
+            for lead in raw_leads:
                 if len(leads) >= MAX_LEADS:
                     break
-                lead = parse_result(raw, sector, location)
-                if lead and lead["Business Name"] not in seen_names:
-                    seen_names.add(lead["Business Name"])
+                name = lead["Business Name"]
+                if name not in seen_names:
+                    seen_names.add(name)
                     leads.append(lead)
-                    print(f"  [research] Found: {lead['Business Name']} ({sector}, {location})")
+                    print(f"  [research] Found: {name} ({sector}, {location})")
         if len(leads) >= MAX_LEADS:
             break
 

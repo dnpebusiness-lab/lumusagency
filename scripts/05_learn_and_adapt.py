@@ -217,12 +217,12 @@ def print_briefing(strategy):
     print("=" * 60)
     print()
     print("FOCUS SECTORS (research these first):")
-    for s in strategy["focus_sectors"]:
+    for s in strategy.get("focus_sectors", DEFAULT_STRATEGY["focus_sectors"]):
         print(f"  ✓ {s}")
 
     print()
     print("FOCUS LOCATIONS (prioritise these areas):")
-    for l in strategy["focus_locations"]:
+    for l in strategy.get("focus_locations", DEFAULT_STRATEGY["focus_locations"]):
         print(f"  ✓ {l}")
 
     if strategy.get("skip_sectors"):
