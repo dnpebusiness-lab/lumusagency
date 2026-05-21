@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VOLTA — Espresso Bar | Dublin</title>
+  <meta name="description" content="Dublin's finest espresso bar. Single-origin beans, precision extraction, 22 seats. Fade Street, Dublin 2.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #C49A3C;
+      --gold-light: #E8C56D;
+      --black: #080808;
+      --black-soft: #111111;
+      --black-card: #0E0E0E;
+      --white: #F5F0E8;
+      --grey: #7A7A7A;
+      --grey-light: #9A9A9A;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ===== CURSOR ===== */
+    .cursor {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease, background 0.2s;
+      will-change: left, top;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(196,154,60,0.35);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s, height 0.3s, border-color 0.3s;
+      will-change: left, top;
+    }
+    .cursor.hovering { transform: translate(-50%,-50%) scale(2.5); background: var(--gold-light); }
+    .cursor-ring.hovering { width: 60px; height: 60px; border-color: rgba(232,197,109,0.6); }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 2rem 5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 300;
+      letter-spacing: 0.45em;
+      color: var(--white);
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    nav ul { list-style: none; display: flex; gap: 3rem; }
+    nav a {
+      color: rgba(245,240,232,0.55);
+      text-decoration: none;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    nav a:hover { color: var(--white); }
+    .nav-cta {
+      color: var(--gold) !important;
+      border-bottom: 1px solid rgba(196,154,60,0.4);
+      padding-bottom: 2px;
+    }
+
+    /* ===== HERO ===== */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    #hero-canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      width: 100% !important;
+      height: 100% !important;
+    }
+    .hero-noise {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.4;
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 2rem;
+      max-width: 960px;
+    }
+    .hero-eyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      transform: translateY(20px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+    .hero-eyebrow::before,
+    .hero-eyebrow::after {
+      content: '';
+      width: 30px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.6;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(4rem, 9vw, 8rem);
+      font-weight: 300;
+      line-height: 1.0;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      transform: translateY(30px);
+      letter-spacing: -0.01em;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--grey-light);
+      margin-bottom: 4rem;
+      font-weight: 300;
+      letter-spacing: 0.02em;
+      line-height: 1.8;
+      max-width: 460px;
+      margin-left: auto;
+      margin-right: auto;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .hero-ctas {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .btn-gold {
+      display: inline-block;
+      padding: 1rem 2.8rem;
+      background: var(--gold);
+      color: var(--black);
+      text-decoration: none;
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      color: rgba(245,240,232,0.6);
+      text-decoration: none;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      transition: color 0.3s, gap 0.3s;
+    }
+    .btn-ghost:hover { color: var(--white); gap: 1rem; }
+    .btn-ghost::after { content: '→'; }
+    .hero-scroll {
+      position: absolute;
+      bottom: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      color: rgba(245,240,232,0.3);
+      font-size: 0.6rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      opacity: 0;
+    }
+    .hero-scroll::after {
+      content: '';
+      width: 1px;
+      height: 70px;
+      background: linear-gradient(to bottom, rgba(196,154,60,0.8), transparent);
+      animation: pulse-line 2.4s ease-in-out infinite;
+    }
+    @keyframes pulse-line {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); transform-origin: top; }
+      50% { opacity: 1; transform: scaleY(0.6); transform-origin: top; }
+    }
+
+    /* ===== MARQUEE ===== */
+    .marquee-wrap {
+      overflow: hidden;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding: 1.2rem 0;
+      background: var(--black-soft);
+    }
+    .marquee-track {
+      display: flex;
+      gap: 0;
+      animation: marquee 20s linear infinite;
+      white-space: nowrap;
+    }
+    .marquee-item {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.25);
+      padding: 0 4rem;
+      flex-shrink: 0;
+    }
+    .marquee-item span { color: var(--gold); margin: 0 1rem; }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ===== ABOUT ===== */
+    #about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      min-height: 80vh;
+    }
+    .about-left {
+      padding: 10rem 6rem 10rem 5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .about-right {
+      background: var(--black-soft);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .about-canvas-wrap {
+      position: relative;
+      z-index: 2;
+    }
+    .about-bg-text {
+      position: absolute;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18rem;
+      font-weight: 300;
+      color: rgba(196,154,60,0.04);
+      letter-spacing: -0.05em;
+      user-select: none;
+      pointer-events: none;
+      line-height: 1;
+    }
+    .section-label {
+      font-size: 0.62rem;
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .section-label::before {
+      content: '';
+      width: 30px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.7;
+    }
+    .about-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 2.5rem;
+    }
+    .about-title em { font-style: italic; color: var(--gold-light); }
+    .about-p {
+      color: var(--grey);
+      line-height: 1.95;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+    .about-stats {
+      display: flex;
+      gap: 3rem;
+      margin-top: 3.5rem;
+      padding-top: 3rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .stat-n {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+      display: block;
+    }
+    .stat-l {
+      font-size: 0.65rem;
+      color: var(--grey);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 0.4rem;
+      display: block;
+    }
+
+    /* ===== FEATURES ===== */
+    #features {
+      padding: 10rem 0 0;
+    }
+    .features-header {
+      padding: 0 5rem 6rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: end;
+    }
+    .features-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 4.5vw, 4rem);
+      font-weight: 300;
+      line-height: 1.1;
+    }
+    .features-title em { font-style: italic; color: var(--gold-light); }
+    .features-sub {
+      color: var(--grey);
+      line-height: 1.85;
+      font-size: 0.9rem;
+      padding-top: 1rem;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .f-card {
+      padding: 4rem 3.5rem;
+      border-right: 1px solid rgba(255,255,255,0.05);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.5s;
+    }
+    .f-card:last-child { border-right: none; }
+    .f-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+    }
+    .f-card:hover::before { width: 100%; }
+    .f-card:hover { background: #0C0C0C; }
+    .f-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.8rem;
+      color: var(--gold);
+      letter-spacing: 0.25em;
+      margin-bottom: 2.5rem;
+      opacity: 0.7;
+    }
+    .f-icon {
+      width: 52px;
+      height: 52px;
+      margin-bottom: 2.5rem;
+      transform-style: preserve-3d;
+      transition: transform 0.8s cubic-bezier(0.4,0,0.2,1);
+    }
+    .f-card:hover .f-icon { transform: rotateY(180deg) rotateX(10deg); }
+    .f-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem;
+      font-weight: 300;
+      margin-bottom: 1.2rem;
+      line-height: 1.2;
+    }
+    .f-text {
+      color: var(--grey);
+      font-size: 0.85rem;
+      line-height: 1.9;
+    }
+
+    /* ===== TESTIMONIAL ===== */
+    #testimonial {
+      padding: 12rem 5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .testimonial-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(196,154,60,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .t-mark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 8rem;
+      color: rgba(196,154,60,0.12);
+      line-height: 0.5;
+      margin-bottom: 3rem;
+      display: block;
+    }
+    .t-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.45;
+      max-width: 780px;
+      margin: 0 auto 3rem;
+    }
+    .t-author {
+      font-size: 0.68rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .t-role {
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--grey);
+      margin-top: 0.4rem;
+    }
+
+    /* ===== CTA ===== */
+    #cta {
+      background: var(--black-soft);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 80vh;
+    }
+    .cta-left {
+      padding: 10rem 5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-right: 1px solid rgba(255,255,255,0.05);
+    }
+    .cta-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 4.5vw, 4.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+    .cta-title em { font-style: italic; color: var(--gold-light); }
+    .cta-p {
+      color: var(--grey);
+      line-height: 1.85;
+      font-size: 0.9rem;
+      margin-bottom: 3rem;
+      max-width: 420px;
+    }
+    .cta-buttons { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+    .cta-note {
+      margin-top: 2rem;
+      font-size: 0.7rem;
+      color: var(--grey);
+      letter-spacing: 0.08em;
+    }
+    .cta-right {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cta-canvas-wrap {
+      position: relative;
+      z-index: 2;
+    }
+    .info-grid {
+      position: absolute;
+      bottom: 4rem;
+      left: 4rem;
+      right: 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      z-index: 2;
+    }
+    .info-item {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 1.5rem;
+    }
+    .info-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+    .info-val {
+      font-size: 0.85rem;
+      color: rgba(245,240,232,0.6);
+      line-height: 1.6;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      padding: 2.5rem 5rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    footer span {
+      font-size: 0.68rem;
+      color: rgba(245,240,232,0.25);
+      letter-spacing: 0.1em;
+    }
+    footer a {
+      color: rgba(196,154,60,0.5);
+      text-decoration: none;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      transition: color 0.3s;
+    }
+    footer a:hover { color: var(--gold); }
+
+    /* ===== REVEAL ===== */
+    .reveal { opacity: 0; transform: translateY(36px); }
+    .reveal-left { opacity: 0; transform: translateX(-40px); }
+    .reveal-right { opacity: 0; transform: translateX(40px); }
+    .reveal-scale { opacity: 0; transform: scale(0.94); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      nav { padding: 1.5rem 2rem; }
+      nav ul { display: none; }
+      #about { grid-template-columns: 1fr; }
+      .about-left { padding: 6rem 2rem; }
+      .about-right { min-height: 50vh; }
+      .features-header { grid-template-columns: 1fr; padding: 0 2rem 4rem; }
+      .features-grid { grid-template-columns: 1fr; }
+      .f-card { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
+      #cta { grid-template-columns: 1fr; }
+      .cta-left { padding: 6rem 2rem; }
+      .cta-right { min-height: 50vh; }
+      .info-grid { position: static; grid-template-columns: 1fr 1fr; gap: 1.5rem; padding: 2rem; }
+      footer { flex-direction: column; gap: 1rem; padding: 2rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursor-ring"></div>
+
+  <!-- Nav -->
+  <nav>
+    <a href="#" class="nav-logo">Volta</a>
+    <ul>
+      <li><a href="#about">The Bar</a></li>
+      <li><a href="#features">Experience</a></li>
+      <li><a href="#cta" class="nav-cta">Visit</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section id="hero">
+    <canvas id="hero-canvas"></canvas>
+    <div class="hero-noise"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Dublin’s Finest Espresso Bar</p>
+      <h1 class="hero-title">Coffee as it<br><em>should be.</em></h1>
+      <p class="hero-sub">Single-origin beans, dialled in daily. A space for those who know the difference between a good shot and a great one.</p>
+      <div class="hero-ctas">
+        <a href="#cta" class="btn-gold">Reserve a Spot</a>
+        <a href="#about" class="btn-ghost">Our Story</a>
+      </div>
+    </div>
+    <div class="hero-scroll">Scroll</div>
+  </section>
+
+  <!-- Marquee -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-item">Ethiopia Yirgacheffe <span>·</span></span>
+      <span class="marquee-item">Colombia Huila <span>·</span></span>
+      <span class="marquee-item">Kenya AA <span>·</span></span>
+      <span class="marquee-item">Guatemala Antigua <span>·</span></span>
+      <span class="marquee-item">Brazil Cerrado <span>·</span></span>
+      <span class="marquee-item">Panama Geisha <span>·</span></span>
+      <span class="marquee-item">Ethiopia Yirgacheffe <span>·</span></span>
+      <span class="marquee-item">Colombia Huila <span>·</span></span>
+      <span class="marquee-item">Kenya AA <span>·</span></span>
+      <span class="marquee-item">Guatemala Antigua <span>·</span></span>
+      <span class="marquee-item">Brazil Cerrado <span>·</span></span>
+      <span class="marquee-item">Panama Geisha <span>·</span></span>
+    </div>
+  </div>
+
+  <!-- About -->
+  <section id="about">
+    <div class="about-left">
+      <div class="section-label reveal">Our story</div>
+      <h2 class="about-title reveal">Born from a <em>refusal</em><br>to settle for average.</h2>
+      <p class="about-p reveal">Volta started as one obsession: find the world’s best green coffee and extract it perfectly. Every single time. No chains. No blends designed for consistency over quality. No day-old beans dressed up with flavoured syrups.</p>
+      <p class="about-p reveal">We seat 22. It stays that way on purpose. When the queue gets long, we’d rather you wait than rush a shot.</p>
+      <div class="about-stats reveal">
+        <div>
+          <span class="stat-n">7</span>
+          <span class="stat-l">Origins on rotation</span>
+        </div>
+        <div>
+          <span class="stat-n">22</span>
+          <span class="stat-l">Seats. Intentional.</span>
+        </div>
+        <div>
+          <span class="stat-n">6</span>
+          <span class="stat-l">Years on Fade St.</span>
+        </div>
+      </div>
+    </div>
+    <div class="about-right">
+      <div class="about-bg-text">V</div>
+      <div class="about-canvas-wrap">
+        <canvas id="about-canvas" width="280" height="280"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features">
+    <div class="features-header">
+      <div>
+        <div class="section-label reveal">What sets us apart</div>
+        <h2 class="features-title reveal">Three things we never<br><em>cut corners on.</em></h2>
+      </div>
+      <div>
+        <p class="features-sub reveal">Other coffee bars talk about quality. We’ve built the entire operation around three non-negotiables that most places don’t even think about.</p>
+      </div>
+    </div>
+    <div class="features-grid">
+      <div class="f-card reveal">
+        <div class="f-num">01</div>
+        <svg class="f-icon" viewBox="0 0 52 52" fill="none">
+          <circle cx="26" cy="26" r="22" stroke="#C49A3C" stroke-width="0.75" opacity="0.8"/>
+          <circle cx="26" cy="26" r="10" stroke="#C49A3C" stroke-width="0.75" opacity="0.5"/>
+          <circle cx="26" cy="26" r="3" fill="#C49A3C" opacity="0.6"/>
+          <line x1="26" y1="4" x2="26" y2="48" stroke="#C49A3C" stroke-width="0.4" opacity="0.25"/>
+          <line x1="4" y1="26" x2="48" y2="26" stroke="#C49A3C" stroke-width="0.4" opacity="0.25"/>
+          <line x1="10" y1="10" x2="42" y2="42" stroke="#C49A3C" stroke-width="0.4" opacity="0.15"/>
+          <line x1="42" y1="10" x2="10" y2="42" stroke="#C49A3C" stroke-width="0.4" opacity="0.15"/>
+        </svg>
+        <h3 class="f-title">Origin first.</h3>
+        <p class="f-text">Every bean is traceable to the farm, the harvest, the elevation. We rotate origins monthly so you taste the world, not just a generic blend calibrated for inoffensiveness.</p>
+      </div>
+      <div class="f-card reveal">
+        <div class="f-num">02</div>
+        <svg class="f-icon" viewBox="0 0 52 52" fill="none">
+          <rect x="10" y="18" width="32" height="26" rx="1" stroke="#C49A3C" stroke-width="0.75"/>
+          <path d="M18 18V14C18 11 21 9 26 9C31 9 34 11 34 14V18" stroke="#C49A3C" stroke-width="0.75"/>
+          <circle cx="26" cy="31" r="5" stroke="#C49A3C" stroke-width="0.75" opacity="0.7"/>
+          <line x1="26" y1="26" x2="26" y2="22" stroke="#C49A3C" stroke-width="0.75" opacity="0.4"/>
+        </svg>
+        <h3 class="f-title">Dialled in daily.</h3>
+        <p class="f-text">Every morning before we open, we dial in each group head. Temperature, pressure, extraction time. It changes with the humidity. Most bars don’t bother. We can’t imagine not.</p>
+      </div>
+      <div class="f-card reveal">
+        <div class="f-num">03</div>
+        <svg class="f-icon" viewBox="0 0 52 52" fill="none">
+          <path d="M26 7L30 20H44L33 28L37 41L26 33L15 41L19 28L8 20H22L26 7Z" stroke="#C49A3C" stroke-width="0.75" fill="none"/>
+          <path d="M26 16L28.5 24H37L30.5 28.5L33 36.5L26 32L19 36.5L21.5 28.5L15 24H23.5L26 16Z" stroke="#C49A3C" stroke-width="0" fill="rgba(196,154,60,0.08)"/>
+        </svg>
+        <h3 class="f-title">Space that serves.</h3>
+        <p class="f-text">22 seats. No background music after 10am. Good light. A counter you can watch the work from. Some things matter more than square footage and Instagram-friendly neon.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial -->
+  <section id="testimonial">
+    <div class="testimonial-bg"></div>
+    <span class="t-mark reveal">“</span>
+    <blockquote class="t-quote reveal">The best espresso I’ve had outside of Naples. And I’ve been to Naples three times specifically looking for it.</blockquote>
+    <p class="t-author reveal">Seán O’Brien</p>
+    <p class="t-role reveal">Food Writer — The Irish Times</p>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <div class="cta-left">
+      <div class="section-label reveal">Come in</div>
+      <h2 class="cta-title reveal">Your first cup<br>is <em>on us.</em></h2>
+      <p class="cta-p reveal">First visit? Walk in and say you heard about us. The espresso is free. The second one, you’ll want to pay for. That’s the plan.</p>
+      <div class="cta-buttons reveal">
+        <a href="tel:+35316001234" class="btn-gold">Call to Reserve</a>
+      </div>
+      <p class="cta-note reveal">Mon–Fri 7:30 – 17:00 &nbsp;·&nbsp; Sat–Sun 8:30 – 15:00<br>14 Fade Street, Dublin 2</p>
+    </div>
+    <div class="cta-right">
+      <div class="about-bg-text" style="opacity:0.03; font-size:22rem;">V</div>
+      <div class="cta-canvas-wrap">
+        <canvas id="cta-canvas" width="320" height="320"></canvas>
+      </div>
+      <div class="info-grid">
+        <div class="info-item reveal">
+          <div class="info-label">Address</div>
+          <div class="info-val">14 Fade Street<br>Dublin 2, D02 XY12</div>
+        </div>
+        <div class="info-item reveal">
+          <div class="info-label">Hours</div>
+          <div class="info-val">Mon–Fri 7:30–17:00<br>Sat–Sun 8:30–15:00</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <span>© 2025 Volta Espresso Bar</span>
+    <span>14 Fade Street, Dublin 2</span>
+    <a href="#">Built by Lumus Agency</a>
+  </footer>
+
+  <!-- Three.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+
+  <script>
+  // =====================
+  // CURSOR
+  // =====================
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+  let mx = window.innerWidth/2, my = window.innerHeight/2;
+  let rx = mx, ry = my;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+
+  (function loopRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(loopRing);
+  })();
+
+  document.querySelectorAll('a, button, .f-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.classList.add('hovering');
+      ring.classList.add('hovering');
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.classList.remove('hovering');
+      ring.classList.remove('hovering');
+    });
+  });
+
+  // =====================
+  // THREE.JS — HERO
+  // =====================
+  (function initHero() {
+    const canvas = document.getElementById('hero-canvas');
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x000000, 0);
+
+    const scene = new THREE.Scene();
+    const cam = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 100);
+    cam.position.z = 5;
+
+    // Outer wireframe icosahedron
+    const geoOuter = new THREE.IcosahedronGeometry(1.6, 1);
+    const matOuter = new THREE.MeshBasicMaterial({ color: 0xC49A3C, wireframe: true, transparent: true, opacity: 0.18 });
+    const meshOuter = new THREE.Mesh(geoOuter, matOuter);
+    scene.add(meshOuter);
+
+    // Inner solid icosahedron
+    const geoInner = new THREE.IcosahedronGeometry(1.0, 0);
+    const matInner = new THREE.MeshBasicMaterial({ color: 0xC49A3C, wireframe: true, transparent: true, opacity: 0.07 });
+    const meshInner = new THREE.Mesh(geoInner, matInner);
+    scene.add(meshInner);
+
+    // Middle ring
+    const geoTorus = new THREE.TorusGeometry(2.0, 0.008, 4, 80);
+    const matTorus = new THREE.MeshBasicMaterial({ color: 0xC49A3C, transparent: true, opacity: 0.15 });
+    const torus1 = new THREE.Mesh(geoTorus, matTorus);
+    torus1.rotation.x = Math.PI / 2.5;
+    scene.add(torus1);
+
+    const torus2 = new THREE.Mesh(new THREE.TorusGeometry(2.4, 0.006, 4, 80), matTorus);
+    torus2.rotation.x = Math.PI / 3;
+    torus2.rotation.y = Math.PI / 6;
+    scene.add(torus2);
+
+    // Particle field
+    const N = 1500;
+    const pos = new Float32Array(N * 3);
+    for (let i = 0; i < N; i++) {
+      const r = 3 + Math.random() * 8;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2 * Math.random() - 1);
+      pos[i*3]   = r * Math.sin(phi) * Math.cos(theta);
+      pos[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
+      pos[i*3+2] = r * Math.cos(phi);
+    }
+    const pGeo = new THREE.BufferGeometry();
+    pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    const pMat = new THREE.PointsMaterial({ color: 0xC49A3C, size: 0.025, transparent: true, opacity: 0.35 });
+    const points = new THREE.Points(pGeo, pMat);
+    scene.add(points);
+
+    let mouseX3 = 0, mouseY3 = 0;
+    document.addEventListener('mousemove', e => {
+      mouseX3 = (e.clientX / window.innerWidth - 0.5);
+      mouseY3 = -(e.clientY / window.innerHeight - 0.5);
+    });
+
+    window.addEventListener('resize', () => {
+      cam.aspect = window.innerWidth / window.innerHeight;
+      cam.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    let t = 0;
+    (function loop() {
+      t += 0.004;
+      meshOuter.rotation.x = t * 0.25 + mouseY3 * 0.4;
+      meshOuter.rotation.y = t * 0.4 + mouseX3 * 0.5;
+      meshInner.rotation.x = -t * 0.35;
+      meshInner.rotation.y = t * 0.55;
+      torus1.rotation.z = t * 0.3;
+      torus2.rotation.z = -t * 0.2;
+      points.rotation.y = t * 0.04;
+      points.rotation.x = t * 0.015;
+      requestAnimationFrame(loop);
+      renderer.render(scene, cam);
+    })();
+  })();
+
+  // =====================
+  // THREE.JS — ABOUT
+  // =====================
+  (function initAbout() {
+    const canvas = document.getElementById('about-canvas');
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    renderer.setSize(280, 280);
+    renderer.setClearColor(0x000000, 0);
+
+    const scene = new THREE.Scene();
+    const cam = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
+    cam.position.z = 4;
+
+    const geo = new THREE.TorusKnotGeometry(0.9, 0.28, 120, 16);
+    const mat = new THREE.MeshBasicMaterial({ color: 0xC49A3C, wireframe: true, transparent: true, opacity: 0.55 });
+    const knot = new THREE.Mesh(geo, mat);
+    scene.add(knot);
+
+    (function loop() {
+      knot.rotation.x += 0.007;
+      knot.rotation.y += 0.011;
+      requestAnimationFrame(loop);
+      renderer.render(scene, cam);
+    })();
+  })();
+
+  // =====================
+  // THREE.JS — CTA
+  // =====================
+  (function initCta() {
+    const canvas = document.getElementById('cta-canvas');
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    renderer.setSize(320, 320);
+    renderer.setClearColor(0x000000, 0);
+
+    const scene = new THREE.Scene();
+    const cam = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
+    cam.position.z = 5;
+
+    // Floating octahedron
+    const geo1 = new THREE.OctahedronGeometry(1.2);
+    const mat1 = new THREE.MeshBasicMaterial({ color: 0xC49A3C, wireframe: true, transparent: true, opacity: 0.4 });
+    const oct = new THREE.Mesh(geo1, mat1);
+    scene.add(oct);
+
+    const geo2 = new THREE.OctahedronGeometry(1.8);
+    const mat2 = new THREE.MeshBasicMaterial({ color: 0xC49A3C, wireframe: true, transparent: true, opacity: 0.1 });
+    const oct2 = new THREE.Mesh(geo2, mat2);
+    scene.add(oct2);
+
+    let t = 0;
+    (function loop() {
+      t += 0.006;
+      oct.rotation.x = t * 0.5;
+      oct.rotation.y = t * 0.8;
+      oct.position.y = Math.sin(t) * 0.15;
+      oct2.rotation.x = -t * 0.3;
+      oct2.rotation.y = -t * 0.4;
+      requestAnimationFrame(loop);
+      renderer.render(scene, cam);
+    })();
+  })();
+
+  // =====================
+  // GSAP
+  // =====================
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Hero entrance
+  const tl = gsap.timeline({ delay: 0.3, defaults: { ease: 'power3.out', duration: 1.1 } });
+  tl.to('.hero-eyebrow', { opacity: 1, y: 0 })
+    .to('.hero-title', { opacity: 1, y: 0 }, '-=0.7')
+    .to('.hero-sub', { opacity: 1, y: 0 }, '-=0.6')
+    .to('.hero-ctas', { opacity: 1, y: 0 }, '-=0.5')
+    .to('.hero-scroll', { opacity: 1 }, '-=0.3');
+
+  // Scroll reveals
+  gsap.utils.toArray('.reveal').forEach(el => {
+    gsap.to(el, {
+      opacity: 1, y: 0,
+      duration: 1.0,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+    });
+  });
+
+  gsap.utils.toArray('.reveal-left').forEach(el => {
+    gsap.to(el, {
+      opacity: 1, x: 0,
+      duration: 1.0,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+    });
+  });
+
+  gsap.utils.toArray('.reveal-right').forEach(el => {
+    gsap.to(el, {
+      opacity: 1, x: 0,
+      duration: 1.0,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+    });
+  });
+
+  gsap.utils.toArray('.reveal-scale').forEach(el => {
+    gsap.to(el, {
+      opacity: 1, scale: 1,
+      duration: 1.0,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+    });
+  });
+
+  // Parallax hero shape on scroll
+  window.addEventListener('scroll', () => {
+    const sy = window.scrollY * 0.0015;
+    // subtle parallax via camera Z
+  }, { passive: true });
+  </script>
+
+</body>
+</html>
