@@ -31,8 +31,8 @@ No pitch, no pressure — just an honest look at what's holding you back online.
 
 Best,
 The Lumus Team
-hello@lumusagency.ie
-lumusagency.ie
+lumus.marketing.agency@gmail.com
+lumusagency.net
 ```
 
 ---
@@ -61,8 +61,8 @@ Worth a look?
 
 Best,
 The Lumus Team
-hello@lumusagency.ie
-lumusagency.ie
+lumus.marketing.agency@gmail.com
+lumusagency.net
 ```
 
 ---
@@ -98,7 +98,7 @@ But if you are curious, I'm happy to send over a free snapshot of what we'd fix 
 
 Best,
 The Lumus Team
-hello@lumusagency.ie
+lumus.marketing.agency@gmail.com
 ```
 
 ---
@@ -118,8 +118,8 @@ Feel free to reach out whenever it makes sense.
 
 Wishing you a great week,
 The Lumus Team
-hello@lumusagency.ie
-lumusagency.ie
+lumus.marketing.agency@gmail.com
+lumusagency.net
 ```
 
 ---
