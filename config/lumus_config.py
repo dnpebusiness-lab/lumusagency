@@ -2,8 +2,8 @@
 
 AGENCY_NAME = "Lumus"
 AGENCY_TAGLINE = "We help local businesses look better, communicate clearer and convert more online."
-AGENCY_EMAIL = "hello@lumusagency.ie"
-AGENCY_WEBSITE = "https://lumusagency.ie"
+AGENCY_EMAIL = "lumus.marketing.agency@gmail.com"
+AGENCY_WEBSITE = "https://lumusagency.net"
 AGENCY_INSTAGRAM = "@lumusagency"
 
 # Target locations
