@@ -170,6 +170,7 @@ function ProjectCard({ project, offset }: { project: Project; offset: number }) 
   return (
     <Link
       data-wg-card
+      data-cursor="view"
       href={project.href}
       className={cn("group block", shift)}
     >
@@ -203,6 +204,11 @@ function ProjectCard({ project, offset }: { project: Project; offset: number }) 
         <div
           aria-hidden
           className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"
+        />
+
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-gold/[0.10] origin-bottom scale-y-0 group-hover:scale-y-100 transition-transform duration-700 ease-[cubic-bezier(0.215,0.61,0.355,1)]"
         />
       </div>
 

@@ -3,6 +3,7 @@ import { SectionLabel } from "./SectionLabel";
 import { GoldDivider } from "./GoldDivider";
 import { InstagramIcon, LinkedInIcon, BehanceIcon } from "./SocialIcons";
 import { Reveal } from "./Reveal";
+import { Marquee } from "./Marquee";
 
 const NAV = [
   { label: "The Agency", href: "/agency" },
@@ -22,6 +23,22 @@ export function Footer() {
 
   return (
     <footer className="relative bg-black text-white">
+      <div className="border-y border-[var(--border-gold)] overflow-hidden py-5">
+        <Marquee
+          items={[
+            "We Light the Way",
+            "Lumus Agency",
+            "Galway · Ireland",
+            "Est. 2025",
+            "We Light the Way",
+            "Editorial Craft",
+          ]}
+          speed={40}
+          separator="·"
+          itemClassName="font-display italic text-gold/25 text-[clamp(1.8rem,4vw,3.5rem)] tracking-tightest leading-none"
+          separatorClassName="font-display text-gold/15 text-2xl mx-14"
+        />
+      </div>
       <GoldDivider />
       <div className="mx-auto max-w-[1400px] px-6 md:px-10 pt-24 pb-10">
         <Reveal stagger={0.12} y={50} className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">

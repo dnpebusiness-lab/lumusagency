@@ -23,6 +23,7 @@ export function Hero() {
       gsap.set("[data-hero-rule]", { scaleY: 0, transformOrigin: "top center" });
       gsap.set("[data-hero-cta] > *", { opacity: 0, y: 14 });
       gsap.set("[data-hero-indicator]", { opacity: 0, y: 12 });
+      gsap.set("[data-hero-watermark]", { opacity: 0 });
 
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
       tl.to("[data-hero-eyebrow]", { opacity: 1, y: 0, duration: 0.8 })
@@ -31,6 +32,7 @@ export function Hero() {
           { yPercent: 0, duration: 1, stagger: 0.18, ease: "power4.out" },
           0.2,
         )
+        .to("[data-hero-watermark]", { opacity: 1, duration: 1.6, ease: "power2.out" }, 0.3)
         .to(
           "[data-hero-rule]",
           { scaleY: 1, duration: 0.9, ease: "power4.inOut" },
@@ -45,7 +47,25 @@ export function Hero() {
         .to("[data-hero-indicator]", { opacity: 1, y: 0, duration: 0.6 }, 1.3);
     }, el);
 
-    return () => ctx.revert();
+    const watermark = el.querySelector<HTMLElement>("[data-hero-watermark]");
+    const onMouse = (e: MouseEvent) => {
+      if (!watermark) return;
+      const cx = window.innerWidth / 2;
+      const cy = window.innerHeight / 2;
+      gsap.to(watermark, {
+        x: ((e.clientX - cx) / cx) * -30,
+        y: ((e.clientY - cy) / cy) * -20,
+        duration: 1.4,
+        ease: "power3.out",
+      });
+    };
+
+    if (!reduced) window.addEventListener("mousemove", onMouse);
+
+    return () => {
+      window.removeEventListener("mousemove", onMouse);
+      ctx.revert();
+    };
   }, []);
 
   return (
@@ -61,6 +81,14 @@ export function Hero() {
         aria-hidden
         className="pointer-events-none absolute -bottom-60 -right-40 h-[520px] w-[520px] rounded-full bg-gold/[0.04] blur-[140px]"
       />
+
+      <span
+        data-hero-watermark
+        aria-hidden
+        className="pointer-events-none absolute right-[-6vw] top-1/2 -translate-y-[55%] font-display italic text-gold/[0.045] text-[clamp(12rem,32vw,26rem)] leading-none select-none will-change-transform"
+      >
+        L•
+      </span>
 
       <div className="relative mx-auto max-w-[1400px] w-full">
         <div data-hero-eyebrow>

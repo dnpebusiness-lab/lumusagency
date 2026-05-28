@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { AgencyHero } from "@/components/agency/AgencyHero";
 import { AgencyStory } from "@/components/agency/AgencyStory";
+import { ProcessSection } from "@/components/agency/ProcessSection";
 import { DesignPrinciples } from "@/components/agency/DesignPrinciples";
 import { VisionMission } from "@/components/agency/VisionMission";
 import { FinalCTA } from "@/components/home/FinalCTA";
@@ -24,6 +25,7 @@ export default function AgencyPage() {
     <main>
       <AgencyHero />
       <AgencyStory />
+      <ProcessSection />
       <DesignPrinciples />
       <VisionMission />
       <FinalCTA />

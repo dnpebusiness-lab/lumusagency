@@ -9,6 +9,7 @@ const INTERACTIVE_SELECTOR =
 export function CustomCursor() {
   const dotRef = useRef<HTMLDivElement | null>(null);
   const ringRef = useRef<HTMLDivElement | null>(null);
+  const viewLabelRef = useRef<HTMLSpanElement | null>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -19,11 +20,13 @@ export function CustomCursor() {
 
     const dot = dotRef.current;
     const ring = ringRef.current;
-    if (!dot || !ring) return;
+    const viewLabel = viewLabelRef.current;
+    if (!dot || !ring || !viewLabel) return;
 
     document.documentElement.classList.add("has-custom-cursor");
 
     gsap.set([dot, ring], { xPercent: -50, yPercent: -50, opacity: 0 });
+    gsap.set(viewLabel, { opacity: 0 });
 
     const dotX = gsap.quickTo(dot, "x", { duration: 0.12, ease: "power3.out" });
     const dotY = gsap.quickTo(dot, "y", { duration: 0.12, ease: "power3.out" });
@@ -49,7 +52,7 @@ export function CustomCursor() {
     };
 
     const onDown = () => {
-      gsap.to(ring, { scale: 0.7, duration: 0.25, ease: "power3.out" });
+      gsap.to(ring, { scale: 0.7, duration: 0.2, ease: "power3.out" });
     };
     const onUp = () => {
       gsap.to(ring, { scale: 1, duration: 0.25, ease: "power3.out" });
@@ -57,21 +60,36 @@ export function CustomCursor() {
 
     const onOver = (e: MouseEvent) => {
       const target = e.target as Element | null;
-      if (target && target.closest(INTERACTIVE_SELECTOR)) {
+
+      if (target?.closest('[data-cursor="view"]')) {
         gsap.to(ring, {
-          scale: 1.6,
+          width: 88,
+          height: 88,
+          borderColor: "var(--gold)",
+          duration: 0.4,
+          ease: "power3.out",
+        });
+        gsap.to(viewLabel, { opacity: 1, duration: 0.25, ease: "power3.out", delay: 0.1 });
+        gsap.to(dot, { scale: 0, duration: 0.2, ease: "power3.out" });
+      } else if (target?.closest(INTERACTIVE_SELECTOR)) {
+        gsap.to(ring, {
+          width: 64,
+          height: 64,
           borderColor: "var(--gold)",
           duration: 0.35,
           ease: "power3.out",
         });
+        gsap.to(viewLabel, { opacity: 0, duration: 0.15 });
         gsap.to(dot, { scale: 0, duration: 0.25, ease: "power3.out" });
       } else {
         gsap.to(ring, {
-          scale: 1,
+          width: 40,
+          height: 40,
           borderColor: "var(--border-gold)",
           duration: 0.35,
           ease: "power3.out",
         });
+        gsap.to(viewLabel, { opacity: 0, duration: 0.15 });
         gsap.to(dot, { scale: 1, duration: 0.25, ease: "power3.out" });
       }
     };
@@ -97,8 +115,15 @@ export function CustomCursor() {
       <div
         ref={ringRef}
         aria-hidden
-        className="pointer-events-none fixed top-0 left-0 z-[100] h-10 w-10 rounded-full border border-[var(--border-gold)] mix-blend-difference"
-      />
+        className="pointer-events-none fixed top-0 left-0 z-[100] h-10 w-10 rounded-full border border-[var(--border-gold)] flex items-center justify-center"
+      >
+        <span
+          ref={viewLabelRef}
+          className="font-sans text-[8px] uppercase tracking-cta-wide text-gold leading-none"
+        >
+          VIEW ↗
+        </span>
+      </div>
       <div
         ref={dotRef}
         aria-hidden
