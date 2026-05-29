@@ -10,794 +10,694 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
-    :root {
-      --ink:        #080808;
-      --ink-mid:    #1A1A1A;
-      --ink-soft:   #2A2A2A;
-      --ink-muted:  #787878;
-      --ink-subtle: #ABABAB;
-      --paper:      #FFFFFF;
-      --paper-off:  #F8F7F5;
-      --paper-warm: #F0EEEA;
-      --rule:       #E8E6E2;
-      --rule-mid:   #D0CEC9;
-      --serif:      'Cormorant Garamond', Georgia, serif;
-      --sans:       'Inter', system-ui, sans-serif;
-      --mono:       'JetBrains Mono', monospace;
+    :root{
+      --ink:#080808;--ink-mid:#1A1A1A;--ink-soft:#2A2A2A;
+      --ink-muted:#787878;--ink-subtle:#ABABAB;
+      --paper:#FFFFFF;--paper-off:#F8F7F5;--paper-warm:#F0EEEA;
+      --rule:#E8E6E2;--rule-mid:#D0CEC9;
+      --serif:'Cormorant Garamond',Georgia,serif;
+      --sans:'Inter',system-ui,sans-serif;
+      --mono:'JetBrains Mono',monospace;
+      --expo:cubic-bezier(0.16,1,0.3,1);
+      --out:cubic-bezier(0,0,0.3,1);
     }
 
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
-    body { font-family: var(--sans); background: var(--paper-off); color: var(--ink); }
-
-    img { display: block; max-width: 100%; }
-    a { color: inherit; text-decoration: none; }
-    button { font-family: inherit; cursor: pointer; border: none; background: none; }
-
-    /* ---- UTILITY ---- */
-    .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
-    .section    { padding: 96px 0; }
-    .section-sm { padding: 72px 0; }
-
-    .eyebrow {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: var(--ink-muted);
-    }
-    .heading-xl {
-      font-family: var(--serif);
-      font-size: clamp(2.4rem, 5vw, 4rem);
-      font-weight: 600;
-      line-height: 1.1;
-      letter-spacing: -.02em;
-      color: var(--ink);
-    }
-    .heading-lg {
-      font-family: var(--serif);
-      font-size: clamp(1.8rem, 3vw, 2.8rem);
-      font-weight: 600;
-      line-height: 1.15;
-      letter-spacing: -.015em;
-      color: var(--ink);
-    }
-    .body-sm { font-size: 13px; line-height: 1.75; color: var(--ink-muted); }
-
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--ink); color: var(--paper);
-      font-family: var(--sans); font-size: 11px; font-weight: 700;
-      letter-spacing: .18em; text-transform: uppercase;
-      padding: 16px 32px; transition: background .25s;
-    }
-    .btn-primary:hover { background: var(--ink-soft); }
-
-    .btn-ghost {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: transparent; color: var(--paper);
-      font-family: var(--sans); font-size: 11px; font-weight: 600;
-      letter-spacing: .18em; text-transform: uppercase;
-      padding: 16px 32px; border: 1px solid rgba(255,255,255,.25);
-      transition: background .25s;
-    }
-    .btn-ghost:hover { background: rgba(255,255,255,.08); }
-
-    /* ---- REVEAL ---- */
-    .reveal { opacity: 0; transform: translateY(30px); }
-    .reveal-left  { opacity: 0; transform: translateX(-30px); }
-    .reveal-right { opacity: 0; transform: translateX(30px); }
-
-    /* ---- HEADER ---- */
-    #header {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      padding: 24px 0;
-      border-bottom: 1px solid transparent;
-      transition: all .35s;
-    }
-    #header.scrolled {
-      background: rgba(248,247,245,.96);
-      backdrop-filter: blur(12px);
-      padding: 16px 0;
-      border-color: var(--rule);
-      box-shadow: 0 1px 20px rgba(0,0,0,.04);
-    }
-    .header-inner {
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .logo {
-      display: flex; flex-direction: column;
-    }
-    .logo-name {
-      font-family: var(--serif); font-size: 18px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: .08em; color: var(--ink);
-    }
-    .logo-sub {
-      font-family: var(--mono); font-size: 9px; letter-spacing: .22em;
-      text-transform: uppercase; color: var(--ink-muted);
-    }
-    .nav { display: flex; align-items: center; gap: 32px; }
-    .nav a {
-      font-family: var(--mono); font-size: 10px; letter-spacing: .18em;
-      text-transform: uppercase; color: var(--ink); transition: color .2s;
-    }
-    .nav a:hover { color: var(--ink-soft); }
-    .header-cta {
-      display: flex; align-items: center; gap: 16px;
-    }
-    .header-email {
-      font-family: var(--mono); font-size: 10px; letter-spacing: .12em;
-      color: var(--ink-muted);
-    }
-    @media (max-width: 900px) { .nav { display: none; } .header-email { display: none; } }
-
-    /* ---- HERO ---- */
-    #hero {
-      position: relative; min-height: 100vh;
-      display: flex; align-items: center;
-      overflow: hidden;
-    }
-    #hero-bg {
-      position: absolute; inset: 0; z-index: 0;
-    }
-    #hero-bg img {
-      width: 100%; height: 100%; object-fit: cover;
-      filter: brightness(.55);
-      transform: scale(1.02);
-    }
-    #hero-bg::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(100deg, rgba(8,8,8,.92) 0%, rgba(8,8,8,.5) 55%, transparent 100%),
-                  linear-gradient(to top, var(--paper-off) 0%, transparent 40%);
-    }
-    #hero-canvas {
-      position: absolute; inset: 0; z-index: 1;
-      pointer-events: none;
-      mix-blend-mode: screen;
-    }
-    #hero-content {
-      position: relative; z-index: 2;
-      width: 100%;
-    }
-    .hero-inner {
-      display: grid;
-      grid-template-columns: 1fr 420px;
-      gap: 48px;
-      align-items: center;
-    }
-    .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
-    .hero-tag {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.18);
-      color: rgba(255,255,255,.85);
-      font-family: var(--mono); font-size: 9px; letter-spacing: .2em;
-      text-transform: uppercase; padding: 5px 12px;
-    }
-    .hero-tag span { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,.5); }
-    .hero-title {
-      font-family: var(--serif);
-      font-size: clamp(2.6rem, 5.5vw, 4.2rem);
-      font-weight: 700; line-height: 1.08;
-      letter-spacing: -.02em; color: #fff;
-      margin-bottom: 20px;
-    }
-    .hero-title em { font-weight: 300; color: rgba(255,255,255,.6); display: block; }
-    .hero-sub {
-      font-size: 15px; line-height: 1.75;
-      color: rgba(255,255,255,.65);
-      max-width: 520px; margin-bottom: 36px;
-    }
-    .hero-sub strong { color: #fff; font-weight: 500; }
-    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
-    .hero-meta {
-      display: flex; gap: 0; align-items: center;
-      margin-top: 36px;
-      padding-top: 24px;
-      border-top: 1px solid rgba(255,255,255,.1);
-      max-width: 460px;
-    }
-    .hero-meta-item {
-      display: flex; align-items: center; gap: 6px;
-      font-family: var(--mono); font-size: 10px;
-      color: rgba(255,255,255,.45);
-      flex: 1;
-    }
-    .hero-meta-item svg { opacity: .6; }
-    .hero-divider { width: 1px; height: 16px; background: rgba(255,255,255,.12); margin: 0 12px; }
-
-    /* Booking card in hero */
-    .booking-card {
-      background: #fff;
-      padding: 36px;
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow: 0 24px 60px rgba(0,0,0,.25);
-    }
-    .booking-card-eyebrow {
-      display: flex; align-items: center; gap: 6px;
-      font-family: var(--mono); font-size: 9px; letter-spacing: .2em;
-      text-transform: uppercase; color: var(--ink-muted);
-      margin-bottom: 16px;
-    }
-    .booking-card-eyebrow::before {
-      content: ''; width: 4px; height: 4px;
-      border-radius: 50%; background: var(--ink-muted);
-    }
-    .booking-card h3 {
-      font-family: var(--serif); font-size: 26px; font-weight: 600;
-      color: var(--ink); margin-bottom: 28px;
-    }
-    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .field { display: flex; flex-direction: column; padding-bottom: 10px; border-bottom: 1px solid var(--rule); margin-bottom: 16px; }
-    .field label {
-      font-family: var(--mono); font-size: 9px; letter-spacing: .18em;
-      text-transform: uppercase; color: var(--ink-muted);
-      margin-bottom: 6px;
-    }
-    .field input, .field select {
-      font-family: var(--sans); font-size: 13px; color: var(--ink);
-      background: transparent; border: none; outline: none;
-      cursor: pointer;
-    }
-    .field select option { font-family: var(--sans); }
-    .book-btn {
-      width: 100%; background: var(--ink); color: #fff;
-      font-family: var(--sans); font-size: 11px; font-weight: 700;
-      letter-spacing: .18em; text-transform: uppercase;
-      padding: 18px; margin-top: 8px;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      transition: background .25s;
-    }
-    .book-btn:hover { background: var(--ink-soft); }
-    .book-secure {
-      display: flex; align-items: center; justify-content: center; gap: 6px;
-      font-family: var(--mono); font-size: 9px; letter-spacing: .14em;
-      text-transform: uppercase; color: var(--ink-subtle); margin-top: 12px;
+    @media(prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      *,*::before,*::after{
+        animation-duration:.01ms!important;
+        animation-iteration-count:1!important;
+        transition-duration:.01ms!important;
+      }
     }
 
-    @media (max-width: 960px) {
-      .hero-inner { grid-template-columns: 1fr; }
-      .booking-card { display: none; }
+    html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+    body{font-family:var(--sans);background:var(--paper-off);color:var(--ink);overflow-x:hidden}
+
+    /* Film grain */
+    body::after{
+      content:'';position:fixed;inset:0;z-index:9990;pointer-events:none;
+      opacity:.028;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23g)'/%3E%3C/svg%3E");
+      background-size:256px 256px;
     }
 
-    /* ---- WHY STAY ---- */
-    #why { background: var(--paper-off); border-top: 1px solid var(--rule); }
-    .why-inner {
-      display: grid; grid-template-columns: 5fr 7fr; gap: 80px; align-items: start;
-    }
-    .why-sticky { position: sticky; top: 100px; }
-    .why-sticky h2 { margin: 16px 0 20px; }
-    .why-sticky h2 em { display: block; font-weight: 300; color: var(--ink-muted); }
-    .cafe-perk {
-      display: flex; gap: 16px; align-items: flex-start;
-      background: var(--rule); padding: 20px;
-      margin-top: 24px;
-    }
-    .cafe-perk-icon {
-      width: 44px; height: 44px; background: #fff;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .cafe-perk-text h4 {
-      font-family: var(--serif); font-size: 13px; font-weight: 600;
-      text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px;
-    }
-    .cafe-perk-text p { font-size: 11px; color: var(--ink-muted); line-height: 1.6; }
-    .feature-list { display: flex; flex-direction: column; gap: 12px; }
-    .feature-item {
-      display: flex; gap: 16px; align-items: flex-start;
-      background: #fff; border: 1px solid var(--rule);
-      padding: 20px 24px;
-      transition: transform .2s, border-color .2s;
-    }
-    .feature-item:hover { transform: translateX(4px); border-color: var(--ink-subtle); }
-    .feature-icon {
-      width: 40px; height: 40px; background: var(--ink);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; color: #fff;
-    }
-    .feature-text h3 { font-family: var(--serif); font-size: 16px; font-weight: 600; margin-bottom: 4px; }
-    .feature-text p { font-size: 12px; color: var(--ink-muted); line-height: 1.65; }
-    @media (max-width: 860px) { .why-inner { grid-template-columns: 1fr; } .why-sticky { position: static; } }
+    img{display:block;max-width:100%}
+    a{color:inherit;text-decoration:none}
+    button{font-family:inherit;cursor:pointer;border:none;background:none}
 
-    /* ---- ROOMS ---- */
-    #rooms { background: #fff; border-top: 1px solid var(--rule); }
-    .rooms-header {
-      display: flex; align-items: flex-end; justify-content: space-between;
-      gap: 24px; margin-bottom: 56px;
-    }
-    .rooms-header h2 { margin-top: 12px; }
-    .rooms-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1px; background: var(--rule);
-    }
-    .room-card {
-      background: #fff;
-      display: flex; flex-direction: column;
-      transition: transform .3s;
-    }
-    .room-card:hover { transform: translateY(-2px); }
-    .room-img {
-      position: relative; aspect-ratio: 4/3; overflow: hidden;
-      background: var(--rule);
-    }
-    .room-img img {
-      width: 100%; height: 100%; object-fit: cover;
-      transition: transform .7s;
-    }
-    .room-card:hover .room-img img { transform: scale(1.04); }
-    .room-img::after {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(8,8,8,.45) 0%, transparent 55%);
-    }
-    .room-price {
-      position: absolute; top: 16px; right: 16px; z-index: 1;
-      background: var(--ink); color: #fff;
-      font-family: var(--mono); font-size: 10px; letter-spacing: .12em;
-      text-transform: uppercase; padding: 8px 12px;
-      display: flex; align-items: center; gap: 4px;
-    }
-    .room-price strong { font-family: var(--serif); font-size: 16px; font-weight: 600; }
-    .room-badges {
-      position: absolute; bottom: 16px; left: 16px; z-index: 1;
-      display: flex; gap: 6px;
-    }
-    .room-badge {
-      background: #fff; color: var(--ink);
-      font-family: var(--mono); font-size: 9px; letter-spacing: .12em;
-      text-transform: uppercase; padding: 4px 8px;
-      display: flex; align-items: center; gap: 4px;
-    }
-    .room-body { padding: 24px 28px 28px; flex: 1; display: flex; flex-direction: column; }
-    .room-name {
-      font-family: var(--serif); font-size: 22px; font-weight: 600;
-      color: var(--ink); margin-bottom: 4px;
-    }
-    .room-bed {
-      font-family: var(--mono); font-size: 9px; letter-spacing: .15em;
-      text-transform: uppercase; color: var(--ink-muted);
-      margin-bottom: 14px;
-    }
-    .room-desc { font-size: 12px; color: var(--ink-muted); line-height: 1.7; margin-bottom: 16px; }
-    .room-features { list-style: none; margin-bottom: 18px; }
-    .room-features li {
-      font-size: 11px; color: var(--ink-soft);
-      padding: 4px 0; border-bottom: 1px solid var(--rule);
-      display: flex; align-items: flex-start; gap: 6px;
-    }
-    .room-features li::before { content: '→'; color: var(--ink-muted); flex-shrink: 0; }
-    .room-actions { display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
-    .room-btn-primary {
-      display: flex; align-items: center; justify-content: center; gap: 6px;
-      background: var(--ink); color: #fff;
-      font-family: var(--sans); font-size: 10px; font-weight: 700;
-      letter-spacing: .15em; text-transform: uppercase;
-      padding: 14px; transition: background .25s;
-    }
-    .room-btn-primary:hover { background: var(--ink-soft); }
-    .room-btn-secondary {
-      display: flex; align-items: center; justify-content: center; gap: 6px;
-      background: var(--paper-warm); color: var(--ink);
-      font-family: var(--sans); font-size: 10px; font-weight: 600;
-      letter-spacing: .15em; text-transform: uppercase;
-      padding: 12px; border: 1px solid var(--rule);
-      transition: background .25s;
-    }
-    .room-btn-secondary:hover { background: #fff; }
+    .container{max-width:1280px;margin:0 auto;padding:0 24px}
+    .section{padding:96px 0}
 
-    /* ---- AMENITIES ---- */
-    #amenities { background: var(--paper-off); border-top: 1px solid var(--rule); }
-    .amenities-header { text-align: center; margin-bottom: 56px; }
-    .amenities-header h2 { margin: 12px 0 14px; }
-    .amenities-header p { font-size: 13px; color: var(--ink-muted); max-width: 380px; margin: 0 auto; }
-    .amenities-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1px; background: var(--rule);
-    }
-    .amenity-card {
-      background: #fff; padding: 32px;
-      display: flex; flex-direction: column; gap: 16px;
-      transition: background .25s;
-    }
-    .amenity-card:hover { background: var(--paper-off); }
-    .amenity-icon {
-      width: 44px; height: 44px; background: var(--ink);
-      display: flex; align-items: center; justify-content: center;
-      color: #fff; transition: background .25s;
-    }
-    .amenity-card:hover .amenity-icon { background: var(--ink-soft); }
-    .amenity-card h3 { font-family: var(--serif); font-size: 18px; font-weight: 600; }
-    .amenity-card p { font-size: 12px; color: var(--ink-muted); line-height: 1.7; }
+    .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-muted)}
+    .heading-xl{font-family:var(--serif);font-size:clamp(2.4rem,5vw,4rem);font-weight:600;line-height:1.08;letter-spacing:-.02em;color:var(--ink)}
+    .heading-lg{font-family:var(--serif);font-size:clamp(1.8rem,3vw,2.8rem);font-weight:600;line-height:1.15;letter-spacing:-.015em;color:var(--ink)}
+    .body-sm{font-size:13px;line-height:1.75;color:var(--ink-muted)}
 
-    /* ---- CAFE ---- */
-    #cafe { background: var(--ink-mid); border-top: 1px solid rgba(255,255,255,.06); }
-    .cafe-inner {
-      display: grid; grid-template-columns: 5fr 7fr;
-      gap: 80px; align-items: center;
-    }
-    .cafe-img-wrap { position: relative; }
-    .cafe-img-border {
-      position: absolute; inset: -16px;
-      border: 1px solid rgba(255,255,255,.08);
-      pointer-events: none;
-    }
-    .cafe-img {
-      position: relative; aspect-ratio: 4/3;
-      overflow: hidden; border: 1px solid rgba(255,255,255,.06);
-    }
-    .cafe-img img {
-      width: 100%; height: 100%; object-fit: cover;
-      filter: grayscale(15%);
-      transition: filter .7s;
-    }
-    .cafe-img:hover img { filter: grayscale(0); }
-    .cafe-badge {
-      position: absolute; bottom: -20px; right: -20px;
-      background: #fff; color: var(--ink);
-      width: 120px; height: 120px;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center; padding: 12px;
-      box-shadow: 0 8px 32px rgba(0,0,0,.2);
-      animation: float 4s ease-in-out infinite;
-    }
-    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-    .cafe-badge-label {
-      background: var(--ink); color: #fff;
-      font-family: var(--mono); font-size: 7px; letter-spacing: .15em;
-      text-transform: uppercase; padding: 2px 6px; margin-bottom: 4px;
-    }
-    .cafe-badge-pct {
-      font-family: var(--serif); font-size: 28px; font-weight: 600; color: var(--ink);
-    }
-    .cafe-badge-sub {
-      font-family: var(--mono); font-size: 8px; color: var(--ink-muted); text-transform: uppercase;
-    }
-    .cafe-text { color: #fff; }
-    .cafe-text .eyebrow { color: rgba(255,255,255,.4); margin-bottom: 16px; }
-    .cafe-text h2 {
-      font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.2rem);
-      font-weight: 700; line-height: 1.1;
-      margin-bottom: 20px;
-    }
-    .cafe-text h2 em { display: block; font-weight: 300; color: rgba(255,255,255,.5); }
-    .cafe-text p { font-size: 15px; color: rgba(255,255,255,.65); line-height: 1.75; margin-bottom: 28px; }
-    .cafe-perk-box {
-      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
-      padding: 24px; display: flex; gap: 16px; margin-bottom: 32px;
-    }
-    .cafe-perk-box-icon {
-      width: 44px; height: 44px; background: rgba(255,255,255,.1);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .cafe-perk-box-text h4 {
-      font-family: var(--serif); font-size: 17px; font-weight: 600; margin-bottom: 6px;
-    }
-    .cafe-perk-box-text p { font-size: 13px; color: rgba(255,255,255,.55); line-height: 1.65; margin: 0; }
-    .cafe-menu { border-top: 1px solid rgba(255,255,255,.08); padding-top: 20px; }
-    .cafe-menu-title {
-      font-family: var(--mono); font-size: 9px; letter-spacing: .18em;
-      text-transform: uppercase; color: rgba(255,255,255,.3);
-      margin-bottom: 16px;
-    }
-    .cafe-menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .cafe-menu-item { border-bottom: 1px solid rgba(255,255,255,.05); padding-bottom: 12px; }
-    .cafe-menu-item h5 { font-size: 12px; font-weight: 600; color: #fff; margin-bottom: 3px; }
-    .cafe-menu-item p { font-size: 10px; color: rgba(255,255,255,.4); line-height: 1.5; }
-    .cafe-menu-item span { font-family: var(--mono); font-size: 9px; color: rgba(255,255,255,.3); }
-    @media (max-width: 860px) { .cafe-inner { grid-template-columns: 1fr; } .cafe-menu-grid { grid-template-columns: 1fr; } }
+    /* Line reveal system */
+    .line{display:block;overflow:hidden}
+    .line-inner{display:block}
 
-    /* ---- LOCATION ---- */
-    #location { background: var(--paper-off); border-top: 1px solid var(--rule); }
-    .location-header { text-align: center; margin-bottom: 56px; }
-    .location-header h2 { margin: 12px 0 14px; }
-    .location-header p { font-size: 13px; color: var(--ink-muted); max-width: 500px; margin: 0 auto; }
-    .location-inner {
-      display: grid; grid-template-columns: 5fr 7fr;
-      gap: 40px; align-items: stretch;
+    /* Buttons */
+    .btn-primary{
+      position:relative;overflow:hidden;
+      display:inline-flex;align-items:center;gap:8px;
+      background:var(--ink);color:var(--paper);
+      font-family:var(--sans);font-size:11px;font-weight:700;
+      letter-spacing:.18em;text-transform:uppercase;
+      padding:16px 32px;transition:color .3s;
     }
-    .location-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
-    .filter-btn {
-      display: flex; align-items: center; gap: 6px;
-      font-family: var(--sans); font-size: 11px;
-      padding: 8px 14px; border: 1px solid var(--rule);
-      background: #fff; color: var(--ink);
-      transition: all .2s; cursor: pointer;
+    .btn-primary::after{
+      content:'';position:absolute;inset:0;
+      background:rgba(255,255,255,.12);
+      transform:translateX(-101%);
+      transition:transform .4s var(--expo);
     }
-    .filter-btn.active, .filter-btn:hover {
-      background: var(--ink); color: #fff; border-color: var(--ink);
-    }
-    .location-list { display: flex; flex-direction: column; gap: 10px; }
-    .location-item {
-      background: #fff; border: 1px solid var(--rule);
-      padding: 16px 20px;
-      transition: border-color .2s;
-    }
-    .location-item:hover { border-color: var(--ink-subtle); }
-    .location-item-top {
-      display: flex; justify-content: space-between;
-      align-items: flex-start; gap: 12px; margin-bottom: 6px;
-    }
-    .location-item-top h4 { font-family: var(--serif); font-size: 15px; font-weight: 600; }
-    .location-walk {
-      background: var(--rule); color: var(--ink);
-      font-family: var(--mono); font-size: 9px; letter-spacing: .12em;
-      text-transform: uppercase; padding: 4px 10px;
-      white-space: nowrap; flex-shrink: 0;
-    }
-    .location-item p { font-size: 11px; color: var(--ink-muted); line-height: 1.6; margin-bottom: 8px; }
-    .location-dist {
-      font-family: var(--mono); font-size: 9px; color: var(--ink-subtle);
-      text-transform: uppercase; letter-spacing: .12em;
-    }
-    .address-box {
-      background: var(--ink); color: #fff;
-      padding: 20px 24px; margin-top: 20px;
-    }
-    .address-box .eyebrow { color: rgba(255,255,255,.4); margin-bottom: 8px; }
-    .address-box p { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
-    .address-box span { font-family: var(--mono); font-size: 9px; color: rgba(255,255,255,.4); }
-    .map-wrap {
-      height: 100%; min-height: 480px;
-      border: 1px solid var(--rule);
-      overflow: hidden;
-      background: #fff;
-      padding: 6px;
-    }
-    .map-wrap iframe { width: 100%; height: 100%; border: 0; }
-    @media (max-width: 860px) { .location-inner { grid-template-columns: 1fr; } }
+    .btn-primary:hover::after{transform:translateX(0)}
+    .btn-primary span,.btn-primary svg{position:relative;z-index:1}
 
-    /* ---- REVIEWS ---- */
-    #reviews { background: var(--ink); border-top: 1px solid rgba(255,255,255,.06); }
-    .reviews-header { text-align: center; margin-bottom: 56px; }
-    .reviews-header .eyebrow { color: rgba(255,255,255,.35); margin-bottom: 14px; }
-    .reviews-header h2 {
-      font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 700; color: #fff;
+    .btn-ghost{
+      display:inline-flex;align-items:center;gap:8px;
+      background:transparent;color:var(--paper);
+      font-family:var(--sans);font-size:11px;font-weight:600;
+      letter-spacing:.18em;text-transform:uppercase;
+      padding:16px 32px;border:1px solid rgba(255,255,255,.22);
+      transition:background .3s,border-color .3s;
     }
-    .reviews-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 1px; background: rgba(255,255,255,.06);
-    }
-    .review-card {
-      background: var(--ink); padding: 36px;
-      display: flex; flex-direction: column;
-      transition: background .4s;
-    }
-    .review-card:hover { background: rgba(255,255,255,.04); }
-    .review-quote {
-      font-size: 40px; line-height: 1;
-      font-family: var(--serif);
-      color: rgba(255,255,255,.1);
-      margin-bottom: 16px;
-    }
-    .review-stars { display: flex; gap: 3px; margin-bottom: 16px; }
-    .review-stars span { font-size: 12px; }
-    .review-text {
-      font-size: 14px; line-height: 1.75;
-      color: rgba(255,255,255,.7);
-      font-style: italic; flex: 1;
-      margin-bottom: 24px;
-    }
-    .review-footer {
-      border-top: 1px solid rgba(255,255,255,.08);
-      padding-top: 16px;
-      display: flex; justify-content: space-between; align-items: flex-end;
-    }
-    .review-author { font-family: var(--serif); font-size: 15px; font-weight: 600; color: #fff; }
-    .review-room { font-family: var(--mono); font-size: 9px; color: rgba(255,255,255,.3); text-transform: uppercase; letter-spacing: .12em; margin-top: 3px; }
-    .review-date { font-family: var(--mono); font-size: 9px; color: rgba(255,255,255,.25); font-style: italic; }
-    @media (max-width: 860px) { .reviews-grid { grid-template-columns: 1fr; } }
+    .btn-ghost:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.4)}
 
-    /* ---- FAQ ---- */
-    #faq { background: #fff; border-top: 1px solid var(--rule); }
-    .faq-inner {
-      display: grid; grid-template-columns: 5fr 7fr;
-      gap: 80px; align-items: start;
+    /* Header */
+    #header{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      padding:22px 0;border-bottom:1px solid transparent;
+      transition:padding .35s,background .35s,border-color .35s,box-shadow .35s;
     }
-    .faq-left h2 { margin: 12px 0 16px; }
-    .faq-left p { font-size: 13px; color: var(--ink-muted); line-height: 1.75; margin-bottom: 32px; }
-    .time-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
-    .time-card {
-      background: var(--paper-off); border: 1px solid var(--rule);
-      padding: 18px;
+    #header.scrolled{
+      background:rgba(248,247,245,.96);backdrop-filter:blur(12px);
+      padding:14px 0;border-color:var(--rule);
+      box-shadow:0 1px 20px rgba(0,0,0,.04);
     }
-    .time-card .eyebrow { color: var(--ink-muted); margin-bottom: 6px; }
-    .time-card strong { font-family: var(--serif); font-size: 18px; display: block; margin-bottom: 4px; }
-    .time-card span { font-size: 10px; color: var(--ink-muted); }
-    .included-box {
-      background: var(--paper-off); border: 1px solid var(--rule); padding: 20px;
+    .header-inner{display:flex;align-items:center;justify-content:space-between}
+    .logo{display:flex;flex-direction:column}
+    .logo-name{
+      font-family:var(--serif);font-size:18px;font-weight:700;
+      text-transform:uppercase;letter-spacing:.08em;color:var(--ink);
+      transition:opacity .2s;
     }
-    .included-box h4 {
-      font-family: var(--mono); font-size: 9px; letter-spacing: .15em;
-      text-transform: uppercase; margin-bottom: 14px;
-      padding-bottom: 10px; border-bottom: 1px solid var(--rule);
+    .logo:hover .logo-name{opacity:.7}
+    .logo-sub{font-family:var(--mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-muted)}
+    .nav{display:flex;align-items:center;gap:32px}
+    .nav a{
+      position:relative;font-family:var(--mono);font-size:10px;letter-spacing:.18em;
+      text-transform:uppercase;color:var(--ink-muted);transition:color .2s;
     }
-    .included-item {
-      display: flex; align-items: center; gap: 10px;
-      font-size: 12px; padding: 6px 0;
+    .nav a::after{
+      content:'';position:absolute;bottom:-2px;left:0;right:100%;
+      height:1px;background:var(--ink);transition:right .3s var(--expo);
     }
-    .included-item svg { color: var(--ink-muted); flex-shrink: 0; }
-    .contact-list { margin-top: 24px; }
-    .contact-list h5 {
-      font-family: var(--mono); font-size: 9px; letter-spacing: .18em;
-      text-transform: uppercase; color: var(--ink-muted);
-      margin-bottom: 10px;
-    }
-    .contact-list a {
-      display: flex; align-items: center; gap: 8px;
-      font-size: 12px; color: var(--ink); padding: 5px 0;
-      transition: color .2s;
-    }
-    .contact-list a:hover { color: var(--ink-soft); }
-    .faq-list { display: flex; flex-direction: column; gap: 8px; }
-    .faq-item { border: 1px solid var(--rule); overflow: hidden; }
-    .faq-q {
-      display: flex; justify-content: space-between; align-items: center;
-      gap: 16px; padding: 18px 22px;
-      font-family: var(--serif); font-size: 16px; font-weight: 600;
-      cursor: pointer; background: rgba(248,247,245,.4);
-      transition: background .2s; width: 100%; text-align: left;
-    }
-    .faq-q:hover { background: var(--paper-off); }
-    .faq-icon {
-      width: 24px; height: 24px; background: var(--rule);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; font-size: 14px; color: var(--ink-muted);
-      transition: background .2s;
-    }
-    .faq-item.open .faq-icon { background: var(--ink); color: #fff; }
-    .faq-a {
-      font-size: 13px; color: var(--ink-muted); line-height: 1.75;
-      padding: 0 22px 18px;
-      display: none;
-    }
-    .faq-item.open .faq-a { display: block; }
-    @media (max-width: 860px) { .faq-inner { grid-template-columns: 1fr; } }
+    .nav a:hover,.nav a.active{color:var(--ink)}
+    .nav a:hover::after,.nav a.active::after{right:0}
+    .header-cta{display:flex;align-items:center;gap:16px}
+    .header-email{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--ink-muted)}
+    @media(max-width:900px){.nav{display:none}.header-email{display:none}}
 
-    /* ---- CTA BANNER ---- */
-    #cta {
-      background: var(--ink); color: #fff;
-      text-align: center; padding: 100px 0;
-      position: relative; overflow: hidden;
+    /* Hero */
+    #hero{
+      position:relative;min-height:100vh;
+      display:flex;align-items:center;overflow:hidden;
+      --px:0;--py:0;
     }
-    #cta::before {
-      content: ''; position: absolute;
-      top: 50%; left: 50%; transform: translate(-50%,-50%);
-      width: 600px; height: 600px;
-      border-radius: 50%;
-      background: rgba(255,255,255,.03);
-      pointer-events: none;
+    #hero-bg{position:absolute;inset:0;z-index:0}
+    #hero-bg img{
+      width:100%;height:100%;object-fit:cover;
+      filter:brightness(.52);
+      transform:scale(1.12) translate(calc(var(--px) * 1px),calc(var(--py) * 1px));
+      transition:transform .1s linear;
+      will-change:transform;
     }
-    .cta-inner { position: relative; z-index: 1; }
-    .cta-inner .eyebrow { color: rgba(255,255,255,.35); margin-bottom: 20px; }
-    .cta-inner h2 {
-      font-family: var(--serif);
-      font-size: clamp(2.2rem, 4.5vw, 3.6rem);
-      font-weight: 700; color: #fff;
-      margin-bottom: 20px;
+    #hero-bg::after{
+      content:'';position:absolute;inset:0;
+      background:
+        linear-gradient(105deg,rgba(8,8,8,.94) 0%,rgba(8,8,8,.52) 52%,rgba(8,8,8,.1) 100%),
+        linear-gradient(to top,var(--paper-off) 0%,transparent 32%);
     }
-    .cta-inner h2 em { display: block; font-weight: 300; color: rgba(255,255,255,.4); }
-    .cta-inner p {
-      font-size: 14px; color: rgba(255,255,255,.55);
-      max-width: 440px; margin: 0 auto 40px;
-      line-height: 1.75;
+    /* Subtle scanline texture */
+    #hero-bg::before{
+      content:'';position:absolute;inset:0;z-index:1;
+      background:repeating-linear-gradient(90deg,transparent 0,transparent 4px,rgba(255,255,255,.006) 4px,rgba(255,255,255,.006) 5px);
     }
-    .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .cta-trust {
-      display: flex; align-items: center; justify-content: center; gap: 12px;
-      margin-top: 36px;
-      font-family: var(--mono); font-size: 9px; letter-spacing: .15em;
-      text-transform: uppercase; color: rgba(255,255,255,.25);
+    #hero-content{
+      position:relative;z-index:2;width:100%;
+      transform:translate(calc(var(--px) * -.3px),calc(var(--py) * -.3px));
+      transition:transform .15s linear;
     }
-    .cta-trust span { width: 3px; height: 3px; border-radius: 50%; background: currentColor; }
+    .hero-inner{
+      display:grid;grid-template-columns:1fr 440px;
+      gap:48px;align-items:center;
+    }
+    .hero-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+    .hero-tag{
+      display:inline-flex;align-items:center;gap:6px;
+      background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);
+      color:rgba(255,255,255,.75);font-family:var(--mono);font-size:9px;
+      letter-spacing:.2em;text-transform:uppercase;padding:6px 14px;
+      transition:background .3s,border-color .3s;
+    }
+    .hero-tag:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.25)}
+    .hero-tag span{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.4)}
 
-    /* ---- FOOTER ---- */
-    #footer {
-      background: #030303; color: rgba(255,255,255,.4);
-      padding: 56px 0;
-      border-top: 1px solid rgba(255,255,255,.04);
+    .hero-title{
+      font-family:var(--serif);
+      font-size:clamp(2.8rem,5.5vw,4.6rem);
+      font-weight:700;line-height:1.09;letter-spacing:-.02em;
+      margin-bottom:22px;
     }
-    .footer-inner {
-      display: grid; grid-template-columns: 5fr 3fr 4fr;
-      gap: 48px; margin-bottom: 40px;
-      padding-bottom: 32px;
-      border-bottom: 1px solid rgba(255,255,255,.04);
-    }
-    .footer-brand h4 {
-      font-family: var(--serif); font-size: 18px;
-      font-weight: 700; text-transform: uppercase;
-      letter-spacing: .06em; color: #fff; margin-bottom: 12px;
-    }
-    .footer-brand p { font-size: 12px; line-height: 1.7; max-width: 280px; color: rgba(255,255,255,.4); }
-    .footer-col h5 {
-      font-family: var(--mono); font-size: 9px; letter-spacing: .2em;
-      text-transform: uppercase; color: #fff; margin-bottom: 12px;
-    }
-    .footer-col p, .footer-col a {
-      font-size: 11px; line-height: 1.8;
-      color: rgba(255,255,255,.4); display: block;
-    }
-    .footer-col a:hover { color: #fff; }
-    .footer-bottom {
-      display: flex; justify-content: space-between; align-items: center;
-      flex-wrap: wrap; gap: 12px;
-      font-family: var(--mono); font-size: 9px; letter-spacing: .1em;
-      text-transform: uppercase; color: rgba(255,255,255,.2);
-    }
-    .footer-links { display: flex; gap: 20px; }
-    .footer-links a:hover { color: rgba(255,255,255,.6); }
-    @media (max-width: 860px) { .footer-inner { grid-template-columns: 1fr; gap: 32px; } }
+    .hero-title .line{padding-bottom:.06em}
+    .hero-title .line-inner{color:#fff}
+    .hero-title em.line .line-inner{font-weight:300;font-style:italic;color:rgba(255,255,255,.52)}
 
-    /* ---- MOBILE STICKY ---- */
-    #mobile-sticky {
-      position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
-      background: var(--ink); color: #fff;
-      padding: 14px 20px;
-      display: flex; align-items: center; justify-content: space-between;
-      border-top: 1px solid rgba(255,255,255,.08);
-      box-shadow: 0 -8px 32px rgba(0,0,0,.5);
-      transform: translateY(100%);
-      transition: transform .4s cubic-bezier(.16,1,.3,1);
+    .hero-sub{
+      font-size:15px;line-height:1.8;
+      color:rgba(255,255,255,.62);max-width:500px;margin-bottom:36px;
     }
-    #mobile-sticky.visible { transform: translateY(0); }
-    @media (min-width: 1024px) { #mobile-sticky { display: none; } }
-    .mobile-sticky-left p:first-child {
-      font-family: var(--mono); font-size: 9px; letter-spacing: .15em;
-      text-transform: uppercase; color: rgba(255,255,255,.4);
+    .hero-sub strong{color:rgba(255,255,255,.9);font-weight:500}
+    .hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+    .hero-meta{
+      display:flex;align-items:center;
+      margin-top:36px;padding-top:22px;
+      border-top:1px solid rgba(255,255,255,.08);max-width:440px;
     }
-    .mobile-sticky-left p:last-child {
-      font-family: var(--serif); font-size: 16px; font-weight: 700;
+    .hero-meta-item{
+      display:flex;align-items:center;gap:6px;
+      font-family:var(--mono);font-size:10px;
+      color:rgba(255,255,255,.38);flex:1;
     }
-    .mobile-sticky-btn {
-      background: #fff; color: var(--ink);
-      font-family: var(--sans); font-size: 10px; font-weight: 700;
-      letter-spacing: .15em; text-transform: uppercase;
-      padding: 12px 22px;
+    .hero-divider{width:1px;height:14px;background:rgba(255,255,255,.1);margin:0 12px}
+    @media(max-width:960px){
+      .hero-inner{grid-template-columns:1fr}
+      .booking-card-wrap{display:none}
+      #hero{padding-bottom:60px}
     }
 
-    /* SVG icons inline */
-    .icon { display: inline-block; width: 1em; height: 1em; vertical-align: middle; }
+    /* Key tag */
+    .key-tag{
+      position:absolute;top:-54px;right:-8px;
+      width:58px;height:92px;
+      animation:key-breathe 10s ease-in-out infinite;
+    }
+    @media(prefers-reduced-motion:reduce){.key-tag{animation:none}}
+    .key-tag-face{
+      width:100%;height:100%;
+      background:linear-gradient(150deg,#1c1c1c 0%,#080808 100%);
+      border:1px solid rgba(255,255,255,.11);
+      border-radius:3px;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+      transform:perspective(360px) rotateY(-10deg) rotateX(4deg);
+      box-shadow:5px 10px 30px rgba(0,0,0,.72),inset 0 1px 0 rgba(255,255,255,.05);
+    }
+    .key-tag-hole{
+      width:10px;height:10px;border-radius:50%;
+      border:1px solid rgba(255,255,255,.18);background:rgba(0,0,0,.6);
+    }
+    .key-tag-year{
+      font-family:var(--serif);font-size:15px;font-weight:700;
+      color:rgba(255,255,255,.88);letter-spacing:.01em;line-height:1;
+    }
+    .key-tag-rule{width:22px;height:1px;background:rgba(255,255,255,.14)}
+    .key-tag-label{
+      font-family:var(--mono);font-size:6.5px;letter-spacing:.28em;
+      color:rgba(255,255,255,.32);text-transform:uppercase;
+    }
+    @keyframes key-breathe{
+      0%,100%{transform:rotate(-.8deg)}
+      50%{transform:rotate(1.2deg) translateY(-2px)}
+    }
+
+    /* Booking card */
+    .booking-card-wrap{position:relative}
+    .booking-card{
+      background:#fff;padding:36px;
+      border:1px solid rgba(255,255,255,.1);
+      box-shadow:22px 30px 70px rgba(0,0,0,.32),6px 8px 20px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.8);
+      transform:perspective(1400px) rotateY(-2.5deg) rotateX(1deg);
+      transform-origin:right center;
+      transition:transform .5s var(--expo),box-shadow .5s ease;
+      will-change:transform;
+    }
+    .booking-card:hover{
+      transform:perspective(1400px) rotateY(-1deg) rotateX(.5deg) translateY(-5px);
+      box-shadow:28px 40px 90px rgba(0,0,0,.36),8px 10px 28px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.8);
+    }
+    .booking-card-eyebrow{
+      display:flex;align-items:center;gap:6px;
+      font-family:var(--mono);font-size:9px;letter-spacing:.2em;
+      text-transform:uppercase;color:var(--ink-muted);margin-bottom:16px;
+    }
+    .booking-card-eyebrow::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--ink);flex-shrink:0}
+    .booking-card h3{font-family:var(--serif);font-size:26px;font-weight:600;color:var(--ink);margin-bottom:26px;letter-spacing:-.01em}
+    .field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .field{
+      display:flex;flex-direction:column;
+      padding-bottom:10px;border-bottom:1px solid var(--rule);margin-bottom:16px;
+      transition:border-color .2s;
+    }
+    .field:focus-within{border-color:var(--ink)}
+    .field label{
+      font-family:var(--mono);font-size:9px;letter-spacing:.18em;
+      text-transform:uppercase;color:var(--ink-muted);margin-bottom:6px;transition:color .2s;
+    }
+    .field:focus-within label{color:var(--ink)}
+    .field input,.field select{
+      font-family:var(--sans);font-size:13px;color:var(--ink);
+      background:transparent;border:none;outline:none;cursor:pointer;
+    }
+    .book-btn{
+      width:100%;background:var(--ink);color:#fff;
+      font-family:var(--sans);font-size:11px;font-weight:700;
+      letter-spacing:.18em;text-transform:uppercase;
+      padding:18px;margin-top:8px;
+      display:flex;align-items:center;justify-content:center;gap:8px;
+      position:relative;overflow:hidden;cursor:pointer;
+      transition:background .3s;
+    }
+    .book-btn::after{
+      content:'';position:absolute;inset:0;
+      background:rgba(255,255,255,.08);transform:translateX(-101%);
+      transition:transform .35s var(--expo);
+    }
+    .book-btn:hover::after{transform:translateX(0)}
+    .book-btn>*{position:relative;z-index:1}
+    .book-secure{
+      display:flex;align-items:center;justify-content:center;gap:6px;
+      font-family:var(--mono);font-size:9px;letter-spacing:.14em;
+      text-transform:uppercase;color:var(--ink-subtle);margin-top:12px;
+    }
+
+    /* Why stay */
+    #why{background:var(--paper-off);border-top:1px solid var(--rule)}
+    .why-inner{display:grid;grid-template-columns:5fr 7fr;gap:80px;align-items:start}
+    .why-sticky{position:sticky;top:100px}
+    .why-sticky h2{margin:16px 0 20px}
+    .why-sticky h2 em{display:block;font-weight:300;color:var(--ink-muted);font-style:italic}
+    .cafe-perk{
+      display:flex;gap:16px;align-items:flex-start;
+      background:var(--rule);padding:20px;margin-top:24px;
+      border-left:2px solid var(--ink);
+    }
+    .cafe-perk-icon{width:44px;height:44px;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .cafe-perk-text h4{font-family:var(--serif);font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+    .cafe-perk-text p{font-size:11px;color:var(--ink-muted);line-height:1.6}
+    .feature-list{display:flex;flex-direction:column;gap:0}
+    .feature-item{
+      display:flex;gap:20px;align-items:flex-start;
+      background:#fff;padding:22px 24px;
+      border-bottom:1px solid var(--rule);
+      border-right:2px solid transparent;
+      transition:border-color .25s,background .25s;
+    }
+    .feature-item:first-child{border-top:1px solid var(--rule)}
+    .feature-item:hover{border-right-color:var(--ink);background:var(--paper-off)}
+    .feature-icon{
+      width:40px;height:40px;background:var(--ink);
+      display:flex;align-items:center;justify-content:center;
+      flex-shrink:0;color:#fff;transition:background .25s;
+    }
+    .feature-item:hover .feature-icon{background:var(--ink-soft)}
+    .feature-text h3{font-family:var(--serif);font-size:17px;font-weight:600;margin-bottom:4px}
+    .feature-text p{font-size:12px;color:var(--ink-muted);line-height:1.65}
+    @media(max-width:860px){.why-inner{grid-template-columns:1fr}.why-sticky{position:static}}
+
+    /* Rooms */
+    #rooms{background:#fff;border-top:1px solid var(--rule)}
+    .rooms-header{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:56px}
+    .rooms-header h2{margin-top:10px}
+    .rooms-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:var(--rule)}
+    .room-card{
+      background:#fff;display:flex;flex-direction:column;
+      will-change:transform;transform-style:preserve-3d;
+    }
+    .room-img{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--rule)}
+    .room-img img{
+      width:100%;height:100%;object-fit:cover;
+      transition:transform .8s var(--expo);will-change:transform;
+    }
+    .room-card:hover .room-img img{transform:scale(1.05)}
+    .room-img::after{
+      content:'';position:absolute;inset:0;z-index:1;
+      background:linear-gradient(to top,rgba(8,8,8,.5) 0%,rgba(8,8,8,.1) 45%,transparent 70%);
+    }
+    .room-price{
+      position:absolute;top:14px;right:14px;z-index:2;
+      background:var(--ink);color:#fff;
+      font-family:var(--mono);font-size:10px;letter-spacing:.12em;
+      text-transform:uppercase;padding:8px 12px;
+      display:flex;align-items:center;gap:4px;
+    }
+    .room-price strong{font-family:var(--serif);font-size:16px;font-weight:600}
+    .room-badges{position:absolute;bottom:14px;left:14px;z-index:2;display:flex;gap:6px}
+    .room-badge{
+      background:rgba(255,255,255,.9);color:var(--ink);
+      font-family:var(--mono);font-size:9px;letter-spacing:.1em;
+      text-transform:uppercase;padding:4px 8px;backdrop-filter:blur(4px);
+    }
+    .room-body{padding:24px 26px 26px;flex:1;display:flex;flex-direction:column}
+    .room-name{font-family:var(--serif);font-size:22px;font-weight:600;color:var(--ink);margin-bottom:4px;letter-spacing:-.01em}
+    .room-bed{font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:14px}
+    .room-desc{font-size:12px;color:var(--ink-muted);line-height:1.7;margin-bottom:14px}
+    .room-features{list-style:none;margin-bottom:18px}
+    .room-features li{
+      font-size:11px;color:var(--ink-soft);
+      padding:4px 0;border-bottom:1px solid var(--rule);
+      display:flex;align-items:flex-start;gap:6px;
+    }
+    .room-features li::before{content:'→';color:var(--ink-muted);flex-shrink:0}
+    .room-actions{display:flex;flex-direction:column;gap:8px;margin-top:auto}
+    .room-btn-primary{
+      display:flex;align-items:center;justify-content:center;gap:6px;
+      background:var(--ink);color:#fff;
+      font-family:var(--sans);font-size:10px;font-weight:700;
+      letter-spacing:.15em;text-transform:uppercase;padding:14px;
+      position:relative;overflow:hidden;transition:background .25s;
+    }
+    .room-btn-primary::after{
+      content:'';position:absolute;inset:0;background:rgba(255,255,255,.07);
+      transform:translateX(-101%);transition:transform .3s var(--expo);
+    }
+    .room-btn-primary:hover::after{transform:translateX(0)}
+    .room-btn-secondary{
+      display:flex;align-items:center;justify-content:center;gap:6px;
+      background:transparent;color:var(--ink);
+      font-family:var(--sans);font-size:10px;font-weight:600;
+      letter-spacing:.15em;text-transform:uppercase;
+      padding:12px;border:1px solid var(--rule);
+      transition:background .25s,border-color .25s;
+    }
+    .room-btn-secondary:hover{background:var(--paper-off);border-color:var(--ink-subtle)}
+
+    /* Amenities */
+    #amenities{background:var(--paper-off);border-top:1px solid var(--rule)}
+    .amenities-header{text-align:center;margin-bottom:56px}
+    .amenities-header h2{margin:12px 0 14px}
+    .amenities-header p{font-size:13px;color:var(--ink-muted);max-width:380px;margin:0 auto}
+    .amenities-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:var(--rule)}
+    .amenity-card{
+      background:#fff;padding:32px;
+      display:flex;flex-direction:column;gap:14px;transition:background .25s;
+    }
+    .amenity-card:hover{background:var(--paper-off)}
+    .amenity-icon{
+      width:44px;height:44px;background:var(--ink);
+      display:flex;align-items:center;justify-content:center;
+      color:#fff;transition:background .25s,transform .3s var(--expo);
+    }
+    .amenity-card:hover .amenity-icon{background:var(--ink-soft);transform:translateY(-2px)}
+    .amenity-card h3{font-family:var(--serif);font-size:18px;font-weight:600}
+    .amenity-card p{font-size:12px;color:var(--ink-muted);line-height:1.7}
+
+    /* Cafe */
+    #cafe{background:var(--ink-mid);border-top:1px solid rgba(255,255,255,.04);position:relative}
+    #cafe::before{
+      content:'';position:absolute;top:-60px;left:0;right:0;height:60px;
+      background:linear-gradient(to bottom,transparent,var(--ink-mid));
+      pointer-events:none;z-index:0;
+    }
+    .cafe-inner{display:grid;grid-template-columns:5fr 7fr;gap:80px;align-items:center;position:relative;z-index:1}
+    .cafe-img-wrap{position:relative}
+    .cafe-img-border{position:absolute;inset:-16px;border:1px solid rgba(255,255,255,.07);pointer-events:none}
+    .cafe-img{position:relative;aspect-ratio:4/3;overflow:hidden;border:1px solid rgba(255,255,255,.06)}
+    .cafe-img img{width:100%;height:100%;object-fit:cover;filter:grayscale(12%);transition:filter .7s,transform .7s var(--expo)}
+    .cafe-img:hover img{filter:grayscale(0);transform:scale(1.03)}
+    /* Steam */
+    .steam-wrap{
+      position:absolute;bottom:100%;left:50%;
+      transform:translateX(-50%);
+      display:flex;gap:10px;pointer-events:none;padding-bottom:2px;
+    }
+    .steam-line{
+      width:1px;height:32px;border-radius:1px;
+      background:linear-gradient(to top,rgba(255,255,255,.1),transparent);
+      animation:steam-rise 3.5s ease-in infinite;
+    }
+    .steam-line:nth-child(2){animation-delay:1.1s;height:24px}
+    .steam-line:nth-child(3){animation-delay:2.2s;height:42px}
+    @keyframes steam-rise{
+      0%{transform:translateY(0) scaleX(1);opacity:0}
+      25%{opacity:.65}
+      100%{transform:translateY(-52px) scaleX(.2);opacity:0}
+    }
+    @media(prefers-reduced-motion:reduce){.steam-line{animation:none}}
+    .cafe-badge{
+      position:absolute;bottom:-20px;right:-20px;z-index:2;
+      background:#fff;color:var(--ink);
+      width:116px;height:116px;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      text-align:center;padding:12px;
+      box-shadow:0 8px 32px rgba(0,0,0,.25);
+      animation:float-badge 6s ease-in-out infinite;
+    }
+    @keyframes float-badge{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+    @media(prefers-reduced-motion:reduce){.cafe-badge{animation:none}}
+    .cafe-badge-label{
+      background:var(--ink);color:#fff;
+      font-family:var(--mono);font-size:7px;letter-spacing:.15em;
+      text-transform:uppercase;padding:2px 7px;margin-bottom:4px;
+    }
+    .cafe-badge-pct{font-family:var(--serif);font-size:28px;font-weight:600;color:var(--ink)}
+    .cafe-badge-sub{font-family:var(--mono);font-size:8px;color:var(--ink-muted);text-transform:uppercase}
+    .cafe-text{color:#fff}
+    .cafe-text .eyebrow{color:rgba(255,255,255,.35);margin-bottom:16px;display:block}
+    .cafe-text h2{font-family:var(--serif);font-size:clamp(2rem,4vw,3.2rem);font-weight:700;line-height:1.1;margin-bottom:20px}
+    .cafe-text h2 em{display:block;font-weight:300;color:rgba(255,255,255,.45);font-style:italic}
+    .cafe-text p{font-size:15px;color:rgba(255,255,255,.62);line-height:1.8;margin-bottom:28px}
+    .cafe-perk-box{
+      background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+      padding:22px;display:flex;gap:16px;margin-bottom:30px;
+      border-left:2px solid rgba(255,255,255,.18);
+    }
+    .cafe-perk-box-icon{width:44px;height:44px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .cafe-perk-box-text h4{font-family:var(--serif);font-size:17px;font-weight:600;margin-bottom:6px}
+    .cafe-perk-box-text p{font-size:13px;color:rgba(255,255,255,.5);line-height:1.65;margin:0}
+    .cafe-menu{border-top:1px solid rgba(255,255,255,.06);padding-top:20px}
+    .cafe-menu-title{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:16px}
+    .cafe-menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .cafe-menu-item{border-bottom:1px solid rgba(255,255,255,.04);padding-bottom:10px}
+    .cafe-menu-item h5{font-size:12px;font-weight:600;color:rgba(255,255,255,.8);margin-bottom:3px}
+    .cafe-menu-item p{font-size:10px;color:rgba(255,255,255,.35);line-height:1.5}
+    .cafe-menu-item span{font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.25)}
+    @media(max-width:860px){.cafe-inner{grid-template-columns:1fr}.cafe-menu-grid{grid-template-columns:1fr}}
+
+    /* Location */
+    #location{background:var(--paper-off);border-top:1px solid var(--rule)}
+    .location-header{text-align:center;margin-bottom:56px}
+    .location-header h2{margin:12px 0 14px}
+    .location-header p{font-size:13px;color:var(--ink-muted);max-width:500px;margin:0 auto}
+    .location-inner{display:grid;grid-template-columns:5fr 7fr;gap:40px;align-items:stretch}
+    .location-filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+    .filter-btn{
+      display:flex;align-items:center;gap:6px;
+      font-family:var(--sans);font-size:11px;
+      padding:8px 14px;border:1px solid var(--rule);
+      background:#fff;color:var(--ink-muted);
+      transition:all .22s;cursor:pointer;
+    }
+    .filter-btn.active,.filter-btn:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+    .location-list{display:flex;flex-direction:column;gap:8px}
+    .location-item{
+      background:#fff;border:1px solid var(--rule);padding:14px 18px;
+      border-left:2px solid transparent;transition:border-color .25s;
+    }
+    .location-item:hover{border-left-color:var(--ink)}
+    .location-item-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:5px}
+    .location-item-top h4{font-family:var(--serif);font-size:15px;font-weight:600}
+    .location-walk{
+      background:var(--rule);color:var(--ink);
+      font-family:var(--mono);font-size:9px;letter-spacing:.12em;
+      text-transform:uppercase;padding:4px 10px;white-space:nowrap;flex-shrink:0;
+    }
+    .location-item p{font-size:11px;color:var(--ink-muted);line-height:1.6;margin-bottom:6px}
+    .location-dist{font-family:var(--mono);font-size:9px;color:var(--ink-subtle);text-transform:uppercase;letter-spacing:.12em}
+    .address-box{background:var(--ink);color:#fff;padding:20px 22px;margin-top:18px}
+    .address-box .eyebrow{color:rgba(255,255,255,.35);margin-bottom:8px;display:block}
+    .address-box p{font-size:13px;font-weight:500;margin-bottom:4px}
+    .address-box span{font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.35)}
+    .map-wrap{height:100%;min-height:480px;border:1px solid var(--rule);overflow:hidden;background:#fff;padding:5px}
+    .map-wrap iframe{width:100%;height:100%;border:0}
+    @media(max-width:860px){.location-inner{grid-template-columns:1fr}}
+
+    /* Reviews */
+    #reviews{background:var(--ink);border-top:1px solid rgba(255,255,255,.05)}
+    .reviews-header{text-align:center;margin-bottom:56px}
+    .reviews-header .eyebrow{color:rgba(255,255,255,.3);margin-bottom:14px;display:block}
+    .reviews-header h2{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:700;color:#fff}
+    .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.05)}
+    .review-card{
+      background:var(--ink);padding:36px;display:flex;flex-direction:column;
+      transition:background .4s;
+    }
+    .review-card:hover{background:rgba(255,255,255,.03)}
+    .review-quote{font-family:var(--serif);font-size:48px;line-height:1;color:rgba(255,255,255,.08);margin-bottom:14px}
+    .review-stars{display:flex;gap:3px;margin-bottom:14px}
+    .review-stars span{font-size:12px;color:rgba(255,255,255,.55)}
+    .review-text{font-size:14px;line-height:1.78;color:rgba(255,255,255,.65);font-style:italic;flex:1;margin-bottom:24px}
+    .review-footer{border-top:1px solid rgba(255,255,255,.06);padding-top:14px;display:flex;justify-content:space-between;align-items:flex-end}
+    .review-author{font-family:var(--serif);font-size:15px;font-weight:600;color:#fff}
+    .review-room{font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.28);text-transform:uppercase;letter-spacing:.12em;margin-top:3px}
+    .review-date{font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.22);font-style:italic}
+    @media(max-width:860px){.reviews-grid{grid-template-columns:1fr}}
+
+    /* FAQ */
+    #faq{background:#fff;border-top:1px solid var(--rule)}
+    .faq-inner{display:grid;grid-template-columns:5fr 7fr;gap:80px;align-items:start}
+    .faq-left h2{margin:12px 0 16px}
+    .faq-left p{font-size:13px;color:var(--ink-muted);line-height:1.75;margin-bottom:32px}
+    .time-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
+    .time-card{background:var(--paper-off);border:1px solid var(--rule);padding:18px}
+    .time-card .eyebrow{color:var(--ink-muted);margin-bottom:6px;display:block}
+    .time-card strong{font-family:var(--serif);font-size:18px;display:block;margin-bottom:4px}
+    .time-card span{font-size:10px;color:var(--ink-muted)}
+    .included-box{background:var(--paper-off);border:1px solid var(--rule);padding:20px}
+    .included-box h4{
+      font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;
+      margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--rule);
+    }
+    .included-item{display:flex;align-items:center;gap:10px;font-size:12px;padding:6px 0}
+    .included-item svg{color:var(--ink-muted);flex-shrink:0}
+    .contact-list{margin-top:24px}
+    .contact-list h5{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:10px}
+    .contact-list a{
+      display:flex;align-items:center;gap:8px;
+      font-size:12px;color:var(--ink);padding:5px 0;
+      transition:color .2s,gap .2s;
+    }
+    .contact-list a:hover{color:var(--ink-soft);gap:12px}
+    .faq-list{display:flex;flex-direction:column;gap:0}
+    .faq-item{border-bottom:1px solid var(--rule);overflow:hidden}
+    .faq-item:first-child{border-top:1px solid var(--rule)}
+    .faq-q{
+      display:flex;justify-content:space-between;align-items:center;
+      gap:16px;padding:18px 0;
+      font-family:var(--serif);font-size:16px;font-weight:600;
+      cursor:pointer;background:transparent;transition:color .2s;
+      width:100%;text-align:left;color:var(--ink);
+    }
+    .faq-q:hover{color:var(--ink-soft)}
+    .faq-icon{
+      width:22px;height:22px;display:flex;align-items:center;justify-content:center;
+      flex-shrink:0;font-size:18px;color:var(--ink-muted);
+      transition:color .2s,transform .35s var(--expo);
+    }
+    .faq-item.open .faq-icon{color:var(--ink);transform:rotate(45deg)}
+    .faq-a{font-size:13px;color:var(--ink-muted);line-height:1.75;padding:0 0 18px;display:none}
+    .faq-item.open .faq-a{display:block}
+    @media(max-width:860px){.faq-inner{grid-template-columns:1fr}}
+
+    /* CTA */
+    #cta{
+      background:var(--ink);color:#fff;
+      text-align:center;padding:112px 0;
+      position:relative;overflow:hidden;
+    }
+    #cta::before{
+      content:'';position:absolute;
+      width:1px;top:0;bottom:0;left:50%;
+      background:rgba(255,255,255,.04);pointer-events:none;
+    }
+    .cta-inner{position:relative;z-index:1}
+    .cta-inner .eyebrow{color:rgba(255,255,255,.3);margin-bottom:24px;display:block}
+    .cta-inner h2{
+      font-family:var(--serif);
+      font-size:clamp(2.4rem,5vw,4rem);
+      font-weight:700;margin-bottom:22px;
+    }
+    .cta-inner h2 .line-inner{color:#fff}
+    .cta-inner h2 em.line .line-inner{font-weight:300;color:rgba(255,255,255,.38);font-style:italic}
+    .cta-body{font-size:14px;color:rgba(255,255,255,.5);max-width:420px;margin:0 auto 42px;line-height:1.78}
+    .cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+    .cta-trust{
+      display:flex;align-items:center;justify-content:center;gap:14px;margin-top:40px;
+      font-family:var(--mono);font-size:9px;letter-spacing:.15em;
+      text-transform:uppercase;color:rgba(255,255,255,.2);
+    }
+    .cta-trust span{width:3px;height:3px;border-radius:50%;background:currentColor}
+
+    /* Footer */
+    #footer{background:#030303;color:rgba(255,255,255,.38);padding:56px 0;border-top:1px solid rgba(255,255,255,.04)}
+    .footer-inner{
+      display:grid;grid-template-columns:5fr 3fr 4fr;
+      gap:48px;margin-bottom:40px;padding-bottom:32px;
+      border-bottom:1px solid rgba(255,255,255,.04);
+    }
+    .footer-brand h4{font-family:var(--serif);font-size:18px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#fff;margin-bottom:12px}
+    .footer-brand p{font-size:12px;line-height:1.7;max-width:280px}
+    .footer-col h5{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:12px}
+    .footer-col p,.footer-col a{font-size:11px;line-height:1.8;color:rgba(255,255,255,.38);display:block}
+    .footer-col a:hover{color:rgba(255,255,255,.75)}
+    .footer-bottom{
+      display:flex;justify-content:space-between;align-items:center;
+      flex-wrap:wrap;gap:12px;
+      font-family:var(--mono);font-size:9px;letter-spacing:.1em;
+      text-transform:uppercase;color:rgba(255,255,255,.18);
+    }
+    .footer-links{display:flex;gap:20px}
+    .footer-links a:hover{color:rgba(255,255,255,.5)}
+    @media(max-width:860px){.footer-inner{grid-template-columns:1fr;gap:32px}}
+
+    /* Mobile sticky */
+    #mobile-sticky{
+      position:fixed;bottom:0;left:0;right:0;z-index:100;
+      background:var(--ink);color:#fff;
+      padding:14px 20px;
+      display:flex;align-items:center;justify-content:space-between;
+      border-top:1px solid rgba(255,255,255,.07);
+      box-shadow:0 -8px 32px rgba(0,0,0,.5);
+      transform:translateY(100%);
+      transition:transform .45s var(--expo);
+    }
+    #mobile-sticky.visible{transform:translateY(0)}
+    @media(min-width:1024px){#mobile-sticky{display:none}}
+    .mobile-sticky-left p:first-child{font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.38)}
+    .mobile-sticky-left p:last-child{font-family:var(--serif);font-size:16px;font-weight:700}
+    .mobile-sticky-btn{
+      background:#fff;color:var(--ink);
+      font-family:var(--sans);font-size:10px;font-weight:700;
+      letter-spacing:.15em;text-transform:uppercase;
+      padding:12px 22px;display:inline-block;
+      transition:background .25s;
+    }
+    .mobile-sticky-btn:hover{background:var(--paper-warm)}
   </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header id="header">
   <div class="container">
     <div class="header-inner">
-      <a href="#hero" class="logo" onclick="smoothScroll('hero'); return false;">
+      <a href="#hero" class="logo" onclick="smoothScroll('hero');return false;">
         <span class="logo-name">1997 Stays</span>
         <span class="logo-sub">Newcastle, Galway</span>
       </a>
       <nav class="nav">
-        <a href="#why"    onclick="smoothScroll('why'); return false;">Why Us</a>
-        <a href="#rooms"  onclick="smoothScroll('rooms'); return false;">The Rooms</a>
-        <a href="#cafe"   onclick="smoothScroll('cafe'); return false;">The Café</a>
-        <a href="#location" onclick="smoothScroll('location'); return false;">Location</a>
-        <a href="#faq"    onclick="smoothScroll('faq'); return false;">FAQs</a>
+        <a href="#why"      onclick="smoothScroll('why');return false;">Why Us</a>
+        <a href="#rooms"    onclick="smoothScroll('rooms');return false;">The Rooms</a>
+        <a href="#cafe"     onclick="smoothScroll('cafe');return false;">The Café</a>
+        <a href="#location" onclick="smoothScroll('location');return false;">Location</a>
+        <a href="#faq"      onclick="smoothScroll('faq');return false;">FAQs</a>
       </nav>
       <div class="header-cta">
         <span class="header-email">cathal.keogh@mochabeans.com</span>
-        <button class="btn-primary" onclick="smoothScroll('cta')" style="padding:12px 22px;font-size:10px;">Book Direct</button>
+        <button class="btn-primary" onclick="smoothScroll('cta')" style="padding:12px 22px;font-size:10px;"><span>Book Direct</span></button>
       </div>
     </div>
   </div>
 </header>
 
-<!-- HERO -->
 <section id="hero">
   <div id="hero-bg">
-    <img src="images/stays_hero_1779895532652.png" alt="1997 Stays Galway" />
+    <img src="images/stays_hero_1779895532652.png" alt="1997 Stays Galway — Newcastle boutique guesthouse" loading="eager" />
   </div>
-  <canvas id="hero-canvas"></canvas>
 
   <div id="hero-content" class="container">
     <div class="hero-inner">
@@ -808,8 +708,8 @@
           <span class="hero-tag" id="tag3"><span></span>Contactless Check-in</span>
         </div>
         <h1 class="hero-title" id="hero-title">
-          Stay in Galway.
-          <em>Above one of the city's favourite cafés.</em>
+          <span class="line"><span class="line-inner">Stay in Galway.</span></span>
+          <em class="line"><span class="line-inner">Above one of the city's favourite cafés.</span></em>
         </h1>
         <p class="hero-sub" id="hero-sub">
           A cozy boutique guest house in Newcastle, Galway. Positioned above the legendary
@@ -817,96 +717,98 @@
           Walk to the University in 1 minute, the Cathedral in 5, and Shop Street in 10.
         </p>
         <div class="hero-btns" id="hero-btns">
-          <button class="btn-primary" onclick="smoothScroll('cta')">
-            Check Availability
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </button>
-          <button class="btn-ghost" onclick="smoothScroll('rooms')">
-            View Rooms
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
-          </button>
+          <button class="btn-primary" onclick="smoothScroll('cta')"><span>Check Availability</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+          <button class="btn-ghost" onclick="smoothScroll('rooms')">View Rooms<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></button>
         </div>
         <div class="hero-meta" id="hero-meta">
           <div class="hero-meta-item">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-            Check-in: 14:00
+            Check-in 14:00
           </div>
           <div class="hero-divider"></div>
           <div class="hero-meta-item">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-            Check-out: 12:00
+            Check-out 12:00
           </div>
           <div class="hero-divider"></div>
           <div class="hero-meta-item">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
             Smoke-Free
           </div>
         </div>
       </div>
 
-      <!-- Booking card -->
-      <div class="booking-card" id="booking-card">
-        <div class="booking-card-eyebrow">Direct Booking Benefit Applied</div>
-        <h3>Check Availability</h3>
-        <form onsubmit="openCloudbeds(event)">
-          <div class="field-row">
-            <div class="field">
-              <label>Arrival</label>
-              <input type="date" id="checkin" name="checkin" />
+      <div class="booking-card-wrap" id="booking-card-wrap">
+        <div class="key-tag" id="key-tag" aria-hidden="true">
+          <div class="key-tag-face">
+            <div class="key-tag-hole"></div>
+            <span class="key-tag-year">1997</span>
+            <div class="key-tag-rule"></div>
+            <span class="key-tag-label">Stays</span>
+          </div>
+        </div>
+        <div class="booking-card" id="booking-card">
+          <div class="booking-card-eyebrow">Direct Booking Benefit Applied</div>
+          <h3>Check Availability</h3>
+          <form onsubmit="openCloudbeds(event)">
+            <div class="field-row">
+              <div class="field">
+                <label>Arrival</label>
+                <input type="date" id="checkin" name="checkin" />
+              </div>
+              <div class="field">
+                <label>Departure</label>
+                <input type="date" id="checkout" name="checkout" />
+              </div>
             </div>
             <div class="field">
-              <label>Departure</label>
-              <input type="date" id="checkout" name="checkout" />
-            </div>
-          </div>
-          <div class="field">
-            <label>Room / Suite</label>
-            <select id="roomtype" name="roomtype">
-              <option value="">Browse All Guest Suites</option>
-              <option value="poster-king">Poster Room Kingsize — from €139/night</option>
-              <option value="deluxe-queen">Deluxe Queen Double — from €119/night</option>
-              <option value="triple">Triple Room — from €99/night</option>
-              <option value="cosy-single">Cosy Single — from €79/night</option>
-            </select>
-          </div>
-          <div class="field-row">
-            <div class="field">
-              <label>Guests</label>
-              <select name="guests" id="guests">
-                <option value="1">1 Guest</option>
-                <option value="2" selected>2 Guests</option>
-                <option value="3">3 Guests</option>
-                <option value="4">4 Guests</option>
+              <label>Room / Suite</label>
+              <select id="roomtype" name="roomtype">
+                <option value="">Browse All Guest Suites</option>
+                <option value="poster-king">Poster Room Kingsize — from €139/night</option>
+                <option value="deluxe-queen">Deluxe Queen Double — from €119/night</option>
+                <option value="triple">Triple Room — from €99/night</option>
+                <option value="cosy-single">Cosy Single — from €79/night</option>
               </select>
             </div>
-            <div class="field">
-              <label>Promo Code</label>
-              <input type="text" id="promo" placeholder="Optional" style="text-transform:uppercase;" />
+            <div class="field-row">
+              <div class="field">
+                <label>Guests</label>
+                <select name="guests" id="guests">
+                  <option value="1">1 Guest</option>
+                  <option value="2" selected>2 Guests</option>
+                  <option value="3">3 Guests</option>
+                  <option value="4">4 Guests</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Promo Code</label>
+                <input type="text" id="promo" placeholder="Optional" style="text-transform:uppercase" />
+              </div>
             </div>
+            <button type="submit" class="book-btn">
+              <span>Search Availability</span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </form>
+          <div class="book-secure">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Direct Booking — No Fees
           </div>
-          <button type="submit" class="book-btn">
-            Search Availability
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </button>
-        </form>
-        <div class="book-secure">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          Direct Booking — No Fees
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- WHY STAY -->
 <section id="why" class="section">
   <div class="container">
     <div class="why-inner">
-      <div class="why-sticky reveal-left">
+      <div class="why-sticky">
         <span class="eyebrow">A Tasteful Stay Experience</span>
-        <h2 class="heading-lg">
+        <h2 class="heading-lg" style="margin:16px 0 20px;">
           Designed for convenience,
-          <em style="font-weight:300;color:var(--ink-muted);">finished for pure comfort.</em>
+          <em>finished for pure comfort.</em>
         </h2>
         <p class="body-sm">Whether you are visiting the leading Galway campuses, arriving for healthcare consultations, or escaping to explore the wild West of Ireland coastline, 1997 Stays merges cozy boutique warmth with practical self-managed flexibility.</p>
         <div class="cafe-perk">
@@ -920,46 +822,36 @@
         </div>
       </div>
       <div class="feature-list">
-        <div class="feature-item reveal">
-          <div class="feature-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          </div>
+        <div class="feature-item">
+          <div class="feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
           <div class="feature-text">
             <h3>Prestigious Newcastle Location</h3>
             <p>Directly across from the University of Galway gates and a 2-minute walk to Galway University Hospital.</p>
           </div>
         </div>
-        <div class="feature-item reveal">
-          <div class="feature-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg>
-          </div>
+        <div class="feature-item">
+          <div class="feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg></div>
           <div class="feature-text">
             <h3>Mocha Beans Café Downstairs</h3>
-            <p>Immediate boutique access to craft award-winning espresso blends, premium brunch plates, and fresh lunches daily.</p>
+            <p>Immediate access to craft award-winning espresso blends, premium brunch plates, and fresh lunches daily.</p>
           </div>
         </div>
-        <div class="feature-item reveal">
-          <div class="feature-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
-          </div>
+        <div class="feature-item">
+          <div class="feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
           <div class="feature-text">
             <h3>10% Guest Discount Perk</h3>
             <p>Show your digital booking reference at the till to save 10% on café beverages and food for the full duration of your stay.</p>
           </div>
         </div>
-        <div class="feature-item reveal">
-          <div class="feature-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          </div>
+        <div class="feature-item">
+          <div class="feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
           <div class="feature-text">
             <h3>Express Contactless Check-in</h3>
             <p>Digital key codes sent straight to your phone from 14:00. Zero reception queue, 24-hour access.</p>
           </div>
         </div>
-        <div class="feature-item reveal">
-          <div class="feature-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          </div>
+        <div class="feature-item">
+          <div class="feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
           <div class="feature-text">
             <h3>Tailored Comfortable Rooms</h3>
             <p>From solo researcher retreats to king stays and functional family layouts, every room is immaculately maintained.</p>
@@ -970,10 +862,9 @@
   </div>
 </section>
 
-<!-- ROOMS -->
-<section id="rooms" class="section" style="background:#fff;border-top:1px solid var(--rule);">
+<section id="rooms" class="section" style="background:#fff;border-top:1px solid var(--rule)">
   <div class="container">
-    <div class="rooms-header reveal">
+    <div class="rooms-header">
       <div>
         <span class="eyebrow">Select Accommodations</span>
         <h2 class="heading-xl" style="margin-top:10px;">Curated Spaces</h2>
@@ -984,12 +875,9 @@
 
       <div class="room-card">
         <div class="room-img">
-          <img src="images/stays_poster_1779895568395.png" alt="Poster Room Kingsize" />
-          <div class="room-price"><span>from</span> <strong>€139</strong> <span>/ night</span></div>
-          <div class="room-badges">
-            <span class="room-badge">1–2 Guests</span>
-            <span class="room-badge">24 m²</span>
-          </div>
+          <img src="images/stays_poster_1779895568395.png" alt="Poster Room Kingsize" loading="lazy" />
+          <div class="room-price"><span>from</span><strong>€139</strong><span>/ night</span></div>
+          <div class="room-badges"><span class="room-badge">1–2 Guests</span><span class="room-badge">24 m²</span></div>
         </div>
         <div class="room-body">
           <h4 class="room-name">Poster Room Kingsize</h4>
@@ -1001,20 +889,17 @@
             <li>Cathedral 5 minutes' stroll away</li>
           </ul>
           <div class="room-actions">
-            <a href="https://www.cloudbeds.com/reservation/1997StaysGalway?source=direct_booking_landing_page&discount_applied=10_percent_cafe" target="_blank" class="room-btn-primary">Instant Reserve →</a>
-            <a href="https://www.cloudbeds.com/reservation/1997StaysGalway" target="_blank" class="room-btn-secondary">Verify Direct Rates ✔</a>
+            <a href="https://www.cloudbeds.com/reservation/1997StaysGalway?source=direct_booking_landing_page&discount_applied=10_percent_cafe" target="_blank" rel="noopener noreferrer" class="room-btn-primary"><span>Instant Reserve →</span></a>
+            <a href="https://www.cloudbeds.com/reservation/1997StaysGalway" target="_blank" rel="noopener noreferrer" class="room-btn-secondary">Verify Direct Rates ✔</a>
           </div>
         </div>
       </div>
 
       <div class="room-card">
         <div class="room-img">
-          <img src="images/stays_queen_1779895586147.png" alt="Deluxe Queen" />
-          <div class="room-price"><span>from</span> <strong>€119</strong> <span>/ night</span></div>
-          <div class="room-badges">
-            <span class="room-badge">1–2 Guests</span>
-            <span class="room-badge">18 m²</span>
-          </div>
+          <img src="images/stays_queen_1779895586147.png" alt="Deluxe Queen Double" loading="lazy" />
+          <div class="room-price"><span>from</span><strong>€119</strong><span>/ night</span></div>
+          <div class="room-badges"><span class="room-badge">1–2 Guests</span><span class="room-badge">18 m²</span></div>
         </div>
         <div class="room-body">
           <h4 class="room-name">Deluxe Queen Double</h4>
@@ -1026,20 +911,17 @@
             <li>10% café discount active daily at the till</li>
           </ul>
           <div class="room-actions">
-            <a href="https://www.cloudbeds.com/reservation/1997StaysGalway?source=direct_booking_landing_page&discount_applied=10_percent_cafe" target="_blank" class="room-btn-primary">Instant Reserve →</a>
-            <a href="https://www.cloudbeds.com/reservation/1997StaysGalway" target="_blank" class="room-btn-secondary">Verify Direct Rates ✔</a>
+            <a href="https://www.cloudbeds.com/reservation/1997StaysGalway?source=direct_booking_landing_page&discount_applied=10_percent_cafe" target="_blank" rel="noopener noreferrer" class="room-btn-primary"><span>Instant Reserve →</span></a>
+            <a href="https://www.cloudbeds.com/reservation/1997StaysGalway" target="_blank" rel="noopener noreferrer" class="room-btn-secondary">Verify Direct Rates ✔</a>
           </div>
         </div>
       </div>
 
       <div class="room-card">
         <div class="room-img">
-          <img src="images/stays_triple_1779895626656.png" alt="Triple Room" />
-          <div class="room-price"><span>from</span> <strong>€99</strong> <span>/ night</span></div>
-          <div class="room-badges">
-            <span class="room-badge">2+1 Child</span>
-            <span class="room-badge">15 m²</span>
-          </div>
+          <img src="images/stays_triple_1779895626656.png" alt="Triple Room" loading="lazy" />
+          <div class="room-price"><span>from</span><strong>€99</strong><span>/ night</span></div>
+          <div class="room-badges"><span class="room-badge">2+1 Child</span><span class="room-badge">15 m²</span></div>
         </div>
         <div class="room-body">
           <h4 class="room-name">Triple Room</h4>
@@ -1051,20 +933,17 @@
             <li>Budget-friendly group layout in Newcastle</li>
           </ul>
           <div class="room-actions">
-            <a href="https://www.cloudbeds.com/reservation/1997StaysGalway?source=direct_booking_landing_page&discount_applied=10_percent_cafe" target="_blank" class="room-btn-primary">Instant Reserve →</a>
-            <a href="https://www.cloudbeds.com/reservation/1997StaysGalway" target="_blank" class="room-btn-secondary">Verify Direct Rates ✔</a>
+            <a href="https://www.cloudbeds.com/reservation/1997StaysGalway?source=direct_booking_landing_page&discount_applied=10_percent_cafe" target="_blank" rel="noopener noreferrer" class="room-btn-primary"><span>Instant Reserve →</span></a>
+            <a href="https://www.cloudbeds.com/reservation/1997StaysGalway" target="_blank" rel="noopener noreferrer" class="room-btn-secondary">Verify Direct Rates ✔</a>
           </div>
         </div>
       </div>
 
       <div class="room-card">
         <div class="room-img">
-          <img src="images/stays_single_1779895608279.png" alt="Cosy Single" />
-          <div class="room-price"><span>from</span> <strong>€79</strong> <span>/ night</span></div>
-          <div class="room-badges">
-            <span class="room-badge">1 Guest</span>
-            <span class="room-badge">12 m²</span>
-          </div>
+          <img src="images/stays_single_1779895608279.png" alt="Cosy Single" loading="lazy" />
+          <div class="room-price"><span>from</span><strong>€79</strong><span>/ night</span></div>
+          <div class="room-badges"><span class="room-badge">1 Guest</span><span class="room-badge">12 m²</span></div>
         </div>
         <div class="room-body">
           <h4 class="room-name">Cosy Single</h4>
@@ -1076,8 +955,8 @@
             <li>Save 10% on fresh brunch &amp; espresso daily</li>
           </ul>
           <div class="room-actions">
-            <a href="https://www.cloudbeds.com/reservation/1997StaysGalway?source=direct_booking_landing_page&discount_applied=10_percent_cafe" target="_blank" class="room-btn-primary">Instant Reserve →</a>
-            <a href="https://www.cloudbeds.com/reservation/1997StaysGalway" target="_blank" class="room-btn-secondary">Verify Direct Rates ✔</a>
+            <a href="https://www.cloudbeds.com/reservation/1997StaysGalway?source=direct_booking_landing_page&discount_applied=10_percent_cafe" target="_blank" rel="noopener noreferrer" class="room-btn-primary"><span>Instant Reserve →</span></a>
+            <a href="https://www.cloudbeds.com/reservation/1997StaysGalway" target="_blank" rel="noopener noreferrer" class="room-btn-secondary">Verify Direct Rates ✔</a>
           </div>
         </div>
       </div>
@@ -1086,10 +965,9 @@
   </div>
 </section>
 
-<!-- AMENITIES -->
-<section id="amenities" class="section" style="background:var(--paper-off);border-top:1px solid var(--rule);">
+<section id="amenities" class="section" style="background:var(--paper-off);border-top:1px solid var(--rule)">
   <div class="container">
-    <div class="amenities-header reveal">
+    <div class="amenities-header">
       <span class="eyebrow">What's Included</span>
       <h2 class="heading-xl" style="margin:12px 0 14px;">Property Amenities</h2>
       <p>Everything you need, nothing you don't. Every amenity included in the nightly rate.</p>
@@ -1129,32 +1007,36 @@
   </div>
 </section>
 
-<!-- CAFE -->
-<section id="cafe" class="section" style="background:var(--ink-mid);">
+<section id="cafe" class="section">
   <div class="container">
     <div class="cafe-inner">
-      <div class="cafe-img-wrap reveal-left">
+      <div class="cafe-img-wrap">
         <div class="cafe-img-border"></div>
         <div class="cafe-img">
-          <img src="images/stays_cafe_1779895551793.png" alt="Mocha Beans Cafe" />
+          <div class="steam-wrap" aria-hidden="true">
+            <div class="steam-line"></div>
+            <div class="steam-line"></div>
+            <div class="steam-line"></div>
+          </div>
+          <img src="images/stays_cafe_1779895551793.png" alt="Mocha Beans Café, Newcastle Galway" loading="lazy" />
           <div class="cafe-badge">
             <span class="cafe-badge-label">Stay Benefit</span>
             <span class="cafe-badge-pct">10% Off</span>
             <span class="cafe-badge-sub">Newcastle Café</span>
           </div>
         </div>
-        <div style="display:flex;gap:10px;margin-top:24px;justify-content:center;">
-          <span style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.5);font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;padding:8px 14px;">Newcastle Favourite</span>
-          <span style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.5);font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;padding:8px 14px;">Award-Winning Coffee</span>
+        <div style="display:flex;gap:10px;margin-top:24px;justify-content:center">
+          <span style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.45);font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;padding:8px 14px">Newcastle Favourite</span>
+          <span style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.45);font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;padding:8px 14px">Award-Winning Coffee</span>
         </div>
       </div>
-      <div class="cafe-text reveal-right">
-        <span class="eyebrow" style="color:rgba(255,255,255,.35);">The Downstairs Experience</span>
-        <h2 style="margin:16px 0 20px;">
+      <div class="cafe-text">
+        <span class="eyebrow">The Downstairs Experience</span>
+        <h2>
           More than a stay.
           <em>Artisan coffee &amp; brunch, everyday.</em>
         </h2>
-        <p>1997 Stays rests directly above <strong style="color:#fff;">Mocha Beans Café</strong>, Galway's beloved artisan local coffee hub. Every morning, the rich aroma of premium freshly roasted coffee rises to greet you. Step downstairs for signature espresso blends, hearty sourdough plates, and fresh lunches cooked daily.</p>
+        <p>1997 Stays rests directly above <strong style="color:#fff">Mocha Beans Café</strong>, Galway's beloved artisan local coffee hub. Every morning, the rich aroma of premium freshly roasted coffee rises to greet you. Step downstairs for signature espresso blends, hearty sourdough plates, and fresh lunches cooked daily.</p>
         <div class="cafe-perk-box">
           <div class="cafe-perk-box-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg>
@@ -1194,12 +1076,11 @@
   </div>
 </section>
 
-<!-- LOCATION -->
-<section id="location" class="section" style="border-top:1px solid var(--rule);">
+<section id="location" class="section" style="border-top:1px solid var(--rule)">
   <div class="container">
-    <div class="location-header reveal">
+    <div class="location-header">
       <span class="eyebrow">Galway, Newcastle Area</span>
-      <h2 class="heading-xl" style="margin:12px 0 14px;">Newcastle Central. <em style="font-weight:300;">On the doorstep of everything.</em></h2>
+      <h2 class="heading-xl" style="margin:12px 0 14px;">Newcastle Central. <em style="font-weight:300;font-style:italic">On the doorstep of everything.</em></h2>
       <p>Situated at <strong>25 Lower Newcastle, Galway</strong> — immediate proximity to both professional hubs and rich cultural seaside centres.</p>
     </div>
     <div class="location-inner">
@@ -1254,7 +1135,7 @@
           </div>
         </div>
         <div class="address-box">
-          <p class="eyebrow">Property Address</p>
+          <span class="eyebrow">Property Address</span>
           <p>25 Lower Newcastle Road, Galway City, Co. Galway, H91 X466, Ireland</p>
           <span>★ Directly above Mocha Beans Café &amp; Roastery</span>
         </div>
@@ -1270,20 +1151,16 @@
   </div>
 </section>
 
-<!-- REVIEWS -->
 <section id="reviews" class="section">
   <div class="container">
-    <div class="reviews-header reveal">
+    <div class="reviews-header">
       <span class="eyebrow">Guest Experiences</span>
       <h2>What our guests say.</h2>
     </div>
     <div class="reviews-grid">
       <div class="review-card">
         <div class="review-quote">&ldquo;</div>
-        <div class="review-stars">
-          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-          <span style="font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.3);margin-left:6px;">5/5</span>
-        </div>
+        <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span><span style="font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.28);margin-left:6px">5/5</span></div>
         <p class="review-text">The absolute best location for university researchers. Literally across the street. The self check-in was seamless, and showing the booking reference downstairs at Mocha Beans saved me a small fortune on fantastic breakfasts!</p>
         <div class="review-footer">
           <div><div class="review-author">Dr. Rachel Jenkins</div><div class="review-room">Poster Room Kingsize</div></div>
@@ -1292,10 +1169,7 @@
       </div>
       <div class="review-card">
         <div class="review-quote">&ldquo;</div>
-        <div class="review-stars">
-          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-          <span style="font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.3);margin-left:6px;">5/5</span>
-        </div>
+        <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span><span style="font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.28);margin-left:6px">5/5</span></div>
         <p class="review-text">Cozy, beautifully designed room that felt much more personal than a big corporate hotel. Having a top-tier coffee roastery downstairs was incredible. Highly recommend the Deluxe Queen for city breaks.</p>
         <div class="review-footer">
           <div><div class="review-author">Liam O'Connor</div><div class="review-room">Deluxe Queen Double Bed</div></div>
@@ -1304,10 +1178,7 @@
       </div>
       <div class="review-card">
         <div class="review-quote">&ldquo;</div>
-        <div class="review-stars">
-          <span>★</span><span>★</span><span>★</span><span>★</span><span style="opacity:.5">★</span>
-          <span style="font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.3);margin-left:6px;">4.8/5</span>
-        </div>
+        <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span style="opacity:.4">★</span><span style="font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.28);margin-left:6px">4.8/5</span></div>
         <p class="review-text">We stayed in the Triple Room with our nine-year-old. Bunk was great for him. Very cleanly managed, quiet street noise, and easy walking distance across the Salmon Weir bridge onto Shop Street. Recommended!</p>
         <div class="review-footer">
           <div><div class="review-author">Sarah &amp; Josh</div><div class="review-room">Triple Room</div></div>
@@ -1318,11 +1189,10 @@
   </div>
 </section>
 
-<!-- FAQ -->
-<section id="faq" class="section" style="background:#fff;border-top:1px solid var(--rule);">
+<section id="faq" class="section" style="background:#fff;border-top:1px solid var(--rule)">
   <div class="container">
     <div class="faq-inner">
-      <div class="faq-left reveal-left">
+      <div class="faq-left">
         <span class="eyebrow">Stay Check-list</span>
         <h2 class="heading-lg" style="margin:12px 0 16px;">Practical Information</h2>
         <p>Everything you need for a flawless, stress-free arrival and departure at 1997 Stays, Newcastle Galway.</p>
@@ -1340,37 +1210,19 @@
         </div>
         <div class="included-box">
           <h4>Included Free of Charge</h4>
-          <div class="included-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"/></svg>
-            Commercial High-Speed Gigabit Wi-Fi
-          </div>
-          <div class="included-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
-            Pristine 100% Smoke-Free Guest Rooms
-          </div>
-          <div class="included-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
-            Keyless Smartphone Custom Touchpad Entry
-          </div>
+          <div class="included-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"/></svg>Commercial High-Speed Gigabit Wi-Fi</div>
+          <div class="included-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>Pristine 100% Smoke-Free Guest Rooms</div>
+          <div class="included-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>Keyless Smartphone Custom Touchpad Entry</div>
         </div>
         <div class="contact-list">
           <h5>Co-host Support</h5>
-          <a href="tel:+353868593757">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            +353 86 859 3757
-          </a>
-          <a href="mailto:cathal.keogh@mochabeans.com">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            cathal.keogh@mochabeans.com
-          </a>
-          <a href="https://mochabeans.com" target="_blank">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-            mochabeans.com
-          </a>
+          <a href="tel:+353868593757"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>+353 86 859 3757</a>
+          <a href="mailto:cathal.keogh@mochabeans.com"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>cathal.keogh@mochabeans.com</a>
+          <a href="https://mochabeans.com" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>mochabeans.com</a>
         </div>
       </div>
-      <div class="reveal-right">
-        <h3 style="font-family:var(--serif);font-size:20px;font-weight:600;margin-bottom:20px;">Frequently Asked Questions</h3>
+      <div>
+        <h3 style="font-family:var(--serif);font-size:20px;font-weight:600;margin-bottom:20px">Frequently Asked Questions</h3>
         <div class="faq-list">
           <div class="faq-item">
             <button class="faq-q" onclick="toggleFAQ(this)">What time is check-in and check-out?<span class="faq-icon">+</span></button>
@@ -1406,37 +1258,31 @@
   </div>
 </section>
 
-<!-- CTA BANNER -->
 <section id="cta">
   <div class="container">
-    <div class="cta-inner reveal">
-      <p class="eyebrow">Direct Booking Portal</p>
+    <div class="cta-inner">
+      <span class="eyebrow">Direct Booking Portal</span>
       <h2>
-        Comfort upstairs.
-        <em>Great coffee downstairs.</em>
+        <span class="line"><span class="line-inner">Comfort upstairs.</span></span>
+        <em class="line"><span class="line-inner">Great coffee downstairs.</span></em>
       </h2>
-      <p>Book directly today for guaranteed best rates, seamless contactless key setups, and an exclusive daily 10% café voucher at Mocha Beans Newcastle.</p>
+      <p class="cta-body">Book directly today for guaranteed best rates, seamless contactless key setups, and an exclusive daily 10% café voucher at Mocha Beans Newcastle.</p>
       <div class="cta-btns">
-        <a href="https://www.cloudbeds.com/reservation/1997StaysGalway?source=direct_booking_landing_page&discount_applied=10_percent_cafe" target="_blank" class="btn-primary" style="background:#fff;color:var(--ink);">
-          Check Availability Direct
+        <a href="https://www.cloudbeds.com/reservation/1997StaysGalway?source=direct_booking_landing_page&discount_applied=10_percent_cafe" target="_blank" rel="noopener noreferrer" class="btn-primary" style="background:#fff;color:var(--ink)">
+          <span>Check Availability Direct</span>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="https://www.cloudbeds.com/reservation/1997StaysGalway" target="_blank" class="btn-ghost">
+        <a href="https://www.cloudbeds.com/reservation/1997StaysGalway" target="_blank" rel="noopener noreferrer" class="btn-ghost">
           Cloudbeds Checkout Portal
         </a>
       </div>
       <div class="cta-trust">
-        Direct Booker Perks Enabled
-        <span></span>
-        No Booking Fees
-        <span></span>
-        Free Gigabit Wifi
+        Direct Booker Perks Enabled<span></span>No Booking Fees<span></span>Free Gigabit Wifi
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer id="footer">
   <div class="container">
     <div class="footer-inner">
@@ -1447,13 +1293,13 @@
       <div class="footer-col">
         <h5>Address</h5>
         <p>25 Lower Newcastle Road,<br>Galway City, Co. Galway,<br>H91 X466, Ireland</p>
-        <a href="https://maps.google.com/?q=25+Lower+Newcastle+Road+Galway+H91+X466" target="_blank" style="margin-top:8px;">Find on Google Maps ↗</a>
+        <a href="https://maps.google.com/?q=25+Lower+Newcastle+Road+Galway+H91+X466" target="_blank" rel="noopener" style="margin-top:8px">Find on Google Maps ↗</a>
       </div>
       <div class="footer-col">
         <h5>Contact</h5>
         <a href="tel:+353868593757">+353 86 859 3757</a>
         <a href="mailto:cathal.keogh@mochabeans.com">cathal.keogh@mochabeans.com</a>
-        <a href="https://mochabeans.com" target="_blank">mochabeans.com</a>
+        <a href="https://mochabeans.com" target="_blank" rel="noopener">mochabeans.com</a>
       </div>
     </div>
     <div class="footer-bottom">
@@ -1461,170 +1307,247 @@
       <div class="footer-links">
         <a href="#">Privacy Policy</a>
         <a href="#">Terms of Booking</a>
-        <a href="https://www.cloudbeds.com" target="_blank">Cloudbeds Engine</a>
+        <a href="https://www.cloudbeds.com" target="_blank" rel="noopener">Cloudbeds Engine</a>
       </div>
     </div>
   </div>
 </footer>
 
-<!-- MOBILE STICKY -->
 <div id="mobile-sticky">
   <div class="mobile-sticky-left">
     <p>Newcastle, Galway</p>
     <p>1997 Stays</p>
   </div>
-  <a href="https://www.cloudbeds.com/reservation/1997StaysGalway?source=direct_booking_landing_page&discount_applied=10_percent_cafe" target="_blank" class="mobile-sticky-btn">Book Direct</a>
+  <a href="https://www.cloudbeds.com/reservation/1997StaysGalway?source=direct_booking_landing_page&discount_applied=10_percent_cafe" target="_blank" rel="noopener noreferrer" class="mobile-sticky-btn">Book Direct</a>
 </div>
 
 <script>
-  // ---- SMOOTH SCROLL ----
-  function smoothScroll(id) {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  }
+// === CONSTANTS ===
+const motion = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isMobile = window.innerWidth < 768;
 
-  // ---- HEADER SCROLL ----
-  const header = document.getElementById('header');
-  const sticky = document.getElementById('mobile-sticky');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 100) {
-      header.classList.add('scrolled');
-      sticky.classList.add('visible');
-    } else {
-      header.classList.remove('scrolled');
-      sticky.classList.remove('visible');
-    }
+// === UTILITY ===
+function smoothScroll(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// === HEADER + MOBILE STICKY ===
+const header = document.getElementById('header');
+const sticky = document.getElementById('mobile-sticky');
+window.addEventListener('scroll', () => {
+  const s = window.scrollY > 80;
+  header.classList.toggle('scrolled', s);
+  sticky.classList.toggle('visible', s);
+}, { passive: true });
+
+// === BOOKING FORM ===
+function openCloudbeds(e) {
+  e.preventDefault();
+  const base = 'https://www.cloudbeds.com/reservation/1997StaysGalway';
+  const p = new URLSearchParams();
+  const ci = document.getElementById('checkin').value;
+  const co = document.getElementById('checkout').value;
+  const g  = document.getElementById('guests').value;
+  const pr = document.getElementById('promo').value;
+  if (ci) p.set('checkin', ci);
+  if (co) p.set('checkout', co);
+  if (g)  p.set('guests', g);
+  if (pr) p.set('promo', pr);
+  p.set('source', 'direct_booking_landing_page');
+  p.set('discount_applied', '10_percent_cafe');
+  window.open(base + '?' + p.toString(), '_blank', 'noopener,noreferrer');
+}
+
+(function() {
+  const t = d => { const dt = new Date(); dt.setDate(dt.getDate() + d); return dt.toISOString().split('T')[0]; };
+  document.getElementById('checkin').value  = t(1);
+  document.getElementById('checkout').value = t(2);
+})();
+
+// === FAQ ===
+function toggleFAQ(btn) {
+  const item = btn.parentElement;
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+// === LOCATION FILTER ===
+function filterLocation(cat) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.cat === cat));
+  document.querySelectorAll('.location-item').forEach(item => {
+    item.style.display = (cat === 'all' || item.dataset.cat === cat) ? '' : 'none';
   });
+}
 
-  // ---- BOOKING FORM: open Cloudbeds ----
-  function openCloudbeds(e) {
-    e.preventDefault();
-    const base   = 'https://www.cloudbeds.com/reservation/1997StaysGalway';
-    const params = new URLSearchParams();
-    const ci = document.getElementById('checkin').value;
-    const co = document.getElementById('checkout').value;
-    const g  = document.getElementById('guests').value;
-    const p  = document.getElementById('promo').value;
-    const r  = document.getElementById('roomtype').value;
-    if (ci) params.set('checkin', ci);
-    if (co) params.set('checkout', co);
-    if (g)  params.set('guests', g);
-    if (p)  params.set('promo', p);
-    params.set('source', 'direct_booking_landing_page');
-    params.set('discount_applied', '10_percent_cafe');
-    window.open(base + '?' + params.toString(), '_blank', 'noopener,noreferrer');
-  }
-
-  // Set default dates
-  (function() {
-    const t = (d) => { const dt = new Date(); dt.setDate(dt.getDate()+d); return dt.toISOString().split('T')[0]; };
-    document.getElementById('checkin').value  = t(1);
-    document.getElementById('checkout').value = t(2);
-  })();
-
-  // ---- FAQ ACCORDION ----
-  function toggleFAQ(btn) {
-    const item = btn.parentElement;
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item.open').forEach(i => {
-      i.classList.remove('open');
-      i.querySelector('.faq-icon').textContent = '+';
-    });
-    if (!isOpen) {
-      item.classList.add('open');
-      item.querySelector('.faq-icon').textContent = '−';
-    }
-  }
-
-  // ---- LOCATION FILTER ----
-  function filterLocation(cat) {
-    document.querySelectorAll('.filter-btn').forEach(b => {
-      b.classList.toggle('active', b.dataset.cat === cat);
-    });
-    document.querySelectorAll('.location-item').forEach(item => {
-      const show = cat === 'all' || item.dataset.cat === cat;
-      item.style.display = show ? '' : 'none';
-    });
-  }
-
-  // ---- GSAP + ScrollTrigger ----
+// === GSAP ANIMATIONS ===
+if (motion) {
   gsap.registerPlugin(ScrollTrigger);
 
-  // Hero entrance
-  gsap.timeline({ delay: 0.3 })
-    .from('#tag1,#tag2,#tag3', { opacity:0, y:16, stagger:.1, duration:.65, ease:'power3.out' })
-    .from('#hero-title',       { opacity:0, y:28,            duration:.85, ease:'power3.out' }, '-=0.3')
-    .from('#hero-sub',         { opacity:0, y:18,            duration:.7,  ease:'power2.out' }, '-=0.4')
-    .from('#hero-btns',        { opacity:0, y:14,            duration:.6,  ease:'power2.out' }, '-=0.3')
-    .from('#hero-meta',        { opacity:0,                  duration:.5               },      '-=0.1')
-    .from('#booking-card',     { opacity:0, x:24,            duration:.8,  ease:'power3.out' }, '-=0.8');
+  // --- HERO: layered depth entrance ---
+  const heroTl = gsap.timeline({ delay: 0.25 });
+  heroTl
+    .from('#hero-bg img', { scale: 1.18, duration: 2.4, ease: 'power2.out' }, 0)
+    .from('#tag1,#tag2,#tag3', { y: 20, opacity: 0, stagger: 0.1, duration: 0.65, ease: 'power3.out' }, 0.35)
+    .from('#hero-title .line-inner', { y: '115%', stagger: 0.14, duration: 0.88, ease: 'power3.out' }, 0.5)
+    .from('#hero-sub', { y: 18, opacity: 0, duration: 0.7, ease: 'power2.out' }, 0.92)
+    .from('#hero-btns', { y: 14, opacity: 0, duration: 0.6, ease: 'power2.out' }, 1.06)
+    .from('#hero-meta', { opacity: 0, duration: 0.5 }, 1.2)
+    .from('#booking-card-wrap', { x: 40, opacity: 0, duration: 1.0, ease: 'power3.out' }, 0.55)
+    .from('#key-tag', { y: -22, opacity: 0, duration: 0.75, ease: 'power3.out' }, 0.78);
 
-  // Scroll reveals
-  gsap.utils.toArray('.reveal').forEach(el => {
-    gsap.fromTo(el, { opacity:0, y:32 }, {
-      opacity:1, y:0, duration:1, ease:'power3.out',
-      scrollTrigger: { trigger:el, start:'top 88%', toggleActions:'play none none none' }
-    });
-  });
-  gsap.utils.toArray('.reveal-left').forEach(el => {
-    gsap.fromTo(el, { opacity:0, x:-32 }, {
-      opacity:1, x:0, duration:1, ease:'power3.out',
-      scrollTrigger: { trigger:el, start:'top 88%', toggleActions:'play none none none' }
-    });
-  });
-  gsap.utils.toArray('.reveal-right').forEach(el => {
-    gsap.fromTo(el, { opacity:0, x:32 }, {
-      opacity:1, x:0, duration:1, ease:'power3.out',
-      scrollTrigger: { trigger:el, start:'top 88%', toggleActions:'play none none none' }
-    });
-  });
-
-  // ---- THREE.JS HERO PARTICLES ----
-  (function() {
-    const canvas   = document.getElementById('hero-canvas');
-    const section  = document.getElementById('hero');
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias:false });
-    renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
-    renderer.setSize(section.clientWidth, section.clientHeight);
-
-    const scene  = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(60, section.clientWidth/section.clientHeight, 0.1, 1000);
-    camera.position.z = 7;
-
-    const N   = 1500;
-    const pos = new Float32Array(N*3);
-    for (let i=0;i<N;i++) {
-      pos[i*3]   = (Math.random()-.5)*24;
-      pos[i*3+1] = (Math.random()-.5)*16;
-      pos[i*3+2] = (Math.random()-.5)*12;
-    }
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute('position', new THREE.BufferAttribute(pos,3));
-    const mat = new THREE.PointsMaterial({ color:0xffffff, size:.022, transparent:true, opacity:.28, sizeAttenuation:true });
-    const pts = new THREE.Points(geo, mat);
-    scene.add(pts);
-
-    let mx=0, my=0;
-    window.addEventListener('mousemove', e => {
-      mx = e.clientX/innerWidth  - .5;
-      my = -(e.clientY/innerHeight - .5);
-    });
-
-    const clock = new THREE.Clock();
-    (function tick() {
-      requestAnimationFrame(tick);
-      const t = clock.getElapsedTime();
-      pts.rotation.y = t*.012 + mx*.14;
-      pts.rotation.x = my*.07;
-      renderer.render(scene, camera);
+  // --- MOUSE PARALLAX (desktop only) ---
+  if (!isMobile) {
+    const hero = document.getElementById('hero');
+    let tx = 0, ty = 0, cx = 0, cy = 0;
+    hero.addEventListener('mousemove', e => {
+      const r = hero.getBoundingClientRect();
+      tx = ((e.clientX - r.left) / r.width - 0.5) * 20;
+      ty = ((e.clientY - r.top)  / r.height - 0.5) * 11;
+    }, { passive: true });
+    (function lerp() {
+      cx += (tx - cx) * 0.07;
+      cy += (ty - cy) * 0.07;
+      hero.style.setProperty('--px', cx.toFixed(2));
+      hero.style.setProperty('--py', cy.toFixed(2));
+      requestAnimationFrame(lerp);
     })();
+  }
 
-    window.addEventListener('resize', () => {
-      camera.aspect = section.clientWidth/section.clientHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(section.clientWidth, section.clientHeight);
+  // --- WHY: left col + feature stagger ---
+  gsap.from('.why-sticky', {
+    x: -28, opacity: 0, duration: 0.85, ease: 'power3.out',
+    scrollTrigger: { trigger: '#why', start: 'top 80%' }
+  });
+  gsap.utils.toArray('.feature-item').forEach((item, i) => {
+    gsap.from(item, {
+      x: 24, opacity: 0, duration: 0.65, ease: 'power3.out', delay: i * 0.06,
+      scrollTrigger: { trigger: item, start: 'top 88%' }
     });
-  })();
+  });
+
+  // --- ROOMS: header + clip-path image reveals ---
+  gsap.from('.rooms-header', {
+    y: 28, opacity: 0, duration: 0.7, ease: 'power3.out',
+    scrollTrigger: { trigger: '.rooms-header', start: 'top 85%' }
+  });
+
+  gsap.utils.toArray('.room-card').forEach(card => {
+    const img  = card.querySelector('.room-img img');
+    const body = card.querySelector('.room-body');
+    gsap.fromTo(img,
+      { clipPath: 'inset(100% 0 0 0)' },
+      { clipPath: 'inset(0% 0 0 0)', duration: 1.1, ease: 'power3.inOut',
+        scrollTrigger: { trigger: card, start: 'top 82%' } }
+    );
+    gsap.from(body, {
+      y: 16, opacity: 0, duration: 0.65, ease: 'power2.out',
+      scrollTrigger: { trigger: card, start: 'top 76%' }
+    });
+  });
+
+  // Room card perspective tilt — desktop only
+  if (!isMobile) {
+    document.querySelectorAll('.room-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        gsap.to(card, {
+          rotationY: ((e.clientX - r.left) / r.width - 0.5) * 7,
+          rotationX: -((e.clientY - r.top)  / r.height - 0.5) * 5,
+          transformPerspective: 900,
+          duration: 0.32, ease: 'power2.out', overwrite: 'auto'
+        });
+      }, { passive: true });
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, { rotationY: 0, rotationX: 0, duration: 0.5, ease: 'power3.out', overwrite: 'auto' });
+      });
+    });
+  }
+
+  // --- AMENITIES: stagger ---
+  gsap.utils.toArray('.amenity-card').forEach((card, i) => {
+    gsap.from(card, {
+      y: 22, opacity: 0, duration: 0.6, ease: 'power2.out', delay: i * 0.05,
+      scrollTrigger: { trigger: card, start: 'top 88%' }
+    });
+  });
+
+  // --- CAFE: cinematic clip-path sweep + text reveals ---
+  gsap.fromTo('.cafe-img',
+    { clipPath: 'inset(0 100% 0 0)' },
+    { clipPath: 'inset(0 0% 0 0)', duration: 1.5, ease: 'power3.inOut',
+      scrollTrigger: { trigger: '#cafe', start: 'top 68%' } }
+  );
+  gsap.from('.cafe-badge', {
+    scale: 0.75, opacity: 0, duration: 0.7, ease: 'back.out(1.4)',
+    scrollTrigger: { trigger: '.cafe-img', start: 'top 65%' }
+  });
+  ['.cafe-text .eyebrow', '.cafe-text h2', '.cafe-text > p', '.cafe-perk-box', '.cafe-menu'].forEach((sel, i) => {
+    gsap.from(sel, {
+      y: 20, opacity: 0, duration: 0.65, ease: 'power2.out', delay: i * 0.09,
+      scrollTrigger: { trigger: '#cafe', start: 'top 65%' }
+    });
+  });
+
+  // --- LOCATION ---
+  gsap.from('.location-header', {
+    y: 22, opacity: 0, duration: 0.7, ease: 'power3.out',
+    scrollTrigger: { trigger: '#location', start: 'top 80%' }
+  });
+  gsap.utils.toArray('.location-item').forEach((item, i) => {
+    gsap.from(item, {
+      x: -16, opacity: 0, duration: 0.55, ease: 'power2.out', delay: i * 0.07,
+      scrollTrigger: { trigger: item, start: 'top 90%' }
+    });
+  });
+  gsap.from('.map-wrap', {
+    x: 28, opacity: 0, duration: 0.85, ease: 'power3.out',
+    scrollTrigger: { trigger: '.map-wrap', start: 'top 80%' }
+  });
+
+  // --- REVIEWS: cascade ---
+  gsap.utils.toArray('.review-card').forEach((card, i) => {
+    gsap.from(card, {
+      y: 26, opacity: 0, duration: 0.7, ease: 'power3.out', delay: i * 0.11,
+      scrollTrigger: { trigger: '.reviews-grid', start: 'top 80%' }
+    });
+  });
+
+  // --- FAQ ---
+  gsap.from('.faq-left', {
+    x: -22, opacity: 0, duration: 0.75, ease: 'power3.out',
+    scrollTrigger: { trigger: '#faq', start: 'top 80%' }
+  });
+  gsap.utils.toArray('.faq-item').forEach((item, i) => {
+    gsap.from(item, {
+      y: 12, opacity: 0, duration: 0.45, ease: 'power2.out', delay: i * 0.055,
+      scrollTrigger: { trigger: item, start: 'top 90%' }
+    });
+  });
+
+  // --- CTA: cinematic title lines ---
+  const ctaTl = gsap.timeline({ scrollTrigger: { trigger: '#cta', start: 'top 75%' } });
+  ctaTl
+    .from('#cta .eyebrow',       { opacity: 0, y: 8,     duration: 0.5 })
+    .from('#cta h2 .line-inner', { y: '110%', stagger: 0.14, duration: 0.88, ease: 'power3.out' }, '-=0.2')
+    .from('#cta .cta-body',      { opacity: 0, y: 14,    duration: 0.6,  ease: 'power2.out' }, '-=0.4')
+    .from('#cta .cta-btns',      { opacity: 0, y: 12,    duration: 0.5 }, '-=0.3')
+    .from('#cta .cta-trust',     { opacity: 0,            duration: 0.4 }, '-=0.2');
+}
+
+// === NAV ACTIVE STATE ===
+(function() {
+  const links = document.querySelectorAll('.nav a');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+      }
+    });
+  }, { threshold: 0.3, rootMargin: '-80px 0px -20% 0px' });
+  document.querySelectorAll('section[id]').forEach(s => obs.observe(s));
+})();
 </script>
 </body>
 </html>
