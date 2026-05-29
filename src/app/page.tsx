@@ -9,6 +9,18 @@ import { FinalCTA } from "@/components/home/FinalCTA";
 export default function Home() {
   return (
     <main>
+      <form
+        name="contact"
+        data-netlify="true"
+        data-netlify-honeypot="bot-field"
+        hidden
+      >
+        <input type="text" name="name" />
+        <input type="email" name="email" />
+        <input type="text" name="service" />
+        <textarea name="message"></textarea>
+      </form>
+
       <Hero />
       <MarqueeStrip />
       <ServicesGrid />

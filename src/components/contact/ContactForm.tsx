@@ -16,6 +16,12 @@ const SERVICES = [
 
 type Status = "idle" | "submitting" | "success" | "error";
 
+function encode(data: Record<string, string>) {
+  return Object.keys(data)
+    .map((k) => encodeURIComponent(k) + "=" + encodeURIComponent(data[k]))
+    .join("&");
+}
+
 export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -29,6 +35,7 @@ export function ContactForm() {
     const data = new FormData(form);
 
     const payload = {
+      "form-name": "contact",
       name: String(data.get("name") || "").trim(),
       email: String(data.get("email") || "").trim(),
       service: String(data.get("service") || "").trim(),
@@ -42,15 +49,14 @@ export function ContactForm() {
     }
 
     try {
-      const res = await fetch("/api/contact", {
+      const res = await fetch("/", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: encode(payload),
       });
-      const json = await res.json();
-      if (!res.ok || !json.ok) {
+      if (!res.ok) {
         setStatus("error");
-        setErrorMessage(json.error || "Something went wrong. Please try again.");
+        setErrorMessage("Something went wrong. Please try again.");
         return;
       }
       setStatus("success");
@@ -64,7 +70,22 @@ export function ContactForm() {
   const submitting = status === "submitting";
 
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-12">
+    <form
+      name="contact"
+      method="POST"
+      data-netlify="true"
+      data-netlify-honeypot="bot-field"
+      onSubmit={onSubmit}
+      noValidate
+      className="flex flex-col gap-12"
+    >
+      <input type="hidden" name="form-name" value="contact" />
+      <p className="hidden">
+        <label>
+          Don&rsquo;t fill this out: <input name="bot-field" />
+        </label>
+      </p>
+
       <Field label="Your name" name="name" autoComplete="name" required />
       <Field
         label="Email"
