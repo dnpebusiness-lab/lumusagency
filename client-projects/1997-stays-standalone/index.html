@@ -161,6 +161,17 @@
       padding: 0 2.5rem 5rem;
     }
 
+    /* Dark gradient at top — keeps nav text legible over any photo */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 180px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, transparent 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
     .hero-bg {
       position: absolute;
       inset: 0;
