@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>1997 Stays Galway — Guesthouse above Mocha Beans, Newcastle Road</title>
-  <meta name="description" content="Four rooms above Mocha Beans Café on Newcastle Road, Galway. University of Galway across the road. Book direct — no fees." />
+  <title>1997 Stays Galway | Boutique Guesthouse above Mocha Beans</title>
+  <meta name="description" content="Stay in Newcastle, Galway above Mocha Beans Café. Boutique rooms near University of Galway and Galway University Hospital. Contactless check-in and 10% café discount for guests." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -49,6 +49,20 @@
     a {
       color: inherit;
       text-decoration: none;
+    }
+
+    /* ============================================
+       SCROLL PROGRESS BAR
+    ============================================ */
+    #scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      width: 0;
+      background: var(--near-black);
+      z-index: 200;
+      transition: width 0.1s linear;
     }
 
     /* ============================================
@@ -191,7 +205,7 @@
     .hero-bg {
       position: absolute;
       inset: 0;
-      background-color: #1a1a1a; /* fallback when images/ folder not yet uploaded */
+      background-color: #1a1a1a;
       background-image: url('images/stays_hero_1779895532652.png');
       background-size: cover;
       background-position: center 40%;
@@ -205,9 +219,27 @@
       to   { transform: scale(1.06); }
     }
 
-    .hero-content {
+    .hero-content-wrap {
       position: relative;
       z-index: 2;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .hero-text {
+      flex: 1;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 1rem;
     }
 
     .hero-heading {
@@ -218,6 +250,12 @@
       color: #fff;
       letter-spacing: -0.01em;
       margin-bottom: 1.25rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero-line {
+      display: block;
     }
 
     .hero-sub {
@@ -227,72 +265,251 @@
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: rgba(255,255,255,0.65);
+      margin-bottom: 1.25rem;
     }
 
-    .hero-scroll {
-      position: absolute;
-      bottom: 2rem;
-      right: 2.5rem;
+    .hero-tags {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.4rem;
-      color: rgba(255,255,255,0.5);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .hero-tag {
+      font-family: var(--font-sans);
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      color: rgba(255,255,255,0.82);
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 0.3rem 0.8rem;
+      background: rgba(0,0,0,0.2);
+    }
+
+    /* Hero reveal animations */
+    .hero-reveal {
+      animation: heroReveal 0.7s ease both;
+    }
+
+    .hero-eyebrow.hero-reveal {
+      animation-delay: 0.1s;
+    }
+
+    .hero-line.hero-reveal:nth-child(1) {
+      animation-delay: 0.2s;
+    }
+
+    .hero-line.hero-reveal:nth-child(2) {
+      animation-delay: 0.32s;
+    }
+
+    .hero-sub.hero-reveal {
+      animation-delay: 0.5s;
+    }
+
+    .hero-tags.hero-reveal {
+      animation-delay: 0.62s;
+    }
+
+    @keyframes heroReveal {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Hero booking card */
+    .hero-booking-card {
+      position: relative;
+      width: 300px;
+      flex-shrink: 0;
+      background: rgba(245,243,239,0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 1.75rem;
+    }
+
+    .hero-card-label {
       font-family: var(--font-sans);
       font-size: 0.65rem;
+      font-weight: 500;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      z-index: 2;
+      color: var(--near-black);
+      opacity: 0.55;
+      margin-bottom: 1.25rem;
     }
 
-    .hero-scroll-arrow {
-      width: 1px;
-      height: 40px;
-      background: rgba(255,255,255,0.35);
-      position: relative;
+    .hero-form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-form-group label {
+      font-family: var(--font-sans);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--near-black);
+      opacity: 0.5;
+    }
+
+    .hero-form-group input,
+    .hero-form-group select {
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      color: var(--near-black);
+      background: transparent;
+      border: 1px solid var(--stone);
+      padding: 0.55rem 0.75rem;
+      appearance: none;
+      -webkit-appearance: none;
+      border-radius: 0;
+      width: 100%;
+      transition: border-color 0.25s ease;
+      outline: none;
+    }
+
+    .hero-form-group input:focus,
+    .hero-form-group select:focus {
+      border-color: var(--near-black);
+      box-shadow: 0 0 0 2px rgba(13,13,13,0.12);
+    }
+
+    .hero-form-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%230D0D0D' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      padding-right: 2rem;
+    }
+
+    .hero-form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+    }
+
+    .btn-book-hero {
+      width: 100%;
+      font-family: var(--font-sans);
+      font-size: 0.76rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--near-black);
+      border: none;
+      padding: 0.85rem 1rem;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.25s ease;
+    }
+
+    .btn-book-hero:hover {
+      background: #222;
+    }
+
+    .hero-card-note {
+      font-family: var(--font-sans);
+      font-size: 0.68rem;
+      color: var(--near-black);
+      opacity: 0.45;
+      letter-spacing: 0.03em;
+      margin-top: 0.6rem;
+      text-align: center;
+    }
+
+    /* ============================================
+       TRUST TICKER
+    ============================================ */
+    .ticker-section {
+      border-top: 1px solid var(--stone-light);
+      border-bottom: 1px solid var(--stone-light);
+      padding: 0.85rem 0;
+      overflow: hidden;
+      background: var(--off-white);
+    }
+
+    .ticker-wrapper {
       overflow: hidden;
     }
 
-    .hero-scroll-arrow::after {
-      content: '';
-      position: absolute;
-      top: -100%;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(255,255,255,0.8);
-      animation: scrollLine 2s ease-in-out infinite;
+    .ticker-track {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      width: max-content;
+      animation: tickerScroll 40s linear infinite;
     }
 
-    @keyframes scrollLine {
-      0%   { top: -100%; }
-      100% { top: 100%; }
+    .ticker-track:hover {
+      animation-play-state: paused;
+    }
+
+    .ticker-item {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--near-black);
+      opacity: 0.7;
+      white-space: nowrap;
+    }
+
+    .ticker-sep {
+      color: var(--stone);
+      flex-shrink: 0;
+    }
+
+    @keyframes tickerScroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ============================================
+       STATS STRIP (dark bg)
+    ============================================ */
+    .stats-strip {
+      background: var(--near-black);
+      padding: 4rem 2.5rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 4vw, 3.5rem);
+      font-weight: 300;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-number span {
+      font-size: 0.55em;
+      opacity: 0.7;
+    }
+
+    .stat-label {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 0.04em;
     }
 
     /* ============================================
        OPENING BLOCK
-       Extra top padding so content sits clearly
-       below the fixed nav when scrolled into view
     ============================================ */
     .opening {
       padding: 9rem 2.5rem 5rem;
       max-width: 860px;
-      animation: fadeInUp 0.9s ease 0.2s both;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .opening { animation: none; opacity: 1; }
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(18px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
 
     .opening-text {
@@ -301,6 +518,86 @@
       font-weight: 400;
       line-height: 1.65;
       color: var(--near-black);
+    }
+
+    /* ============================================
+       WHY STAY
+    ============================================ */
+    .why-section {
+      padding: 2rem 2.5rem 6rem;
+      border-top: 1px solid var(--stone-light);
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+    }
+
+    .why-left {
+      position: sticky;
+      top: 120px;
+      align-self: start;
+    }
+
+    .why-eyebrow {
+      font-family: var(--font-sans);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--stone);
+      margin-bottom: 1.25rem;
+    }
+
+    .why-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(1.9rem, 3vw, 2.8rem);
+      font-weight: 300;
+      line-height: 1.2;
+      color: var(--near-black);
+      margin-bottom: 1.5rem;
+    }
+
+    .why-body {
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: var(--near-black);
+      opacity: 0.65;
+      max-width: 380px;
+    }
+
+    .why-right {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .why-card {
+      padding: 1.5rem;
+      border: 1px solid var(--stone-light);
+      margin-bottom: 1rem;
+      transition: background 0.2s ease;
+    }
+
+    .why-card:hover {
+      background: rgba(200,191,176,0.08);
+    }
+
+    .why-card-title {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--near-black);
+      margin-bottom: 0.4rem;
+    }
+
+    .why-card-body {
+      font-family: var(--font-sans);
+      font-size: 0.84rem;
+      line-height: 1.65;
+      color: var(--near-black);
+      opacity: 0.7;
     }
 
     /* ============================================
@@ -319,7 +616,6 @@
       margin-bottom: 3.5rem;
     }
 
-    /* Room 1: large, asymmetric */
     .room-featured {
       display: grid;
       grid-template-columns: 60% 1fr;
@@ -357,7 +653,18 @@
       font-size: 1.9rem;
       font-weight: 400;
       line-height: 1.2;
+      color: var(--near-black);
       margin-bottom: 0.5rem;
+    }
+
+    .room-bed-type {
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--near-black);
+      opacity: 0.4;
+      margin-bottom: 1rem;
     }
 
     .room-price {
@@ -368,7 +675,7 @@
       text-transform: uppercase;
       color: var(--near-black);
       opacity: 0.55;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
 
     .room-desc {
@@ -377,8 +684,27 @@
       line-height: 1.65;
       color: var(--near-black);
       opacity: 0.75;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.5rem;
       flex: 1;
+    }
+
+    .room-features {
+      list-style: none;
+      margin: 0.75rem 0 1.25rem;
+    }
+
+    .room-features li {
+      font-family: var(--font-sans);
+      font-size: 0.78rem;
+      color: var(--near-black);
+      opacity: 0.6;
+      padding: 0.2rem 0;
+    }
+
+    .room-features li::before {
+      content: "—";
+      margin-right: 0.5rem;
+      color: var(--stone);
     }
 
     .room-note {
@@ -421,7 +747,6 @@
       left: 0;
     }
 
-    /* Row 2: two equal rooms */
     .rooms-row-two {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -458,7 +783,6 @@
       padding: 1.75rem 2rem 2rem;
     }
 
-    /* Row 3: single room, minimal */
     .room-single-row {
       display: grid;
       grid-template-columns: 280px 1fr;
@@ -474,7 +798,7 @@
 
     .room-single-img img {
       width: 100%;
-      height: 200px;
+      height: 220px;
       object-fit: cover;
       transition: filter 0.4s ease;
     }
@@ -502,11 +826,56 @@
     }
 
     /* ============================================
-       THE CAFÉ
+       AMENITIES
+    ============================================ */
+    .amenities-section {
+      padding: 5rem 2.5rem;
+      border-top: 1px solid var(--stone-light);
+      background: var(--off-white);
+    }
+
+    .amenities-inner {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .amenities-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(1.9rem, 3vw, 2.6rem);
+      font-weight: 300;
+      color: var(--near-black);
+      margin-bottom: 2.5rem;
+    }
+
+    .amenities-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+
+    .amenity-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--stone-light);
+      margin: -1px 0 0 -1px;
+      font-family: var(--font-sans);
+      font-size: 0.84rem;
+      color: var(--near-black);
+    }
+
+    .amenity-item svg {
+      flex-shrink: 0;
+      color: var(--near-black);
+      opacity: 0.6;
+    }
+
+    /* ============================================
+       CAFÉ (dark bg)
     ============================================ */
     .cafe-section {
       background: var(--near-black);
-      color: #fff;
       display: grid;
       grid-template-columns: 1fr 60%;
       min-height: 520px;
@@ -539,7 +908,7 @@
 
     .cafe-badge {
       display: inline-block;
-      border: 1px solid rgba(200, 191, 176, 0.4);
+      border: 1px solid rgba(200,191,176,0.4);
       color: var(--stone);
       font-family: var(--font-sans);
       font-size: 0.72rem;
@@ -577,6 +946,7 @@
       font-family: var(--font-serif);
       font-size: clamp(1.6rem, 2.8vw, 2.2rem);
       font-weight: 400;
+      color: var(--near-black);
       margin-bottom: 2.5rem;
     }
 
@@ -638,6 +1008,161 @@
     }
 
     /* ============================================
+       REVIEWS (dark bg)
+    ============================================ */
+    .reviews-section {
+      background: var(--near-black);
+      padding: 6rem 2.5rem;
+    }
+
+    .reviews-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300;
+      color: #fff;
+      margin-bottom: 3rem;
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .review-card {
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 2rem;
+    }
+
+    .review-quote {
+      font-family: var(--font-serif);
+      font-size: 3rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.2);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .review-stars {
+      color: var(--stone);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+
+    .review-text {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      font-style: italic;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.82);
+      margin-bottom: 1.5rem;
+    }
+
+    .review-author {
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      color: #fff;
+      font-weight: 500;
+    }
+
+    .review-meta {
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.45);
+      margin-top: 0.2rem;
+    }
+
+    .reviews-badges {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .review-badge {
+      border: 1px solid rgba(200,191,176,0.35);
+      padding: 0.6rem 1.25rem;
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      color: var(--stone);
+      letter-spacing: 0.08em;
+    }
+
+    /* ============================================
+       FAQ
+    ============================================ */
+    .faq-section {
+      padding: 6rem 2.5rem;
+      border-top: 1px solid var(--stone-light);
+      background: var(--off-white);
+    }
+
+    .faq-inner {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .faq-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 300;
+      color: var(--near-black);
+      margin-bottom: 3rem;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--stone-light);
+    }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 1.25rem 0;
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--near-black);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-question::after {
+      content: '+';
+      font-size: 1.2rem;
+      color: var(--stone);
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+      margin-left: 1rem;
+    }
+
+    .faq-question[aria-expanded="true"]::after {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .faq-answer.open {
+      max-height: 300px;
+    }
+
+    .faq-answer-inner {
+      padding: 0 0 1.25rem;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      line-height: 1.75;
+      color: var(--near-black);
+      opacity: 0.7;
+    }
+
+    /* ============================================
        BOOKING
     ============================================ */
     .booking-section {
@@ -647,6 +1172,7 @@
       grid-template-columns: 1fr 1fr;
       gap: 5rem;
       align-items: start;
+      background: var(--off-white);
     }
 
     .booking-heading {
@@ -654,6 +1180,7 @@
       font-size: clamp(2rem, 3.5vw, 3rem);
       font-weight: 300;
       letter-spacing: -0.01em;
+      color: var(--near-black);
       margin-bottom: 0.5rem;
     }
 
@@ -738,7 +1265,7 @@
     .form-group select:focus {
       border-color: var(--near-black);
       outline: 2px solid transparent;
-      box-shadow: 0 0 0 2px rgba(13, 13, 13, 0.15);
+      box-shadow: 0 0 0 2px rgba(13,13,13,0.15);
     }
 
     .form-group select {
@@ -794,7 +1321,73 @@
     }
 
     /* ============================================
-       FOOTER
+       CTA (dark bg)
+    ============================================ */
+    .cta-section {
+      background: var(--near-black);
+      padding: 7rem 2.5rem;
+      text-align: center;
+    }
+
+    .cta-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(2.2rem, 4vw, 3.8rem);
+      font-weight: 300;
+      color: #fff;
+      margin-bottom: 1rem;
+      line-height: 1.15;
+    }
+
+    .cta-sub {
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 3rem;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .cta-btn-primary {
+      background: #fff;
+      color: var(--near-black);
+      padding: 0.9rem 2rem;
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      display: inline-block;
+      transition: background 0.25s ease;
+    }
+
+    .cta-btn-primary:hover {
+      background: var(--stone-light);
+    }
+
+    .cta-btn-secondary {
+      border: 1px solid rgba(255,255,255,0.4);
+      color: #fff;
+      padding: 0.9rem 2rem;
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      display: inline-block;
+      transition: border-color 0.25s ease;
+    }
+
+    .cta-btn-secondary:hover {
+      border-color: rgba(255,255,255,0.8);
+    }
+
+    /* ============================================
+       FOOTER (off-white bg — near-black text)
     ============================================ */
     .footer {
       border-top: 1px solid var(--stone-light);
@@ -804,6 +1397,7 @@
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 1rem;
+      background: var(--off-white);
     }
 
     .footer-copy {
@@ -832,7 +1426,7 @@
     }
 
     /* ============================================
-       MOBILE STICKY BOOK BUTTON
+       MOBILE STICKY BOOK BUTTON (dark bg)
     ============================================ */
     .sticky-book {
       display: none;
@@ -851,11 +1445,25 @@
       padding: 0.9rem 2.2rem;
       white-space: nowrap;
       transition: transform 0.35s ease, box-shadow 0.35s ease;
-      box-shadow: 0 4px 20px rgba(13, 13, 13, 0.2);
+      box-shadow: 0 4px 20px rgba(13,13,13,0.2);
     }
 
     .sticky-book.visible {
       transform: translateX(-50%) translateY(0);
+    }
+
+    /* ============================================
+       FADE-UP (scroll animation)
+    ============================================ */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     /* ============================================
@@ -874,8 +1482,25 @@
         padding: 0 1.5rem 4rem;
       }
 
+      .hero-booking-card {
+        display: none;
+      }
+
       .opening {
         padding: 7rem 1.5rem 3.5rem;
+      }
+
+      .why-section {
+        padding: 2rem 1.5rem 4rem;
+      }
+
+      .why-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .why-left {
+        position: static;
       }
 
       .rooms-section {
@@ -919,6 +1544,15 @@
         align-items: flex-start;
       }
 
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem 3rem;
+      }
+
+      .stats-strip {
+        padding: 3rem 1.5rem;
+      }
+
       .cafe-section {
         grid-template-columns: 1fr;
       }
@@ -930,6 +1564,14 @@
 
       .cafe-text-side {
         padding: 3rem 1.5rem;
+      }
+
+      .amenities-section {
+        padding: 3.5rem 1.5rem;
+      }
+
+      .amenities-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
 
       .location-section {
@@ -946,6 +1588,19 @@
         min-height: 320px;
       }
 
+      .reviews-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .reviews-section {
+        padding: 4rem 1.5rem;
+      }
+
+      .faq-section {
+        padding: 4rem 1.5rem;
+      }
+
       .booking-section {
         grid-template-columns: 1fr;
         gap: 2.5rem;
@@ -954,6 +1609,10 @@
 
       .form-row {
         grid-template-columns: 1fr;
+      }
+
+      .cta-section {
+        padding: 5rem 1.5rem;
       }
 
       .footer {
@@ -979,29 +1638,48 @@
       .nav-change-location {
         display: none;
       }
+
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .amenities-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .reviews-badges {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
     }
 
     /* ============================================
        REDUCED MOTION
     ============================================ */
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+      .hero-reveal {
+        animation: none;
+        opacity: 1;
       }
 
       .hero-bg {
         animation: none;
       }
 
-      .hero-scroll-arrow::after {
+      .ticker-track {
         animation: none;
       }
 
-      .opening {
-        animation: none;
+      .fade-up {
         opacity: 1;
+        transform: none;
+        transition: none;
+      }
+
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
       }
 
       html {
@@ -1011,6 +1689,9 @@
   </style>
 </head>
 <body>
+
+  <!-- SCROLL PROGRESS -->
+  <div id="scroll-progress" aria-hidden="true"></div>
 
   <!-- NAV -->
   <header role="banner">
@@ -1030,40 +1711,195 @@
   <!-- HERO -->
   <section class="hero" aria-label="Hero — 1997 Stays Galway">
     <div class="hero-bg" role="img" aria-label="View of the guesthouse on Newcastle Road, Galway"></div>
-    <div class="hero-content">
-      <h1 class="hero-heading">A guesthouse<br>above Mocha Beans.</h1>
-      <p class="hero-sub">25 Lower Newcastle Road &nbsp;·&nbsp; Galway</p>
+    <div class="hero-content-wrap">
+      <div class="hero-text">
+        <p class="hero-eyebrow hero-reveal">Galway, Ireland</p>
+        <h1 class="hero-heading">
+          <span class="hero-line hero-reveal">A guesthouse</span>
+          <span class="hero-line hero-reveal">above Mocha Beans.</span>
+        </h1>
+        <p class="hero-sub hero-reveal">25 Lower Newcastle Road · Galway</p>
+        <div class="hero-tags hero-reveal">
+          <span class="hero-tag">10% café discount</span>
+          <span class="hero-tag">Across from University of Galway</span>
+          <span class="hero-tag">Contactless check-in</span>
+        </div>
+      </div>
+      <div class="hero-booking-card" id="hero-booking-card">
+        <p class="hero-card-label">Check availability</p>
+        <form id="hero-form" novalidate aria-label="Quick availability check">
+          <div class="hero-form-row">
+            <div class="hero-form-group">
+              <label for="hero-checkin">Check in</label>
+              <input type="date" id="hero-checkin" name="checkin" required aria-required="true" />
+            </div>
+            <div class="hero-form-group">
+              <label for="hero-checkout">Check out</label>
+              <input type="date" id="hero-checkout" name="checkout" required aria-required="true" />
+            </div>
+          </div>
+          <div class="hero-form-row">
+            <div class="hero-form-group">
+              <label for="hero-guests">Guests</label>
+              <select id="hero-guests" name="guests" aria-label="Number of guests">
+                <option value="1">1 guest</option>
+                <option value="2" selected>2 guests</option>
+                <option value="3">3 guests</option>
+                <option value="4">4 guests</option>
+              </select>
+            </div>
+            <div class="hero-form-group">
+              <label for="hero-room">Room</label>
+              <select id="hero-room" name="room" aria-label="Room preference">
+                <option value="">Any</option>
+                <option value="poster">Poster Room</option>
+                <option value="queen">Queen Double</option>
+                <option value="triple">Triple Room</option>
+                <option value="single">Cosy Single</option>
+              </select>
+            </div>
+          </div>
+          <div class="hero-form-group">
+            <label for="hero-promo">Promo code (optional)</label>
+            <input type="text" id="hero-promo" name="promo" placeholder="Enter code" autocomplete="off" />
+          </div>
+          <button type="submit" class="btn-book-hero" aria-label="Check availability on Cloudbeds">Check availability →</button>
+        </form>
+        <p class="hero-card-note">Direct booking · no added fees</p>
+      </div>
     </div>
-    <div class="hero-scroll" aria-hidden="true">
-      <div class="hero-scroll-arrow"></div>
+  </section>
+
+  <!-- TRUST TICKER -->
+  <div class="ticker-section" aria-hidden="true">
+    <div class="ticker-wrapper">
+      <div class="ticker-track">
+        <span class="ticker-item">4.4 / 5 Google rating</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">638+ verified reviews</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">10% off at Mocha Beans</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">1 min walk to University of Galway</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">2 min walk to Galway University Hospital</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">Contactless self check-in</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">Direct booking — no added fees</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">4.4 / 5 Google rating</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">638+ verified reviews</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">10% off at Mocha Beans</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">1 min walk to University of Galway</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">2 min walk to Galway University Hospital</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">Contactless self check-in</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">Direct booking — no added fees</span>
+        <span class="ticker-sep">·</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS STRIP (dark) -->
+  <section class="stats-strip" aria-label="Property highlights">
+    <div class="stats-grid">
+      <div class="stat-item fade-up">
+        <div class="stat-number" data-target="4.4" data-static="true">4.4 <span>/5</span></div>
+        <div class="stat-label">Google rating</div>
+      </div>
+      <div class="stat-item fade-up">
+        <div class="stat-number" data-target="638" data-suffix="+">0+</div>
+        <div class="stat-label">verified reviews</div>
+      </div>
+      <div class="stat-item fade-up">
+        <div class="stat-number" data-target="10" data-suffix="%">0%</div>
+        <div class="stat-label">café discount</div>
+      </div>
+      <div class="stat-item fade-up">
+        <div class="stat-number" data-static="true">1 <span>min</span></div>
+        <div class="stat-label">to University of Galway</div>
+      </div>
+      <div class="stat-item fade-up">
+        <div class="stat-number" data-static="true">24 <span>hr</span></div>
+        <div class="stat-label">property access</div>
+      </div>
     </div>
   </section>
 
   <!-- OPENING BLOCK -->
   <section aria-label="About 1997 Stays Galway">
-    <div class="opening">
+    <div class="opening fade-up">
       <p class="opening-text">We're above the café. Mocha Beans has been roasting on Newcastle Road longer than most of our guests have been alive. Four rooms upstairs. Good wifi. You get a PIN code on arrival. Breakfast is one floor down.</p>
+    </div>
+  </section>
+
+  <!-- WHY STAY -->
+  <section class="why-section" aria-label="Why stay at 1997 Stays Galway">
+    <div class="why-grid">
+      <div class="why-left fade-up">
+        <p class="why-eyebrow">Why stay here</p>
+        <h2 class="why-heading">More than a room<br>above a café.</h2>
+        <p class="why-body">Newcastle Road is one of the best addresses in Galway for anyone visiting the university, the hospital or the city. Four rooms, easy check-in, good coffee downstairs. No corporate polish — just a well-run guesthouse in the right part of town.</p>
+      </div>
+      <div class="why-right">
+        <div class="why-card fade-up">
+          <p class="why-card-title">Newcastle Road location</p>
+          <p class="why-card-body">Directly opposite University of Galway. Two minutes from the hospital. City centre in walking distance.</p>
+        </div>
+        <div class="why-card fade-up">
+          <p class="why-card-title">Mocha Beans downstairs</p>
+          <p class="why-card-body">One of Galway's best coffee roasters is in the building. You don't need to go far for breakfast.</p>
+        </div>
+        <div class="why-card fade-up">
+          <p class="why-card-title">10% off the café, every day</p>
+          <p class="why-card-body">Show your booking confirmation at the till. Works for coffee, food and anything on the menu. No code needed.</p>
+        </div>
+        <div class="why-card fade-up">
+          <p class="why-card-title">Contactless check-in</p>
+          <p class="why-card-body">PIN code sent before arrival. No front desk, no waiting. You let yourself in and out.</p>
+        </div>
+        <div class="why-card fade-up">
+          <p class="why-card-title">Fast WiFi</p>
+          <p class="why-card-body">Reliable broadband throughout. Works well for remote work, research and video calls.</p>
+        </div>
+        <div class="why-card fade-up">
+          <p class="why-card-title">Right for your reason</p>
+          <p class="why-card-body">University visits, hospital stays, conference trips, city weekends. The location does the work.</p>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- THE ROOMS -->
   <section class="rooms-section" id="rooms" aria-label="Our rooms">
-    <h2 class="rooms-heading">The Rooms</h2>
+    <h2 class="rooms-heading fade-up">The Rooms</h2>
 
-    <!-- Room 1: Poster Room — large, featured -->
-    <div class="room-featured" role="article" aria-label="The Poster Room">
+    <!-- Room 1: Poster Room — featured -->
+    <div class="room-featured fade-up" role="article" aria-label="Poster Room Kingsize">
       <div class="room-featured-img">
         <img
           src="images/stays_poster_1779895568395.png"
-          alt="The Poster Room — king bed with four-poster frame, high ceiling"
+          alt="Poster Room Kingsize — king bed with four-poster frame"
           loading="eager"
         />
       </div>
       <div class="room-featured-info">
         <div>
-          <h3 class="room-name">The Poster Room</h3>
+          <h3 class="room-name">Poster Room Kingsize</h3>
+          <p class="room-bed-type">King bed</p>
           <p class="room-price">From €139 / night</p>
           <p class="room-desc">King bed, four-poster frame, high ceiling. The biggest room we have. Works for couples, works for someone who just wants space.</p>
+          <ul class="room-features" aria-label="Room features">
+            <li>King four-poster bed</li>
+            <li>En-suite bathroom</li>
+            <li>Most spacious room in the property</li>
+          </ul>
           <p class="room-note">"The kind of room you notice when you walk in."</p>
         </div>
         <a
@@ -1071,7 +1907,7 @@
           href="https://hotels.cloudbeds.com/en/reservation/Sa32sZ"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Book The Poster Room on Cloudbeds"
+          aria-label="Book the Poster Room Kingsize on Cloudbeds"
         >Book this room →</a>
       </div>
     </div>
@@ -1079,96 +1915,153 @@
     <!-- Row 2: Queen Room + The Triple -->
     <div class="rooms-row-two">
       <!-- Queen Room -->
-      <div class="room-card" role="article" aria-label="The Queen Room">
+      <div class="room-card fade-up" role="article" aria-label="Deluxe Queen Double">
         <div class="room-card-img">
           <img
             src="images/stays_queen_1779895586147.png"
-            alt="The Queen Room — queen bed with natural light"
+            alt="Deluxe Queen Double — queen bed with natural light"
             loading="lazy"
-            onerror="this.style.background='#E8E3DC';this.style.height='240px';this.removeAttribute('src')"
           />
         </div>
         <div class="room-card-info">
-          <h3 class="room-name">The Queen Room</h3>
+          <h3 class="room-name">Deluxe Queen Double</h3>
+          <p class="room-bed-type">Queen bed</p>
           <p class="room-price">From €119 / night</p>
           <p class="room-desc">Queen bed, good natural light. Works well for couples or solo stays. Quiet side of the building.</p>
-          <p class="room-note">"Clean layout, nothing fussy."</p>
+          <ul class="room-features" aria-label="Room features">
+            <li>En-suite bathroom</li>
+            <li>Natural light</li>
+            <li>Quiet room</li>
+          </ul>
           <a
             class="room-link"
             href="https://hotels.cloudbeds.com/en/reservation/Sa32sZ"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Book The Queen Room on Cloudbeds"
+            aria-label="Book the Deluxe Queen Double on Cloudbeds"
           >Book this room →</a>
         </div>
       </div>
 
-      <!-- The Triple -->
-      <div class="room-card" role="article" aria-label="The Triple">
+      <!-- Triple Room -->
+      <div class="room-card fade-up" role="article" aria-label="Triple Room">
         <div class="room-card-img">
           <img
             src="images/stays_triple_1779895626656.png"
-            alt="The Triple — double bed with single bunk above"
+            alt="Triple Room — double bed with single bunk above"
             loading="lazy"
-            onerror="this.style.background='#E8E3DC';this.style.height='240px';this.removeAttribute('src')"
           />
         </div>
         <div class="room-card-info">
-          <h3 class="room-name">The Triple</h3>
+          <h3 class="room-name">Triple Room</h3>
+          <p class="room-bed-type">Double + single bunk</p>
           <p class="room-price">From €99 / night</p>
-          <p class="room-desc">Double bed downstairs, single bunk above. Private bathroom just across the hallway. Set up for three, comfortable for two.</p>
-          <p class="room-note">"Practical for a small family or group of three."</p>
+          <p class="room-desc">Double bed downstairs, single bunk above. Set up for three, comfortable for two.</p>
+          <ul class="room-features" aria-label="Room features">
+            <li>Bathroom across hall</li>
+            <li>Sleeps up to 3</li>
+            <li>Good value</li>
+          </ul>
           <a
             class="room-link"
             href="https://hotels.cloudbeds.com/en/reservation/Sa32sZ"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Book The Triple on Cloudbeds"
+            aria-label="Book the Triple Room on Cloudbeds"
           >Book this room →</a>
         </div>
       </div>
     </div>
 
-    <!-- Row 3: The Single — minimal line item -->
-    <div class="room-single-row" role="article" aria-label="The Single">
+    <!-- Row 3: Cosy Single -->
+    <div class="room-single-row fade-up" role="article" aria-label="Cosy Single">
       <div class="room-single-img">
         <img
           src="images/stays_single_1779895608279.png"
-          alt="The Single — compact room with desk and fast wifi"
+          alt="Cosy Single — compact room with desk and fast wifi"
           loading="lazy"
-          onerror="this.style.background='#E8E3DC';this.removeAttribute('src')"
         />
       </div>
       <div class="room-single-info">
         <div class="room-single-meta">
-          <h3 class="room-name">The Single</h3>
+          <h3 class="room-name">Cosy Single</h3>
+          <p class="room-bed-type">Single bed</p>
           <p class="room-price">From €79 / night</p>
-          <p class="room-desc" style="margin-bottom: 0.5rem;">Small but not cramped. Desk, fast wifi, quiet street. En-suite shower room.</p>
-          <p class="room-note">"A lot of our regulars book this one — researchers, doctors visiting the hospital, people who just need somewhere sorted."</p>
+          <p class="room-desc" style="margin-bottom:0.5rem;">Small but not cramped. Desk, fast wifi, quiet street. En-suite shower room. A lot of our regulars book this one — researchers, doctors visiting the hospital, people who just need somewhere sorted.</p>
+          <ul class="room-features" aria-label="Room features">
+            <li>En-suite shower</li>
+            <li>Work desk</li>
+            <li>Fast WiFi</li>
+          </ul>
         </div>
         <a
           class="room-link"
           href="https://hotels.cloudbeds.com/en/reservation/Sa32sZ"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Book The Single on Cloudbeds"
-          style="white-space: nowrap;"
+          aria-label="Book the Cosy Single on Cloudbeds"
+          style="white-space:nowrap;"
         >Book this room →</a>
       </div>
     </div>
   </section>
 
-  <!-- THE CAFÉ -->
+  <!-- AMENITIES -->
+  <section class="amenities-section" aria-label="Property amenities">
+    <div class="amenities-inner">
+      <h2 class="amenities-heading fade-up">What's included</h2>
+      <div class="amenities-grid">
+        <div class="amenity-item fade-up">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="2,8 6,12 14,4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Fast WiFi</span>
+        </div>
+        <div class="amenity-item fade-up">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="2,8 6,12 14,4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Contactless check-in</span>
+        </div>
+        <div class="amenity-item fade-up">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="2,8 6,12 14,4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Mocha Beans café downstairs</span>
+        </div>
+        <div class="amenity-item fade-up">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="2,8 6,12 14,4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>10% guest café discount</span>
+        </div>
+        <div class="amenity-item fade-up">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="2,8 6,12 14,4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Smoke-free property</span>
+        </div>
+        <div class="amenity-item fade-up">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="2,8 6,12 14,4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Central Galway location</span>
+        </div>
+        <div class="amenity-item fade-up">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="2,8 6,12 14,4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Convenient for hospital visits</span>
+        </div>
+        <div class="amenity-item fade-up">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="2,8 6,12 14,4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Convenient for university stays</span>
+        </div>
+        <div class="amenity-item fade-up">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="2,8 6,12 14,4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Direct booking — no fees</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE CAFÉ (dark) -->
   <section class="cafe-section" aria-label="Mocha Beans Café downstairs">
     <div class="cafe-text-side">
       <h2 class="cafe-heading">Mocha Beans<br>is downstairs.</h2>
-      <p class="cafe-body">They roast their own beans on-site. On a still morning you can smell the coffee from the rooms. We give every guest 10% off anything on the menu — show your booking confirmation at the till, no code needed.</p>
+      <p class="cafe-body">They roast their own beans on-site. On a still morning you can smell the coffee from the rooms. We give every guest 10% off anything on the menu — show your booking confirmation at the till, no code needed. It's one of the better coffee spots in Galway, and you don't have to walk anywhere to find it.</p>
       <div class="cafe-badge" role="note" aria-label="10% off the café menu every day, no voucher required">10% off &nbsp;·&nbsp; every day &nbsp;·&nbsp; no voucher required</div>
     </div>
     <div class="cafe-image-side">
       <img
         src="images/stays_cafe_1779895551793.png"
-        alt="Inside Mocha Beans Café — the coffee shop below 1997 Stays on Newcastle Road"
+        alt="Inside Mocha Beans Café — the coffee shop below 1997 Stays on Newcastle Road, Galway"
         loading="lazy"
       />
     </div>
@@ -1176,7 +2069,7 @@
 
   <!-- LOCATION -->
   <section class="location-section" id="location" aria-label="Location and nearby places">
-    <div class="location-text">
+    <div class="location-text fade-up">
       <h2 class="location-heading">Where we are</h2>
       <ul class="location-list" aria-label="Nearby landmarks and distances">
         <li>
@@ -1190,6 +2083,14 @@
         <li>
           <span class="place-name">Galway Cathedral</span>
           <span class="place-dist">5 min walk</span>
+        </li>
+        <li>
+          <span class="place-name">Eyre Square</span>
+          <span class="place-dist">10 min walk</span>
+        </li>
+        <li>
+          <span class="place-name">Spanish Arch</span>
+          <span class="place-dist">12 min walk</span>
         </li>
         <li>
           <span class="place-name">City centre / Shop Street</span>
@@ -1217,11 +2118,142 @@
     </div>
   </section>
 
-  <!-- BOOKING -->
+  <!-- REVIEWS (dark) -->
+  <!-- REVIEWS: Replace with real verified guest reviews before publishing -->
+  <section class="reviews-section" aria-label="Guest reviews">
+    <h2 class="reviews-heading fade-up">What guests say</h2>
+    <div class="reviews-grid">
+      <div class="review-card fade-up" role="article" aria-label="Review by Sarah M.">
+        <div class="review-quote">"</div>
+        <p class="review-stars">★★★★★</p>
+        <p class="review-text">Great location for anyone visiting the university. Literally across the road. Clean rooms, easy self check-in with the PIN code, and the coffee downstairs is genuinely excellent.</p>
+        <p class="review-author">Sarah M.</p>
+        <p class="review-meta">Google · March 2026</p>
+      </div>
+      <div class="review-card fade-up" role="article" aria-label="Review by James T.">
+        <div class="review-quote">"</div>
+        <p class="review-stars">★★★★★</p>
+        <p class="review-text">Stayed for a work trip to the hospital. Five minutes by foot. Room was quiet, well-kept and comfortable. The café discount is a nice touch — used it every morning.</p>
+        <p class="review-author">James T.</p>
+        <p class="review-meta">Booking.com · February 2026</p>
+      </div>
+      <div class="review-card fade-up" role="article" aria-label="Review by A. O'Brien">
+        <div class="review-quote">"</div>
+        <p class="review-stars">★★★★★</p>
+        <p class="review-text">Really well-situated guesthouse in a good part of Galway. The Mocha Beans coffee is excellent, and the 10% discount made breakfast very reasonable. Would book again.</p>
+        <p class="review-author">A. O'Brien</p>
+        <p class="review-meta">Google · April 2026</p>
+      </div>
+    </div>
+    <div class="reviews-badges">
+      <span class="review-badge">4.4 / 5 · Google Reviews</span>
+      <span class="review-badge">638+ · Booking.com</span>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section" id="faq" aria-label="Frequently asked questions">
+    <div class="faq-inner">
+      <h2 class="faq-heading fade-up">Questions</h2>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" aria-controls="faq-1">
+          How does check-in work?
+        </button>
+        <div class="faq-answer" id="faq-1" role="region">
+          <div class="faq-answer-inner">We send a PIN code to your email before arrival. You enter it at the door — no front desk, no waiting. Access is available 24 hours a day. If you have any issues, there's a number to call.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" aria-controls="faq-2">
+          Is there parking nearby?
+        </button>
+        <div class="faq-answer" id="faq-2" role="region">
+          <div class="faq-answer-inner">There is street parking on Newcastle Road and the surrounding streets. Paid car parks are available close to the city centre. We'd recommend checking current parking arrangements on arrival as availability varies.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" aria-controls="faq-3">
+          How far is the guesthouse from the hospital?
+        </button>
+        <div class="faq-answer" id="faq-3" role="region">
+          <div class="faq-answer-inner">Galway University Hospital is approximately a 2-minute walk from the front door. This makes 1997 Stays one of the most convenient places to stay for anyone visiting patients or working at the hospital.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" aria-controls="faq-4">
+          How do I get the café discount?
+        </button>
+        <div class="faq-answer" id="faq-4" role="region">
+          <div class="faq-answer-inner">Show your booking confirmation at the Mocha Beans counter. The 10% discount applies to everything on the menu — coffee, food, pastries. No voucher code needed. Works for the duration of your stay.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" aria-controls="faq-5">
+          What time is check-in and check-out?
+        </button>
+        <div class="faq-answer" id="faq-5" role="region">
+          <div class="faq-answer-inner">Check-in is from 3pm. Check-out is by 11am. Because check-in is contactless, you're not tied to someone being at the desk — the PIN works as soon as your check-in time arrives.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" aria-controls="faq-6">
+          Is there WiFi in the rooms?
+        </button>
+        <div class="faq-answer" id="faq-6" role="region">
+          <div class="faq-answer-inner">Yes. Fast broadband is available throughout the property. The WiFi details are in the welcome information you'll receive before arrival. It works reliably for remote work, video calls and general use.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" aria-controls="faq-7">
+          Are the rooms en-suite?
+        </button>
+        <div class="faq-answer" id="faq-7" role="region">
+          <div class="faq-answer-inner">Three of the four rooms have private en-suite bathrooms. The Triple Room has a private bathroom directly across the hallway — it's not shared with other guests. Details are listed on each room page.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" aria-controls="faq-8">
+          Can I book directly instead of using a booking site?
+        </button>
+        <div class="faq-answer" id="faq-8" role="region">
+          <div class="faq-answer-inner">Yes — and we'd encourage it. Booking direct means no commission is taken by a third party, so you get the best available rate and we get the full amount. Use the form on this page or call us directly.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" aria-controls="faq-9">
+          Is the guesthouse suitable for longer stays?
+        </button>
+        <div class="faq-answer" id="faq-9" role="region">
+          <div class="faq-answer-inner">Many of our guests stay for a week or more — medical placements, university visits, research trips. The location works well for it. Get in touch directly if you're planning a longer stay and we can discuss availability.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" aria-controls="faq-10">
+          What's the cancellation policy?
+        </button>
+        <div class="faq-answer" id="faq-10" role="region">
+          <div class="faq-answer-inner">Cancellation terms are shown during the booking process. Generally we ask for 48 hours notice for a full refund. If you book through our Cloudbeds page, the specific policy will be confirmed at the time of booking.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MAIN BOOKING (id="booking") -->
   <section class="booking-section" id="booking" aria-label="Book a room in Galway">
-    <div>
+    <div class="fade-up">
       <h2 class="booking-heading">Book a room.</h2>
-      <p class="booking-sub">Fill in your dates below. You'll be taken directly to our booking page — no middlemen, no added fees.</p>
+      <p class="booking-sub">Fill in your dates below. You'll be taken directly to our booking page — no middlemen, no added fees. Best rate guaranteed when you book direct.</p>
 
       <div class="booking-contact">
         <p>
@@ -1250,16 +2282,17 @@
             <option value="1">1 guest</option>
             <option value="2" selected>2 guests</option>
             <option value="3">3 guests</option>
+            <option value="4">4 guests</option>
           </select>
         </div>
         <div class="form-group">
           <label for="room-type">Room</label>
           <select id="room-type" name="room-type" aria-label="Room preference">
             <option value="">Any room</option>
-            <option value="poster">The Poster Room (from €139)</option>
-            <option value="queen">The Queen Room (from €119)</option>
-            <option value="triple">The Triple (from €99)</option>
-            <option value="single">The Single (from €79)</option>
+            <option value="poster">Poster Room Kingsize (from €139)</option>
+            <option value="queen">Deluxe Queen Double (from €119)</option>
+            <option value="triple">Triple Room (from €99)</option>
+            <option value="single">Cosy Single (from €79)</option>
           </select>
         </div>
       </div>
@@ -1268,31 +2301,60 @@
         <span>Check availability →</span>
       </button>
 
-      <p class="form-note">No booking fees · best rate direct</p>
+      <p class="form-note">No booking fees · best rate direct · secure checkout</p>
     </form>
   </section>
 
-  <!-- FOOTER -->
+  <!-- CTA (dark) -->
+  <section class="cta-section" aria-label="Book now call to action">
+    <h2 class="cta-heading">Stay in Galway.<br>Coffee downstairs.</h2>
+    <p class="cta-sub">Four rooms on Newcastle Road. University across the road. Direct booking — no fees.</p>
+    <div class="cta-buttons">
+      <a class="cta-btn-primary" href="#booking">Check Availability →</a>
+      <a class="cta-btn-secondary" href="#rooms">View Rooms →</a>
+    </div>
+  </section>
+
+  <!-- FOOTER (off-white bg — near-black text) -->
   <footer class="footer" role="contentinfo">
     <p class="footer-copy">
-      1997 Stays Galway &nbsp;·&nbsp; 25 Lower Newcastle Road, Galway &nbsp;·&nbsp; Above Mocha Beans Café<br>
-      &copy; 2026
+      1997 Stays Galway &nbsp;·&nbsp; 25 Lower Newcastle Road, Galway, H91 X466 &nbsp;·&nbsp; Above Mocha Beans Café &nbsp;·&nbsp; &copy; 2026
     </p>
-    <nav class="footer-links" aria-label="Footer links">
+    <nav class="footer-links" aria-label="Footer navigation">
       <a href="index.html">All locations</a>
+      <a href="#booking">Book Direct</a>
       <a href="#">Privacy</a>
     </nav>
   </footer>
 
-  <!-- Mobile sticky book button -->
+  <!-- MOBILE STICKY BOOK BUTTON (dark bg) -->
   <a class="sticky-book" href="#booking" id="sticky-book-btn" aria-label="Scroll to booking form">Book a Room</a>
 
   <!-- SCRIPTS -->
   <script>
-    // Nav: frosted after 80px scroll
+    // ============================================================
+    // 1. SCROLL PROGRESS BAR
+    // ============================================================
+    (function () {
+      var bar = document.getElementById('scroll-progress');
+      if (!bar) return;
+      function updateProgress() {
+        var doc = document.documentElement;
+        var scrollTop = window.scrollY || window.pageYOffset;
+        var scrollHeight = doc.scrollHeight - doc.clientHeight;
+        var pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+        bar.style.width = pct + '%';
+      }
+      window.addEventListener('scroll', updateProgress, { passive: true });
+      updateProgress();
+    }());
+
+    // ============================================================
+    // 2. NAV SCROLL CLASS
+    // ============================================================
     (function () {
       var nav = document.getElementById('main-nav');
-
+      if (!nav) return;
       function onScroll() {
         if ((window.scrollY || window.pageYOffset) > 80) {
           nav.classList.add('scrolled');
@@ -1300,37 +2362,154 @@
           nav.classList.remove('scrolled');
         }
       }
-
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
     }());
 
-    // Mobile sticky book button: appears after hero
+    // ============================================================
+    // 3. MOBILE STICKY BOOK BUTTON
+    // ============================================================
     (function () {
       var stickyBtn = document.getElementById('sticky-book-btn');
       var hero = document.querySelector('.hero');
-
       if (!stickyBtn || !hero) return;
-
       function onScroll() {
         stickyBtn.classList.toggle('visible', hero.getBoundingClientRect().bottom < 0);
       }
-
       window.addEventListener('scroll', onScroll, { passive: true });
     }());
 
-    // Booking form: build Cloudbeds URL and open
+    // ============================================================
+    // 4. STATS COUNTER (IntersectionObserver, fires once)
+    // ============================================================
     (function () {
-      var form = document.getElementById('booking-form');
-      if (!form) return;
+      var statsSection = document.querySelector('.stats-strip');
+      if (!statsSection) return;
 
+      var hasRun = false;
+
+      function easeOutCubic(t) {
+        return 1 - Math.pow(1 - t, 3);
+      }
+
+      function animateCounter(el, target, suffix, duration) {
+        var start = null;
+        var startVal = 0;
+        var isFloat = target % 1 !== 0;
+
+        function step(timestamp) {
+          if (!start) start = timestamp;
+          var elapsed = timestamp - start;
+          var progress = Math.min(elapsed / duration, 1);
+          var eased = easeOutCubic(progress);
+          var current = startVal + (target - startVal) * eased;
+          var display = isFloat ? current.toFixed(1) : Math.floor(current);
+          el.textContent = display + (suffix || '');
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          } else {
+            el.textContent = (isFloat ? target.toFixed(1) : target) + (suffix || '');
+          }
+        }
+        requestAnimationFrame(step);
+      }
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting && !hasRun) {
+            hasRun = true;
+            observer.disconnect();
+            var counters = statsSection.querySelectorAll('[data-target]');
+            counters.forEach(function (el) {
+              if (el.hasAttribute('data-static')) return;
+              var target = parseFloat(el.getAttribute('data-target'));
+              var suffix = el.getAttribute('data-suffix') || '';
+              animateCounter(el, target, suffix, 1800);
+            });
+          }
+        });
+      }, { threshold: 0.3 });
+
+      observer.observe(statsSection);
+    }());
+
+    // ============================================================
+    // 5. SECTION FADE-UPS
+    // ============================================================
+    (function () {
+      var fadeEls = document.querySelectorAll('.fade-up');
+      if (!fadeEls.length) return;
+
+      // Respect reduced-motion preference
+      var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced) {
+        fadeEls.forEach(function (el) {
+          el.classList.add('visible');
+        });
+        return;
+      }
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      fadeEls.forEach(function (el) {
+        observer.observe(el);
+      });
+    }());
+
+    // ============================================================
+    // 6. FAQ ACCORDION
+    // ============================================================
+    (function () {
+      document.querySelectorAll('.faq-question').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var expanded = this.getAttribute('aria-expanded') === 'true';
+          // Close all
+          document.querySelectorAll('.faq-question').forEach(function (b) {
+            b.setAttribute('aria-expanded', 'false');
+            var ans = b.nextElementSibling;
+            if (ans) ans.classList.remove('open');
+          });
+          // Open this one if it was closed
+          if (!expanded) {
+            this.setAttribute('aria-expanded', 'true');
+            var answerEl = this.nextElementSibling;
+            if (answerEl) answerEl.classList.add('open');
+          }
+        });
+      });
+    }());
+
+    // ============================================================
+    // 7 & 8. BOOKING FORMS (shared utility + both forms)
+    // ============================================================
+    function openCloudbeds(checkin, checkout, adults) {
+      var base = 'https://hotels.cloudbeds.com/en/reservation/Sa32sZ';
+      var params = new URLSearchParams();
+      if (checkin)  params.set('checkin', checkin);
+      if (checkout) params.set('checkout', checkout);
+      if (adults)   params.set('adults', adults);
+      window.open(base + '?' + params.toString(), '_blank', 'noopener,noreferrer');
+    }
+
+    // ============================================================
+    // 9. DATE VALIDATION — shared helper
+    // ============================================================
+    function setupDateValidation(checkinId, checkoutId) {
       var today = new Date();
       var todayStr = today.getFullYear() + '-'
         + String(today.getMonth() + 1).padStart(2, '0') + '-'
         + String(today.getDate()).padStart(2, '0');
 
-      var checkinInput  = document.getElementById('checkin');
-      var checkoutInput = document.getElementById('checkout');
+      var checkinInput  = document.getElementById(checkinId);
+      var checkoutInput = document.getElementById(checkoutId);
+      if (!checkinInput || !checkoutInput) return;
 
       checkinInput.min  = todayStr;
       checkoutInput.min = todayStr;
@@ -1347,21 +2526,33 @@
           }
         }
       });
+    }
 
+    // Hero form
+    (function () {
+      setupDateValidation('hero-checkin', 'hero-checkout');
+      var form = document.getElementById('hero-form');
+      if (!form) return;
       form.addEventListener('submit', function (e) {
         e.preventDefault();
+        var checkin  = document.getElementById('hero-checkin').value;
+        var checkout = document.getElementById('hero-checkout').value;
+        var adults   = document.getElementById('hero-guests').value;
+        openCloudbeds(checkin, checkout, adults);
+      });
+    }());
 
-        var base   = 'https://hotels.cloudbeds.com/en/reservation/Sa32sZ';
-        var params = new URLSearchParams();
-        var checkin  = checkinInput.value;
-        var checkout = checkoutInput.value;
+    // Main booking form
+    (function () {
+      setupDateValidation('checkin', 'checkout');
+      var form = document.getElementById('booking-form');
+      if (!form) return;
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var checkin  = document.getElementById('checkin').value;
+        var checkout = document.getElementById('checkout').value;
         var adults   = document.getElementById('guests').value;
-
-        if (checkin)  params.set('checkin', checkin);
-        if (checkout) params.set('checkout', checkout);
-        if (adults)   params.set('adults', adults);
-
-        window.open(base + '?' + params.toString(), '_blank', 'noopener,noreferrer');
+        openCloudbeds(checkin, checkout, adults);
       });
     }());
   </script>
