@@ -29,7 +29,9 @@ This is a one-time process. Once done, the daily workflow creates Gmail drafts a
 1. Go to **APIs & Services → OAuth consent screen**
 2. User type: **External**
 3. Fill in app name ("Lumus"), support email (your Gmail)
-4. Under **Scopes** add: `https://www.googleapis.com/auth/gmail.compose`
+4. Under **Scopes** add both:
+   - `https://www.googleapis.com/auth/gmail.compose`
+   - `https://www.googleapis.com/auth/gmail.send`
 5. Under **Test users** add your Gmail address: `dnpebusiness@gmail.com`
 6. Save
 
@@ -50,7 +52,10 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 
 flow = InstalledAppFlow.from_client_secrets_file(
     "credentials.json",   # the file you downloaded in Step 2
-    scopes=["https://www.googleapis.com/auth/gmail.compose"]
+    scopes=[
+        "https://www.googleapis.com/auth/gmail.compose",
+        "https://www.googleapis.com/auth/gmail.send",
+    ]
 )
 creds = flow.run_local_server(port=0)
 print("CLIENT_ID:", creds.client_id)

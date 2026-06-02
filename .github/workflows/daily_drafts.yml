@@ -2,7 +2,7 @@ name: Lumus Daily Gmail Drafts
 
 on:
   schedule:
-    - cron: '0 7 * * 1-5'   # Mon–Fri at 07:00 UTC (08:00 Irish time)
+    - cron: '0 6 * * 1-5'   # Mon–Fri at 06:00 UTC = 07:00 Irish time (BST)
   workflow_dispatch:          # Manual trigger from GitHub UI
 
 jobs:
@@ -34,8 +34,11 @@ jobs:
       - name: Find and score leads
         run: python3 orchestrator.py
 
-      - name: Create Gmail drafts
+      - name: Create Gmail drafts (email outreach)
         run: python3 scripts/06_create_gmail_drafts.py
+
+      - name: Send Instagram DM brief
+        run: python3 scripts/07_send_dm_brief.py
 
       - name: Commit and push results
         run: |
