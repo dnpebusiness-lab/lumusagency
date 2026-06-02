@@ -1,7 +1,7 @@
 """
 Copy Agent — writes personalised Email A, Email B, Instagram DM, Follow-Up 1 & 2.
 
-Uses Claude (claude-opus-4-7) when ANTHROPIC_API_KEY is set; falls back to
+Uses Claude (claude-sonnet-4-6) when ANTHROPIC_API_KEY is set; falls back to
 templates when the key is absent.
 
 Claude produces genuinely personalised copy — specific to the business's actual
@@ -162,7 +162,7 @@ def _claude_outreach(client, lead: dict) -> dict:
     for key, prompt in prompts.items():
         try:
             response = client.messages.create(
-                model="claude-opus-4-7",
+                model="claude-sonnet-4-6",
                 max_tokens=400,
                 system=_SYSTEM_PROMPT,
                 messages=[{"role": "user", "content": prompt}],
@@ -181,7 +181,7 @@ def run(leads: list[dict]) -> list[dict]:
     if HAS_ANTHROPIC and api_key:
         client = anthropic.Anthropic(api_key=api_key)
         use_claude = True
-        print("[copy] Using Claude (claude-opus-4-7) for personalised outreach")
+        print("[copy] Using Claude (claude-sonnet-4-6) for personalised outreach")
     else:
         use_claude = False
         if not HAS_ANTHROPIC:
