@@ -175,6 +175,7 @@
     .hero-bg {
       position: absolute;
       inset: 0;
+      background-color: #1a1a1a; /* fallback when image missing */
       background-image: url('images/stays_hero_1779895532652.png');
       background-size: cover;
       background-position: center 40%;
@@ -259,6 +260,10 @@
       padding: 6rem 2.5rem 5rem;
       max-width: 860px;
       animation: fadeInUp 0.9s ease 0.2s both;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .opening { animation: none; opacity: 1; }
     }
 
     @keyframes fadeInUp {
