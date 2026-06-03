@@ -1686,6 +1686,111 @@
         scroll-behavior: auto;
       }
     }
+
+    /* ============================================
+       BOOKING WIDGET SECTION
+    ============================================ */
+    .booking-widget-section {
+      padding: 5rem 2.5rem;
+      border-bottom: 1px solid var(--stone-light);
+      background: var(--off-white);
+    }
+
+    .booking-widget-inner {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .booking-widget-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300;
+      color: var(--near-black);
+      margin-bottom: 0.5rem;
+    }
+
+    .booking-widget-sub {
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      color: var(--near-black);
+      opacity: 0.55;
+      margin-bottom: 2.5rem;
+    }
+
+    .booking-fallback {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--stone-light);
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      color: var(--near-black);
+      opacity: 0.7;
+    }
+
+    .booking-fallback p { margin-bottom: 1rem; }
+
+    .btn-book-direct {
+      display: inline-block;
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--near-black);
+      padding: 0.85rem 2rem;
+      transition: background 0.25s ease;
+      cursor: pointer;
+    }
+
+    .btn-book-direct:hover { background: #333; }
+
+    /* ============================================
+       CONTACT SECTION
+    ============================================ */
+    .contact-section {
+      padding: 6rem 2.5rem;
+      border-top: 1px solid var(--stone-light);
+      background: var(--off-white);
+    }
+
+    .contact-inner {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .contact-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300;
+      color: var(--near-black);
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-sub {
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      color: var(--near-black);
+      opacity: 0.55;
+      margin-bottom: 2rem;
+    }
+
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .contact-details a {
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      color: var(--near-black);
+      opacity: 0.75;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .contact-details a:hover { opacity: 1; }
   </style>
 </head>
 <body>
@@ -1702,7 +1807,7 @@
       </div>
       <div class="nav-right">
         <a class="nav-change-location" href="index.html" aria-label="All 1997 Stays locations">← All locations</a>
-        <a class="nav-phone" href="tel:+353868593757" aria-label="Call us on +353 86 859 3757">+353 86 859 3757</a>
+        <a class="nav-phone" href="#contact" aria-label="Contact us">Contact Us</a>
         <a class="nav-book-link" href="#booking">Book a Room</a>
       </div>
     </nav>
@@ -1725,47 +1830,20 @@
           <span class="hero-tag">Easy contactless check-in</span>
         </div>
       </div>
-      <div class="hero-booking-card" id="hero-booking-card">
-        <p class="hero-card-label">Check availability</p>
-        <form id="hero-form" novalidate aria-label="Quick availability check">
-          <div class="hero-form-row">
-            <div class="hero-form-group">
-              <label for="hero-checkin">Check in</label>
-              <input type="date" id="hero-checkin" name="checkin" required aria-required="true" />
-            </div>
-            <div class="hero-form-group">
-              <label for="hero-checkout">Check out</label>
-              <input type="date" id="hero-checkout" name="checkout" required aria-required="true" />
-            </div>
-          </div>
-          <div class="hero-form-row">
-            <div class="hero-form-group">
-              <label for="hero-guests">Guests</label>
-              <select id="hero-guests" name="guests" aria-label="Number of guests">
-                <option value="1">1 guest</option>
-                <option value="2" selected>2 guests</option>
-                <option value="3">3 guests</option>
-                <option value="4">4 guests</option>
-              </select>
-            </div>
-            <div class="hero-form-group">
-              <label for="hero-room">Room</label>
-              <select id="hero-room" name="room" aria-label="Room preference">
-                <option value="">Any</option>
-                <option value="poster">Poster Room</option>
-                <option value="queen">Queen Double</option>
-                <option value="triple">Triple Room</option>
-                <option value="single">Cosy Single</option>
-              </select>
-            </div>
-          </div>
-          <div class="hero-form-group">
-            <label for="hero-promo">Promo code (optional)</label>
-            <input type="text" id="hero-promo" name="promo" placeholder="Enter code" autocomplete="off" />
-          </div>
-          <button type="submit" class="btn-book-hero" aria-label="Check availability on Cloudbeds">Check availability →</button>
-        </form>
-        <p class="hero-card-note">Direct booking · no added fees</p>
+    </div>
+  </section>
+
+  <!-- BOOKING WIDGET -->
+  <section class="booking-widget-section" id="booking" aria-label="Book your stay at 1997 Stays Galway">
+    <div class="booking-widget-inner">
+      <h2 class="booking-widget-heading">Book Your Stay</h2>
+      <p class="booking-widget-sub">Check availability and reserve your room directly.</p>
+      <div class="booking-widget-embed">
+        <script src="https://mochabeansgroup.cloudbeds.com/widget/load/Sa32sZ/vert?newWindow=1"></script>
+      </div>
+      <div class="booking-fallback">
+        <p>If the booking widget does not load, book directly on our reservations page.</p>
+        <a class="btn-book-direct" href="https://hotels.cloudbeds.com/en/reservation/Sa32sZ" target="_blank" rel="noopener noreferrer">Book Direct</a>
       </div>
     </div>
   </section>
@@ -2249,60 +2327,17 @@
     </div>
   </section>
 
-  <!-- MAIN BOOKING (id="booking") -->
-  <section class="booking-section" id="booking" aria-label="Book a room in Galway">
-    <div class="fade-up">
-      <h2 class="booking-heading">Book a room.</h2>
-      <p class="booking-sub">Fill in your dates below. You will be taken directly to our booking page with no added fees. Best rate guaranteed when you book direct.</p>
-
-      <div class="booking-contact">
-        <p>
-          Or call us — <a href="tel:+353868593757">+353 86 859 3757</a><br>
-          Email — <a href="mailto:cathal.keogh@mochabeans.com">cathal.keogh@mochabeans.com</a>
-        </p>
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact" aria-label="Contact 1997 Stays Galway">
+    <div class="contact-inner fade-up">
+      <h2 class="contact-heading">Get in touch.</h2>
+      <p class="contact-sub">Questions about your stay, group bookings or anything else — reach us directly.</p>
+      <div class="contact-details">
+        <a href="tel:+353868593757">+353 86 859 3757</a>
+        <a href="mailto:cathal.keogh@mochabeans.com">cathal.keogh@mochabeans.com</a>
+        <span style="font-family:var(--font-sans);font-size:0.9rem;opacity:0.6;">25 Lower Newcastle Road, Galway, H91 X466</span>
       </div>
     </div>
-
-    <form class="booking-form" id="booking-form" novalidate aria-label="Room availability form">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="checkin">Check in</label>
-          <input type="date" id="checkin" name="checkin" required aria-required="true" />
-        </div>
-        <div class="form-group">
-          <label for="checkout">Check out</label>
-          <input type="date" id="checkout" name="checkout" required aria-required="true" />
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label for="guests">Guests</label>
-          <select id="guests" name="guests" aria-label="Number of guests">
-            <option value="1">1 guest</option>
-            <option value="2" selected>2 guests</option>
-            <option value="3">3 guests</option>
-            <option value="4">4 guests</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="room-type">Room</label>
-          <select id="room-type" name="room-type" aria-label="Room preference">
-            <option value="">Any room</option>
-            <option value="poster">Poster Room Kingsize (from €139)</option>
-            <option value="queen">Deluxe Queen Double (from €119)</option>
-            <option value="triple">Triple Room (from €99)</option>
-            <option value="single">Cosy Single (from €79)</option>
-          </select>
-        </div>
-      </div>
-
-      <button type="submit" class="btn-book" aria-label="Check availability on Cloudbeds">
-        <span>Check availability →</span>
-      </button>
-
-      <p class="form-note">No booking fees · best rate direct · secure checkout</p>
-    </form>
   </section>
 
   <!-- CTA (dark) -->
@@ -2318,12 +2353,12 @@
   <!-- FOOTER (off-white bg — near-black text) -->
   <footer class="footer" role="contentinfo">
     <p class="footer-copy">
-      1997 Stays Galway &nbsp;·&nbsp; 25 Lower Newcastle Road, Galway, H91 X466 &nbsp;·&nbsp; Above Mocha Beans Café &nbsp;·&nbsp; &copy; 2026
+      1997 Stays Galway &nbsp;·&nbsp; 25 Lower Newcastle Road, Galway, H91 X466 &nbsp;·&nbsp; &copy; 2026
     </p>
     <nav class="footer-links" aria-label="Footer navigation">
       <a href="index.html">All locations</a>
       <a href="#booking">Book Direct</a>
-      <a href="#">Privacy</a>
+      <a href="#contact">Contact</a>
     </nav>
   </footer>
 
@@ -2486,75 +2521,6 @@
       });
     }());
 
-    // ============================================================
-    // 7 & 8. BOOKING FORMS (shared utility + both forms)
-    // ============================================================
-    function openCloudbeds(checkin, checkout, adults) {
-      var base = 'https://hotels.cloudbeds.com/en/reservation/Sa32sZ';
-      var params = new URLSearchParams();
-      if (checkin)  params.set('checkin', checkin);
-      if (checkout) params.set('checkout', checkout);
-      if (adults)   params.set('adults', adults);
-      window.open(base + '?' + params.toString(), '_blank', 'noopener,noreferrer');
-    }
-
-    // ============================================================
-    // 9. DATE VALIDATION — shared helper
-    // ============================================================
-    function setupDateValidation(checkinId, checkoutId) {
-      var today = new Date();
-      var todayStr = today.getFullYear() + '-'
-        + String(today.getMonth() + 1).padStart(2, '0') + '-'
-        + String(today.getDate()).padStart(2, '0');
-
-      var checkinInput  = document.getElementById(checkinId);
-      var checkoutInput = document.getElementById(checkoutId);
-      if (!checkinInput || !checkoutInput) return;
-
-      checkinInput.min  = todayStr;
-      checkoutInput.min = todayStr;
-
-      checkinInput.addEventListener('change', function () {
-        if (this.value) {
-          checkoutInput.min = this.value;
-          if (checkoutInput.value && checkoutInput.value <= this.value) {
-            var next = new Date(this.value);
-            next.setDate(next.getDate() + 1);
-            checkoutInput.value = next.getFullYear() + '-'
-              + String(next.getMonth() + 1).padStart(2, '0') + '-'
-              + String(next.getDate()).padStart(2, '0');
-          }
-        }
-      });
-    }
-
-    // Hero form
-    (function () {
-      setupDateValidation('hero-checkin', 'hero-checkout');
-      var form = document.getElementById('hero-form');
-      if (!form) return;
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var checkin  = document.getElementById('hero-checkin').value;
-        var checkout = document.getElementById('hero-checkout').value;
-        var adults   = document.getElementById('hero-guests').value;
-        openCloudbeds(checkin, checkout, adults);
-      });
-    }());
-
-    // Main booking form
-    (function () {
-      setupDateValidation('checkin', 'checkout');
-      var form = document.getElementById('booking-form');
-      if (!form) return;
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var checkin  = document.getElementById('checkin').value;
-        var checkout = document.getElementById('checkout').value;
-        var adults   = document.getElementById('guests').value;
-        openCloudbeds(checkin, checkout, adults);
-      });
-    }());
   </script>
 
 </body>

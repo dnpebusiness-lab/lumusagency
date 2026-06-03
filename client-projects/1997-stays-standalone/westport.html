@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>1997 Stays Westport — Guesthouse above Mocha Beans, Westport</title>
-  <meta name="description" content="Rooms above Mocha Beans Café in Westport, Co. Mayo. Close to the town, harbour and coast. Book direct — no fees." />
+  <title>1997 Stays Westport — B&B in the heart of Westport, Co. Mayo</title>
+  <meta name="description" content="A comfortable B&B right in the centre of Westport, Co. Mayo. Walk to the harbour, Westport House and Clew Bay. Book direct — best rate guaranteed." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -1008,6 +1008,193 @@
         scroll-behavior: auto;
       }
     }
+
+    /* ============================================
+       BOOKING WIDGET SECTION
+    ============================================ */
+    .booking-widget-section {
+      padding: 5rem 2.5rem;
+      border-bottom: 1px solid var(--stone-light);
+      background: var(--off-white);
+    }
+
+    .booking-widget-inner {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .booking-widget-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300;
+      color: var(--near-black);
+      margin-bottom: 0.5rem;
+    }
+
+    .booking-widget-sub {
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      color: var(--near-black);
+      opacity: 0.55;
+      margin-bottom: 2.5rem;
+    }
+
+    .booking-fallback {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--stone-light);
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      color: var(--near-black);
+      opacity: 0.7;
+    }
+
+    .booking-fallback p { margin-bottom: 1rem; }
+
+    .btn-book-direct {
+      display: inline-block;
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--near-black);
+      padding: 0.85rem 2rem;
+      transition: background 0.25s ease;
+      cursor: pointer;
+    }
+
+    .btn-book-direct:hover { background: #333; }
+
+    /* ============================================
+       WHY STAY SECTION (Benefits)
+    ============================================ */
+    .why-section {
+      padding: 6rem 2.5rem;
+      border-bottom: 1px solid var(--stone-light);
+      background: var(--off-white);
+    }
+
+    .why-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    @media (max-width: 768px) {
+      .why-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+
+    .why-eyebrow {
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--near-black);
+      opacity: 0.45;
+      margin-bottom: 1rem;
+    }
+
+    .why-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300;
+      color: var(--near-black);
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+
+    .why-body {
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: var(--near-black);
+      opacity: 0.7;
+    }
+
+    .why-right {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 480px) {
+      .why-right { grid-template-columns: 1fr; }
+    }
+
+    .why-card {
+      padding: 1.5rem;
+      border: 1px solid var(--stone-light);
+      background: #fff;
+    }
+
+    .why-card-title {
+      font-family: var(--font-sans);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--near-black);
+      margin-bottom: 0.5rem;
+    }
+
+    .why-card-body {
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      line-height: 1.6;
+      color: var(--near-black);
+      opacity: 0.6;
+    }
+
+    /* ============================================
+       CONTACT SECTION
+    ============================================ */
+    .contact-section {
+      padding: 6rem 2.5rem;
+      border-top: 1px solid var(--stone-light);
+      background: var(--off-white);
+    }
+
+    .contact-inner {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .contact-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300;
+      color: var(--near-black);
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-sub {
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      color: var(--near-black);
+      opacity: 0.55;
+      margin-bottom: 2rem;
+    }
+
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .contact-details a {
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      color: var(--near-black);
+      opacity: 0.75;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .contact-details a:hover { opacity: 1; }
   </style>
 </head>
 <body>
@@ -1029,11 +1216,9 @@
 
   <!-- HERO -->
   <section class="hero" aria-label="Hero — 1997 Stays Westport">
-    <!-- TODO: Replace images/westport-hero.jpg with the actual Westport hero photo -->
-    <div class="hero-bg" role="img" aria-label="View of 1997 Stays Westport above Mocha Beans Café"></div>
+    <div class="hero-bg" role="img" aria-label="1997 Stays Westport, B&B in the centre of Westport town"></div>
     <div class="hero-content">
-      <h1 class="hero-heading">A guesthouse<br>above Mocha Beans.</h1>
-      <!-- TODO: Replace with full Westport address once confirmed -->
+      <h1 class="hero-heading">Your B&amp;B<br>in Westport.</h1>
       <p class="hero-sub">Westport &nbsp;·&nbsp; Co. Mayo</p>
     </div>
     <div class="hero-scroll" aria-hidden="true">
@@ -1041,10 +1226,54 @@
     </div>
   </section>
 
+  <!-- BOOKING WIDGET -->
+  <section class="booking-widget-section" id="booking" aria-label="Book your stay at 1997 Stays Westport">
+    <div class="booking-widget-inner">
+      <h2 class="booking-widget-heading">Book Your Stay</h2>
+      <p class="booking-widget-sub">Check availability and reserve your room directly.</p>
+      <div class="booking-widget-embed">
+        <script src="https://mochabeansgroup.cloudbeds.com/widget/load/1jTOWB/vert?newWindow=1"></script>
+      </div>
+      <div class="booking-fallback">
+        <p>If the booking widget does not load, book directly on our reservations page.</p>
+        <a class="btn-book-direct" href="https://mochabeansgroup.cloudbeds.com/en/reservas/1jTOWB?referral_id=197466&association_direct=1&currency=eur" target="_blank" rel="noopener noreferrer">Book Direct</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY STAY -->
+  <section class="why-section" aria-label="Why stay at 1997 Stays Westport">
+    <div class="why-grid">
+      <div class="why-left">
+        <p class="why-eyebrow">Why stay here</p>
+        <h2 class="why-heading">A comfortable B&amp;B<br>in the heart of Westport.</h2>
+        <p class="why-body">Right on the main street — Westport town, the harbour and Clew Bay are all within walking distance. Comfortable rooms, easy contactless check-in and a PIN code sent before arrival. Croagh Patrick is a 15-minute drive.</p>
+      </div>
+      <div class="why-right">
+        <div class="why-card">
+          <p class="why-card-title">Town centre location</p>
+          <p class="why-card-body">On the main street in Westport. Walk to the harbour, Westport House and Clew Bay in under 15 minutes.</p>
+        </div>
+        <div class="why-card">
+          <p class="why-card-title">Comfortable rooms</p>
+          <p class="why-card-body">Well-kept rooms with fresh bedding, en-suite bathrooms and everything you need for a relaxed stay.</p>
+        </div>
+        <div class="why-card">
+          <p class="why-card-title">Easy contactless check-in</p>
+          <p class="why-card-body">A PIN code is sent before arrival. No front desk, no waiting. Let yourself in and out at any time.</p>
+        </div>
+        <div class="why-card">
+          <p class="why-card-title">Best rate direct</p>
+          <p class="why-card-body">Book direct through our Cloudbeds page for the best available rate — no booking fees, no middlemen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- OPENING BLOCK -->
   <section aria-label="About 1997 Stays Westport">
     <div class="opening">
-      <p class="opening-text">We're above the café on the main street in Westport. Mocha Beans has been part of this town for years. A few rooms upstairs — easy check-in, good wifi, PIN code on arrival. The Atlantic is close. The town is on your doorstep.</p>
+      <p class="opening-text">A comfortable B&amp;B right in the centre of Westport. Good rooms, easy check-in, fast wifi. The town, the harbour and Clew Bay are all within walking distance. Croagh Patrick is a short drive away.</p>
     </div>
   </section>
 
@@ -1176,8 +1405,8 @@
   <!-- THE CAFÉ -->
   <section class="cafe-section" aria-label="Mocha Beans Café Westport">
     <div class="cafe-text-side">
-      <h2 class="cafe-heading">Mocha Beans<br>is downstairs.</h2>
-      <p class="cafe-body">They roast their own beans. Mocha Beans has been part of Westport for years — known for the coffee, and for the people behind the counter. Every guest gets 10% off anything on the menu. Show your booking confirmation at the till.</p>
+      <h2 class="cafe-heading">Coffee<br>downstairs.</h2>
+      <p class="cafe-body">Mocha Beans café is on the ground floor. They roast their own beans and have been part of Westport for years. Every guest gets 10% off the menu — show your booking confirmation at the till.</p>
       <div class="cafe-badge" role="note" aria-label="10% off the café menu every day, no voucher required">10% off &nbsp;·&nbsp; every day &nbsp;·&nbsp; no voucher required</div>
     </div>
     <div class="cafe-image-side">
@@ -1237,71 +1466,27 @@
     </div>
   </section>
 
-  <!-- BOOKING -->
-  <section class="booking-section" id="booking" aria-label="Book a room in Westport">
-    <div>
-      <h2 class="booking-heading">Book a room.</h2>
-      <p class="booking-sub">Fill in your dates below. You'll go directly to our booking page — no middlemen, no added fees.</p>
-
-      <div class="booking-contact">
-        <p>
-          <!-- TODO: Add Westport-specific phone or email if different from Galway -->
-          Email — <a href="mailto:cathal.keogh@mochabeans.com">cathal.keogh@mochabeans.com</a>
-        </p>
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact" aria-label="Contact 1997 Stays Westport">
+    <div class="contact-inner">
+      <h2 class="contact-heading">Get in touch.</h2>
+      <p class="contact-sub">Questions about your stay, group bookings or anything else — reach us directly.</p>
+      <div class="contact-details">
+        <a href="mailto:cathal.keogh@mochabeans.com">cathal.keogh@mochabeans.com</a>
+        <span style="font-family:var(--font-sans);font-size:0.9rem;opacity:0.6;">Westport, Co. Mayo, Ireland</span>
       </div>
     </div>
-
-    <form class="booking-form" id="booking-form" novalidate aria-label="Room availability form — Westport">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="checkin">Check in</label>
-          <input type="date" id="checkin" name="checkin" required aria-required="true" />
-        </div>
-        <div class="form-group">
-          <label for="checkout">Check out</label>
-          <input type="date" id="checkout" name="checkout" required aria-required="true" />
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label for="guests">Guests</label>
-          <select id="guests" name="guests" aria-label="Number of guests">
-            <option value="1">1 guest</option>
-            <option value="2" selected>2 guests</option>
-            <option value="3">3 guests</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="room-type">Room</label>
-          <select id="room-type" name="room-type" aria-label="Room preference">
-            <!-- TODO: Update room names to match actual Westport Cloudbeds inventory -->
-            <option value="">Any room</option>
-            <option value="double">The Double Room</option>
-            <option value="twin">The Twin Room</option>
-            <option value="family">The Family Room</option>
-            <option value="single">The Single Room</option>
-          </select>
-        </div>
-      </div>
-
-      <button type="submit" class="btn-book" aria-label="Check availability in Westport on Cloudbeds">
-        <span>Check availability →</span>
-      </button>
-
-      <p class="form-note">No booking fees · best rate direct</p>
-    </form>
   </section>
 
   <!-- FOOTER -->
   <footer class="footer" role="contentinfo">
     <p class="footer-copy">
-      1997 Stays Westport &nbsp;·&nbsp; Westport, Co. Mayo &nbsp;·&nbsp; Above Mocha Beans Café<br>
-      &copy; 2026
+      1997 Stays Westport &nbsp;·&nbsp; Westport, Co. Mayo &nbsp;·&nbsp; &copy; 2026
     </p>
     <nav class="footer-links" aria-label="Footer links">
       <a href="index.html">All locations</a>
-      <a href="#">Privacy</a>
+      <a href="#booking">Book Direct</a>
+      <a href="#contact">Contact</a>
     </nav>
   </footer>
 
@@ -1340,57 +1525,6 @@
       window.addEventListener('scroll', onScroll, { passive: true });
     }());
 
-    // Booking form: build Westport Cloudbeds URL and open
-    (function () {
-      var form = document.getElementById('booking-form');
-      if (!form) return;
-
-      var today = new Date();
-      var todayStr = today.getFullYear() + '-'
-        + String(today.getMonth() + 1).padStart(2, '0') + '-'
-        + String(today.getDate()).padStart(2, '0');
-
-      var checkinInput  = document.getElementById('checkin');
-      var checkoutInput = document.getElementById('checkout');
-
-      checkinInput.min  = todayStr;
-      checkoutInput.min = todayStr;
-
-      checkinInput.addEventListener('change', function () {
-        if (this.value) {
-          checkoutInput.min = this.value;
-          if (checkoutInput.value && checkoutInput.value <= this.value) {
-            var next = new Date(this.value);
-            next.setDate(next.getDate() + 1);
-            checkoutInput.value = next.getFullYear() + '-'
-              + String(next.getMonth() + 1).padStart(2, '0') + '-'
-              + String(next.getDate()).padStart(2, '0');
-          }
-        }
-      });
-
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        // Westport Cloudbeds booking URL
-        var base   = 'https://mochabeansgroup.cloudbeds.com/en/reservas/1jTOWB';
-        var params = new URLSearchParams({
-          referral_id:      '197466',
-          association_direct: '1',
-          currency:         'eur'
-        });
-
-        var checkin  = checkinInput.value;
-        var checkout = checkoutInput.value;
-        var adults   = document.getElementById('guests').value;
-
-        if (checkin)  params.set('checkin', checkin);
-        if (checkout) params.set('checkout', checkout);
-        if (adults)   params.set('adults', adults);
-
-        window.open(base + '?' + params.toString(), '_blank', 'noopener,noreferrer');
-      });
-    }());
   </script>
 
 </body>
