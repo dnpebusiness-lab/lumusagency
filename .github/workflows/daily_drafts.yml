@@ -2,7 +2,7 @@ name: Lumus Daily Gmail Drafts
 
 on:
   schedule:
-    - cron: '0 6 * * 1-5'   # Mon–Fri at 06:00 UTC = 07:00 Irish time (BST)
+    - cron: '0 9 * * 1-5'   # Mon–Fri at 09:00 UTC = 10:00 Irish time (BST)
   workflow_dispatch:          # Manual trigger from GitHub UI
 
 jobs:

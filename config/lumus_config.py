@@ -69,7 +69,7 @@ PRIORITY_THRESHOLDS = {
 
 # Efficiency defaults — controls how much work each run does
 EFFICIENCY = {
-    "max_leads_per_run": 5,          # Max new leads to seed per run
+    "max_leads_per_run": 20,         # Max new leads to seed per run
     "outreach_min_score": 45,        # Write outreach for HOT + WARM (score >= 45)
     "audit_max_words": 150,          # Keep audit notes under this limit
     "read_current_week_only": True,  # Don't scan full history unless asked
