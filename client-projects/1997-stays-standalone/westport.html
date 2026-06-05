@@ -193,9 +193,9 @@
       inset: 0;
       /* TODO: Replace westport-hero.jpg with actual Westport hero image */
       background-color: #1a1a1a;
-      background-image: url('images/westport-hero.jpg');
+      background-image: url('images/DSCF1847.jpg');
       background-size: cover;
-      background-position: center 40%;
+      background-position: center 45%;
       filter: brightness(0.55);
       animation: kenburns 20s ease-out forwards;
       transform-origin: center center;
@@ -336,11 +336,13 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: filter 0.4s ease;
+      transition: transform 0.9s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.4s ease;
+      will-change: transform;
     }
 
-    .room-featured-img img:hover {
-      filter: brightness(1.08);
+    .room-featured:hover .room-featured-img img {
+      transform: scale(1.04);
+      filter: brightness(1.06);
     }
 
     .room-featured-info {
@@ -446,11 +448,13 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: filter 0.4s ease;
+      transition: transform 0.9s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.4s ease;
+      will-change: transform;
     }
 
-    .room-card-img img:hover {
-      filter: brightness(1.08);
+    .room-card:hover .room-card-img img {
+      transform: scale(1.06);
+      filter: brightness(1.06);
     }
 
     .room-card-info {
@@ -1195,6 +1199,126 @@
     }
 
     .contact-details a:hover { opacity: 1; }
+
+    /* ── BOOKING MODAL ── */
+    .bk-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .bk-modal.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .bk-modal-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(13,13,13,0.88);
+      cursor: pointer;
+    }
+    .bk-modal-box {
+      position: relative;
+      z-index: 1;
+      background: var(--off-white);
+      width: min(94vw, 980px);
+      height: min(90vh, 800px);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+      transform: translateY(28px) scale(0.97);
+      transition: transform 0.45s cubic-bezier(0.16,1,0.3,1);
+    }
+    .bk-modal.open .bk-modal-box {
+      transform: translateY(0) scale(1);
+    }
+    .bk-modal-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 1.5rem;
+      border-bottom: 1px solid var(--stone-light);
+      flex-shrink: 0;
+    }
+    .bk-modal-label {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--near-black);
+      letter-spacing: 0.02em;
+    }
+    .bk-modal-close {
+      width: 34px; height: 34px;
+      display: flex; align-items: center; justify-content: center;
+      background: none;
+      border: 1px solid var(--stone-light);
+      cursor: pointer;
+      color: var(--near-black);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .bk-modal-close:hover { background: var(--stone-light); }
+    .bk-modal-close svg { width: 15px; height: 15px; pointer-events: none; display: block; }
+    .bk-modal-iframe-wrap {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+    }
+    .bk-modal-iframe {
+      width: 100%; height: 100%;
+      border: none;
+      display: block;
+    }
+    .bk-modal-loader {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--off-white);
+      font-family: var(--font-sans);
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--near-black);
+      opacity: 0.45;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    .bk-modal-loader.hidden { opacity: 0; }
+
+    /* ── BOOKING SECTION TRIGGER BTN ── */
+    .btn-open-booking {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--off-white);
+      background: var(--near-black);
+      border: none;
+      padding: 0.9rem 2.2rem;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+      margin-top: 1.5rem;
+    }
+    .btn-open-booking:hover { opacity: 0.82; }
+
+    /* ── 3D IMAGE DEPTH ── */
+    .room-single-img img {
+      transition: transform 0.9s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.4s ease;
+      will-change: transform;
+    }
+    .room-single-row:hover .room-single-img img {
+      transform: scale(1.04);
+    }
   </style>
 </head>
 <body>
@@ -1232,10 +1356,12 @@
       <h2 class="booking-widget-heading">Book Your Stay</h2>
       <p class="booking-widget-sub">Check availability and reserve your room directly.</p>
       <div class="booking-widget-embed">
-        <script src="https://mochabeansgroup.cloudbeds.com/widget/load/1jTOWB/vert?newWindow=0"></script>
+        <button class="btn-open-booking" id="open-booking-modal" aria-label="Open booking calendar">
+          Check Availability →
+        </button>
       </div>
       <div class="booking-fallback">
-        <p>If the booking widget does not load, book directly on our reservations page.</p>
+        <p>Prefer to book on the Cloudbeds page directly?</p>
         <a class="btn-book-direct" href="https://mochabeansgroup.cloudbeds.com/en/reservas/1jTOWB?referral_id=197466&association_direct=1&currency=eur" target="_blank" rel="noopener noreferrer">Book Direct</a>
       </div>
     </div>
@@ -1287,8 +1413,8 @@
       <div class="room-featured-img">
         <!-- TODO: Replace images/westport-room-double.jpg with actual room photo -->
         <img
-          src="images/westport-room-double.jpg"
-          alt="The Double Room — double bed, Westport"
+          src="images/DSCF1873.jpg"
+          alt="The Double Room — double bed with warm lighting, Westport"
           loading="eager"
           onerror="this.style.background='#2a2a2a';this.style.height='100%';this.removeAttribute('src')"
         />
@@ -1320,8 +1446,8 @@
         <div class="room-card-img">
           <!-- TODO: Replace images/westport-room-twin.jpg with actual photo -->
           <img
-            src="images/westport-room-twin.jpg"
-            alt="The Twin Room — two beds, Westport"
+            src="images/DSCF1867.jpg"
+            alt="The Twin Room — cosy bedroom, Westport"
             loading="lazy"
             onerror="this.style.background='#E8E3DC';this.style.height='240px';this.removeAttribute('src')"
           />
@@ -1348,8 +1474,8 @@
         <div class="room-card-img">
           <!-- TODO: Replace images/westport-room-family.jpg with actual photo -->
           <img
-            src="images/westport-room-family.jpg"
-            alt="The Family Room — larger room for groups, Westport"
+            src="images/DSCF1853.jpg"
+            alt="The Family Room — double and bunk, Westport"
             loading="lazy"
             onerror="this.style.background='#E8E3DC';this.style.height='240px';this.removeAttribute('src')"
           />
@@ -1377,8 +1503,8 @@
       <div class="room-single-img">
         <!-- TODO: Replace images/westport-room-single.jpg with actual photo -->
         <img
-          src="images/westport-room-single.jpg"
-          alt="The Single Room — compact, Westport"
+          src="images/DSCF1887.jpg"
+          alt="The Single Room — white linen detail, Westport"
           loading="lazy"
           onerror="this.style.background='#E8E3DC';this.removeAttribute('src')"
         />
@@ -1412,7 +1538,7 @@
     <div class="cafe-image-side">
       <!-- TODO: Replace images/westport-cafe.jpg with actual Westport Mocha Beans photo -->
       <img
-        src="images/westport-cafe.jpg"
+        src="images/stays_cafe_1779895551793.png"
         alt="Inside Mocha Beans Café Westport"
         loading="lazy"
         onerror="this.removeAttribute('src')"
@@ -1491,7 +1617,31 @@
   </footer>
 
   <!-- Mobile sticky book button -->
-  <a class="sticky-book" href="#booking" id="sticky-book-btn" aria-label="Scroll to booking form">Book a Room</a>
+  <a class="sticky-book" href="#booking" id="sticky-book-btn" aria-label="Open booking">Book a Room</a>
+
+  <!-- BOOKING MODAL -->
+  <div class="bk-modal" id="bk-modal" role="dialog" aria-modal="true" aria-labelledby="bk-modal-label" hidden>
+    <div class="bk-modal-overlay" id="bk-overlay"></div>
+    <div class="bk-modal-box">
+      <div class="bk-modal-bar">
+        <span class="bk-modal-label" id="bk-modal-label">Book Your Stay — 1997 Stays Westport</span>
+        <button class="bk-modal-close" id="bk-close" aria-label="Close booking">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="bk-modal-iframe-wrap">
+        <iframe
+          id="bk-iframe"
+          class="bk-modal-iframe"
+          src=""
+          data-src="https://mochabeansgroup.cloudbeds.com/en/reservas/1jTOWB?referral_id=197466&association_direct=1&currency=eur"
+          title="Book your stay at 1997 Stays Westport"
+          allow="payment"
+        ></iframe>
+        <div class="bk-modal-loader" id="bk-loader">Loading availability…</div>
+      </div>
+    </div>
+  </div>
 
   <!-- SCRIPTS -->
   <script>
@@ -1523,6 +1673,92 @@
       }
 
       window.addEventListener('scroll', onScroll, { passive: true });
+    }());
+
+
+    // ── BOOKING MODAL ──────────────────────────────────────
+    (function () {
+      var modal    = document.getElementById('bk-modal');
+      var overlay  = document.getElementById('bk-overlay');
+      var closeBtn = document.getElementById('bk-close');
+      var iframe   = document.getElementById('bk-iframe');
+      var loader   = document.getElementById('bk-loader');
+      if (!modal) return;
+
+      function openModal() {
+        if (iframe && iframe.dataset.src && !iframe.getAttribute('src')) {
+          iframe.setAttribute('src', iframe.dataset.src);
+          iframe.addEventListener('load', function () {
+            if (loader) loader.classList.add('hidden');
+          }, { once: true });
+        }
+        modal.removeAttribute('hidden');
+        requestAnimationFrame(function () { modal.classList.add('open'); });
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        modal.classList.remove('open');
+        setTimeout(function () { modal.setAttribute('hidden', ''); }, 380);
+        document.body.style.overflow = '';
+      }
+
+      document.querySelectorAll(
+        '#open-booking-modal, .nav-book-link, .sticky-book, .cta-btn-primary, .room-link'
+      ).forEach(function (el) {
+        el.addEventListener('click', function (e) { e.preventDefault(); openModal(); });
+      });
+
+      document.querySelectorAll('a[href="#booking"]').forEach(function (el) {
+        el.addEventListener('click', function (e) { e.preventDefault(); openModal(); });
+      });
+
+      overlay.addEventListener('click', closeModal);
+      closeBtn.addEventListener('click', closeModal);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+      });
+    }());
+
+    // ── HERO PARALLAX ──────────────────────────────────────
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var heroBg = document.querySelector('.hero-bg');
+      if (!heroBg) return;
+      var ticking = false;
+      window.addEventListener('scroll', function () {
+        if (!ticking) {
+          requestAnimationFrame(function () {
+            var s = window.pageYOffset;
+            if (s < window.innerHeight * 1.2) {
+              heroBg.style.transform = 'scale(1.06) translateY(' + (s * 0.22) + 'px)';
+            }
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true });
+    }());
+
+    // ── ROOM CARD 3D TILT (desktop only) ───────────────────
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (!window.matchMedia('(hover: hover)').matches) return;
+      document.querySelectorAll('.room-card, .room-featured').forEach(function (card) {
+        card.addEventListener('mousemove', function (e) {
+          var rect = card.getBoundingClientRect();
+          var x = ((e.clientX - rect.left) / rect.width  - 0.5) * 5;
+          var y = ((e.clientY - rect.top)  / rect.height - 0.5) * -4;
+          card.style.transform  = 'perspective(900px) rotateX(' + y + 'deg) rotateY(' + x + 'deg)';
+          card.style.transition = 'transform 0.08s linear, box-shadow 0.2s ease';
+          card.style.boxShadow  = '0 16px 48px rgba(0,0,0,0.12)';
+        });
+        card.addEventListener('mouseleave', function () {
+          card.style.transform  = 'perspective(900px) rotateX(0) rotateY(0)';
+          card.style.transition = 'transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.4s ease';
+          card.style.boxShadow  = '';
+        });
+      });
     }());
 
   </script>
