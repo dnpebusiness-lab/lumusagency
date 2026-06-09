@@ -193,7 +193,7 @@
       inset: 0;
       /* TODO: Replace westport-hero.jpg with actual Westport hero image */
       background-color: #1a1a1a;
-      background-image: url('images/DSCF2319.jpg');
+      background-image: url('/.netlify/images?url=/images/DSCF2319.jpg&w=2200&q=85&fm=webp');
       background-size: cover;
       background-position: center 45%;
       filter: brightness(0.55);
@@ -555,9 +555,12 @@
     .cafe-image-side {
       overflow: hidden;
       background: #2a2a2a;
+      position: relative;
     }
 
     .cafe-image-side img {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -1209,6 +1212,18 @@
     .room-single-row:hover .room-single-img img {
       transform: scale(1.04);
     }
+
+    /* ── IMAGE FADE-IN ON LOAD ── */
+    .room-featured-img img,
+    .room-card-img img,
+    .room-single-img img,
+    .cafe-image-side img {
+      opacity: 0;
+      transition: opacity 0.55s ease, transform 0.9s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.4s ease;
+    }
+    .img-loaded {
+      opacity: 1 !important;
+    }
   </style>
 </head>
 <body>
@@ -1301,10 +1316,9 @@
       <div class="room-featured-img">
         <!-- TODO: Replace images/westport-room-double.jpg with actual room photo -->
         <img
-          src="images/DSCF2302.jpg"
+          src="/.netlify/images?url=/images/DSCF2302.jpg&w=1600&q=82&fm=webp"
           alt="The Double Room — bright comfortable room, Westport"
           loading="eager"
-          onerror="this.style.background='#2a2a2a';this.style.height='100%';this.removeAttribute('src')"
         />
       </div>
       <div class="room-featured-info">
@@ -1332,10 +1346,9 @@
         <div class="room-card-img">
           <!-- TODO: Replace images/westport-room-twin.jpg with actual photo -->
           <img
-            src="images/DSCF2308.jpg"
+            src="/.netlify/images?url=/images/DSCF2308.jpg&w=900&q=80&fm=webp"
             alt="The Twin Room — warm bedroom, Westport"
             loading="lazy"
-            onerror="this.style.background='#E8E3DC';this.style.height='240px';this.removeAttribute('src')"
           />
         </div>
         <div class="room-card-info">
@@ -1358,10 +1371,9 @@
         <div class="room-card-img">
           <!-- TODO: Replace images/westport-room-family.jpg with actual photo -->
           <img
-            src="images/DSCF2380.jpg"
+            src="/.netlify/images?url=/images/DSCF2380.jpg&w=900&q=80&fm=webp"
             alt="The Family Room — double and bunk, Westport"
             loading="lazy"
-            onerror="this.style.background='#E8E3DC';this.style.height='240px';this.removeAttribute('src')"
           />
         </div>
         <div class="room-card-info">
@@ -1385,10 +1397,9 @@
       <div class="room-single-img">
         <!-- TODO: Replace images/westport-room-single.jpg with actual photo -->
         <img
-          src="images/DSCF2409.jpg"
+          src="/.netlify/images?url=/images/DSCF2409.jpg&w=900&q=80&fm=webp"
           alt="The Single Room — Westport"
           loading="lazy"
-          onerror="this.style.background='#E8E3DC';this.removeAttribute('src')"
         />
       </div>
       <div class="room-single-info">
@@ -1417,7 +1428,7 @@
     </div>
     <div class="cafe-image-side">
       <img
-        src="images/IMG_2737.png"
+        src="/.netlify/images?url=/images/IMG_2737.png&w=1400&q=82&fm=webp"
         alt="Mocha Beans Café exterior on Bridge Street, Westport"
         loading="lazy"
       />
@@ -1570,6 +1581,12 @@
         });
       });
     }());
+
+    // Fade images in cleanly once loaded
+    document.querySelectorAll('.room-featured-img img, .room-card-img img, .room-single-img img, .cafe-image-side img').forEach(function (img) {
+      function mark() { img.classList.add('img-loaded'); }
+      if (img.complete && img.naturalWidth > 0) { mark(); } else { img.addEventListener('load', mark); }
+    });
 
   </script>
 

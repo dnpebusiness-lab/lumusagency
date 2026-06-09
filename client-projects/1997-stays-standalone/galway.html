@@ -206,7 +206,7 @@
       position: absolute;
       inset: 0;
       background-color: #1a1a1a;
-      background-image: url('images/DSCF1908-Migliorato-NR.jpg');
+      background-image: url('/.netlify/images?url=/images/DSCF1908-Migliorato-NR.jpg&w=2200&q=85&fm=webp');
       background-size: cover;
       background-position: center 50%;
       filter: brightness(0.55);
@@ -924,9 +924,12 @@
 
     .cafe-image-side {
       overflow: hidden;
+      position: relative;
     }
 
     .cafe-image-side img {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -1815,6 +1818,18 @@
     .room-single-row:hover .room-single-img img {
       transform: scale(1.04);
     }
+
+    /* ── IMAGE FADE-IN ON LOAD ── */
+    .room-featured-img img,
+    .room-card-img img,
+    .room-single-img img,
+    .cafe-image-side img {
+      opacity: 0;
+      transition: opacity 0.55s ease, transform 0.9s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.4s ease;
+    }
+    .img-loaded {
+      opacity: 1 !important;
+    }
   </style>
 </head>
 <body>
@@ -1986,7 +2001,7 @@
     <div class="room-featured fade-up" role="article" aria-label="Poster Room Kingsize">
       <div class="room-featured-img">
         <img
-          src="images/DSCF1887.jpg"
+          src="/.netlify/images?url=/images/DSCF1887.jpg&w=1600&q=82&fm=webp"
           alt="Poster Room Kingsize at 1997 Stays Galway, a king size four-poster bed"
           loading="eager"
         />
@@ -2018,7 +2033,7 @@
       <div class="room-card fade-up" role="article" aria-label="Deluxe Queen Double">
         <div class="room-card-img">
           <img
-            src="images/DSCF1867.jpg"
+            src="/.netlify/images?url=/images/DSCF1867.jpg&w=900&q=80&fm=webp"
             alt="Deluxe Queen Double room at 1997 Stays Galway"
             loading="lazy"
           />
@@ -2045,7 +2060,7 @@
       <div class="room-card fade-up" role="article" aria-label="Triple Room">
         <div class="room-card-img">
           <img
-            src="images/DSCF1853.jpg"
+            src="/.netlify/images?url=/images/DSCF1853.jpg&w=900&q=80&fm=webp"
             alt="Triple Room at 1997 Stays Galway, double bed with single bunk above"
             loading="lazy"
           />
@@ -2073,7 +2088,7 @@
     <div class="room-single-row fade-up" role="article" aria-label="Cosy Single">
       <div class="room-single-img">
         <img
-          src="images/DSCF1873.jpg"
+          src="/.netlify/images?url=/images/DSCF1873.jpg&w=900&q=80&fm=webp"
           alt="Cosy Single room at 1997 Stays Galway"
           loading="lazy"
         />
@@ -2154,7 +2169,7 @@
     </div>
     <div class="cafe-image-side">
       <img
-        src="images/DSCF7190 (3).jpg"
+        src="/.netlify/images?url=/images/DSCF7190%20(3).jpg&w=1400&q=82&fm=webp"
         alt="Inside Mocha Beans Café — the coffee shop below 1997 Stays on Newcastle Road, Galway"
         loading="lazy"
       />
@@ -2582,6 +2597,12 @@
         });
       });
     }());
+
+    // Fade images in cleanly once loaded
+    document.querySelectorAll('.room-featured-img img, .room-card-img img, .room-single-img img, .cafe-image-side img').forEach(function (img) {
+      function mark() { img.classList.add('img-loaded'); }
+      if (img.complete && img.naturalWidth > 0) { mark(); } else { img.addEventListener('load', mark); }
+    });
 
   </script>
 
