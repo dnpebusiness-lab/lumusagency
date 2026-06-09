@@ -30,7 +30,7 @@ from config.lumus_config import AGENCY_EMAIL
 LEADS_DIR    = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "leads")
 DATA_DIR     = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
 DM_LOG       = os.path.join(DATA_DIR, "dm_brief_log.json")
-DEFAULT_USER = "dnpebusiness@gmail.com"
+DEFAULT_USER = "lumus.marketing.agency@gmail.com"
 DMS_PER_DAY  = 10
 INCLUDE_PRIORITIES = {"HOT", "WARM"}
 

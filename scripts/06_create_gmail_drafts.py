@@ -32,7 +32,7 @@ LEADS_DIR  = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file
 DATA_DIR   = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
 DRAFTS_LOG = os.path.join(DATA_DIR, "gmail_drafts_log.json")
 INCLUDE_PRIORITIES = {"HOT", "WARM"}
-DEFAULT_USER = "dnpebusiness@gmail.com"
+DEFAULT_USER = "lumus.marketing.agency@gmail.com"
 
 
 # ── Auth ───────────────────────────────────────────────────────────────────────
