@@ -1,76 +1,57 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, CheckCircle } from "lucide-react";
-
-type FormData = {
-  firstName: string;
-  lastName: string;
-  phone: string;
-  email: string;
-  contactMethod: string;
-  goal: string;
-  preferredTime: string;
-};
-
-const initialForm: FormData = {
-  firstName: "",
-  lastName: "",
-  phone: "",
-  email: "",
-  contactMethod: "phone",
-  goal: "",
-  preferredTime: "",
-};
+import { Check } from "lucide-react";
 
 /*
-  REPLACE: Update the form action endpoint with your form provider.
-  Options: Netlify Forms, Formspree, custom API route.
-  Current: form is unconnected — add onSubmit handler for production.
+  REPLACE: wire `onSubmit` to your provider before launch
+  (Netlify Forms / Formspree / MailerLite / custom API route).
+  Right now it simulates a successful submit on the client only.
 */
 
+const goals = [
+  "Get moving again",
+  "Drop a bit of weight",
+  "Recover better",
+  "Try something new",
+  "Something else",
+];
+const times = ["Morning", "Afternoon", "Evening", "Weekend"];
+
 export default function LeadForm() {
-  const [form, setForm] = useState<FormData>(initialForm);
-  const [submitted, setSubmitted] = useState(false);
+  const [time, setTime] = useState("");
+  const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // REPLACE: Send form data to your backend/CRM here.
-    // Example: await fetch('/api/lead', { method: 'POST', body: JSON.stringify(form) })
-    await new Promise((r) => setTimeout(r, 1200)); // Simulated delay
+    await new Promise((r) => setTimeout(r, 1000)); // REPLACE with real request
     setLoading(false);
-    setSubmitted(true);
+    setSent(true);
   };
+
+  const field =
+    "w-full bg-ink border border-line focus:border-ember text-paper placeholder-ash/40 px-4 py-3 text-[15px] outline-none transition-colors duration-200";
+  const label = "block text-[11px] tracking-[0.16em] uppercase text-ash mb-2";
 
   return (
     <AnimatePresence mode="wait">
-      {submitted ? (
+      {sent ? (
         <motion.div
-          key="success"
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="flex flex-col items-center justify-center py-16 text-center"
+          key="done"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="py-14 text-center"
         >
-          <div className="w-16 h-16 rounded-full bg-[rgba(255,107,0,0.1)] border border-[rgba(255,107,0,0.3)] flex items-center justify-center mb-6">
-            <CheckCircle size={28} className="text-[#FF6B00]" />
-          </div>
-          <h3
-            style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700 }}
-            className="text-3xl text-white uppercase mb-3"
-          >
-            Request received.
+          <span className="inline-flex w-14 h-14 items-center justify-center rounded-full border border-ember/40 mb-5">
+            <Check className="text-ember" size={26} />
+          </span>
+          <h3 className="font-display font-extrabold text-3xl tracking-tight text-paper mb-2">
+            Got it.
           </h3>
-          <p className="text-[#666] text-sm max-w-xs leading-relaxed">
-            We&apos;ll be in touch soon to arrange your free session. See you at
-            HOTWORX Galway.
+          <p className="text-ash text-[15px] max-w-xs mx-auto">
+            We&apos;ll text or ring to book you in. See you on Tuam Road.
           </p>
         </motion.div>
       ) : (
@@ -78,157 +59,57 @@ export default function LeadForm() {
           key="form"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          onSubmit={handleSubmit}
+          onSubmit={submit}
           className="space-y-5"
         >
-          {/* Name row */}
+          <div>
+            <label htmlFor="fn" className={label}>
+              First name
+            </label>
+            <input id="fn" name="firstName" required placeholder="Sarah" className={field} />
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label
-                htmlFor="firstName"
-                className="block text-[#666] text-xs uppercase tracking-[0.12em] mb-2"
-              >
-                First Name *
+              <label htmlFor="ph" className={label}>
+                Phone
               </label>
-              <input
-                id="firstName"
-                name="firstName"
-                type="text"
-                required
-                value={form.firstName}
-                onChange={handleChange}
-                placeholder="e.g. Sarah"
-                className="w-full bg-[#111] border border-[rgba(255,255,255,0.08)] focus:border-[rgba(255,107,0,0.5)] text-white placeholder-[#333] px-4 py-3 text-sm outline-none transition-colors duration-200 rounded-sm"
-              />
+              <input id="ph" name="phone" type="tel" required placeholder="087…" className={field} />
             </div>
             <div>
-              <label
-                htmlFor="lastName"
-                className="block text-[#666] text-xs uppercase tracking-[0.12em] mb-2"
-              >
-                Last Name *
+              <label htmlFor="em" className={label}>
+                Email
               </label>
-              <input
-                id="lastName"
-                name="lastName"
-                type="text"
-                required
-                value={form.lastName}
-                onChange={handleChange}
-                placeholder="e.g. Murphy"
-                className="w-full bg-[#111] border border-[rgba(255,255,255,0.08)] focus:border-[rgba(255,107,0,0.5)] text-white placeholder-[#333] px-4 py-3 text-sm outline-none transition-colors duration-200 rounded-sm"
-              />
+              <input id="em" name="email" type="email" required placeholder="you@…" className={field} />
             </div>
           </div>
-
-          {/* Phone + Email */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label
-                htmlFor="phone"
-                className="block text-[#666] text-xs uppercase tracking-[0.12em] mb-2"
-              >
-                Phone *
-              </label>
-              <input
-                id="phone"
-                name="phone"
-                type="tel"
-                required
-                value={form.phone}
-                onChange={handleChange}
-                placeholder="087 000 0000"
-                className="w-full bg-[#111] border border-[rgba(255,255,255,0.08)] focus:border-[rgba(255,107,0,0.5)] text-white placeholder-[#333] px-4 py-3 text-sm outline-none transition-colors duration-200 rounded-sm"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-[#666] text-xs uppercase tracking-[0.12em] mb-2"
-              >
-                Email *
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                required
-                value={form.email}
-                onChange={handleChange}
-                placeholder="you@email.com"
-                className="w-full bg-[#111] border border-[rgba(255,255,255,0.08)] focus:border-[rgba(255,107,0,0.5)] text-white placeholder-[#333] px-4 py-3 text-sm outline-none transition-colors duration-200 rounded-sm"
-              />
-            </div>
-          </div>
-
-          {/* Preferred contact */}
           <div>
-            <label
-              htmlFor="contactMethod"
-              className="block text-[#666] text-xs uppercase tracking-[0.12em] mb-2"
-            >
-              Preferred Contact Method
+            <label htmlFor="goal" className={label}>
+              What&apos;s the goal
             </label>
-            <select
-              id="contactMethod"
-              name="contactMethod"
-              value={form.contactMethod}
-              onChange={handleChange}
-              className="w-full bg-[#111] border border-[rgba(255,255,255,0.08)] focus:border-[rgba(255,107,0,0.5)] text-white px-4 py-3 text-sm outline-none transition-colors duration-200 rounded-sm cursor-pointer appearance-none"
-            >
-              <option value="phone">Phone</option>
-              <option value="email">Email</option>
-              <option value="whatsapp">WhatsApp</option>
+            <select id="goal" name="goal" className={`${field} cursor-pointer appearance-none`} defaultValue={goals[0]}>
+              {goals.map((g) => (
+                <option key={g}>{g}</option>
+              ))}
             </select>
           </div>
-
-          {/* Goal */}
           <div>
-            <label
-              htmlFor="goal"
-              className="block text-[#666] text-xs uppercase tracking-[0.12em] mb-2"
-            >
-              Your Main Goal
-            </label>
-            <select
-              id="goal"
-              name="goal"
-              value={form.goal}
-              onChange={handleChange}
-              className="w-full bg-[#111] border border-[rgba(255,255,255,0.08)] focus:border-[rgba(255,107,0,0.5)] text-white px-4 py-3 text-sm outline-none transition-colors duration-200 rounded-sm cursor-pointer appearance-none"
-            >
-              <option value="" disabled>
-                Select your goal
-              </option>
-              <option value="lose-weight">Lose weight</option>
-              <option value="build-consistency">Build consistency</option>
-              <option value="improve-recovery">Improve recovery</option>
-              <option value="try-something-new">Try something new</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-
-          {/* Preferred time */}
-          <div>
-            <label className="block text-[#666] text-xs uppercase tracking-[0.12em] mb-3">
-              Preferred Training Time
-            </label>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-              {["Morning", "Afternoon", "Evening", "Weekend"].map((t) => (
+            <span className={label}>Best time for you</span>
+            <div className="grid grid-cols-4 gap-2">
+              {times.map((t) => (
                 <label
                   key={t}
-                  className={`flex items-center justify-center py-2.5 border text-sm font-medium cursor-pointer transition-all duration-200 rounded-sm ${
-                    form.preferredTime === t.toLowerCase()
-                      ? "border-[#FF6B00] bg-[rgba(255,107,0,0.1)] text-[#FF6B00]"
-                      : "border-[rgba(255,255,255,0.08)] text-[#555] hover:border-[rgba(255,107,0,0.3)] hover:text-white"
+                  className={`flex items-center justify-center py-2.5 text-[13px] border cursor-pointer transition-colors duration-200 ${
+                    time === t
+                      ? "border-ember text-ember bg-ember/10"
+                      : "border-line text-ash hover:text-paper hover:border-ember/30"
                   }`}
                 >
                   <input
                     type="radio"
                     name="preferredTime"
-                    value={t.toLowerCase()}
-                    checked={form.preferredTime === t.toLowerCase()}
-                    onChange={handleChange}
+                    value={t}
+                    checked={time === t}
+                    onChange={() => setTime(t)}
                     className="sr-only"
                   />
                   {t}
@@ -236,31 +117,17 @@ export default function LeadForm() {
               ))}
             </div>
           </div>
-
-          {/* Submit */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full flex items-center justify-center gap-3 bg-[#FF6B00] hover:bg-[#FF8C3A] disabled:bg-[#AA4400] text-white font-bold py-4 transition-colors duration-200 cursor-pointer uppercase tracking-[0.12em] text-base"
-            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+            className="btn-heat w-full bg-ember text-[#1a0600] hover:bg-burnt disabled:opacity-60 font-medium tracking-wide py-4 transition-colors duration-300 cursor-pointer"
           >
-            {loading ? (
-              <>
-                <div className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
-                Sending...
-              </>
-            ) : (
-              <>
-                <Send size={16} />
-                Book Free Workout
-              </>
-            )}
+            {loading ? "Sending…" : "Book my free workout"}
           </button>
-
-          {/* Consent */}
-          <p className="text-[#333] text-xs leading-relaxed text-center">
-            By submitting, you agree to be contacted about HOTWORX Galway.
-            Consent is not required for purchase.
+          <p className="text-ash/50 text-[11.5px] leading-relaxed">
+            Pop your details in and you agree we can contact you about HOTWORX
+            Galway. First session is for first-time locals during staffed hours —
+            terms apply.
           </p>
         </motion.form>
       )}

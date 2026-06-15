@@ -1,13 +1,12 @@
 import Navbar from "./components/Navbar";
-import HeroSection from "./components/HeroSection";
-import InsightSection from "./components/InsightSection";
-import HowItWorksSection from "./components/HowItWorksSection";
-import WorkoutsSection from "./components/WorkoutsSection";
-import BenefitsSection from "./components/BenefitsSection";
-import LocationSection from "./components/LocationSection";
-import AppSection from "./components/AppSection";
-import SocialProofSection from "./components/SocialProofSection";
-import FinalCTASection from "./components/FinalCTASection";
+import HeroChamber from "./components/HeroChamber";
+import WhyDifferent from "./components/WhyDifferent";
+import EnterChamber from "./components/EnterChamber";
+import Workouts from "./components/Workouts";
+import Benefits from "./components/Benefits";
+import Location from "./components/Location";
+import AppControl from "./components/AppControl";
+import FinalCTA from "./components/FinalCTA";
 import Footer from "./components/Footer";
 import StickyMobileCTA from "./components/StickyMobileCTA";
 
@@ -16,15 +15,15 @@ export default function Home() {
     <>
       <Navbar />
       <main>
-        <HeroSection />
-        <InsightSection />
-        <HowItWorksSection />
-        <WorkoutsSection />
-        <BenefitsSection />
-        <LocationSection />
-        <AppSection />
-        <SocialProofSection />
-        <FinalCTASection />
+        {/* The journey through the chamber */}
+        <HeroChamber />     {/* Outside, looking in */}
+        <WhyDifferent />    {/* 01 — why this room is different */}
+        <EnterChamber />    {/* 02 — how it works */}
+        <Workouts />        {/* 03 — inside the chamber */}
+        <Benefits />        {/* 04 — recovery & results */}
+        <Location />        {/* find the chamber */}
+        <AppControl />      {/* the control centre */}
+        <FinalCTA />        {/* 05 — the door is open */}
       </main>
       <Footer />
       <StickyMobileCTA />

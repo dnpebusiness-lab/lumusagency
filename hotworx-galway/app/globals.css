@@ -1,127 +1,175 @@
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
-:root {
-  --orange: #FF6B00;
-  --orange-light: #FF8C3A;
-  --orange-dark: #CC5500;
-  --amber: #FFA94D;
-  --bg-dark: #080808;
-  --bg-card: #111111;
-  --bg-card-2: #161616;
-  --text-primary: #F5F5F5;
-  --text-muted: #9A9A9A;
+/* ─────────────────────────────────────────────
+   HOTWORX GALWAY — "THE HEAT CHAMBER"
+   Design tokens
+   ───────────────────────────────────────────── */
+@theme {
+  --color-ink: #0A0807;        /* near-black, warm */
+  --color-ink-2: #100C0A;
+  --color-panel: #14100D;
+  --color-panel-2: #1A1512;
+  --color-ember: #FF3B1F;      /* infrared red */
+  --color-burnt: #FF6A2C;      /* burnt orange */
+  --color-amber: #FFB066;      /* warm amber highlight */
+  --color-paper: #EDE6DE;      /* warm off-white */
+  --color-ash: #8A7F76;        /* warm grey */
+  --color-line: rgba(237, 230, 222, 0.09);
+
+  --font-display: var(--font-display), system-ui, sans-serif;
+  --font-body: var(--font-body), system-ui, sans-serif;
 }
 
 * { box-sizing: border-box; }
 
 html {
   scroll-behavior: smooth;
-  background: var(--bg-dark);
+  background: var(--color-ink);
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--bg-dark);
-  color: var(--text-primary);
-  font-family: 'Barlow', sans-serif;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5 {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
+/* Film grain — fixed, multiply, very subtle */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-@keyframes heatShimmer {
-  0%, 100% { opacity: 0.35; transform: scaleY(1) translateY(0px); }
-  50% { opacity: 0.55; transform: scaleY(1.015) translateY(-3px); }
+::selection { background: var(--color-ember); color: #1a0600; }
+
+/* Typography helpers */
+.font-display { font-family: var(--font-display); }
+.heat-text {
+  /* warm edge lighting on big type */
+  text-shadow: 0 0 60px rgba(255, 59, 31, 0.12);
 }
 
-@keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 20px rgba(255,107,0,0.3), 0 0 60px rgba(255,107,0,0.1); }
-  50% { box-shadow: 0 0 40px rgba(255,107,0,0.6), 0 0 100px rgba(255,107,0,0.25); }
+/* Display heading scale */
+.h-mega {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+}
+.h-sec {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 0.94;
+  letter-spacing: -0.025em;
 }
 
-@keyframes pulseRing {
-  0% { transform: scale(1); opacity: 0.7; }
-  100% { transform: scale(2.8); opacity: 0; }
+/* Chapter / zone marker */
+.chapter {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-ash);
+}
+.chapter b { color: var(--color-ember); font-weight: 600; }
+
+/* Outline / ghost text */
+.ghost {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(237, 230, 222, 0.2);
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
-
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-@keyframes rotate3d {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@keyframes scanLine {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100vh); }
-}
-
-.gradient-text {
-  background: linear-gradient(135deg, #FF6B00 0%, #FFA94D 50%, #FF6B00 100%);
-  background-size: 200% 200%;
-  animation: gradientShift 4s ease infinite;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.glass-card {
-  background: rgba(255, 107, 0, 0.03);
-  border: 1px solid rgba(255, 107, 0, 0.12);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
-}
-
-.glass-card:hover {
-  background: rgba(255, 107, 0, 0.07);
-  border-color: rgba(255, 107, 0, 0.28);
-  transform: translateY(-2px);
-}
-
-.heat-border {
-  position: relative;
-}
-
-.heat-border::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+/* Heat-line divider */
+.heat-line {
   height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(255,107,0,0.5) 30%, rgba(255,169,77,0.8) 50%, rgba(255,107,0,0.5) 70%, transparent 100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 59, 31, 0.5) 35%,
+    rgba(255, 176, 102, 0.8) 50%,
+    rgba(255, 59, 31, 0.5) 65%,
+    transparent
+  );
 }
 
-.pulse-glow {
-  animation: pulseGlow 3s ease-in-out infinite;
+/* Magnetic button warm light response */
+.btn-heat {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
 }
-
-.float-anim {
-  animation: float 6s ease-in-out infinite;
+.btn-heat::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(
+    120px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(255, 176, 102, 0.55),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
+.btn-heat:hover::before { opacity: 1; }
 
+/* Session panel — sauna door reveal + inner glow on hover */
+.panel-glow {
+  position: relative;
+  transition: border-color 0.4s ease, background 0.4s ease;
+}
+.panel-glow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  background: radial-gradient(
+    ellipse 80% 100% at 50% 120%,
+    rgba(255, 59, 31, 0.16),
+    transparent 70%
+  );
+}
+.panel-glow:hover::after { opacity: 1; }
+
+/* Infrared pulse (location marker) */
+@keyframes ir-pulse {
+  0% { transform: scale(0.5); opacity: 0.9; }
+  100% { transform: scale(3); opacity: 0; }
+}
+.ir-ring { animation: ir-pulse 2.6s cubic-bezier(0.2, 0.7, 0.2, 1) infinite; }
+
+/* Slow drifting heat haze layer */
+@keyframes haze-drift {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-2%, -1%, 0) scale(1.04); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+.haze { animation: haze-drift 14s ease-in-out infinite; }
+
+/* Scrollbar */
 ::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: #080808; }
-::-webkit-scrollbar-thumb { background: rgba(255,107,0,0.35); border-radius: 3px; }
+::-webkit-scrollbar-track { background: var(--color-ink); }
+::-webkit-scrollbar-thumb { background: rgba(255, 59, 31, 0.4); }
 
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
   *, ::before, ::after {
-    animation-duration: 0.01ms !important;
+    animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    transition-duration: 0.001ms !important;
   }
+  .haze, .ir-ring { animation: none !important; }
 }
