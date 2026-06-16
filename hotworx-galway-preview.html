@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en-IE">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HOTWORX Galway — 24-Hour Infrared Studio, Tuam Road</title>
+<meta name="description" content="Galway's only 24/7 infrared studio. Train hot, finish fast — 15 or 30-minute sauna workouts on Tuam Road. First session free." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#0A0807;--ink2:#100C0A;--panel:#14100D;
+    --ember:#FF6A14;--burnt:#FF8A38;--amber:#FFC078;
+    --paper:#EDE6DE;--ash:#8A7F76;--line:rgba(237,230,222,.09);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;background:var(--ink)}
+  body{background:var(--ink);color:var(--paper);font-family:'Inter',sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  body::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  a{text-decoration:none;color:inherit}
+  ::selection{background:var(--ember);color:#1a0600}
+  .disp{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;letter-spacing:-.03em;line-height:.9}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;position:relative;z-index:2}
+  @media(min-width:640px){.wrap{padding:0 56px}}
+  .ember{color:var(--ember)}.ash{color:var(--ash)}
+  .ghost{color:transparent;-webkit-text-stroke:1px rgba(237,230,222,.2)}
+  .chapter{font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--ash);font-weight:500;display:flex;align-items:center;gap:12px}
+  .chapter b{color:var(--ember);font-weight:600}
+  .chapter .ix{font-family:'Bricolage Grotesque';font-weight:700;color:var(--ember)}
+  .dash{display:inline-block;width:32px;height:1px;background:var(--line)}
+  .sec{padding:120px 0;border-top:1px solid var(--line);position:relative}
+  .hsec{font-family:'Bricolage Grotesque';font-weight:800;letter-spacing:-.025em;line-height:.94;font-size:clamp(32px,6.5vw,92px);overflow-wrap:break-word}
+  /* heading wrappers must not be constrained by ch (ch is measured in the wrapper's 16px font, not the display font) */
+  .rev:has(.hsec){max-width:none!important}
+  .mask{display:block;overflow:hidden;padding-bottom:.06em}
+  .mask>span{display:block;transform:translateY(110%);transition:transform 1s cubic-bezier(.16,1,.3,1)}
+  .in .mask>span{transform:none}
+  .rev{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
+  .rev.in{opacity:1;transform:none}
+  /* buttons */
+  .btn{position:relative;overflow:hidden;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;gap:10px;font-weight:500;letter-spacing:.02em;font-size:15px;cursor:pointer;transition:.3s;border:1px solid transparent}
+  .btn::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(120px circle at var(--mx,50%) var(--my,50%),rgba(255,176,102,.55),transparent 60%);opacity:0;transition:opacity .3s}
+  .btn:hover::before{opacity:1}
+  .fill{background:var(--ember);color:#1a0600;padding:16px 30px}.fill:hover{background:var(--burnt)}
+  .lineb{border-color:var(--line);color:var(--paper);padding:16px 26px}.lineb:hover{border-color:var(--burnt);color:var(--burnt)}
+  svg.ic{width:16px;height:16px;stroke:currentColor;stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  /* nav */
+  nav{position:fixed;inset:0 0 auto 0;z-index:50;height:64px;display:flex;align-items:center;border-bottom:1px solid transparent;transition:.3s}
+  nav.on{background:rgba(10,8,7,.85);backdrop-filter:blur(16px);border-bottom-color:var(--line)}
+  .navin{display:flex;align-items:center;justify-content:space-between;width:100%}
+  .brand{font-family:'Bricolage Grotesque';font-weight:800;font-size:22px;letter-spacing:-.02em}
+  .brand i{font-style:normal;color:var(--ember)}.brand s{text-decoration:none;color:var(--ash);font-family:Inter;font-size:12px;margin-left:8px}
+  .nlinks{display:flex;gap:34px}.nlinks a{color:var(--ash);font-size:13px;transition:.2s}.nlinks a:hover{color:var(--paper)}
+  @media(max-width:1000px){.nlinks,.ncta{display:none}}
+  /* hero */
+  .hero{min-height:100svh;display:flex;align-items:flex-end;padding:112px 0 9vh;position:relative;overflow:hidden}
+  #heat{position:absolute;inset:0;z-index:0;display:block}
+  .heroveil{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(to top,#0A0807 6%,rgba(10,8,7,.78) 26%,rgba(10,8,7,.3) 55%,rgba(10,8,7,.65) 100%)}
+  .frame{position:absolute;top:0;bottom:0;width:1px;background:var(--line);z-index:1}
+  .hero h1{font-size:clamp(46px,11vw,150px);text-shadow:0 0 60px rgba(255,106,20,.12);margin-top:22px;overflow-wrap:break-word}
+  .lead{max-width:42ch;font-size:clamp(16px,2vw,20px);color:rgba(237,230,222,.84);margin-top:28px}
+  .hrow{display:flex;gap:12px;flex-wrap:wrap;margin-top:36px}
+  .hmeta{display:grid;grid-template-columns:repeat(4,auto);width:fit-content;margin-top:56px;border-top:1px solid var(--line)}
+  @media(max-width:600px){.hmeta{grid-template-columns:repeat(2,1fr);width:100%}}
+  .hmeta>div{padding:20px 28px 0 0;margin-right:28px;border-right:1px solid var(--line)}
+  @media(max-width:600px){.hmeta>div{padding:16px 0 0;margin:0;border-right:0;border-bottom:1px solid var(--line)}}
+  .hmeta>div:last-child{border:0;margin:0}
+  @media(max-width:600px){.hmeta>div:nth-child(odd){border-right:1px solid var(--line);padding-right:16px}}
+  .hmeta .k{font-family:'Bricolage Grotesque';font-weight:800;font-size:26px;line-height:1}
+  .hmeta .v{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ash);margin-top:6px}
+  /* why */
+  .split{display:grid;grid-template-columns:1fr 1fr;position:relative}
+  @media(max-width:900px){.split{grid-template-columns:1fr}}
+  .pcol{padding:40px}
+  @media(min-width:640px){.pcol{padding:40px}}
+  .pcol h4{font-size:13px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:32px}
+  .pcol li{display:flex;gap:16px;align-items:flex-start;font-size:18px;line-height:1.3;margin-bottom:20px;list-style:none}
+  .pcol li .b{margin-top:11px;width:16px;height:1px;flex:0 0 auto}
+  .seam{position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);width:1px;background:linear-gradient(to bottom,transparent,rgba(255,106,20,.6),transparent)}
+  @media(max-width:900px){.seam{display:none}}
+  /* steps */
+  .track{display:grid;grid-template-columns:80px 1fr;gap:0 40px}
+  @media(max-width:760px){.track{grid-template-columns:1fr}}
+  .rail{position:relative}@media(max-width:760px){.rail{display:none}}
+  .rail .bg{position:absolute;left:50%;top:8px;bottom:8px;width:1px;background:var(--line)}
+  .rail .fl{position:absolute;left:50%;top:8px;bottom:8px;width:1px;background:linear-gradient(to bottom,var(--ember),var(--amber));transform-origin:top;transform:scaleY(0);transition:transform 1.1s cubic-bezier(.16,1,.3,1)}
+  .step{display:grid;grid-template-columns:auto 1fr;gap:24px;padding:40px 0;border-top:1px solid var(--line)}
+  .step:first-child{border-top:0;padding-top:0}
+  @media(min-width:640px){.step{gap:40px}}
+  .step .no{font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(40px,7vw,84px);line-height:.8}
+  .step h3{font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(22px,3.4vw,38px);letter-spacing:-.02em;line-height:1.05}
+  .step p{color:rgba(237,230,222,.72);margin-top:12px;max-width:52ch;font-size:clamp(15px,1.6vw,18px)}
+  /* workouts */
+  .tabs{display:inline-flex;border:1px solid var(--line)}
+  .tabs button{padding:12px 22px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;color:var(--ash);background:none;border:0;border-right:1px solid var(--line);cursor:pointer;transition:.3s}
+  .tabs button:last-child{border-right:0}.tabs button.on{background:var(--ember);color:#1a0600}
+  .wgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:860px){.wgrid{grid-template-columns:1fr 1fr}}@media(max-width:560px){.wgrid{grid-template-columns:1fr}}
+  .wp{position:relative;border:1px solid var(--line);background:rgba(20,16,13,.4);padding:26px;overflow:hidden;transition:border-color .4s}
+  .wp::after{content:"";position:absolute;inset:0;opacity:0;transition:opacity .5s;pointer-events:none;background:radial-gradient(ellipse 80% 100% at 50% 120%,rgba(255,106,20,.16),transparent 70%)}
+  .wp:hover::after{opacity:1}.wp:hover{border-color:rgba(255,106,20,.3)}
+  .wp h3{font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(20px,2.4vw,28px);letter-spacing:-.02em;transition:color .3s;position:relative}
+  .wp:hover h3{color:var(--ember)}
+  .wp .ix{position:absolute;top:26px;right:26px;font-family:'Bricolage Grotesque';color:rgba(138,127,118,.4);font-size:14px}
+  .wp p{color:rgba(237,230,222,.66);margin-top:12px;font-size:15px;position:relative}
+  /* benefits */
+  .bgrid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
+  @media(max-width:860px){.bgrid{grid-template-columns:1fr 1fr}}@media(max-width:560px){.bgrid{grid-template-columns:1fr}}
+  .bc{position:relative;border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:36px;transition:background .3s;overflow:hidden}
+  .bc:hover{background:rgba(20,16,13,.5)}
+  .bc::after{content:"";position:absolute;inset:0;opacity:0;transition:opacity .5s;pointer-events:none;background:radial-gradient(ellipse 90% 100% at 50% 120%,rgba(255,106,20,.1),transparent 70%)}
+  .bc:hover::after{opacity:1}
+  .bc h3{font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(26px,3.6vw,42px);line-height:.95;letter-spacing:-.02em;position:relative}
+  .bc p{color:rgba(237,230,222,.66);margin-top:16px;font-size:15px;max-width:34ch;position:relative}
+  /* location */
+  .loc{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:900px){.loc{grid-template-columns:1fr}}
+  .map{position:relative;min-height:440px;border:1px solid var(--line);background:var(--ink2);overflow:hidden}
+  @media(max-width:900px){.map{min-height:320px}}
+  .mapgrid{position:absolute;inset:0;opacity:.5;background:repeating-linear-gradient(0deg,transparent 0 47px,rgba(255,106,20,.06) 47px 48px),repeating-linear-gradient(90deg,transparent 0 47px,rgba(255,106,20,.05) 47px 48px)}
+  .mapglow{position:absolute;inset:0;background:radial-gradient(circle at 56% 44%,rgba(255,106,20,.18),transparent 45%)}
+  .mk{position:absolute;top:44%;left:56%}
+  .mk .d{width:16px;height:16px;border-radius:50%;background:var(--ember);box-shadow:0 0 0 4px rgba(255,106,20,.2)}
+  .mk .r{position:absolute;inset:-12px;border:1px solid var(--ember);border-radius:50%;animation:ring 2.6s cubic-bezier(.2,.7,.2,1) infinite}
+  .mk .r2{animation-delay:1.3s}
+  @keyframes ring{0%{transform:scale(.4);opacity:.9}100%{transform:scale(3);opacity:0}}
+  .maplab{position:absolute;left:20px;bottom:20px;right:20px}
+  .ldet{border:1px solid var(--line);padding:40px;display:flex;flex-direction:column;justify-content:space-between}
+  .acc{display:flex;gap:16px;align-items:flex-start;margin-bottom:20px}
+  .acc svg{color:var(--ember);flex:0 0 auto;margin-top:2px;width:18px;height:18px}
+  .acc span{color:rgba(237,230,222,.7);font-size:16px}
+  .hr{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}
+  .hr .d{color:var(--ash)}
+  /* app */
+  .app{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+  @media(max-width:900px){.app{grid-template-columns:1fr;gap:40px}}
+  .feat{display:flex;justify-content:space-between;gap:24px;align-items:baseline;padding:20px 0;border-bottom:1px solid var(--line)}
+  .feat .t{font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(17px,2vw,22px);letter-spacing:-.01em}
+  .feat .d{color:var(--ash);font-size:14px;text-align:right;max-width:24ch}
+  .stage{position:relative;height:460px;display:flex;align-items:center;justify-content:center}
+  .stage .glow{position:absolute;width:80%;height:80%;border-radius:50%;background:radial-gradient(circle,rgba(255,106,20,.12),transparent 65%);filter:blur(20px)}
+  .float{animation:drift 9s ease-in-out infinite}
+  @keyframes drift{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  .ccard{position:relative;z-index:10;width:230px;border:1px solid var(--line);background:var(--panel);padding:20px}
+  .chip{position:absolute;z-index:20;border:1px solid var(--line);background:var(--ink);padding:12px 16px}
+  /* final */
+  .final{position:relative;overflow:hidden;border-top:1px solid var(--line)}
+  .final .door{position:absolute;inset:0 0 40% 0;pointer-events:none;background:radial-gradient(ellipse 70% 100% at 50% 0%,rgba(255,106,20,.16),rgba(255,106,44,.05) 40%,transparent 70%)}
+  .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;position:relative}
+  @media(max-width:900px){.fgrid{grid-template-columns:1fr;gap:40px}}
+  .field{margin-bottom:18px}
+  .field label{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ash);margin-bottom:8px}
+  input,select{width:100%;background:var(--ink);border:1px solid var(--line);color:var(--paper);padding:13px 15px;font-size:15px;font-family:Inter;outline:none;transition:.2s}
+  input:focus,select:focus{border-color:var(--ember)}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .tw{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .tw label{display:flex;align-items:center;justify-content:center;padding:11px 4px;border:1px solid var(--line);font-size:13px;color:var(--ash);cursor:pointer;transition:.2s}
+  .tw label.sel{border-color:var(--ember);color:var(--ember);background:rgba(255,106,20,.1)}
+  /* footer + sticky */
+  footer{border-top:1px solid var(--line);background:var(--ink2);padding:64px 0 44px}
+  .fcols{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
+  @media(max-width:760px){.fcols{grid-template-columns:1fr}}
+  .sticky{position:fixed;inset:auto 0 0 0;z-index:50;display:none;padding:12px}
+  @media(max-width:1000px){.sticky{display:block}}
+  .sticky .bar{display:flex;gap:10px;padding:10px;background:rgba(10,8,7,.95);backdrop-filter:blur(16px);border:1px solid var(--line)}
+  .sticky .b{flex:1;background:var(--ember);color:#1a0600;text-align:center;font-weight:500;padding:14px;font-size:15px}
+  .sticky .c{width:48px;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);color:var(--ember)}
+  .herophoto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.6;filter:brightness(.62) saturate(.85) contrast(1.05)}
+  .pv{background:#15110d;border-bottom:1px solid var(--line);padding:7px;text-align:center;font-size:11px;color:var(--ash);position:relative;z-index:55;letter-spacing:.04em}
+  /* photo strips */
+  .pstrip{position:relative;overflow:hidden;height:480px;border-top:1px solid var(--line);background:linear-gradient(135deg,#1c0f07,#2a1305 55%,#0A0807)}
+  @media(max-width:760px){.pstrip{height:340px}}
+  .pstrip img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.66) saturate(.82) contrast(1.04)}
+  .pstrip .pveil{position:absolute;inset:0;background:linear-gradient(to right,rgba(10,8,7,.92) 0%,rgba(10,8,7,.5) 45%,rgba(10,8,7,.2) 100%);z-index:1}
+  .pstrip .pcon{position:relative;z-index:2;height:100%;display:flex;align-items:center}
+  .bphoto{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:48px}
+  @media(max-width:760px){.bphoto{grid-template-columns:1fr}}
+  .bphoto .pi{position:relative;overflow:hidden;border:1px solid var(--line);background:linear-gradient(135deg,#1c0f07,#241004)}
+  /* gallery */
+  .gal{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:900px){.gal{grid-template-columns:1fr 1fr}}
+  .gal .gi{position:relative;overflow:hidden;border:1px solid var(--line);aspect-ratio:3/4;background:linear-gradient(135deg,#1c0f07,#241004)}
+  .gal .gi img{width:100%;height:100%;object-fit:cover;filter:brightness(.72) saturate(.88) contrast(1.04);transition:transform .8s cubic-bezier(.16,1,.3,1)}
+  .gal .gi:hover img{transform:scale(1.05)}
+  .gal .gi figcaption{position:absolute;bottom:0;left:0;right:0;padding:18px;font-size:13px;letter-spacing:.04em;background:linear-gradient(to top,rgba(10,8,7,.92),transparent)}
+  .bphoto .pi img{width:100%;height:300px;object-fit:cover;filter:brightness(.72) saturate(.88) contrast(1.04);display:block;transition:transform .8s cubic-bezier(.16,1,.3,1)}
+  .bphoto .pi:hover img{transform:scale(1.04)}
+  .bphoto .pi .pl{position:absolute;bottom:0;left:0;right:0;padding:24px;background:linear-gradient(to top,rgba(10,8,7,.95),rgba(10,8,7,.4) 55%,transparent)}
+  /* sticky */
+  .sticky{position:fixed;inset:auto 0 0 0;z-index:50;padding:12px;transform:translateY(100%);transition:transform .35s cubic-bezier(.16,1,.3,1)}
+  @media(max-width:1000px){.sticky.show{transform:none}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.mask>span{transform:none}.rev{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="pv">Static preview of the “Heat Chamber” build — full Next.js + R3F version lives in <b style="color:var(--paper)">/hotworx-galway</b></div>
+
+<svg style="display:none">
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-car" viewBox="0 0 24 24"><path d="M5 17H3v-5l2-5h14l2 5v5h-2M5 17a2 2 0 1 0 4 0M15 17a2 2 0 1 0 4 0M5 17h10M6 12h12"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  <symbol id="i-nav" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+</svg>
+
+<nav id="nav"><div class="wrap navin">
+  <a href="#" class="brand">HOT<i>WORX</i><s>Galway</s></a>
+  <div class="nlinks"><a href="#why">Why</a><a href="#how">How</a><a href="#workouts">Classes</a><a href="#gallery">Inside</a><a href="#benefits">The heat</a><a href="#location">Where</a></div>
+  <a href="#book" class="btn fill ncta" style="padding:10px 18px;font-size:13px">First session free</a>
+</div></nav>
+
+<!-- HERO -->
+<header class="hero" id="hero">
+  <!-- REPLACE: swap src with a real HOTWORX Galway interior photo before launch -->
+  <img class="herophoto" src="https://images.unsplash.com/photo-1534438327882-6f3a0cbabc38?auto=format&fit=crop&w=1920&q=80" alt="" aria-hidden="true" onerror="this.remove()">
+  <canvas id="heat"></canvas>
+  <div class="heroveil"></div>
+  <div class="frame" style="left:24px"></div><div class="frame" style="right:24px"></div>
+  <div class="wrap">
+    <p class="chapter"><span class="dash" style="background:var(--ember)"></span> Tuam Road, Galway — <b>open 24 hours</b></p>
+    <h1 class="disp" id="h1"><span class="mask"><span>Train hot.</span></span><span class="mask"><span>Finish <span class="ember">fast.</span></span></span></h1>
+    <p class="lead">Galway's only 24/7 infrared studio. Fifteen or thirty minutes inside the heat, booked from your phone, open whenever you are. Your first session is free.</p>
+    <div class="hrow">
+      <a href="#book" class="btn fill" data-mag>Book your free workout <svg class="ic"><use href="#i-arrow"/></svg></a>
+      <a href="tel:0917600007" class="btn lineb" data-mag><svg class="ic"><use href="#i-phone"/></svg> 091 760 007</a>
+    </div>
+    <div class="hmeta">
+      <div><div class="k">15–30</div><div class="v">Minutes a class</div></div>
+      <div><div class="k">3</div><div class="v">People per sauna</div></div>
+      <div><div class="k">24/7</div><div class="v">Members in anytime</div></div>
+      <div><div class="k">Free</div><div class="v">First session</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- WHY -->
+<section class="sec" id="why">
+  <div class="wrap">
+    <div class="rev" style="margin-bottom:80px">
+      <p class="chapter" style="margin-bottom:24px"><span class="ix">01</span><span class="dash"></span> Outside the chamber</p>
+      <h2 class="hsec"><span class="mask"><span>Same goal.</span></span><span class="mask"><span>Different room.</span></span></h2>
+    </div>
+    <div class="split">
+      <div class="pcol rev" style="border:1px solid var(--line)">
+        <h4 class="ash">The usual gym</h4>
+        <ul>
+          <li><span class="b" style="background:rgba(237,230,222,.2)"></span><span style="color:rgba(237,230,222,.6)">An hour you have to find</span></li>
+          <li><span class="b" style="background:rgba(237,230,222,.2)"></span><span style="color:rgba(237,230,222,.6)">A crowded floor at peak time</span></li>
+          <li><span class="b" style="background:rgba(237,230,222,.2)"></span><span style="color:rgba(237,230,222,.6)">Guesswork once you're there</span></li>
+          <li><span class="b" style="background:rgba(237,230,222,.2)"></span><span style="color:rgba(237,230,222,.6)">Easy to skip, easy to quit</span></li>
+        </ul>
+      </div>
+      <div class="pcol rev" style="border:1px solid rgba(255,106,20,.3);background:var(--panel);position:relative;overflow:hidden">
+        <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 90% 100% at 80% 0%,rgba(255,106,20,.12),transparent 65%)"></div>
+        <h4 class="ember" style="position:relative">HOTWORX Galway</h4>
+        <ul style="position:relative">
+          <li><span class="b" style="background:var(--ember)"></span>15 or 30 minutes, in and out</li>
+          <li><span class="b" style="background:var(--ember)"></span>Three people to a sauna, max</li>
+          <li><span class="b" style="background:var(--ember)"></span>A guided session on the wall</li>
+          <li><span class="b" style="background:var(--ember)"></span>Doors open round the clock</li>
+        </ul>
+      </div>
+      <div class="seam"></div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO STRIP 1 -->
+<!-- REPLACE: swap src with a real HOTWORX Galway sauna/session photo -->
+<div class="pstrip">
+  <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1920&q=80" alt="Infrared studio workout session" onerror="this.remove()">
+  <div class="pveil"></div>
+  <div class="wrap pcon">
+    <div>
+      <p class="chapter" style="margin-bottom:20px"><span class="dash" style="background:var(--ember)"></span>Inside the chamber</p>
+      <p class="disp" style="font-size:clamp(34px,5.5vw,78px);max-width:14ch;line-height:.93">Three people. One hour becomes fifteen minutes.</p>
+    </div>
+  </div>
+</div>
+
+<!-- HOW -->
+<section class="sec" id="how">
+  <div style="position:absolute;inset:auto 0 0 0;height:66%;pointer-events:none;background:radial-gradient(ellipse 70% 80% at 50% 120%,rgba(255,106,20,.08),transparent 70%)"></div>
+  <div class="wrap">
+    <div class="rev" style="margin-bottom:80px">
+      <p class="chapter" style="margin-bottom:24px"><span class="ix">02</span><span class="dash"></span> Enter the chamber</p>
+      <h2 class="hsec"><span class="mask"><span>How it</span></span><span class="mask"><span>actually works.</span></span></h2>
+    </div>
+    <div class="track" id="track">
+      <div class="rail"><div class="bg"></div><div class="fl" id="fl"></div></div>
+      <div>
+        <div class="step"><div class="no ghost">01</div><div><h3>Choose your session</h3><p>Nine isometric classes at 30 minutes, three HIIT classes at 15. Open the app, tap a slot, done.</p></div></div>
+        <div class="step"><div class="no ghost">02</div><div><h3>Step into the heat</h3><p>You and up to two others. A screen runs the session start to finish. The infrared does the part you can't see.</p></div></div>
+        <div class="step"><div class="no ghost">03</div><div><h3>Track it from the app</h3><p>Calories logged the second you finish. Streaks kept honest. Come back tomorrow morning, or tonight.</p><a href="#book" class="ember" style="display:inline-flex;gap:8px;margin-top:24px;font-size:14px;font-weight:500">Book your free workout →</a></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKOUTS -->
+<section class="sec" id="workouts">
+  <div class="wrap">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap;margin-bottom:48px">
+      <div class="rev">
+        <p class="chapter" style="margin-bottom:24px"><span class="ix">03</span><span class="dash"></span> Inside the chamber</p>
+        <h2 class="hsec"><span class="mask"><span>Twelve ways</span></span><span class="mask"><span>to sweat.</span></span></h2>
+      </div>
+      <div class="tabs rev"><button class="on" data-t="iso">Isometric</button><button data-t="hiit">HIIT</button><button data-t="fx">FX Zone</button></div>
+    </div>
+    <p class="ash" style="font-size:14px;margin-bottom:32px" id="meta"><span style="color:var(--paper)">30 min · up to 3</span></p>
+    <!-- REPLACE: swap with a real HOTWORX Galway class-in-action photo -->
+    <div style="position:relative;overflow:hidden;border:1px solid var(--line);margin-bottom:32px;min-height:340px;background:linear-gradient(135deg,#1c0f07,#2a1305 60%,#0A0807)" class="rev">
+      <img src="https://images.unsplash.com/photo-1574680178050-55c6a25ef79f?auto=format&fit=crop&w=1600&q=80" alt="Group workout in infrared studio" style="width:100%;height:340px;object-fit:cover;object-position:center 40%;filter:brightness(.68) saturate(.85) contrast(1.04);display:block" onerror="this.remove()">
+      <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(10,8,7,.92),rgba(10,8,7,.35) 55%,rgba(10,8,7,.1) 100%);display:flex;align-items:center;padding:0 32px 0 48px">
+        <p class="disp" style="font-size:clamp(22px,3.5vw,48px);line-height:.95">Twelve classes. One room. A screen that runs the session.</p>
+      </div>
+    </div>
+    <div id="wbox"></div>
+    <div class="rev" style="margin-top:56px;border:1px solid var(--line);background:rgba(20,16,13,.3);padding:32px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap">
+      <p class="disp" style="font-size:clamp(18px,2.2vw,26px);max-width:34ch">Not sure which one to start with? We'll sort that on your free session.</p>
+      <a href="#book" class="btn fill" data-mag>Book free workout →</a>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="sec" id="gallery">
+  <div class="wrap">
+    <div class="rev" style="margin-bottom:56px">
+      <p class="chapter" style="margin-bottom:24px"><span class="ix">—</span><span class="dash"></span> A look inside</p>
+      <h2 class="hsec"><span class="mask"><span>The room,</span></span><span class="mask"><span>before you walk in.</span></span></h2>
+    </div>
+    <!-- REPLACE: swap srcs with real HOTWORX Galway studio photos before launch -->
+    <div class="gal rev">
+      <figure class="gi"><img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=700&q=80" alt="Inside the infrared sauna" onerror="this.remove()"><figcaption>The sauna</figcaption></figure>
+      <figure class="gi"><img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=700&q=80" alt="Mid-session in the heat" onerror="this.remove()"><figcaption>Mid-session</figcaption></figure>
+      <figure class="gi"><img src="https://images.unsplash.com/photo-1534258936925-c58bed479fcb?auto=format&fit=crop&w=700&q=80" alt="The FX kit floor" onerror="this.remove()"><figcaption>The FX floor</figcaption></figure>
+      <figure class="gi"><img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&w=700&q=80" alt="After the workout" onerror="this.remove()"><figcaption>The finish</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section class="sec" id="benefits">
+  <div class="wrap">
+    <div class="rev" style="margin-bottom:80px">
+      <p class="chapter" style="margin-bottom:24px"><span class="ix">04</span><span class="dash"></span> Recovery &amp; results</p>
+      <h2 class="hsec"><span class="mask"><span>What the heat</span></span><span class="mask"><span>does for you.</span></span></h2>
+    </div>
+    <div class="bgrid" id="bgrid"></div>
+    <!-- REPLACE: swap srcs with real HOTWORX Galway photos of workouts and recovery -->
+    <div class="bphoto rev">
+      <div class="pi">
+        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80" alt="Workout in infrared studio" onerror="this.remove()">
+        <div class="pl"><p class="disp" style="font-size:18px">The session</p><p class="ash" style="font-size:13px">30 minutes inside the heat</p></div>
+      </div>
+      <div class="pi">
+        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=900&q=80" alt="Recovery and stretch in warm studio" onerror="this.remove()">
+        <div class="pl"><p class="disp" style="font-size:18px">The recovery</p><p class="ash" style="font-size:13px">What the infrared keeps doing after</p></div>
+      </div>
+    </div>
+    <p class="rev ash" style="margin-top:32px;font-size:12.5px;max-width:64ch;opacity:.7">These describe general wellness benefits of infrared training and exercise — not medical claims, and results vary with what you put in. Anything to do with your health, talk to your GP first.</p>
+  </div>
+</section>
+
+<!-- PHOTO STRIP 2 -->
+<!-- REPLACE: swap src with a real HOTWORX Galway atmosphere/equipment photo -->
+<div class="pstrip" style="height:360px;border-bottom:1px solid var(--line)">
+  <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1920&q=80" alt="Infrared sauna warm light" onerror="this.remove()">
+  <div class="pveil" style="background:linear-gradient(to left,rgba(10,8,7,.92) 0%,rgba(10,8,7,.5) 45%,rgba(10,8,7,.15) 100%)"></div>
+  <div class="wrap pcon" style="justify-content:flex-end">
+    <div style="text-align:right">
+      <p class="chapter" style="justify-content:flex-end;margin-bottom:16px"><span class="dash" style="background:var(--ember)"></span>Galway city</p>
+      <p class="disp" style="font-size:clamp(28px,4vw,58px);line-height:.93">Open while the city sleeps.</p>
+      <a href="#book" class="btn fill" style="margin-top:24px;display:inline-flex">Book free workout →</a>
+    </div>
+  </div>
+</div>
+
+<!-- LOCATION -->
+<section class="sec" id="location">
+  <div class="wrap">
+    <div class="rev" style="margin-bottom:80px">
+      <p class="chapter" style="margin-bottom:24px"><span class="ix">—</span><span class="dash"></span> Find the chamber</p>
+      <h2 class="hsec"><span class="mask"><span>Tuam Road.</span></span><span class="mask"><span>Park at the door.</span></span></h2>
+    </div>
+    <div class="loc">
+      <div class="map rev">
+        <div class="mapgrid"></div><div class="mapglow"></div>
+        <div class="mk"><span class="r"></span><span class="r r2"></span><span class="d"></span></div>
+        <div class="maplab"><p class="disp" style="font-size:18px">HOTWORX Galway</p><p class="ash" style="font-size:14px">Tuam Road Retail Centre · H91 YH39</p></div>
+      </div>
+      <div class="ldet rev">
+        <div>
+          <div class="acc"><svg class="ic"><use href="#i-pin"/></svg><span>Ground floor, across from the Travelodge, beside Wayfair</span></div>
+          <div class="acc"><svg class="ic"><use href="#i-car"/></svg><span>Free parking right outside — no city-centre circling</span></div>
+          <div class="acc"><svg class="ic"><use href="#i-phone"/></svg><span>091 760 007</span></div>
+          <div style="margin-top:32px;padding-top:32px;border-top:1px solid var(--line)">
+            <p class="chapter" style="margin-bottom:18px">Front desk staffed</p>
+            <div class="hr"><span class="d">Mon – Thu</span><span>11am – 8pm</span></div>
+            <div class="hr"><span class="d">Friday</span><span>9am – 6pm</span></div>
+            <div class="hr" style="border:0"><span class="d">Saturday</span><span>9am – 2pm</span></div>
+            <p style="color:rgba(237,230,222,.6);font-size:14px;margin-top:16px">Members get in 24/7, seven days. Staffed hours are for first visits and sign-ups — that's when your free session runs.</p>
+          </div>
+        </div>
+        <div class="hrow" style="margin-top:40px">
+          <a href="https://maps.google.com/?q=Tuam+Road+Retail+Centre+Galway" target="_blank" rel="noopener" class="btn lineb" data-mag><svg class="ic"><use href="#i-nav"/></svg> Open in Maps</a>
+          <a href="tel:0917600007" class="btn fill" data-mag>Call studio</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APP -->
+<section class="sec" id="app">
+  <div class="wrap app">
+    <div>
+      <div class="rev" style="margin-bottom:40px">
+        <p class="chapter" style="margin-bottom:24px"><span class="ix">—</span><span class="dash"></span> The control centre</p>
+        <h2 class="hsec"><span class="mask"><span>Your studio,</span></span><span class="mask"><span>in your pocket.</span></span></h2>
+      </div>
+      <p class="rev ash" style="max-width:42ch;margin-bottom:40px;font-size:16px">The Burn Off app runs the lot — booking, calories, challenges and the friends who keep you turning up.</p>
+      <div style="border-top:1px solid var(--line)">
+        <div class="feat rev"><span class="t">Book in seconds</span><span class="d">Whole timetable, tap the slot, sorted.</span></div>
+        <div class="feat rev"><span class="t">See the calories</span><span class="d">Every session logged the second you finish.</span></div>
+        <div class="feat rev"><span class="t">Chase a challenge</span><span class="d">Monthly targets to keep the streak alive.</span></div>
+        <div class="feat rev"><span class="t">Bring the crew</span><span class="d">Add friends, share sessions, stay honest.</span></div>
+      </div>
+    </div>
+    <div class="stage rev">
+      <div class="glow"></div>
+      <div class="ccard float">
+        <p class="ash" style="font-size:10px;letter-spacing:.18em;text-transform:uppercase">Burned this month</p>
+        <p class="disp" style="font-size:44px;margin-top:8px">4,820</p>
+        <p class="ash" style="font-size:11px;margin-top:4px">cals · 12 sessions</p>
+        <div style="margin-top:16px"><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--ash);margin-bottom:6px"><span>Monthly goal</span><span class="ember">12 / 16</span></div><div style="height:4px;background:var(--ink)"><div style="height:100%;width:75%;background:var(--ember)"></div></div></div>
+      </div>
+      <div class="chip float" style="top:24px;right:8px;border-color:rgba(255,106,20,.3);animation-delay:.6s"><p class="disp" style="font-size:13px;text-transform:uppercase">Hot Yoga</p><p class="ash" style="font-size:10px">Tomorrow · 7:00 · 30m</p></div>
+      <div class="chip float" style="bottom:32px;left:0;display:flex;align-items:center;gap:10px;animation-delay:1.2s"><span style="width:6px;height:6px;border-radius:50%;background:var(--ember)"></span><span style="font-size:12px">342 cal · session done</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL -->
+<section class="final" id="book">
+  <div class="door"></div>
+  <div class="wrap" style="padding-top:120px;padding-bottom:120px">
+    <div class="fgrid">
+      <div>
+        <p class="chapter rev" style="margin-bottom:28px"><span class="ix">05</span><span class="dash"></span> The door is open</p>
+        <h2 class="hsec rev" style="font-size:clamp(42px,8vw,104px);text-shadow:0 0 60px rgba(255,106,20,.12)"><span class="mask"><span>Try it</span></span><span class="mask"><span>for <span class="ember">free.</span></span></span></h2>
+        <p class="rev" style="margin-top:32px;color:rgba(237,230,222,.6);max-width:40ch;font-size:17px">Book your first session during staffed hours and feel infrared training for yourself. No card, no pressure.</p>
+        <div class="rev hrow"><a href="tel:0917600007" class="btn lineb" data-mag><svg class="ic"><use href="#i-phone"/></svg> 091 760 007</a></div>
+        <div class="rev" style="margin-top:40px;border-top:1px solid var(--line);max-width:360px">
+          <div class="hr"><span class="d">Mon – Thu</span><span>11am – 8pm</span></div>
+          <div class="hr"><span class="d">Friday</span><span>9am – 6pm</span></div>
+          <div class="hr" style="border:0"><span class="d">Saturday</span><span>9am – 2pm</span></div>
+        </div>
+      </div>
+      <div class="rev" style="border:1px solid var(--line);background:rgba(20,16,13,.5);padding:40px">
+        <h3 class="disp" style="font-size:24px;margin-bottom:4px">Book your free session</h3>
+        <p class="ash" style="font-size:14px;margin-bottom:32px">Leave your details — we'll be in touch to sort a time.</p>
+        <form id="leadform" onsubmit="submitLead(event)">
+          <div class="field"><label>First name</label><input required placeholder="Sarah"></div>
+          <div class="two"><div class="field"><label>Phone</label><input required type="tel" placeholder="087…"></div><div class="field"><label>Email</label><input required type="email" placeholder="you@…"></div></div>
+          <div class="field"><label>What's the goal</label><select><option>Get moving again</option><option>Drop a bit of weight</option><option>Recover better</option><option>Try something new</option><option>Something else</option></select></div>
+          <div class="field"><label>Best time for you</label><div class="tw"><label><input type="radio" name="t" hidden>Morning</label><label><input type="radio" name="t" hidden>Afternoon</label><label><input type="radio" name="t" hidden>Evening</label><label><input type="radio" name="t" hidden>Weekend</label></div></div>
+          <button type="submit" class="btn fill" style="width:100%;margin-top:6px">Book my free workout</button>
+          <p class="ash" style="font-size:11.5px;margin-top:14px;opacity:.6">Pop your details in and you agree we can contact you about HOTWORX Galway. First session is for first-time locals during staffed hours — terms apply.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap fcols">
+    <div><div class="brand" style="font-size:26px;margin-bottom:16px">HOT<i>WORX</i><s>Galway</s></div><p class="ash" style="font-size:15px;max-width:34ch">The only 24-hour infrared studio in the city. Train hot, finish fast — Tuam Road, beside Wayfair.</p><a href="#book" class="btn fill" style="margin-top:24px;font-size:14px">Book free workout</a></div>
+    <div><p class="chapter" style="margin-bottom:20px">Find us</p><p class="ash" style="font-size:14px;line-height:1.9">Tuam Road Retail Centre<br>Galway · H91 YH39<br><a href="tel:0917600007" style="color:var(--paper)">091 760 007</a></p></div>
+    <div><p class="chapter" style="margin-bottom:20px">Front desk</p><p class="ash" style="font-size:14px;line-height:1.9">Mon–Thu 11am – 8pm<br>Fri 9am – 6pm<br>Sat 9am – 2pm<br><span class="ember">Members in 24/7</span></p></div>
+  </div>
+  <div class="wrap" style="margin-top:56px;padding-top:24px;border-top:1px solid var(--line);font-size:12px;color:rgba(138,127,118,.5)">© 2026 HOTWORX Galway. All rights reserved.</div>
+</footer>
+
+<div class="sticky"><div class="bar"><a href="#book" class="b">Book free workout</a><a href="tel:0917600007" class="c"><svg class="ic"><use href="#i-phone"/></svg></a></div></div>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// form submit
+function submitLead(e){e.preventDefault();const f=document.getElementById('leadform');f.innerHTML=`<div style="padding:48px 0;text-align:center"><p class="disp" style="font-size:38px">Got it.</p><p style="color:#8A7F76;margin-top:14px;font-size:16px">We&rsquo;ll text or ring to book you in.<br>See you on Tuam Road.</p></div>`;}
+
+// nav
+const nav=$('#nav');addEventListener('scroll',()=>nav.classList.toggle('on',scrollY>40));
+
+// sticky mobile CTA — show after 500px scroll, hide when booking form is visible
+const stk=$('.sticky');
+function stickyCheck(){const bookTop=(document.getElementById('book')?.getBoundingClientRect().top??9999);stk.classList.toggle('show',scrollY>500&&bookTop>innerHeight);}
+addEventListener('scroll',stickyCheck,{passive:true});stickyCheck();
+
+// reveal + mask
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{rootMargin:'-10% 0px'});
+$$('.rev').forEach(el=>io.observe(el));
+// hero masks animate immediately
+setTimeout(()=>$('#h1').classList.add('in'),120);
+$$('.sec .rev .mask, .final .rev .mask, #h1').forEach(()=>{});
+
+// data
+const iso=[['Hot Iso','Whole-body hold work, head to toe'],['Hot Pilates','Core and posture, slow and deliberate'],['Hot Yoga','Flexibility and a clear head'],['Hot Buns','Glutes and legs, no kit'],['Hot Barre None','Small movements, long burn'],['Hot Core','Everything through the middle'],['Hot Warrior','Strength and stamina together'],['Hot Bands','Resistance through full range'],['Hot Stretch','The recovery day you keep skipping']];
+const hiit=[['Hot Cycle','Legs and lungs on the bike'],['Hot Thunder','Rowing intervals that earn the shower'],['Hot Blast','Total body, fifteen flat-out minutes']];
+const ben=[['Recover','faster','Designed to support muscle recovery after a hard week.'],['Burn','more','Working in infrared can help push calorie burn past the same class cold.'],['Stay','consistent','Short sessions you will actually repeat — that is where it adds up.'],['Ease','stress','The heat and the quiet are made to take the edge off the day.'],['Support','circulation','Built to support healthy blood flow while you move.'],['Sweat','it out','A proper sweat that supports your own recovery.']];
+const meta={iso:'30 min · up to 3',hiit:'15 min · up to 3',fx:'Open floor · members'};
+
+function renderW(t){
+  const box=$('#wbox');$('#meta').innerHTML='<span style="color:var(--paper)">'+meta[t]+'</span>';
+  if(t==='fx'){box.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px" class="fxg">
+    <div class="wp" style="padding:40px"><h3>The FX Zone</h3><p style="font-size:16px;max-width:44ch;margin-top:16px">A kit floor outside the saunas — bands, free weights, ropes and the basics. Warm up, add a few sets, or train on the days you skip the heat. No booking, just walk over.</p></div>
+    <div style="border:1px solid rgba(255,106,20,.3);background:var(--panel);padding:40px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden"><div style="position:absolute;inset:0;background:radial-gradient(ellipse 100% 100% at 70% 0%,rgba(255,106,20,.12),transparent 65%)"></div><div style="position:relative"><p class="ember" style="font-size:12px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:12px">Included with membership</p><p class="disp" style="font-size:clamp(24px,3vw,40px)">Build the workout around your day.</p></div><a href="#book" class="btn fill" data-mag style="margin-top:32px;position:relative;width:fit-content">Try it free →</a></div></div>`;
+    if(innerWidth<=860)box.querySelector('.fxg').style.gridTemplateColumns='1fr';
+  } else {
+    const d=t==='iso'?iso:hiit;
+    box.innerHTML='<div class="wgrid">'+d.map((w,i)=>`<div class="wp"><span class="ix">${String(i+1).padStart(2,'0')}</span><h3>${w[0]}</h3><p>${w[1]}</p></div>`).join('')+'</div>';
+  }
+  bindMag();
+}
+$('#bgrid').innerHTML=ben.map(b=>`<div class="bc"><h3>${b[0]} <span class="ember">${b[1]}</span></h3><p>${b[2]}</p></div>`).join('');
+renderW('iso');
+$$('.tabs button').forEach(b=>b.onclick=()=>{$$('.tabs button').forEach(x=>x.classList.remove('on'));b.classList.add('on');renderW(b.dataset.t)});
+
+// time radio
+$$('.tw label').forEach(l=>l.onclick=()=>{$$('.tw label').forEach(x=>x.classList.remove('sel'));l.classList.add('sel')});
+
+// magnetic buttons
+function bindMag(){$$('[data-mag]').forEach(b=>{
+  if(b._mag)return;b._mag=1;
+  b.addEventListener('mousemove',e=>{const r=b.getBoundingClientRect();const mx=e.clientX-r.left,my=e.clientY-r.top;b.style.setProperty('--mx',mx+'px');b.style.setProperty('--my',my+'px');if(reduce)return;b.style.transform=`translate(${(mx-r.width/2)*.22}px,${(my-r.height/2)*.3}px)`});
+  b.addEventListener('mouseleave',()=>b.style.transform='');
+})}
+bindMag();
+
+// chamber fill
+const fl=$('#fl'),track=$('#track');
+function fillScroll(){if(reduce){fl.style.transform='scaleY(1)';return;}const r=track.getBoundingClientRect();const p=Math.min(Math.max((innerHeight*0.7-r.top)/(r.height),0),1);fl.style.transition='none';fl.style.transform='scaleY('+p+')';}
+addEventListener('scroll',fillScroll);fillScroll();
+
+// HERO infrared field — lightweight 2D canvas (radial heat + drift)
+(function(){
+  const c=$('#heat'),x=c.getContext('2d');if(!x)return;let w,h,t=0,raf,vis=true;
+  function size(){w=c.width=innerWidth*Math.min(devicePixelRatio,1.6);h=c.height=c.offsetHeight*Math.min(devicePixelRatio,1.6);}
+  size();addEventListener('resize',size);
+  let mx=0,my=0;addEventListener('mousemove',e=>{mx=(e.clientX/innerWidth-.5);my=(e.clientY/innerHeight-.5)});
+  const io2=new IntersectionObserver(e=>vis=e[0].isIntersecting);io2.observe(c);
+  function frame(){
+    raf=requestAnimationFrame(frame);
+    if(!vis){return;}
+    t+=reduce?0:0.005;
+    // transparent canvas: orange heat glow composites over the photo behind it
+    x.clearRect(0,0,w,h);
+    x.globalCompositeOperation='lighter';
+    const cx=(0.66+Math.sin(t*0.18)*0.03+mx*0.05)*w;
+    const cy=(0.32+Math.cos(t*0.13)*0.03+my*0.05)*h;
+    const R=Math.max(w,h)*(0.55+0.04*Math.sin(t*0.5));
+    const g=x.createRadialGradient(cx,cy,0,cx,cy,R);
+    g.addColorStop(0,'rgba(255,180,110,0.50)');
+    g.addColorStop(0.18,'rgba(255,138,56,0.34)');
+    g.addColorStop(0.42,'rgba(255,106,20,0.16)');
+    g.addColorStop(0.75,'rgba(120,40,10,0.06)');
+    g.addColorStop(1,'rgba(10,8,7,0)');
+    x.fillStyle=g;x.fillRect(0,0,w,h);
+    // soft secondary ember
+    const g2=x.createRadialGradient(cx*0.9,cy*1.3,0,cx*0.9,cy*1.3,R*0.5);
+    g2.addColorStop(0,'rgba(255,106,20,0.14)');g2.addColorStop(1,'rgba(10,8,7,0)');
+    x.fillStyle=g2;x.fillRect(0,0,w,h);
+    x.globalCompositeOperation='source-over';
+    if(reduce){cancelAnimationFrame(raf);}
+  }
+  frame();
+})();
+</script>
+</body>
+</html>
