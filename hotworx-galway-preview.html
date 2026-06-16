@@ -11,7 +11,7 @@
 <style>
   :root{
     --ink:#0A0807;--ink2:#100C0A;--panel:#14100D;
-    --ember:#FF3B1F;--burnt:#FF6A2C;--amber:#FFB066;
+    --ember:#FF6A14;--burnt:#FF8A38;--amber:#FFC078;
     --paper:#EDE6DE;--ash:#8A7F76;--line:rgba(237,230,222,.09);
   }
   *{box-sizing:border-box;margin:0;padding:0}
@@ -54,10 +54,10 @@
   /* hero */
   .hero{min-height:100svh;display:flex;align-items:flex-end;padding:112px 0 9vh;position:relative;overflow:hidden}
   #heat{position:absolute;inset:0;z-index:0;display:block}
-  .heroveil{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(to top,#0A0807 4%,rgba(10,8,7,.4) 30%,rgba(10,8,7,.12) 55%,rgba(10,8,7,.6) 100%)}
+  .heroveil{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(to top,#0A0807 6%,rgba(10,8,7,.78) 26%,rgba(10,8,7,.3) 55%,rgba(10,8,7,.65) 100%)}
   .frame{position:absolute;top:0;bottom:0;width:1px;background:var(--line);z-index:1}
-  .hero h1{font-size:clamp(54px,11vw,150px);text-shadow:0 0 60px rgba(255,59,31,.12);margin-top:22px}
-  .lead{max-width:42ch;font-size:clamp(16px,2vw,20px);color:rgba(237,230,222,.7);margin-top:28px}
+  .hero h1{font-size:clamp(54px,11vw,150px);text-shadow:0 0 60px rgba(255,106,20,.12);margin-top:22px}
+  .lead{max-width:42ch;font-size:clamp(16px,2vw,20px);color:rgba(237,230,222,.84);margin-top:28px}
   .hrow{display:flex;gap:12px;flex-wrap:wrap;margin-top:36px}
   .hmeta{display:grid;grid-template-columns:repeat(4,auto);width:fit-content;margin-top:56px;border-top:1px solid var(--line)}
   @media(max-width:600px){.hmeta{grid-template-columns:repeat(2,1fr);width:100%}}
@@ -75,7 +75,7 @@
   .pcol h4{font-size:13px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:32px}
   .pcol li{display:flex;gap:16px;align-items:flex-start;font-size:18px;line-height:1.3;margin-bottom:20px;list-style:none}
   .pcol li .b{margin-top:11px;width:16px;height:1px;flex:0 0 auto}
-  .seam{position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);width:1px;background:linear-gradient(to bottom,transparent,rgba(255,59,31,.6),transparent)}
+  .seam{position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);width:1px;background:linear-gradient(to bottom,transparent,rgba(255,106,20,.6),transparent)}
   @media(max-width:900px){.seam{display:none}}
   /* steps */
   .track{display:grid;grid-template-columns:80px 1fr;gap:0 40px}
@@ -88,7 +88,7 @@
   @media(min-width:640px){.step{gap:40px}}
   .step .no{font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(40px,7vw,84px);line-height:.8}
   .step h3{font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(22px,3.4vw,38px);letter-spacing:-.02em;line-height:1.05}
-  .step p{color:rgba(237,230,222,.55);margin-top:12px;max-width:52ch;font-size:clamp(15px,1.6vw,18px)}
+  .step p{color:rgba(237,230,222,.72);margin-top:12px;max-width:52ch;font-size:clamp(15px,1.6vw,18px)}
   /* workouts */
   .tabs{display:inline-flex;border:1px solid var(--line)}
   .tabs button{padding:12px 22px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;color:var(--ash);background:none;border:0;border-right:1px solid var(--line);cursor:pointer;transition:.3s}
@@ -96,30 +96,30 @@
   .wgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
   @media(max-width:860px){.wgrid{grid-template-columns:1fr 1fr}}@media(max-width:560px){.wgrid{grid-template-columns:1fr}}
   .wp{position:relative;border:1px solid var(--line);background:rgba(20,16,13,.4);padding:26px;overflow:hidden;transition:border-color .4s}
-  .wp::after{content:"";position:absolute;inset:0;opacity:0;transition:opacity .5s;pointer-events:none;background:radial-gradient(ellipse 80% 100% at 50% 120%,rgba(255,59,31,.16),transparent 70%)}
-  .wp:hover::after{opacity:1}.wp:hover{border-color:rgba(255,59,31,.3)}
+  .wp::after{content:"";position:absolute;inset:0;opacity:0;transition:opacity .5s;pointer-events:none;background:radial-gradient(ellipse 80% 100% at 50% 120%,rgba(255,106,20,.16),transparent 70%)}
+  .wp:hover::after{opacity:1}.wp:hover{border-color:rgba(255,106,20,.3)}
   .wp h3{font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(20px,2.4vw,28px);letter-spacing:-.02em;transition:color .3s;position:relative}
   .wp:hover h3{color:var(--ember)}
   .wp .ix{position:absolute;top:26px;right:26px;font-family:'Bricolage Grotesque';color:rgba(138,127,118,.4);font-size:14px}
-  .wp p{color:rgba(237,230,222,.5);margin-top:12px;font-size:15px;position:relative}
+  .wp p{color:rgba(237,230,222,.66);margin-top:12px;font-size:15px;position:relative}
   /* benefits */
   .bgrid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
   @media(max-width:860px){.bgrid{grid-template-columns:1fr 1fr}}@media(max-width:560px){.bgrid{grid-template-columns:1fr}}
   .bc{position:relative;border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:36px;transition:background .3s;overflow:hidden}
   .bc:hover{background:rgba(20,16,13,.5)}
-  .bc::after{content:"";position:absolute;inset:0;opacity:0;transition:opacity .5s;pointer-events:none;background:radial-gradient(ellipse 90% 100% at 50% 120%,rgba(255,59,31,.1),transparent 70%)}
+  .bc::after{content:"";position:absolute;inset:0;opacity:0;transition:opacity .5s;pointer-events:none;background:radial-gradient(ellipse 90% 100% at 50% 120%,rgba(255,106,20,.1),transparent 70%)}
   .bc:hover::after{opacity:1}
   .bc h3{font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(26px,3.6vw,42px);line-height:.95;letter-spacing:-.02em;position:relative}
-  .bc p{color:rgba(237,230,222,.5);margin-top:16px;font-size:15px;max-width:34ch;position:relative}
+  .bc p{color:rgba(237,230,222,.66);margin-top:16px;font-size:15px;max-width:34ch;position:relative}
   /* location */
   .loc{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   @media(max-width:900px){.loc{grid-template-columns:1fr}}
   .map{position:relative;min-height:440px;border:1px solid var(--line);background:var(--ink2);overflow:hidden}
   @media(max-width:900px){.map{min-height:320px}}
-  .mapgrid{position:absolute;inset:0;opacity:.5;background:repeating-linear-gradient(0deg,transparent 0 47px,rgba(255,59,31,.06) 47px 48px),repeating-linear-gradient(90deg,transparent 0 47px,rgba(255,59,31,.05) 47px 48px)}
-  .mapglow{position:absolute;inset:0;background:radial-gradient(circle at 56% 44%,rgba(255,59,31,.18),transparent 45%)}
+  .mapgrid{position:absolute;inset:0;opacity:.5;background:repeating-linear-gradient(0deg,transparent 0 47px,rgba(255,106,20,.06) 47px 48px),repeating-linear-gradient(90deg,transparent 0 47px,rgba(255,106,20,.05) 47px 48px)}
+  .mapglow{position:absolute;inset:0;background:radial-gradient(circle at 56% 44%,rgba(255,106,20,.18),transparent 45%)}
   .mk{position:absolute;top:44%;left:56%}
-  .mk .d{width:16px;height:16px;border-radius:50%;background:var(--ember);box-shadow:0 0 0 4px rgba(255,59,31,.2)}
+  .mk .d{width:16px;height:16px;border-radius:50%;background:var(--ember);box-shadow:0 0 0 4px rgba(255,106,20,.2)}
   .mk .r{position:absolute;inset:-12px;border:1px solid var(--ember);border-radius:50%;animation:ring 2.6s cubic-bezier(.2,.7,.2,1) infinite}
   .mk .r2{animation-delay:1.3s}
   @keyframes ring{0%{transform:scale(.4);opacity:.9}100%{transform:scale(3);opacity:0}}
@@ -137,14 +137,14 @@
   .feat .t{font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(17px,2vw,22px);letter-spacing:-.01em}
   .feat .d{color:var(--ash);font-size:14px;text-align:right;max-width:24ch}
   .stage{position:relative;height:460px;display:flex;align-items:center;justify-content:center}
-  .stage .glow{position:absolute;width:80%;height:80%;border-radius:50%;background:radial-gradient(circle,rgba(255,59,31,.12),transparent 65%);filter:blur(20px)}
+  .stage .glow{position:absolute;width:80%;height:80%;border-radius:50%;background:radial-gradient(circle,rgba(255,106,20,.12),transparent 65%);filter:blur(20px)}
   .float{animation:drift 9s ease-in-out infinite}
   @keyframes drift{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
   .ccard{position:relative;z-index:10;width:230px;border:1px solid var(--line);background:var(--panel);padding:20px}
   .chip{position:absolute;z-index:20;border:1px solid var(--line);background:var(--ink);padding:12px 16px}
   /* final */
   .final{position:relative;overflow:hidden;border-top:1px solid var(--line)}
-  .final .door{position:absolute;inset:0 0 40% 0;pointer-events:none;background:radial-gradient(ellipse 70% 100% at 50% 0%,rgba(255,59,31,.16),rgba(255,106,44,.05) 40%,transparent 70%)}
+  .final .door{position:absolute;inset:0 0 40% 0;pointer-events:none;background:radial-gradient(ellipse 70% 100% at 50% 0%,rgba(255,106,20,.16),rgba(255,106,44,.05) 40%,transparent 70%)}
   .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;position:relative}
   @media(max-width:900px){.fgrid{grid-template-columns:1fr;gap:40px}}
   .field{margin-bottom:18px}
@@ -154,7 +154,7 @@
   .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
   .tw{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
   .tw label{display:flex;align-items:center;justify-content:center;padding:11px 4px;border:1px solid var(--line);font-size:13px;color:var(--ash);cursor:pointer;transition:.2s}
-  .tw label.sel{border-color:var(--ember);color:var(--ember);background:rgba(255,59,31,.1)}
+  .tw label.sel{border-color:var(--ember);color:var(--ember);background:rgba(255,106,20,.1)}
   /* footer + sticky */
   footer{border-top:1px solid var(--line);background:var(--ink2);padding:64px 0 44px}
   .fcols{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
@@ -164,19 +164,27 @@
   .sticky .bar{display:flex;gap:10px;padding:10px;background:rgba(10,8,7,.95);backdrop-filter:blur(16px);border:1px solid var(--line)}
   .sticky .b{flex:1;background:var(--ember);color:#1a0600;text-align:center;font-weight:500;padding:14px;font-size:15px}
   .sticky .c{width:48px;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);color:var(--ember)}
-  .herophoto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.28;mix-blend-mode:luminosity}
+  .herophoto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.6;filter:brightness(.62) saturate(.85) contrast(1.05)}
   .pv{background:#15110d;border-bottom:1px solid var(--line);padding:7px;text-align:center;font-size:11px;color:var(--ash);position:relative;z-index:55;letter-spacing:.04em}
   /* photo strips */
-  .pstrip{position:relative;overflow:hidden;height:480px;border-top:1px solid var(--line)}
+  .pstrip{position:relative;overflow:hidden;height:480px;border-top:1px solid var(--line);background:linear-gradient(135deg,#1c0f07,#2a1305 55%,#0A0807)}
   @media(max-width:760px){.pstrip{height:340px}}
-  .pstrip img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.38) saturate(.6)}
-  .pstrip .pveil{position:absolute;inset:0;background:linear-gradient(to right,rgba(10,8,7,.8) 0%,rgba(10,8,7,.25) 55%,rgba(10,8,7,.55) 100%);z-index:1}
+  .pstrip img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.66) saturate(.82) contrast(1.04)}
+  .pstrip .pveil{position:absolute;inset:0;background:linear-gradient(to right,rgba(10,8,7,.92) 0%,rgba(10,8,7,.5) 45%,rgba(10,8,7,.2) 100%);z-index:1}
   .pstrip .pcon{position:relative;z-index:2;height:100%;display:flex;align-items:center}
   .bphoto{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:48px}
   @media(max-width:760px){.bphoto{grid-template-columns:1fr}}
-  .bphoto .pi{position:relative;overflow:hidden;border:1px solid var(--line)}
-  .bphoto .pi img{width:100%;height:280px;object-fit:cover;filter:brightness(.5) saturate(.7);display:block}
-  .bphoto .pi .pl{position:absolute;bottom:0;left:0;right:0;padding:20px 24px;background:linear-gradient(to top,rgba(10,8,7,.9),transparent)}
+  .bphoto .pi{position:relative;overflow:hidden;border:1px solid var(--line);background:linear-gradient(135deg,#1c0f07,#241004)}
+  /* gallery */
+  .gal{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:900px){.gal{grid-template-columns:1fr 1fr}}
+  .gal .gi{position:relative;overflow:hidden;border:1px solid var(--line);aspect-ratio:3/4;background:linear-gradient(135deg,#1c0f07,#241004)}
+  .gal .gi img{width:100%;height:100%;object-fit:cover;filter:brightness(.72) saturate(.88) contrast(1.04);transition:transform .8s cubic-bezier(.16,1,.3,1)}
+  .gal .gi:hover img{transform:scale(1.05)}
+  .gal .gi figcaption{position:absolute;bottom:0;left:0;right:0;padding:18px;font-size:13px;letter-spacing:.04em;background:linear-gradient(to top,rgba(10,8,7,.92),transparent)}
+  .bphoto .pi img{width:100%;height:300px;object-fit:cover;filter:brightness(.72) saturate(.88) contrast(1.04);display:block;transition:transform .8s cubic-bezier(.16,1,.3,1)}
+  .bphoto .pi:hover img{transform:scale(1.04)}
+  .bphoto .pi .pl{position:absolute;bottom:0;left:0;right:0;padding:24px;background:linear-gradient(to top,rgba(10,8,7,.95),rgba(10,8,7,.4) 55%,transparent)}
   /* sticky */
   .sticky{position:fixed;inset:auto 0 0 0;z-index:50;padding:12px;transform:translateY(100%);transition:transform .35s cubic-bezier(.16,1,.3,1)}
   @media(max-width:1000px){.sticky.show{transform:none}}
@@ -196,15 +204,15 @@
 
 <nav id="nav"><div class="wrap navin">
   <a href="#" class="brand">HOT<i>WORX</i><s>Galway</s></a>
-  <div class="nlinks"><a href="#why">Why</a><a href="#how">How</a><a href="#workouts">Classes</a><a href="#benefits">The heat</a><a href="#location">Where</a></div>
+  <div class="nlinks"><a href="#why">Why</a><a href="#how">How</a><a href="#workouts">Classes</a><a href="#gallery">Inside</a><a href="#benefits">The heat</a><a href="#location">Where</a></div>
   <a href="#book" class="btn fill ncta" style="padding:10px 18px;font-size:13px">First session free</a>
 </div></nav>
 
 <!-- HERO -->
 <header class="hero" id="hero">
-  <canvas id="heat"></canvas>
   <!-- REPLACE: swap src with a real HOTWORX Galway interior photo before launch -->
-  <img class="herophoto" src="https://images.unsplash.com/photo-1534438327882-6f3a0cbabc38?auto=format&fit=crop&w=1920&q=80" alt="" aria-hidden="true" onerror="this.style.display='none'">
+  <img class="herophoto" src="https://images.unsplash.com/photo-1534438327882-6f3a0cbabc38?auto=format&fit=crop&w=1920&q=80" alt="" aria-hidden="true" onerror="this.remove()">
+  <canvas id="heat"></canvas>
   <div class="heroveil"></div>
   <div class="frame" style="left:24px"></div><div class="frame" style="right:24px"></div>
   <div class="wrap">
@@ -235,14 +243,14 @@
       <div class="pcol rev" style="border:1px solid var(--line)">
         <h4 class="ash">The usual gym</h4>
         <ul>
-          <li><span class="b" style="background:rgba(237,230,222,.2)"></span><span style="color:rgba(237,230,222,.45)">An hour you have to find</span></li>
-          <li><span class="b" style="background:rgba(237,230,222,.2)"></span><span style="color:rgba(237,230,222,.45)">A crowded floor at peak time</span></li>
-          <li><span class="b" style="background:rgba(237,230,222,.2)"></span><span style="color:rgba(237,230,222,.45)">Guesswork once you're there</span></li>
-          <li><span class="b" style="background:rgba(237,230,222,.2)"></span><span style="color:rgba(237,230,222,.45)">Easy to skip, easy to quit</span></li>
+          <li><span class="b" style="background:rgba(237,230,222,.2)"></span><span style="color:rgba(237,230,222,.6)">An hour you have to find</span></li>
+          <li><span class="b" style="background:rgba(237,230,222,.2)"></span><span style="color:rgba(237,230,222,.6)">A crowded floor at peak time</span></li>
+          <li><span class="b" style="background:rgba(237,230,222,.2)"></span><span style="color:rgba(237,230,222,.6)">Guesswork once you're there</span></li>
+          <li><span class="b" style="background:rgba(237,230,222,.2)"></span><span style="color:rgba(237,230,222,.6)">Easy to skip, easy to quit</span></li>
         </ul>
       </div>
-      <div class="pcol rev" style="border:1px solid rgba(255,59,31,.3);background:var(--panel);position:relative;overflow:hidden">
-        <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 90% 100% at 80% 0%,rgba(255,59,31,.12),transparent 65%)"></div>
+      <div class="pcol rev" style="border:1px solid rgba(255,106,20,.3);background:var(--panel);position:relative;overflow:hidden">
+        <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 90% 100% at 80% 0%,rgba(255,106,20,.12),transparent 65%)"></div>
         <h4 class="ember" style="position:relative">HOTWORX Galway</h4>
         <ul style="position:relative">
           <li><span class="b" style="background:var(--ember)"></span>15 or 30 minutes, in and out</li>
@@ -259,7 +267,7 @@
 <!-- PHOTO STRIP 1 -->
 <!-- REPLACE: swap src with a real HOTWORX Galway sauna/session photo -->
 <div class="pstrip">
-  <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1920&q=80" alt="Infrared studio workout session" onerror="this.style.display='none'">
+  <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1920&q=80" alt="Infrared studio workout session" onerror="this.remove()">
   <div class="pveil"></div>
   <div class="wrap pcon">
     <div>
@@ -271,7 +279,7 @@
 
 <!-- HOW -->
 <section class="sec" id="how">
-  <div style="position:absolute;inset:auto 0 0 0;height:66%;pointer-events:none;background:radial-gradient(ellipse 70% 80% at 50% 120%,rgba(255,59,31,.08),transparent 70%)"></div>
+  <div style="position:absolute;inset:auto 0 0 0;height:66%;pointer-events:none;background:radial-gradient(ellipse 70% 80% at 50% 120%,rgba(255,106,20,.08),transparent 70%)"></div>
   <div class="wrap">
     <div class="rev" style="margin-bottom:80px;max-width:18ch">
       <p class="chapter" style="margin-bottom:24px"><span class="ix">02</span><span class="dash"></span> Enter the chamber</p>
@@ -300,9 +308,9 @@
     </div>
     <p class="ash" style="font-size:14px;margin-bottom:32px" id="meta"><span style="color:var(--paper)">30 min · up to 3</span></p>
     <!-- REPLACE: swap with a real HOTWORX Galway class-in-action photo -->
-    <div style="position:relative;overflow:hidden;border:1px solid var(--line);margin-bottom:32px" class="rev">
-      <img src="https://images.unsplash.com/photo-1574680178050-55c6a25ef79f?auto=format&fit=crop&w=1600&q=80" alt="Group workout in infrared studio" style="width:100%;height:280px;object-fit:cover;object-position:center 40%;filter:brightness(.45) saturate(.65);display:block" onerror="this.parentElement.style.display='none'">
-      <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(10,8,7,.8),rgba(10,8,7,.1) 60%);display:flex;align-items:center;padding:0 40px">
+    <div style="position:relative;overflow:hidden;border:1px solid var(--line);margin-bottom:32px;min-height:340px;background:linear-gradient(135deg,#1c0f07,#2a1305 60%,#0A0807)" class="rev">
+      <img src="https://images.unsplash.com/photo-1574680178050-55c6a25ef79f?auto=format&fit=crop&w=1600&q=80" alt="Group workout in infrared studio" style="width:100%;height:340px;object-fit:cover;object-position:center 40%;filter:brightness(.68) saturate(.85) contrast(1.04);display:block" onerror="this.remove()">
+      <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(10,8,7,.92),rgba(10,8,7,.35) 55%,rgba(10,8,7,.1) 100%);display:flex;align-items:center;padding:0 32px 0 48px">
         <p class="disp" style="font-size:clamp(22px,3.5vw,48px);max-width:18ch;line-height:.95">Twelve classes. One room. A screen that runs the session.</p>
       </div>
     </div>
@@ -310,6 +318,23 @@
     <div class="rev" style="margin-top:56px;border:1px solid var(--line);background:rgba(20,16,13,.3);padding:32px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap">
       <p class="disp" style="font-size:clamp(18px,2.2vw,26px);max-width:34ch">Not sure which one to start with? We'll sort that on your free session.</p>
       <a href="#book" class="btn fill" data-mag>Book free workout →</a>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="sec" id="gallery">
+  <div class="wrap">
+    <div class="rev" style="margin-bottom:56px;max-width:18ch">
+      <p class="chapter" style="margin-bottom:24px"><span class="ix">—</span><span class="dash"></span> A look inside</p>
+      <h2 class="hsec"><span class="mask"><span>The room,</span></span><span class="mask"><span>before you walk in.</span></span></h2>
+    </div>
+    <!-- REPLACE: swap srcs with real HOTWORX Galway studio photos before launch -->
+    <div class="gal rev">
+      <figure class="gi"><img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=700&q=80" alt="Inside the infrared sauna" onerror="this.remove()"><figcaption>The sauna</figcaption></figure>
+      <figure class="gi"><img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=700&q=80" alt="Mid-session in the heat" onerror="this.remove()"><figcaption>Mid-session</figcaption></figure>
+      <figure class="gi"><img src="https://images.unsplash.com/photo-1534258936925-c58bed479fcb?auto=format&fit=crop&w=700&q=80" alt="The FX kit floor" onerror="this.remove()"><figcaption>The FX floor</figcaption></figure>
+      <figure class="gi"><img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&w=700&q=80" alt="After the workout" onerror="this.remove()"><figcaption>The finish</figcaption></figure>
     </div>
   </div>
 </section>
@@ -325,11 +350,11 @@
     <!-- REPLACE: swap srcs with real HOTWORX Galway photos of workouts and recovery -->
     <div class="bphoto rev">
       <div class="pi">
-        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80" alt="Workout in infrared studio" onerror="this.parentElement.style.display='none'">
+        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80" alt="Workout in infrared studio" onerror="this.remove()">
         <div class="pl"><p class="disp" style="font-size:18px">The session</p><p class="ash" style="font-size:13px">30 minutes inside the heat</p></div>
       </div>
       <div class="pi">
-        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=900&q=80" alt="Recovery and stretch in warm studio" onerror="this.parentElement.style.display='none'">
+        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=900&q=80" alt="Recovery and stretch in warm studio" onerror="this.remove()">
         <div class="pl"><p class="disp" style="font-size:18px">The recovery</p><p class="ash" style="font-size:13px">What the infrared keeps doing after</p></div>
       </div>
     </div>
@@ -340,8 +365,8 @@
 <!-- PHOTO STRIP 2 -->
 <!-- REPLACE: swap src with a real HOTWORX Galway atmosphere/equipment photo -->
 <div class="pstrip" style="height:360px;border-bottom:1px solid var(--line)">
-  <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1920&q=80" alt="Infrared sauna warm light" onerror="this.style.display='none'">
-  <div class="pveil" style="background:linear-gradient(to left,rgba(10,8,7,.85) 0%,rgba(10,8,7,.2) 55%)"></div>
+  <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1920&q=80" alt="Infrared sauna warm light" onerror="this.remove()">
+  <div class="pveil" style="background:linear-gradient(to left,rgba(10,8,7,.92) 0%,rgba(10,8,7,.5) 45%,rgba(10,8,7,.15) 100%)"></div>
   <div class="wrap pcon" style="justify-content:flex-end">
     <div style="text-align:right;max-width:28ch">
       <p class="chapter" style="justify-content:flex-end;margin-bottom:16px"><span class="dash" style="background:var(--ember)"></span>Galway city</p>
@@ -374,7 +399,7 @@
             <div class="hr"><span class="d">Mon – Thu</span><span>11am – 8pm</span></div>
             <div class="hr"><span class="d">Friday</span><span>9am – 6pm</span></div>
             <div class="hr" style="border:0"><span class="d">Saturday</span><span>9am – 2pm</span></div>
-            <p style="color:rgba(237,230,222,.45);font-size:14px;margin-top:16px">Members get in 24/7, seven days. Staffed hours are for first visits and sign-ups — that's when your free session runs.</p>
+            <p style="color:rgba(237,230,222,.6);font-size:14px;margin-top:16px">Members get in 24/7, seven days. Staffed hours are for first visits and sign-ups — that's when your free session runs.</p>
           </div>
         </div>
         <div class="hrow" style="margin-top:40px">
@@ -410,7 +435,7 @@
         <p class="ash" style="font-size:11px;margin-top:4px">cals · 12 sessions</p>
         <div style="margin-top:16px"><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--ash);margin-bottom:6px"><span>Monthly goal</span><span class="ember">12 / 16</span></div><div style="height:4px;background:var(--ink)"><div style="height:100%;width:75%;background:var(--ember)"></div></div></div>
       </div>
-      <div class="chip float" style="top:24px;right:8px;border-color:rgba(255,59,31,.3);animation-delay:.6s"><p class="disp" style="font-size:13px;text-transform:uppercase">Hot Yoga</p><p class="ash" style="font-size:10px">Tomorrow · 7:00 · 30m</p></div>
+      <div class="chip float" style="top:24px;right:8px;border-color:rgba(255,106,20,.3);animation-delay:.6s"><p class="disp" style="font-size:13px;text-transform:uppercase">Hot Yoga</p><p class="ash" style="font-size:10px">Tomorrow · 7:00 · 30m</p></div>
       <div class="chip float" style="bottom:32px;left:0;display:flex;align-items:center;gap:10px;animation-delay:1.2s"><span style="width:6px;height:6px;border-radius:50%;background:var(--ember)"></span><span style="font-size:12px">342 cal · session done</span></div>
     </div>
   </div>
@@ -423,7 +448,7 @@
     <div class="fgrid">
       <div>
         <p class="chapter rev" style="margin-bottom:28px"><span class="ix">05</span><span class="dash"></span> The door is open</p>
-        <h2 class="hsec rev" style="font-size:clamp(42px,8vw,104px);text-shadow:0 0 60px rgba(255,59,31,.12)"><span class="mask"><span>Try it</span></span><span class="mask"><span>for <span class="ember">free.</span></span></span></h2>
+        <h2 class="hsec rev" style="font-size:clamp(42px,8vw,104px);text-shadow:0 0 60px rgba(255,106,20,.12)"><span class="mask"><span>Try it</span></span><span class="mask"><span>for <span class="ember">free.</span></span></span></h2>
         <p class="rev" style="margin-top:32px;color:rgba(237,230,222,.6);max-width:40ch;font-size:17px">Book your first session during staffed hours and feel infrared training for yourself. No card, no pressure.</p>
         <div class="rev hrow"><a href="tel:0917600007" class="btn lineb" data-mag><svg class="ic"><use href="#i-phone"/></svg> 091 760 007</a></div>
         <div class="rev" style="margin-top:40px;border-top:1px solid var(--line);max-width:360px">
@@ -464,7 +489,7 @@ const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // form submit
-function submitLead(e){e.preventDefault();const f=document.getElementById(‘leadform’);f.innerHTML=`<div style="padding:48px 0;text-align:center"><p class="disp" style="font-size:38px">Got it.</p><p style="color:#8A7F76;margin-top:14px;font-size:16px">We’ll text or ring to book you in.<br>See you on Tuam Road.</p></div>`;}
+function submitLead(e){e.preventDefault();const f=document.getElementById('leadform');f.innerHTML=`<div style="padding:48px 0;text-align:center"><p class="disp" style="font-size:38px">Got it.</p><p style="color:#8A7F76;margin-top:14px;font-size:16px">We&rsquo;ll text or ring to book you in.<br>See you on Tuam Road.</p></div>`;}
 
 // nav
 const nav=$('#nav');addEventListener('scroll',()=>nav.classList.toggle('on',scrollY>40));
@@ -484,14 +509,14 @@ $$('.sec .rev .mask, .final .rev .mask, #h1').forEach(()=>{});
 // data
 const iso=[['Hot Iso','Whole-body hold work, head to toe'],['Hot Pilates','Core and posture, slow and deliberate'],['Hot Yoga','Flexibility and a clear head'],['Hot Buns','Glutes and legs, no kit'],['Hot Barre None','Small movements, long burn'],['Hot Core','Everything through the middle'],['Hot Warrior','Strength and stamina together'],['Hot Bands','Resistance through full range'],['Hot Stretch','The recovery day you keep skipping']];
 const hiit=[['Hot Cycle','Legs and lungs on the bike'],['Hot Thunder','Rowing intervals that earn the shower'],['Hot Blast','Total body, fifteen flat-out minutes']];
-const ben=[[‘Recover’,’faster’,’Designed to support muscle recovery after a hard week.’],[‘Burn’,’more’,’Working in infrared can help push calorie burn past the same class cold.’],[‘Stay’,’consistent’,’Short sessions you’ll actually repeat — that’s where it adds up.’],[‘Ease’,’stress’,’The heat and the quiet are made to take the edge off the day.’],[‘Support’,’circulation’,’Built to support healthy blood flow while you move.’],[‘Sweat’,’it out’,’A proper sweat that supports the body’s own recovery.’]];
+const ben=[['Recover','faster','Designed to support muscle recovery after a hard week.'],['Burn','more','Working in infrared can help push calorie burn past the same class cold.'],['Stay','consistent','Short sessions you will actually repeat — that is where it adds up.'],['Ease','stress','The heat and the quiet are made to take the edge off the day.'],['Support','circulation','Built to support healthy blood flow while you move.'],['Sweat','it out','A proper sweat that supports your own recovery.']];
 const meta={iso:'30 min · up to 3',hiit:'15 min · up to 3',fx:'Open floor · members'};
 
 function renderW(t){
   const box=$('#wbox');$('#meta').innerHTML='<span style="color:var(--paper)">'+meta[t]+'</span>';
   if(t==='fx'){box.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px" class="fxg">
     <div class="wp" style="padding:40px"><h3>The FX Zone</h3><p style="font-size:16px;max-width:44ch;margin-top:16px">A kit floor outside the saunas — bands, free weights, ropes and the basics. Warm up, add a few sets, or train on the days you skip the heat. No booking, just walk over.</p></div>
-    <div style="border:1px solid rgba(255,59,31,.3);background:var(--panel);padding:40px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden"><div style="position:absolute;inset:0;background:radial-gradient(ellipse 100% 100% at 70% 0%,rgba(255,59,31,.12),transparent 65%)"></div><div style="position:relative"><p class="ember" style="font-size:12px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:12px">Included with membership</p><p class="disp" style="font-size:clamp(24px,3vw,40px)">Build the workout around your day.</p></div><a href="#book" class="btn fill" data-mag style="margin-top:32px;position:relative;width:fit-content">Try it free →</a></div></div>`;
+    <div style="border:1px solid rgba(255,106,20,.3);background:var(--panel);padding:40px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden"><div style="position:absolute;inset:0;background:radial-gradient(ellipse 100% 100% at 70% 0%,rgba(255,106,20,.12),transparent 65%)"></div><div style="position:relative"><p class="ember" style="font-size:12px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:12px">Included with membership</p><p class="disp" style="font-size:clamp(24px,3vw,40px)">Build the workout around your day.</p></div><a href="#book" class="btn fill" data-mag style="margin-top:32px;position:relative;width:fit-content">Try it free →</a></div></div>`;
     if(innerWidth<=860)box.querySelector('.fxg').style.gridTemplateColumns='1fr';
   } else {
     const d=t==='iso'?iso:hiit;
@@ -530,22 +555,24 @@ addEventListener('scroll',fillScroll);fillScroll();
     raf=requestAnimationFrame(frame);
     if(!vis){return;}
     t+=reduce?0:0.005;
+    // transparent canvas: orange heat glow composites over the photo behind it
     x.clearRect(0,0,w,h);
-    x.fillStyle='#0A0807';x.fillRect(0,0,w,h);
+    x.globalCompositeOperation='lighter';
     const cx=(0.66+Math.sin(t*0.18)*0.03+mx*0.05)*w;
     const cy=(0.32+Math.cos(t*0.13)*0.03+my*0.05)*h;
     const R=Math.max(w,h)*(0.55+0.04*Math.sin(t*0.5));
     const g=x.createRadialGradient(cx,cy,0,cx,cy,R);
-    g.addColorStop(0,'rgba(255,176,102,0.55)');
-    g.addColorStop(0.18,'rgba(255,106,44,0.40)');
-    g.addColorStop(0.42,'rgba(255,59,31,0.18)');
-    g.addColorStop(0.75,'rgba(40,10,6,0.10)');
+    g.addColorStop(0,'rgba(255,180,110,0.50)');
+    g.addColorStop(0.18,'rgba(255,138,56,0.34)');
+    g.addColorStop(0.42,'rgba(255,106,20,0.16)');
+    g.addColorStop(0.75,'rgba(120,40,10,0.06)');
     g.addColorStop(1,'rgba(10,8,7,0)');
     x.fillStyle=g;x.fillRect(0,0,w,h);
     // soft secondary ember
     const g2=x.createRadialGradient(cx*0.9,cy*1.3,0,cx*0.9,cy*1.3,R*0.5);
-    g2.addColorStop(0,'rgba(255,59,31,0.12)');g2.addColorStop(1,'rgba(10,8,7,0)');
+    g2.addColorStop(0,'rgba(255,106,20,0.14)');g2.addColorStop(1,'rgba(10,8,7,0)');
     x.fillStyle=g2;x.fillRect(0,0,w,h);
+    x.globalCompositeOperation='source-over';
     if(reduce){cancelAnimationFrame(raf);}
   }
   frame();
