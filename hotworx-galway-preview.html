@@ -30,7 +30,9 @@
   .chapter .ix{font-family:'Bricolage Grotesque';font-weight:700;color:var(--ember)}
   .dash{display:inline-block;width:32px;height:1px;background:var(--line)}
   .sec{padding:120px 0;border-top:1px solid var(--line);position:relative}
-  .hsec{font-family:'Bricolage Grotesque';font-weight:800;letter-spacing:-.025em;line-height:.94;font-size:clamp(36px,6.5vw,92px)}
+  .hsec{font-family:'Bricolage Grotesque';font-weight:800;letter-spacing:-.025em;line-height:.94;font-size:clamp(32px,6.5vw,92px);overflow-wrap:break-word}
+  /* heading wrappers must not be constrained by ch (ch is measured in the wrapper's 16px font, not the display font) */
+  .rev:has(.hsec){max-width:none!important}
   .mask{display:block;overflow:hidden;padding-bottom:.06em}
   .mask>span{display:block;transform:translateY(110%);transition:transform 1s cubic-bezier(.16,1,.3,1)}
   .in .mask>span{transform:none}
@@ -56,7 +58,7 @@
   #heat{position:absolute;inset:0;z-index:0;display:block}
   .heroveil{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(to top,#0A0807 6%,rgba(10,8,7,.78) 26%,rgba(10,8,7,.3) 55%,rgba(10,8,7,.65) 100%)}
   .frame{position:absolute;top:0;bottom:0;width:1px;background:var(--line);z-index:1}
-  .hero h1{font-size:clamp(54px,11vw,150px);text-shadow:0 0 60px rgba(255,106,20,.12);margin-top:22px}
+  .hero h1{font-size:clamp(46px,11vw,150px);text-shadow:0 0 60px rgba(255,106,20,.12);margin-top:22px;overflow-wrap:break-word}
   .lead{max-width:42ch;font-size:clamp(16px,2vw,20px);color:rgba(237,230,222,.84);margin-top:28px}
   .hrow{display:flex;gap:12px;flex-wrap:wrap;margin-top:36px}
   .hmeta{display:grid;grid-template-columns:repeat(4,auto);width:fit-content;margin-top:56px;border-top:1px solid var(--line)}
@@ -235,7 +237,7 @@
 <!-- WHY -->
 <section class="sec" id="why">
   <div class="wrap">
-    <div class="rev" style="margin-bottom:80px;max-width:20ch">
+    <div class="rev" style="margin-bottom:80px">
       <p class="chapter" style="margin-bottom:24px"><span class="ix">01</span><span class="dash"></span> Outside the chamber</p>
       <h2 class="hsec"><span class="mask"><span>Same goal.</span></span><span class="mask"><span>Different room.</span></span></h2>
     </div>
@@ -281,7 +283,7 @@
 <section class="sec" id="how">
   <div style="position:absolute;inset:auto 0 0 0;height:66%;pointer-events:none;background:radial-gradient(ellipse 70% 80% at 50% 120%,rgba(255,106,20,.08),transparent 70%)"></div>
   <div class="wrap">
-    <div class="rev" style="margin-bottom:80px;max-width:18ch">
+    <div class="rev" style="margin-bottom:80px">
       <p class="chapter" style="margin-bottom:24px"><span class="ix">02</span><span class="dash"></span> Enter the chamber</p>
       <h2 class="hsec"><span class="mask"><span>How it</span></span><span class="mask"><span>actually works.</span></span></h2>
     </div>
@@ -300,7 +302,7 @@
 <section class="sec" id="workouts">
   <div class="wrap">
     <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap;margin-bottom:48px">
-      <div class="rev" style="max-width:16ch">
+      <div class="rev">
         <p class="chapter" style="margin-bottom:24px"><span class="ix">03</span><span class="dash"></span> Inside the chamber</p>
         <h2 class="hsec"><span class="mask"><span>Twelve ways</span></span><span class="mask"><span>to sweat.</span></span></h2>
       </div>
@@ -311,7 +313,7 @@
     <div style="position:relative;overflow:hidden;border:1px solid var(--line);margin-bottom:32px;min-height:340px;background:linear-gradient(135deg,#1c0f07,#2a1305 60%,#0A0807)" class="rev">
       <img src="https://images.unsplash.com/photo-1574680178050-55c6a25ef79f?auto=format&fit=crop&w=1600&q=80" alt="Group workout in infrared studio" style="width:100%;height:340px;object-fit:cover;object-position:center 40%;filter:brightness(.68) saturate(.85) contrast(1.04);display:block" onerror="this.remove()">
       <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(10,8,7,.92),rgba(10,8,7,.35) 55%,rgba(10,8,7,.1) 100%);display:flex;align-items:center;padding:0 32px 0 48px">
-        <p class="disp" style="font-size:clamp(22px,3.5vw,48px);max-width:18ch;line-height:.95">Twelve classes. One room. A screen that runs the session.</p>
+        <p class="disp" style="font-size:clamp(22px,3.5vw,48px);line-height:.95">Twelve classes. One room. A screen that runs the session.</p>
       </div>
     </div>
     <div id="wbox"></div>
@@ -325,7 +327,7 @@
 <!-- GALLERY -->
 <section class="sec" id="gallery">
   <div class="wrap">
-    <div class="rev" style="margin-bottom:56px;max-width:18ch">
+    <div class="rev" style="margin-bottom:56px">
       <p class="chapter" style="margin-bottom:24px"><span class="ix">—</span><span class="dash"></span> A look inside</p>
       <h2 class="hsec"><span class="mask"><span>The room,</span></span><span class="mask"><span>before you walk in.</span></span></h2>
     </div>
@@ -342,7 +344,7 @@
 <!-- BENEFITS -->
 <section class="sec" id="benefits">
   <div class="wrap">
-    <div class="rev" style="margin-bottom:80px;max-width:16ch">
+    <div class="rev" style="margin-bottom:80px">
       <p class="chapter" style="margin-bottom:24px"><span class="ix">04</span><span class="dash"></span> Recovery &amp; results</p>
       <h2 class="hsec"><span class="mask"><span>What the heat</span></span><span class="mask"><span>does for you.</span></span></h2>
     </div>
@@ -368,7 +370,7 @@
   <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1920&q=80" alt="Infrared sauna warm light" onerror="this.remove()">
   <div class="pveil" style="background:linear-gradient(to left,rgba(10,8,7,.92) 0%,rgba(10,8,7,.5) 45%,rgba(10,8,7,.15) 100%)"></div>
   <div class="wrap pcon" style="justify-content:flex-end">
-    <div style="text-align:right;max-width:28ch">
+    <div style="text-align:right">
       <p class="chapter" style="justify-content:flex-end;margin-bottom:16px"><span class="dash" style="background:var(--ember)"></span>Galway city</p>
       <p class="disp" style="font-size:clamp(28px,4vw,58px);line-height:.93">Open while the city sleeps.</p>
       <a href="#book" class="btn fill" style="margin-top:24px;display:inline-flex">Book free workout →</a>
@@ -379,7 +381,7 @@
 <!-- LOCATION -->
 <section class="sec" id="location">
   <div class="wrap">
-    <div class="rev" style="margin-bottom:80px;max-width:16ch">
+    <div class="rev" style="margin-bottom:80px">
       <p class="chapter" style="margin-bottom:24px"><span class="ix">—</span><span class="dash"></span> Find the chamber</p>
       <h2 class="hsec"><span class="mask"><span>Tuam Road.</span></span><span class="mask"><span>Park at the door.</span></span></h2>
     </div>
@@ -415,7 +417,7 @@
 <section class="sec" id="app">
   <div class="wrap app">
     <div>
-      <div class="rev" style="margin-bottom:40px;max-width:16ch">
+      <div class="rev" style="margin-bottom:40px">
         <p class="chapter" style="margin-bottom:24px"><span class="ix">—</span><span class="dash"></span> The control centre</p>
         <h2 class="hsec"><span class="mask"><span>Your studio,</span></span><span class="mask"><span>in your pocket.</span></span></h2>
       </div>
