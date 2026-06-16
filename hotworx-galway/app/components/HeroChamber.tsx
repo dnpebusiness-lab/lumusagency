@@ -51,6 +51,16 @@ export default function HeroChamber() {
       ref={ref}
       className="relative min-h-[100svh] flex items-end overflow-hidden pb-[9vh] pt-28"
     >
+      {/* Layer 0: background photo — REPLACE src with a real HOTWORX Galway interior photo */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="https://images.unsplash.com/photo-1534438327882-6f3a0cbabc38?auto=format&fit=crop&w=1920&q=80"
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 w-full h-full object-cover z-[-1]"
+        style={{ filter: "brightness(0.35) saturate(0.6)" }}
+      />
+
       {/* Layer 1: 3D infrared field, or static fallback */}
       <div className="absolute inset-0 z-0">
         {use3D ? (
@@ -61,7 +71,7 @@ export default function HeroChamber() {
             className="absolute inset-0"
             style={{
               background:
-                "radial-gradient(ellipse 60% 55% at 62% 30%, rgba(255,59,31,0.28), rgba(255,106,44,0.10) 38%, #0A0807 70%)",
+                "radial-gradient(ellipse 60% 55% at 62% 30%, rgba(255,59,31,0.28), rgba(255,106,44,0.10) 38%, rgba(10,8,7,0.7) 70%)",
             }}
           />
         )}

@@ -59,9 +59,12 @@
   .hero h1{font-size:clamp(54px,11vw,150px);text-shadow:0 0 60px rgba(255,59,31,.12);margin-top:22px}
   .lead{max-width:42ch;font-size:clamp(16px,2vw,20px);color:rgba(237,230,222,.7);margin-top:28px}
   .hrow{display:flex;gap:12px;flex-wrap:wrap;margin-top:36px}
-  .hmeta{display:flex;flex-wrap:wrap;margin-top:56px;border-top:1px solid var(--line)}
+  .hmeta{display:grid;grid-template-columns:repeat(4,auto);width:fit-content;margin-top:56px;border-top:1px solid var(--line)}
+  @media(max-width:600px){.hmeta{grid-template-columns:repeat(2,1fr);width:100%}}
   .hmeta>div{padding:20px 28px 0 0;margin-right:28px;border-right:1px solid var(--line)}
+  @media(max-width:600px){.hmeta>div{padding:16px 0 0;margin:0;border-right:0;border-bottom:1px solid var(--line)}}
   .hmeta>div:last-child{border:0;margin:0}
+  @media(max-width:600px){.hmeta>div:nth-child(odd){border-right:1px solid var(--line);padding-right:16px}}
   .hmeta .k{font-family:'Bricolage Grotesque';font-weight:800;font-size:26px;line-height:1}
   .hmeta .v{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ash);margin-top:6px}
   /* why */
@@ -161,7 +164,22 @@
   .sticky .bar{display:flex;gap:10px;padding:10px;background:rgba(10,8,7,.95);backdrop-filter:blur(16px);border:1px solid var(--line)}
   .sticky .b{flex:1;background:var(--ember);color:#1a0600;text-align:center;font-weight:500;padding:14px;font-size:15px}
   .sticky .c{width:48px;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);color:var(--ember)}
+  .herophoto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-1;filter:brightness(.38) saturate(.65)}
   .pv{background:#15110d;border-bottom:1px solid var(--line);padding:7px;text-align:center;font-size:11px;color:var(--ash);position:relative;z-index:55;letter-spacing:.04em}
+  /* photo strips */
+  .pstrip{position:relative;overflow:hidden;height:480px;border-top:1px solid var(--line)}
+  @media(max-width:760px){.pstrip{height:340px}}
+  .pstrip img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.38) saturate(.6)}
+  .pstrip .pveil{position:absolute;inset:0;background:linear-gradient(to right,rgba(10,8,7,.8) 0%,rgba(10,8,7,.25) 55%,rgba(10,8,7,.55) 100%);z-index:1}
+  .pstrip .pcon{position:relative;z-index:2;height:100%;display:flex;align-items:center}
+  .bphoto{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:48px}
+  @media(max-width:760px){.bphoto{grid-template-columns:1fr}}
+  .bphoto .pi{position:relative;overflow:hidden;border:1px solid var(--line)}
+  .bphoto .pi img{width:100%;height:280px;object-fit:cover;filter:brightness(.5) saturate(.7);display:block}
+  .bphoto .pi .pl{position:absolute;bottom:0;left:0;right:0;padding:20px 24px;background:linear-gradient(to top,rgba(10,8,7,.9),transparent)}
+  /* sticky */
+  .sticky{position:fixed;inset:auto 0 0 0;z-index:50;padding:12px;transform:translateY(100%);transition:transform .35s cubic-bezier(.16,1,.3,1)}
+  @media(max-width:1000px){.sticky.show{transform:none}}
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.mask>span{transform:none}.rev{opacity:1;transform:none}}
 </style>
 </head>
@@ -184,6 +202,8 @@
 
 <!-- HERO -->
 <header class="hero" id="hero">
+  <!-- REPLACE: swap src with a real HOTWORX Galway interior photo before launch -->
+  <img class="herophoto" src="https://images.unsplash.com/photo-1534438327882-6f3a0cbabc38?auto=format&fit=crop&w=1920&q=80" alt="Dark gym interior" onerror="this.style.display='none'">
   <canvas id="heat"></canvas>
   <div class="heroveil"></div>
   <div class="frame" style="left:24px"></div><div class="frame" style="right:24px"></div>
@@ -236,6 +256,19 @@
   </div>
 </section>
 
+<!-- PHOTO STRIP 1 -->
+<!-- REPLACE: swap src with a real HOTWORX Galway sauna/session photo -->
+<div class="pstrip">
+  <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1920&q=80" alt="Infrared studio workout session" onerror="this.style.display='none'">
+  <div class="pveil"></div>
+  <div class="wrap pcon">
+    <div>
+      <p class="chapter" style="margin-bottom:20px"><span class="dash" style="background:var(--ember)"></span>Inside the chamber</p>
+      <p class="disp" style="font-size:clamp(34px,5.5vw,78px);max-width:14ch;line-height:.93">Three people. One hour becomes fifteen minutes.</p>
+    </div>
+  </div>
+</div>
+
 <!-- HOW -->
 <section class="sec" id="how">
   <div style="position:absolute;inset:auto 0 0 0;height:66%;pointer-events:none;background:radial-gradient(ellipse 70% 80% at 50% 120%,rgba(255,59,31,.08),transparent 70%)"></div>
@@ -266,6 +299,13 @@
       <div class="tabs rev"><button class="on" data-t="iso">Isometric</button><button data-t="hiit">HIIT</button><button data-t="fx">FX Zone</button></div>
     </div>
     <p class="ash" style="font-size:14px;margin-bottom:32px" id="meta"><span style="color:var(--paper)">30 min · up to 3</span></p>
+    <!-- REPLACE: swap with a real HOTWORX Galway class-in-action photo -->
+    <div style="position:relative;overflow:hidden;border:1px solid var(--line);margin-bottom:32px" class="rev">
+      <img src="https://images.unsplash.com/photo-1574680178050-55c6a25ef79f?auto=format&fit=crop&w=1600&q=80" alt="Group workout in infrared studio" style="width:100%;height:280px;object-fit:cover;object-position:center 40%;filter:brightness(.45) saturate(.65);display:block" onerror="this.parentElement.style.display='none'">
+      <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(10,8,7,.8),rgba(10,8,7,.1) 60%);display:flex;align-items:center;padding:0 40px">
+        <p class="disp" style="font-size:clamp(22px,3.5vw,48px);max-width:18ch;line-height:.95">Twelve classes. One room. A screen that runs the session.</p>
+      </div>
+    </div>
     <div id="wbox"></div>
     <div class="rev" style="margin-top:56px;border:1px solid var(--line);background:rgba(20,16,13,.3);padding:32px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap">
       <p class="disp" style="font-size:clamp(18px,2.2vw,26px);max-width:34ch">Not sure which one to start with? We'll sort that on your free session.</p>
@@ -282,9 +322,34 @@
       <h2 class="hsec"><span class="mask"><span>What the heat</span></span><span class="mask"><span>does for you.</span></span></h2>
     </div>
     <div class="bgrid" id="bgrid"></div>
+    <!-- REPLACE: swap srcs with real HOTWORX Galway photos of workouts and recovery -->
+    <div class="bphoto rev">
+      <div class="pi">
+        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80" alt="Workout in infrared studio" onerror="this.parentElement.style.display='none'">
+        <div class="pl"><p class="disp" style="font-size:18px">The session</p><p class="ash" style="font-size:13px">30 minutes inside the heat</p></div>
+      </div>
+      <div class="pi">
+        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=900&q=80" alt="Recovery and stretch in warm studio" onerror="this.parentElement.style.display='none'">
+        <div class="pl"><p class="disp" style="font-size:18px">The recovery</p><p class="ash" style="font-size:13px">What the infrared keeps doing after</p></div>
+      </div>
+    </div>
     <p class="rev ash" style="margin-top:32px;font-size:12.5px;max-width:64ch;opacity:.7">These describe general wellness benefits of infrared training and exercise — not medical claims, and results vary with what you put in. Anything to do with your health, talk to your GP first.</p>
   </div>
 </section>
+
+<!-- PHOTO STRIP 2 -->
+<!-- REPLACE: swap src with a real HOTWORX Galway atmosphere/equipment photo -->
+<div class="pstrip" style="height:360px;border-bottom:1px solid var(--line)">
+  <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1920&q=80" alt="Infrared sauna warm light" onerror="this.style.display='none'">
+  <div class="pveil" style="background:linear-gradient(to left,rgba(10,8,7,.85) 0%,rgba(10,8,7,.2) 55%)"></div>
+  <div class="wrap pcon" style="justify-content:flex-end">
+    <div style="text-align:right;max-width:28ch">
+      <p class="chapter" style="justify-content:flex-end;margin-bottom:16px"><span class="dash" style="background:var(--ember)"></span>Galway city</p>
+      <p class="disp" style="font-size:clamp(28px,4vw,58px);line-height:.93">Open while the city sleeps.</p>
+      <a href="#book" class="btn fill" style="margin-top:24px;display:inline-flex">Book free workout →</a>
+    </div>
+  </div>
+</div>
 
 <!-- LOCATION -->
 <section class="sec" id="location">
@@ -370,7 +435,7 @@
       <div class="rev" style="border:1px solid var(--line);background:rgba(20,16,13,.5);padding:40px">
         <h3 class="disp" style="font-size:24px;margin-bottom:4px">Book your free session</h3>
         <p class="ash" style="font-size:14px;margin-bottom:32px">Leave your details — we'll be in touch to sort a time.</p>
-        <form onsubmit="event.preventDefault();this.innerHTML='&lt;div style=\'padding:40px 0;text-align:center\'&gt;&lt;h3 class=disp style=\'font-size:30px\'&gt;Got it.&lt;/h3&gt;&lt;p style=\'color:#8A7F76;margin-top:10px\'&gt;We&amp;rsquo;ll text or ring to book you in. See you on Tuam Road.&lt;/p&gt;&lt;/div&gt;'">
+        <form id="leadform" onsubmit="submitLead(event)">
           <div class="field"><label>First name</label><input required placeholder="Sarah"></div>
           <div class="two"><div class="field"><label>Phone</label><input required type="tel" placeholder="087…"></div><div class="field"><label>Email</label><input required type="email" placeholder="you@…"></div></div>
           <div class="field"><label>What's the goal</label><select><option>Get moving again</option><option>Drop a bit of weight</option><option>Recover better</option><option>Try something new</option><option>Something else</option></select></div>
@@ -398,8 +463,16 @@
 const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+// form submit
+function submitLead(e){e.preventDefault();const f=document.getElementById(‘leadform’);f.innerHTML=`<div style="padding:48px 0;text-align:center"><p class="disp" style="font-size:38px">Got it.</p><p style="color:#8A7F76;margin-top:14px;font-size:16px">We’ll text or ring to book you in.<br>See you on Tuam Road.</p></div>`;}
+
 // nav
 const nav=$('#nav');addEventListener('scroll',()=>nav.classList.toggle('on',scrollY>40));
+
+// sticky mobile CTA — show after 500px scroll, hide when booking form is visible
+const stk=$('.sticky');
+function stickyCheck(){const bookTop=(document.getElementById('book')?.getBoundingClientRect().top??9999);stk.classList.toggle('show',scrollY>500&&bookTop>innerHeight);}
+addEventListener('scroll',stickyCheck,{passive:true});stickyCheck();
 
 // reveal + mask
 const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{rootMargin:'-10% 0px'});
@@ -458,7 +531,6 @@ addEventListener('scroll',fillScroll);fillScroll();
     if(!vis){return;}
     t+=reduce?0:0.005;
     x.clearRect(0,0,w,h);
-    x.fillStyle='#0A0807';x.fillRect(0,0,w,h);
     const cx=(0.66+Math.sin(t*0.18)*0.03+mx*0.05)*w;
     const cy=(0.32+Math.cos(t*0.13)*0.03+my*0.05)*h;
     const R=Math.max(w,h)*(0.55+0.04*Math.sin(t*0.5));

@@ -95,6 +95,25 @@ export default function Workouts() {
           <span className="text-paper">{current.meta}</span>
         </p>
 
+        {/* REPLACE: swap src with a real HOTWORX Galway class-in-action photo */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <Reveal className="relative overflow-hidden border border-line mb-8">
+          <img
+            src="https://images.unsplash.com/photo-1574680178050-55c6a25ef79f?auto=format&fit=crop&w=1600&q=80"
+            alt="Group workout in infrared studio"
+            className="w-full object-cover block"
+            style={{ height: 280, objectPosition: "center 40%", filter: "brightness(0.42) saturate(0.65)" }}
+          />
+          <div
+            className="absolute inset-0 flex items-center px-8 sm:px-12"
+            style={{ background: "linear-gradient(to right, rgba(10,8,7,0.85), rgba(10,8,7,0.1) 60%)" }}
+          >
+            <p className="font-display font-extrabold text-[clamp(22px,3.5vw,48px)] leading-[0.93] tracking-tight max-w-[18ch]">
+              Twelve classes. One room. A screen that runs the session.
+            </p>
+          </div>
+        </Reveal>
+
         <AnimatePresence mode="wait">
           {active !== "fx" ? (
             <motion.div

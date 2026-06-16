@@ -47,6 +47,42 @@ export default function Benefits() {
           ))}
         </div>
 
+        {/* REPLACE: swap srcs with real HOTWORX Galway photos */}
+        <Reveal className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-12">
+          <div className="relative overflow-hidden border border-line">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80"
+              alt="Workout in infrared studio"
+              className="w-full block"
+              style={{ height: 280, objectFit: "cover", filter: "brightness(0.45) saturate(0.65)" }}
+            />
+            <div
+              className="absolute bottom-0 left-0 right-0 p-6"
+              style={{ background: "linear-gradient(to top, rgba(10,8,7,0.92), transparent)" }}
+            >
+              <p className="font-display font-extrabold text-[18px] tracking-tight">The session</p>
+              <p className="text-ash text-[13px] mt-0.5">30 minutes inside the heat</p>
+            </div>
+          </div>
+          <div className="relative overflow-hidden border border-line">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=900&q=80"
+              alt="Recovery and stretch in warm studio"
+              className="w-full block"
+              style={{ height: 280, objectFit: "cover", filter: "brightness(0.45) saturate(0.65)" }}
+            />
+            <div
+              className="absolute bottom-0 left-0 right-0 p-6"
+              style={{ background: "linear-gradient(to top, rgba(10,8,7,0.92), transparent)" }}
+            >
+              <p className="font-display font-extrabold text-[18px] tracking-tight">The recovery</p>
+              <p className="text-ash text-[13px] mt-0.5">What the infrared keeps doing after</p>
+            </div>
+          </div>
+        </Reveal>
+
         <Reveal>
           <p className="mt-8 text-ash/70 text-[12.5px] leading-relaxed max-w-[64ch]">
             These describe general wellness benefits of infrared training and
