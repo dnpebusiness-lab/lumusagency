@@ -73,7 +73,7 @@
           <!-- GREETING + INTRO -->
           <tr>
             <td class="pad-mobile" style="padding: 40px 48px 28px; background-color:#F5F3EF;">
-              <p style="margin:0 0 6px;font-family:Arial,Helvetica,sans-serif;font-size:10px;font-weight:normal;letter-spacing:0.14em;text-transform:uppercase;color:#9B9488;">Hi {{guest_name}},</p>
+              <p style="margin:0 0 6px;font-family:Arial,Helvetica,sans-serif;font-size:10px;font-weight:normal;letter-spacing:0.14em;text-transform:uppercase;color:#9B9488;">Hi {TAG_FIRST_NAME},</p>
               <h1 style="margin:0 0 16px;font-family:Georgia,'Times New Roman',serif;font-size:30px;font-weight:normal;line-height:1.1;color:#0D0D0D;">Your PIN code<br>is ready.</h1>
               <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.7;color:#4A4540;">Here is everything you need for check-in at St. Helen&#8217;s Townhouse tomorrow. Keep this email on your phone — the PIN code is what lets you in.</p>
             </td>
@@ -86,7 +86,7 @@
                 <tr>
                   <td align="center" style="padding: 40px 24px 36px;">
                     <p style="margin:0 0 16px;font-family:Arial,Helvetica,sans-serif;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:#9B9488;">Your PIN code</p>
-                    <p class="pin-display" style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:64px;font-weight:normal;letter-spacing:0.2em;color:#0D0D0D;line-height:1;">{{pin_code}}</p>
+                    <p class="pin-display" style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:64px;font-weight:normal;letter-spacing:0.2em;color:#0D0D0D;line-height:1;">{TAG_REMOTELOCK_PIN}</p>
                     <p style="margin:20px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:11px;line-height:1.6;color:#9B9488;">Enter at the keypad on the front door of the townhouse<br>No front desk &nbsp;&#183;&nbsp; arrive any time from check-in</p>
                   </td>
                 </tr>
@@ -114,17 +114,17 @@
                 <tr>
                   <td class="detail-cell" align="center" style="padding:20px 16px;border-right:1px solid #E0DDD7;width:33%;">
                     <p style="margin:0 0 5px;font-family:Arial,Helvetica,sans-serif;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:#9B9488;">Check-in</p>
-                    <p style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:15px;color:#0D0D0D;">{{check_in_date}}</p>
-                    <p style="margin:4px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#9B9488;">from {{check_in_time}}</p>
+                    <p style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:15px;color:#0D0D0D;">{TAG_CHECK_IN_DATE}</p>
+                    <p style="margin:4px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#9B9488;">from {TAG_CHECK_IN_TIME}</p>
                   </td>
                   <td class="detail-cell" align="center" style="padding:20px 16px;border-right:1px solid #E0DDD7;width:33%;">
                     <p style="margin:0 0 5px;font-family:Arial,Helvetica,sans-serif;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:#9B9488;">Check-out</p>
-                    <p style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:15px;color:#0D0D0D;">{{check_out_date}}</p>
-                    <p style="margin:4px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#9B9488;">by {{check_out_time}}</p>
+                    <p style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:15px;color:#0D0D0D;">{TAG_CHECK_OUT_DATE}</p>
+                    <p style="margin:4px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#9B9488;">by {TAG_CHECK_OUT_TIME}</p>
                   </td>
                   <td class="detail-cell" align="center" style="padding:20px 16px;width:33%;">
                     <p style="margin:0 0 5px;font-family:Arial,Helvetica,sans-serif;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:#9B9488;">Address</p>
-                    <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.5;color:#0D0D0D;">{{property_address}}</p>
+                    <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.5;color:#0D0D0D;">{TAG_PROPERTY_ADDRESS}</p>
                   </td>
                 </tr>
               </table>
@@ -145,13 +145,13 @@
                 <tr><td style="padding: 0 0 13px;">
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr>
                     <td style="padding-right:12px;font-family:Arial,sans-serif;font-size:12px;color:#9B9488;vertical-align:top;">&#8212;</td>
-                    <td style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.6;color:#4A4540;">No front desk. Arrive any time from <strong style="color:#0D0D0D;font-weight:600;">{{check_in_time}}</strong>. Your room and all shared areas are ready on arrival.</td>
+                    <td style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.6;color:#4A4540;">No front desk. Arrive any time from <strong style="color:#0D0D0D;font-weight:600;">{TAG_CHECK_IN_TIME}</strong>. Your room and all shared areas are ready on arrival.</td>
                   </tr></table>
                 </td></tr>
                 <tr><td style="padding: 0 0 13px;">
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr>
                     <td style="padding-right:12px;font-family:Arial,sans-serif;font-size:12px;color:#9B9488;vertical-align:top;">&#8212;</td>
-                    <td style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.6;color:#4A4540;">Please vacate by <strong style="color:#0D0D0D;font-weight:600;">{{check_out_time}}</strong> on your day of departure.</td>
+                    <td style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.6;color:#4A4540;">Please vacate by <strong style="color:#0D0D0D;font-weight:600;">{TAG_CHECK_OUT_TIME}</strong> on your day of departure.</td>
                   </tr></table>
                 </td></tr>
                 <tr><td>
