@@ -145,6 +145,7 @@ h4 { font-size: var(--t-md);      font-weight: 600; }
   object-fit: cover;
   object-position: center;
 }
+.photo-slot:has(img)::after { display: none; }
 
 /* ─── LABEL / EYEBROW ────────────────────────────────────── */
 .label {
@@ -243,7 +244,17 @@ h4 { font-size: var(--t-md);      font-weight: 600; }
   text-decoration: none;
   flex-shrink: 0;
 }
-.site-logo__mark { width: 36px; height: 42px; flex-shrink: 0; }
+.site-logo__mark {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.625rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.lm-c { color: #111111; }
+.lm-h { color: #7A5A3A; }
 .site-logo__text { display: flex; flex-direction: column; line-height: 1; }
 .site-logo__city {
   font-size: 0.9375rem;
@@ -1857,6 +1868,8 @@ h4 { font-size: var(--t-md);      font-weight: 600; }
 /* Footer logo (dark bg variant) */
 .footer-logo .site-logo__city  { color: var(--rev); }
 .footer-logo .site-logo__hosting { color: var(--rev-40); }
+.footer-logo .lm-c { color: var(--ground); }
+.footer-logo .lm-h { color: #C4976A; }
 
 /* ─── Page hero ─────────────────────────────────────────────── */
 .page-hero { background: var(--ground); }

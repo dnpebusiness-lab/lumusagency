@@ -9,7 +9,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -19,10 +19,7 @@
   <header class="site-header" role="banner">
     <div class="hdr-inner">
       <a href="index.html" class="site-logo" aria-label="City Hosting — home">
-        <svg class="site-logo__mark" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-          <rect x="1" y="1" width="26" height="26" rx="2" stroke="#7A5A3A" stroke-width="1.5"/>
-          <path d="M6 22V8h5v5h6V8h5v14" stroke="#111111" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <span class="site-logo__mark" aria-hidden="true"><span class="lm-c">C</span><span class="lm-h">H</span></span>
         <span class="site-logo__text">
           <span class="site-logo__city">City</span>
           <span class="site-logo__hosting">Hosting</span>
@@ -78,8 +75,8 @@
     <!-- Photo gallery -->
     <section class="prop-detail-gallery" aria-label="Property photos">
       <div class="prop-detail-gallery__main">
-        <div class="photo-slot photo-slot--gallery-main" data-label="Main property photo. Client to supply real photography.">
-          <!-- Primary photo: populated by JS or CMS -->
+        <div class="photo-slot photo-slot--gallery-main">
+          <img src="images/galway-hero.png" alt="Property managed by City Hosting" loading="eager" width="1200" height="800">
         </div>
       </div>
       <div class="prop-detail-gallery__thumbs" aria-label="Additional photos" role="list">
@@ -175,10 +172,7 @@
     <div class="wrap footer-body">
       <div class="footer-brand">
         <a href="index.html" class="site-logo footer-logo" aria-label="City Hosting — home">
-          <svg class="site-logo__mark" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-            <rect x="1" y="1" width="26" height="26" rx="2" stroke="#7A5A3A" stroke-width="1.5"/>
-            <path d="M6 22V8h5v5h6V8h5v14" stroke="#F5F1EA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          <span class="site-logo__mark" aria-hidden="true"><span class="lm-c">C</span><span class="lm-h">H</span></span>
           <span class="site-logo__text"><span class="site-logo__city">City</span><span class="site-logo__hosting">Hosting</span></span>
         </a>
         <p class="footer-tagline">Professional holiday let management across Galway and the West of Ireland.</p>
