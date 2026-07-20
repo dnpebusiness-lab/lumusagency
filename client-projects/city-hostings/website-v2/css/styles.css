@@ -236,9 +236,12 @@ h4 { font-size: var(--t-md);      font-weight: 600; }
 .hdr-inner {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 2rem;
   width: 100%;
+}
+.nav-primary {
+  margin-left: auto;
 }
 
 /* Logo */
