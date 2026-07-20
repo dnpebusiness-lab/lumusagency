@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en-IE">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — City Hosting Galway</title>
+  <meta name="description" content="Get in touch with City Hosting. Property owners can enquire about management. Guests can contact us about bookings and stays.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://cityhostings.com/contact.html">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header" role="banner">
+    <div class="hdr-inner">
+      <a href="index.html" class="site-logo" aria-label="City Hosting — home">
+        <svg class="site-logo__mark" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <rect x="1" y="1" width="26" height="26" rx="2" stroke="#7A5A3A" stroke-width="1.5"/>
+          <path d="M6 22V8h5v5h6V8h5v14" stroke="#111111" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="site-logo__text">
+          <span class="site-logo__city">City</span>
+          <span class="site-logo__hosting">Hosting</span>
+        </span>
+      </a>
+      <nav class="nav-primary" aria-label="Primary navigation">
+        <ul role="list">
+          <li><a href="property-management.html">For owners</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="book-direct.html">Properties</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html" aria-current="page">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="hdr-actions">
+        <a href="book-direct.html" class="btn btn--warm btn--sm">Book direct</a>
+        <button class="nav-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="nav-drawer">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+            <line x1="3" y1="7" x2="19" y2="7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="3" y1="15" x2="19" y2="15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="nav-overlay" aria-hidden="true"></div>
+  <nav class="nav-drawer" id="nav-drawer" aria-label="Mobile navigation">
+    <div class="nav-drawer__header">
+      <span class="site-logo__text"><span class="site-logo__city">City</span><span class="site-logo__hosting">Hosting</span></span>
+      <button class="nav-toggle nav-toggle--close" aria-label="Close navigation menu" aria-expanded="true" aria-controls="nav-drawer">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+          <line x1="4" y1="4" x2="18" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="18" y1="4" x2="4" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <ul role="list">
+      <li><a href="property-management.html">For property owners</a></li>
+      <li><a href="services.html">Our services</a></li>
+      <li><a href="book-direct.html">Browse properties</a></li>
+      <li><a href="about.html">About City Hosting</a></li>
+      <li><a href="contact.html">Get in touch</a></li>
+    </ul>
+    <div class="nav-drawer__footer">
+      <a href="mailto:info@cityhostings.com" class="btn btn--outline">info@cityhostings.com</a>
+      <a href="tel:+353831723722" class="btn btn--warm">083 172 3722</a>
+    </div>
+  </nav>
+
+  <main id="main-content">
+
+    <section class="page-hero page-hero--narrow section-pad-top" aria-labelledby="contact-heading">
+      <div class="wrap">
+        <p class="eyebrow reveal">Get in touch</p>
+        <h1 id="contact-heading" class="page-hero__heading reveal reveal-d1">Contact City Hosting.</h1>
+        <p class="page-hero__sub reveal reveal-d2">Property owner or guest — use the form that fits, or contact us directly. We respond within one business day.</p>
+      </div>
+    </section>
+
+    <!-- Two-route contact -->
+    <section class="contact-grid section-pad" aria-label="Contact routes">
+      <div class="wrap contact-grid__inner">
+
+        <!-- Owner route -->
+        <div class="contact-route reveal">
+          <div class="contact-route__header">
+            <p class="eyebrow">Property owners</p>
+            <h2>Enquire about management or an assessment</h2>
+          </div>
+          <form
+            class="contact-route__form"
+            name="owner-enquiry"
+            method="POST"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            data-validate
+            aria-label="Owner enquiry"
+          >
+            <input type="hidden" name="form-name" value="owner-enquiry">
+            <p hidden><label>Don't fill this in: <input name="bot-field"></label></p>
+
+            <div class="field">
+              <label class="field-label" for="o-name">Name <span aria-label="required">*</span></label>
+              <input class="field-input" type="text" id="o-name" name="name" autocomplete="name" required data-error-msg="Please enter your name.">
+              <span class="field-error" hidden role="alert"></span>
+            </div>
+            <div class="field">
+              <label class="field-label" for="o-email">Email <span aria-label="required">*</span></label>
+              <input class="field-input" type="email" id="o-email" name="email" autocomplete="email" required data-error-msg="Please enter your email.">
+              <span class="field-error" hidden role="alert"></span>
+            </div>
+            <div class="field">
+              <label class="field-label" for="o-phone">Phone</label>
+              <input class="field-input" type="tel" id="o-phone" name="phone" autocomplete="tel">
+            </div>
+            <div class="field">
+              <label class="field-label" for="o-location">Property location <span aria-label="required">*</span></label>
+              <input class="field-input" type="text" id="o-location" name="property_location" placeholder="e.g. Galway City, Connemara…" required data-error-msg="Please tell us where the property is.">
+              <span class="field-error" hidden role="alert"></span>
+            </div>
+            <div class="field">
+              <label class="field-label" for="o-message">Message</label>
+              <textarea class="field-textarea" id="o-message" name="message" rows="3" placeholder="What are you looking to do with the property?"></textarea>
+            </div>
+            <div class="consent">
+              <label class="consent__label">
+                <input class="consent__checkbox" type="checkbox" name="consent" required>
+                <span>I agree to City Hosting contacting me about this enquiry.</span>
+              </label>
+            </div>
+            <button type="submit" class="btn btn--dark btn--full">Send owner enquiry</button>
+          </form>
+        </div>
+
+        <!-- Guest route -->
+        <div class="contact-route reveal reveal-d1">
+          <div class="contact-route__header">
+            <p class="eyebrow">Guests</p>
+            <h2>Questions about a booking or stay</h2>
+          </div>
+          <form
+            class="contact-route__form"
+            name="guest-contact"
+            method="POST"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            data-validate
+            aria-label="Guest contact"
+          >
+            <input type="hidden" name="form-name" value="guest-contact">
+            <p hidden><label>Don't fill this in: <input name="bot-field"></label></p>
+
+            <div class="field">
+              <label class="field-label" for="g-name">Name <span aria-label="required">*</span></label>
+              <input class="field-input" type="text" id="g-name" name="name" autocomplete="name" required data-error-msg="Please enter your name.">
+              <span class="field-error" hidden role="alert"></span>
+            </div>
+            <div class="field">
+              <label class="field-label" for="g-email">Email <span aria-label="required">*</span></label>
+              <input class="field-input" type="email" id="g-email" name="email" autocomplete="email" required data-error-msg="Please enter your email.">
+              <span class="field-error" hidden role="alert"></span>
+            </div>
+            <div class="field">
+              <label class="field-label" for="g-booking">Booking reference (if you have one)</label>
+              <input class="field-input" type="text" id="g-booking" name="booking_ref" placeholder="Optional">
+            </div>
+            <div class="field">
+              <label class="field-label" for="g-message">Your question <span aria-label="required">*</span></label>
+              <textarea class="field-textarea" id="g-message" name="message" rows="4" required data-error-msg="Please tell us what you need." placeholder="What dates are you enquiring about? Which property?"></textarea>
+              <span class="field-error" hidden role="alert"></span>
+            </div>
+            <div class="consent">
+              <label class="consent__label">
+                <input class="consent__checkbox" type="checkbox" name="consent" required>
+                <span>I agree to City Hosting contacting me about this enquiry.</span>
+              </label>
+            </div>
+            <button type="submit" class="btn btn--warm btn--full">Send guest enquiry</button>
+          </form>
+
+          <!-- Direct contact as supplement -->
+          <div class="contact-route__direct">
+            <p class="contact-route__direct-label">Or reach us directly</p>
+            <a href="tel:+353831723722" class="contact-route__phone">+353 83 172 3722</a>
+            <span class="contact-route__phone-note">Phone &amp; WhatsApp</span>
+            <a href="mailto:info@cityhostings.com" class="contact-route__email">info@cityhostings.com</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Office address -->
+    <section class="contact-address section-pad" aria-labelledby="address-heading">
+      <div class="wrap contact-address__inner">
+        <div class="reveal">
+          <p class="eyebrow">Find us</p>
+          <h2 id="address-heading" class="section-heading">Based in Galway.</h2>
+          <address class="contact-address__detail not-italic">
+            Unit 4, Tuam Road<br>
+            Galway, H91 AR24<br>
+            Ireland
+          </address>
+          <a href="https://maps.google.com/?q=Unit+4+Tuam+Road+Galway+Ireland" class="btn btn--outline-warm" target="_blank" rel="noopener noreferrer">View on Google Maps</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="wrap footer-body">
+      <div class="footer-brand">
+        <a href="index.html" class="site-logo footer-logo" aria-label="City Hosting — home">
+          <svg class="site-logo__mark" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+            <rect x="1" y="1" width="26" height="26" rx="2" stroke="#7A5A3A" stroke-width="1.5"/>
+            <path d="M6 22V8h5v5h6V8h5v14" stroke="#F5F1EA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="site-logo__text"><span class="site-logo__city">City</span><span class="site-logo__hosting">Hosting</span></span>
+        </a>
+        <p class="footer-tagline">Professional holiday let management across Galway and the West of Ireland.</p>
+        <address class="footer-address not-italic">Unit 4, Tuam Road<br>Galway, H91 AR24<br>Ireland</address>
+      </div>
+      <nav class="footer-nav" aria-label="For owners"><h3 class="footer-nav__heading">For owners</h3><ul role="list"><li><a href="property-management.html">Property management</a></li><li><a href="services.html">Our services</a></li><li><a href="property-management.html#enquiry">Enquire now</a></li></ul></nav>
+      <nav class="footer-nav" aria-label="For guests"><h3 class="footer-nav__heading">For guests</h3><ul role="list"><li><a href="book-direct.html">Browse properties</a></li><li><a href="contact.html">Guest contact</a></li></ul></nav>
+      <div class="footer-contact">
+        <h3 class="footer-nav__heading">Get in touch</h3>
+        <a href="tel:+353831723722" class="footer-contact__phone">+353 83 172 3722</a>
+        <span class="footer-contact__note">Phone &amp; WhatsApp</span>
+        <a href="mailto:info@cityhostings.com" class="footer-contact__email">info@cityhostings.com</a>
+      </div>
+    </div>
+    <div class="footer-base wrap">
+      <p class="footer-legal">&copy; <span id="footer-year">2025</span> City Hosting. All rights reserved.</p>
+      <nav class="footer-legal-nav" aria-label="Legal"><a href="privacy.html">Privacy policy</a><a href="terms.html">Terms</a></nav>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+  <script>document.getElementById('footer-year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
