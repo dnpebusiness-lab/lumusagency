@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import Hero from '@/components/home/Hero'
-import TwoJourneys from '@/components/home/TwoJourneys'
+import OwnerGuestSplit from '@/components/home/OwnerGuestSplit'
 import BrandStatement from '@/components/home/BrandStatement'
-import ServicesOverview from '@/components/home/ServicesOverview'
-import ProcessSteps from '@/components/home/ProcessSteps'
+import ServiceIndex from '@/components/home/ServiceIndex'
+import ProcessLine from '@/components/home/ProcessLine'
 import FeaturedProperties from '@/components/home/FeaturedProperties'
 import LocalExpertise from '@/components/home/LocalExpertise'
 import WhyBookDirect from '@/components/home/WhyBookDirect'
@@ -23,10 +23,10 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <TwoJourneys />
+      <OwnerGuestSplit />
       <BrandStatement />
-      <ServicesOverview />
-      <ProcessSteps />
+      <ServiceIndex />
+      <ProcessLine />
       <FeaturedProperties />
       <LocalExpertise />
       <WhyBookDirect />
