@@ -3,189 +3,229 @@
 (function () {
   'use strict';
 
-  /* ─── Header scroll state ─── */
+  /* ─── Sticky header via IntersectionObserver ─── */
   const hdr = document.querySelector('.site-header');
   if (hdr) {
-    const onScroll = () => {
-      hdr.classList.toggle('is-scrolled', window.scrollY > 40);
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
+    if ('IntersectionObserver' in window) {
+      const sentinel = document.createElement('div');
+      sentinel.style.cssText = 'position:absolute;top:0;height:1px;width:1px;pointer-events:none;';
+      document.body.insertBefore(sentinel, document.body.firstChild);
+      new IntersectionObserver(
+        ([e]) => hdr.classList.toggle('is-scrolled', !e.isIntersecting),
+        { threshold: 0, rootMargin: '40px 0px 0px 0px' }
+      ).observe(sentinel);
+    } else {
+      window.addEventListener('scroll', () => {
+        hdr.classList.toggle('is-scrolled', window.scrollY > 40);
+      }, { passive: true });
+    }
   }
 
   /* ─── Mobile nav ─── */
-  const toggle = document.querySelector('.nav-toggle');
-  const drawer = document.querySelector('.nav-drawer');
-  const overlay = document.querySelector('.nav-overlay');
+  const toggles   = document.querySelectorAll('.nav-toggle');
+  const drawer    = document.querySelector('.nav-drawer');
+  const overlay   = document.querySelector('.nav-overlay');
+  const mainEl    = document.getElementById('main-content');
+  var   lastFocus = null;
+
+  function getFocusables() {
+    if (!drawer) return [];
+    return [].slice.call(drawer.querySelectorAll('a, button, [tabindex="0"]')).filter(function (el) {
+      return !el.disabled && !el.closest('[hidden]');
+    });
+  }
 
   function openNav() {
-    drawer && drawer.classList.add('is-open');
-    overlay && overlay.classList.add('is-visible');
-    toggle && toggle.setAttribute('aria-expanded', 'true');
+    if (!drawer) return;
+    lastFocus = document.activeElement;
+    drawer.classList.add('is-open');
+    drawer.removeAttribute('aria-hidden');
+    if (overlay) overlay.classList.add('is-visible');
+    if (mainEl)  mainEl.setAttribute('inert', '');
     document.body.style.overflow = 'hidden';
+    toggles.forEach(function (t) { t.setAttribute('aria-expanded', 'true'); });
+    requestAnimationFrame(function () {
+      var first = getFocusables()[0];
+      if (first) first.focus({ preventScroll: true });
+    });
   }
 
   function closeNav() {
-    drawer && drawer.classList.remove('is-open');
-    overlay && overlay.classList.remove('is-visible');
-    toggle && toggle.setAttribute('aria-expanded', 'false');
+    if (!drawer) return;
+    drawer.classList.remove('is-open');
+    drawer.setAttribute('aria-hidden', 'true');
+    if (overlay) overlay.classList.remove('is-visible');
+    if (mainEl)  mainEl.removeAttribute('inert');
     document.body.style.overflow = '';
+    toggles.forEach(function (t) { t.setAttribute('aria-expanded', 'false'); });
+    if (lastFocus) { lastFocus.focus({ preventScroll: true }); lastFocus = null; }
   }
 
-  toggle && toggle.addEventListener('click', () => {
-    const expanded = toggle.getAttribute('aria-expanded') === 'true';
-    expanded ? closeNav() : openNav();
-  });
+  if (drawer) {
+    drawer.setAttribute('aria-hidden', 'true');
 
-  overlay && overlay.addEventListener('click', closeNav);
+    toggles.forEach(function (t) {
+      t.addEventListener('click', function () {
+        drawer.classList.contains('is-open') ? closeNav() : openNav();
+      });
+    });
 
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeNav();
-  });
+    if (overlay) overlay.addEventListener('click', closeNav);
 
-  // Close drawer on nav link click
-  document.querySelectorAll('.nav-drawer a').forEach(a => {
-    a.addEventListener('click', closeNav);
-  });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && drawer.classList.contains('is-open')) closeNav();
+    });
 
-  /* ─── Accordion (FAQ & services) ─── */
-  document.querySelectorAll('.accordion-trigger').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const item = btn.closest('.accordion-item');
-      const panel = item && item.querySelector('.accordion-panel');
-      const expanded = btn.getAttribute('aria-expanded') === 'true';
+    /* Focus trap */
+    drawer.addEventListener('keydown', function (e) {
+      if (e.key !== 'Tab') return;
+      var focusables = getFocusables();
+      if (!focusables.length) return;
+      var first = focusables[0];
+      var last  = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault(); last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault(); first.focus();
+      }
+    });
 
-      // Close siblings
-      const parent = btn.closest('.accordion');
+    /* Close on link click */
+    drawer.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', closeNav);
+    });
+  }
+
+  /* ─── Accordion ─── */
+  document.querySelectorAll('.accordion-trigger').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var item     = btn.closest('.accordion-item');
+      var panel    = item && item.querySelector('.accordion-panel');
+      var expanded = btn.getAttribute('aria-expanded') === 'true';
+
+      /* Close siblings */
+      var parent = btn.closest('.accordion');
       if (parent) {
-        parent.querySelectorAll('.accordion-trigger').forEach(b => {
-          if (b !== btn) {
-            b.setAttribute('aria-expanded', 'false');
-            const p = b.closest('.accordion-item');
-            p && p.querySelector('.accordion-panel')?.removeAttribute('style');
-          }
+        parent.querySelectorAll('.accordion-trigger').forEach(function (b) {
+          if (b === btn) return;
+          b.setAttribute('aria-expanded', 'false');
+          var sib = b.closest('.accordion-item');
+          var p   = sib && sib.querySelector('.accordion-panel');
+          if (p) p.style.maxHeight = '';
         });
       }
 
       if (expanded) {
         btn.setAttribute('aria-expanded', 'false');
-        panel && panel.removeAttribute('style');
+        if (panel) panel.style.maxHeight = '';
       } else {
         btn.setAttribute('aria-expanded', 'true');
-        if (panel) {
-          panel.style.maxHeight = panel.scrollHeight + 'px';
-        }
+        if (panel) panel.style.maxHeight = panel.scrollHeight + 'px';
       }
     });
   });
 
   /* ─── Scroll reveals ─── */
-  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const reveals = document.querySelectorAll('.reveal');
-    if (reveals.length && 'IntersectionObserver' in window) {
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            io.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      reveals.forEach(el => io.observe(el));
-    }
+  if (reducedMotion) {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('is-visible'); });
+  } else if ('IntersectionObserver' in window) {
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -48px 0px' });
+    document.querySelectorAll('.reveal').forEach(function (el) { revealObserver.observe(el); });
   } else {
-    // Immediately show all reveals for reduced-motion users
-    document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('is-visible'); });
   }
 
-  /* ─── Property rendering ─── */
-  const grid = document.querySelector('[data-property-grid]');
+  /* ─── Property grid ─── */
+  var grid = document.querySelector('[data-property-grid]');
   if (grid && typeof CITY_HOSTING !== 'undefined') {
-    const props = CITY_HOSTING.properties;
+    var props = CITY_HOSTING.properties;
     if (!props || props.length === 0) {
-      grid.innerHTML = `<p class="stays__empty">Properties coming soon. <a href="mailto:${CITY_HOSTING.contact.email}">Contact us</a> to check availability.</p>`;
+      grid.innerHTML = '<p class="stays__empty">Properties coming soon. <a href="contact.html">Get in touch</a> to check availability.</p>';
     } else {
-      grid.innerHTML = props.map(p => `
-        <article class="prop-card">
-          <a href="property.html?id=${p.id}" class="prop-card__img-link" aria-label="View ${p.name}">
-            <div class="prop-card__img photo-slot" data-label="${p.name}">
-              ${p.photos && p.photos[0] ? `<img src="${p.photos[0]}" alt="${p.name}" loading="lazy" width="800" height="600">` : ''}
-            </div>
-          </a>
-          <div class="prop-card__body">
-            <p class="prop-card__meta">${p.location} &middot; ${p.guests} guests</p>
-            <h3 class="prop-card__name"><a href="property.html?id=${p.id}">${p.name}</a></h3>
-            ${p.summary ? `<p class="prop-card__summary">${p.summary}</p>` : ''}
-            <a href="${p.bookingUrl || 'book-direct.html'}" class="btn btn--warm" target="${p.bookingUrl ? '_blank' : '_self'}" rel="${p.bookingUrl ? 'noopener noreferrer' : ''}">Check availability</a>
-          </div>
-        </article>
-      `).join('');
+      grid.innerHTML = props.map(function (p) {
+        return '<article class="prop-card">' +
+          '<a href="property.html?id=' + p.id + '" class="prop-card__img-link" aria-label="View ' + p.name + '">' +
+          '<div class="prop-card__img photo-slot">' +
+          (p.photos && p.photos[0] ? '<img src="' + p.photos[0] + '" alt="' + p.name + '" loading="lazy" width="800" height="600">' : '') +
+          '</div></a>' +
+          '<div class="prop-card__body">' +
+          '<p class="prop-card__meta">' + p.location + ' &middot; ' + p.guests + ' guests</p>' +
+          '<h3 class="prop-card__name"><a href="property.html?id=' + p.id + '">' + p.name + '</a></h3>' +
+          (p.summary ? '<p class="prop-card__summary">' + p.summary + '</p>' : '') +
+          '<a href="' + (p.bookingUrl || 'book-direct.html') + '" class="btn btn--warm"' +
+          (p.bookingUrl ? ' target="_blank" rel="noopener noreferrer"' : '') + '>Check availability</a>' +
+          '</div></article>';
+      }).join('');
     }
   }
 
   /* ─── Property detail page ─── */
-  const detailRoot = document.querySelector('[data-property-detail]');
+  var detailRoot = document.querySelector('[data-property-detail]');
   if (detailRoot && typeof CITY_HOSTING !== 'undefined') {
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get('id');
-    const prop = id && CITY_HOSTING.properties.find(p => p.id === id);
-
+    var params = new URLSearchParams(window.location.search);
+    var id     = params.get('id');
+    var prop   = id && CITY_HOSTING.properties.find(function (p) { return p.id === id; });
     if (prop) {
-      const title = detailRoot.querySelector('[data-prop-name]');
-      const bookBtn = detailRoot.querySelector('[data-prop-book]');
-      if (title) title.textContent = prop.name;
+      detailRoot.querySelectorAll('[data-prop-name]').forEach(function (el) { el.textContent = prop.name; });
+      var bookBtn = detailRoot.querySelector('[data-prop-book]');
       if (bookBtn && prop.bookingUrl) {
-        bookBtn.href = prop.bookingUrl;
+        bookBtn.href   = prop.bookingUrl;
         bookBtn.target = '_blank';
-        bookBtn.rel = 'noopener noreferrer';
+        bookBtn.rel    = 'noopener noreferrer';
       }
     }
   }
 
-  /* ─── Contact phone links (populate from config) ─── */
+  /* ─── Contact links from config ─── */
   if (typeof CITY_HOSTING !== 'undefined') {
-    document.querySelectorAll('[data-phone]').forEach(el => {
+    document.querySelectorAll('[data-phone]').forEach(function (el) {
       el.href = CITY_HOSTING.contact.phoneTel;
       el.textContent = CITY_HOSTING.contact.phone;
     });
-    document.querySelectorAll('[data-phone-intl]').forEach(el => {
+    document.querySelectorAll('[data-phone-intl]').forEach(function (el) {
       el.href = CITY_HOSTING.contact.phoneTel;
       el.textContent = CITY_HOSTING.contact.phoneIntl;
     });
-    document.querySelectorAll('[data-email]').forEach(el => {
+    document.querySelectorAll('[data-email]').forEach(function (el) {
       el.href = CITY_HOSTING.contact.emailHref;
       el.textContent = CITY_HOSTING.contact.email;
     });
   }
 
-  /* ─── Enquiry form — owner tab switching ─── */
-  document.querySelectorAll('[data-form-tab]').forEach(tab => {
-    tab.addEventListener('click', () => {
-      const target = tab.dataset.formTab;
-      document.querySelectorAll('[data-form-tab]').forEach(t => {
+  /* ─── Enquiry form tabs ─── */
+  document.querySelectorAll('[data-form-tab]').forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      var target = tab.dataset.formTab;
+      document.querySelectorAll('[data-form-tab]').forEach(function (t) {
         t.classList.toggle('is-active', t === tab);
         t.setAttribute('aria-selected', t === tab ? 'true' : 'false');
       });
-      document.querySelectorAll('[data-form-panel]').forEach(panel => {
+      document.querySelectorAll('[data-form-panel]').forEach(function (panel) {
         panel.hidden = panel.dataset.formPanel !== target;
       });
     });
   });
 
-  /* ─── Form: basic client-side validation ─── */
-  document.querySelectorAll('form[data-validate]').forEach(form => {
-    form.addEventListener('submit', e => {
-      let valid = true;
-      form.querySelectorAll('[required]').forEach(field => {
-        const wrapper = field.closest('.field');
-        const err = wrapper && wrapper.querySelector('.field-error');
+  /* ─── Form validation ─── */
+  document.querySelectorAll('form[data-validate]').forEach(function (form) {
+    form.addEventListener('submit', function (e) {
+      var valid = true;
+      form.querySelectorAll('[required]').forEach(function (field) {
+        var wrapper = field.closest('.field');
+        var err     = wrapper && wrapper.querySelector('.field-error');
         if (!field.value.trim()) {
           valid = false;
           field.setAttribute('aria-invalid', 'true');
-          if (err) {
-            err.textContent = field.dataset.errorMsg || 'This field is required.';
-            err.hidden = false;
-          }
+          if (err) { err.textContent = field.dataset.errorMsg || 'This field is required.'; err.hidden = false; }
         } else {
           field.removeAttribute('aria-invalid');
           if (err) err.hidden = true;
@@ -193,16 +233,14 @@
       });
       if (!valid) {
         e.preventDefault();
-        const firstInvalid = form.querySelector('[aria-invalid="true"]');
-        firstInvalid && firstInvalid.focus();
+        var first = form.querySelector('[aria-invalid="true"]');
+        if (first) first.focus();
       }
     });
-
-    // Clear error on input
-    form.querySelectorAll('[required]').forEach(field => {
-      field.addEventListener('input', () => {
-        const wrapper = field.closest('.field');
-        const err = wrapper && wrapper.querySelector('.field-error');
+    form.querySelectorAll('[required]').forEach(function (field) {
+      field.addEventListener('input', function () {
+        var wrapper = field.closest('.field');
+        var err     = wrapper && wrapper.querySelector('.field-error');
         field.removeAttribute('aria-invalid');
         if (err) err.hidden = true;
       });
@@ -210,9 +248,9 @@
   });
 
   /* ─── GA4 ─── */
-  if (typeof CITY_HOSTING !== 'undefined' && CITY_HOSTING.analytics.ga4) {
-    const s = document.createElement('script');
-    s.src = `https://www.googletagmanager.com/gtag/js?id=${CITY_HOSTING.analytics.ga4}`;
+  if (typeof CITY_HOSTING !== 'undefined' && CITY_HOSTING.analytics && CITY_HOSTING.analytics.ga4) {
+    var s   = document.createElement('script');
+    s.src   = 'https://www.googletagmanager.com/gtag/js?id=' + CITY_HOSTING.analytics.ga4;
     s.async = true;
     document.head.appendChild(s);
     window.dataLayer = window.dataLayer || [];
