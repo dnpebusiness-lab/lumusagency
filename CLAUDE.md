@@ -37,15 +37,43 @@ client-projects/ → Un folder per ogni cliente
 
 ---
 
-## Standard di Qualità (Non Negoziabili)
+## Regola Assoluta — Zero Template AI (NON NEGOZIABILE)
 
-Ogni output deve superare questo test:
-> **"Questo potrebbe appartenere a un altro business qualsiasi?"**
-> Se sì → si riscrive. Sempre.
+**MAI PIÙ siti che sembrano fatti da una macchina.** Nessuno deve sospettarlo.
+
+Prima di scrivere una riga di codice o copy, SEMPRE:
+
+1. **Competitor research** — anche se il cliente non ha un brief. Specialmente se non ce l'ha.
+   - Guarda cosa fanno tutti nel settore
+   - Identifica i cliché visivi, di copy, di struttura
+   - Fai l'opposto di quello che fa la massa
+
+2. **Chiedi quello che manca** — non inventare. Se non hai:
+   - Storia vera del business → chiedi
+   - Tono di voce reale → chiedi
+   - Differenziatore concreto → chiedi
+   - Foto reali → dillo
+   Un sito costruito su dati inventati è inutile per chiunque.
+
+3. **Test anti-generico** prima di ogni deliverable:
+   > "Questo potrebbe appartenere a un altro business qualsiasi?"
+   > Se sì → si riscrive. Senza eccezioni.
+
+4. **Copy specifico, mai corporativo.** Nessuna frase del tipo:
+   - "We are passionate about..."
+   - "Quality you can trust"
+   - "Your success is our mission"
+   - Qualsiasi cosa che suona bene ma non dice niente
+
+5. **Design con intenzione.** Ogni scelta visiva deve avere un perché legato al brand, non al template.
+
+---
+
+## Standard di Qualità (Non Negoziabili)
 
 - Nessun contenuto placeholder in nessun deliverable finale
 - Nessuna copy generica o AI-sounding
-- Nessuna decisione di design senza brand strategy approvata
+- Nessuna decisione di design senza competitor research minima
 - Nessun sito va live senza QA Agent GO status
 
 ---
