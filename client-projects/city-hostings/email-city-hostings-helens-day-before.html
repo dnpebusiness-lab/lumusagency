@@ -73,7 +73,7 @@
           <!-- GREETING + INTRO -->
           <tr>
             <td class="pad-mobile" style="padding: 40px 48px 28px; background-color:#F5F3EF;">
-              <p style="margin:0 0 6px;font-family:Arial,Helvetica,sans-serif;font-size:10px;font-weight:normal;letter-spacing:0.14em;text-transform:uppercase;color:#9B9488;">Hi {TAG_FIRST_NAME},</p>
+              <p style="margin:0 0 6px;font-family:Arial,Helvetica,sans-serif;font-size:10px;font-weight:normal;letter-spacing:0.14em;text-transform:uppercase;color:#9B9488;">Hi <strong style="color:#0D0D0D;font-weight:700;">{TAG_FIRST_NAME}</strong>,</p>
               <h1 style="margin:0 0 16px;font-family:Georgia,'Times New Roman',serif;font-size:30px;font-weight:normal;line-height:1.1;color:#0D0D0D;">Your PIN code<br>is ready.</h1>
               <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.7;color:#4A4540;">Here is everything you need for check-in at St. Helen&#8217;s Townhouse tomorrow. Keep this email on your phone — the PIN code is what lets you in.</p>
             </td>
@@ -86,8 +86,42 @@
                 <tr>
                   <td align="center" style="padding: 40px 24px 36px;">
                     <p style="margin:0 0 16px;font-family:Arial,Helvetica,sans-serif;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:#9B9488;">Your PIN code</p>
-                    <p class="pin-display" style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:64px;font-weight:normal;letter-spacing:0.2em;color:#0D0D0D;line-height:1;">{TAG_REMOTELOCK_PIN}</p>
+                    <p class="pin-display" style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:64px;font-weight:700;letter-spacing:0.2em;color:#0D0D0D;line-height:1;"><strong>{TAG_REMOTELOCK_PIN}</strong></p>
                     <p style="margin:20px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:11px;line-height:1.6;color:#9B9488;">Enter at the keypad on the front door of the townhouse<br>No front desk &nbsp;&#183;&nbsp; arrive any time from check-in</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- YOUR ROOM -->
+          <tr>
+            <td style="padding: 0 48px 36px; background-color:#F5F3EF;">
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="border:1px solid #E0DDD7; background-color:#0D0D0D;">
+                <tr>
+                  <td style="padding: 28px 32px;">
+                    <p style="margin:0 0 8px;font-family:Arial,Helvetica,sans-serif;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(245,243,239,0.4);">Your room</p>
+                    <p style="margin:0 0 16px;font-family:Georgia,'Times New Roman',serif;font-size:26px;font-weight:normal;color:#F5F3EF;line-height:1.1;"><strong style="font-weight:700;">{TAG_ROOM_NAME}</strong></p>
+                    <p style="margin:0 0 20px;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.6;color:rgba(245,243,239,0.55);">St. Helen&#8217;s Townhouse &nbsp;&#183;&nbsp; Helen&#8217;s Street, Galway</p>
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td style="padding-right:10px;padding-bottom:8px;">
+                          <a href="https://cityhostingdraft.netlify.app/book-direct.html#room-1" style="display:inline-block;font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:0.08em;color:#F5F3EF;text-decoration:none;border:1px solid rgba(245,243,239,0.3);padding:7px 14px;">Room 1</a>
+                        </td>
+                        <td style="padding-right:10px;padding-bottom:8px;">
+                          <a href="https://cityhostingdraft.netlify.app/book-direct.html#room-2" style="display:inline-block;font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:0.08em;color:#F5F3EF;text-decoration:none;border:1px solid rgba(245,243,239,0.3);padding:7px 14px;">Room 2</a>
+                        </td>
+                        <td style="padding-right:10px;padding-bottom:8px;">
+                          <a href="https://cityhostingdraft.netlify.app/book-direct.html#room-3" style="display:inline-block;font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:0.08em;color:#F5F3EF;text-decoration:none;border:1px solid rgba(245,243,239,0.3);padding:7px 14px;">Room 3</a>
+                        </td>
+                        <td style="padding-right:10px;padding-bottom:8px;">
+                          <a href="https://cityhostingdraft.netlify.app/book-direct.html#room-4" style="display:inline-block;font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:0.08em;color:#F5F3EF;text-decoration:none;border:1px solid rgba(245,243,239,0.3);padding:7px 14px;">Room 4</a>
+                        </td>
+                        <td style="padding-bottom:8px;">
+                          <a href="https://cityhostingdraft.netlify.app/book-direct.html#room-5" style="display:inline-block;font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:0.08em;color:#F5F3EF;text-decoration:none;border:1px solid rgba(245,243,239,0.3);padding:7px 14px;">Room 5</a>
+                        </td>
+                      </tr>
+                    </table>
                   </td>
                 </tr>
               </table>
@@ -114,17 +148,17 @@
                 <tr>
                   <td class="detail-cell" align="center" style="padding:20px 16px;border-right:1px solid #E0DDD7;width:33%;">
                     <p style="margin:0 0 5px;font-family:Arial,Helvetica,sans-serif;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:#9B9488;">Check-in</p>
-                    <p style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:15px;color:#0D0D0D;">{TAG_BOOKING_START}</p>
-                    <p style="margin:4px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#9B9488;">from {TAG_BOOKING_START}</p>
+                    <p style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:15px;color:#0D0D0D;"><strong style="font-weight:700;">{TAG_BOOKING_START}</strong></p>
+                    <p style="margin:4px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#9B9488;">from <strong style="color:#0D0D0D;">{TAG_BOOKING_START}</strong></p>
                   </td>
                   <td class="detail-cell" align="center" style="padding:20px 16px;border-right:1px solid #E0DDD7;width:33%;">
                     <p style="margin:0 0 5px;font-family:Arial,Helvetica,sans-serif;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:#9B9488;">Check-out</p>
-                    <p style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:15px;color:#0D0D0D;">{TAG_BOOKING_END}</p>
-                    <p style="margin:4px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#9B9488;">by {TAG_BOOKING_END}</p>
+                    <p style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:15px;color:#0D0D0D;"><strong style="font-weight:700;">{TAG_BOOKING_END}</strong></p>
+                    <p style="margin:4px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#9B9488;">by <strong style="color:#0D0D0D;">{TAG_BOOKING_END}</strong></p>
                   </td>
                   <td class="detail-cell" align="center" style="padding:20px 16px;width:33%;">
                     <p style="margin:0 0 5px;font-family:Arial,Helvetica,sans-serif;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:#9B9488;">Address</p>
-                    <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.5;color:#0D0D0D;">{TAG_PROPERTY_NAME}</p>
+                    <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.5;color:#0D0D0D;"><strong style="font-weight:700;">{TAG_PROPERTY_NAME}</strong></p>
                   </td>
                 </tr>
               </table>
@@ -145,13 +179,13 @@
                 <tr><td style="padding: 0 0 13px;">
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr>
                     <td style="padding-right:12px;font-family:Arial,sans-serif;font-size:12px;color:#9B9488;vertical-align:top;">&#8212;</td>
-                    <td style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.6;color:#4A4540;">No front desk. Arrive any time from <strong style="color:#0D0D0D;font-weight:600;">{TAG_BOOKING_START}</strong>. Your room and all shared areas are ready on arrival.</td>
+                    <td style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.6;color:#4A4540;">No front desk. Arrive any time from <strong style="color:#0D0D0D;font-weight:700;">{TAG_BOOKING_START}</strong>. Your room and all shared areas are ready on arrival.</td>
                   </tr></table>
                 </td></tr>
                 <tr><td style="padding: 0 0 13px;">
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr>
                     <td style="padding-right:12px;font-family:Arial,sans-serif;font-size:12px;color:#9B9488;vertical-align:top;">&#8212;</td>
-                    <td style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.6;color:#4A4540;">Please vacate by <strong style="color:#0D0D0D;font-weight:600;">{TAG_BOOKING_END}</strong> on your day of departure.</td>
+                    <td style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.6;color:#4A4540;">Please vacate by <strong style="color:#0D0D0D;font-weight:700;">{TAG_BOOKING_END}</strong> on your day of departure.</td>
                   </tr></table>
                 </td></tr>
                 <tr><td>
@@ -169,7 +203,6 @@
             <td class="pad-mobile" style="padding: 36px 48px; background-color:#F5F3EF; border-top:1px solid #E0DDD7;">
               <p style="margin:0 0 8px;font-family:Georgia,'Times New Roman',serif;font-size:18px;font-weight:normal;color:#0D0D0D;">Need anything?</p>
               <p style="margin:0 0 20px;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.65;color:#4A4540;">Get in touch before or during your stay — reply to this email or contact us directly.</p>
-              <!-- UPDATE WITH ACTUAL CONTACT INFO -->
               <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
                   <td style="padding-bottom:10px;">
