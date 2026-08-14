@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>City Hostings — Social Post Template</title>
+<title>City Hostings — Check-in Card</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -15,184 +15,287 @@ body {
   align-items: flex-start;
   min-height: 100vh;
   padding: 48px;
-}
-
-/* ─── 1080×1080 post ─── */
-.post {
-  width: 1080px;
-  height: 1080px;
-  background: #0D0D0B;
-  position: relative;
-  overflow: hidden;
-  flex-shrink: 0;
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* top content column */
-.top {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+/* ─── card ─── */
+.card {
+  width: 1080px;
+  background: #0D0D0B;
+  flex-shrink: 0;
+}
+
+/* ── HEADER ── */
+.hd {
+  padding: 52px 72px 0;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 92px;
-  z-index: 2;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.hd-logo { display: flex; align-items: flex-start; }
+.hd-right { text-align: right; padding-top: 6px; }
+.hd-prop {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 15px;
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(245,243,239,0.7);
+  letter-spacing: 0.02em;
+  display: block;
+}
+.hd-tag {
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #AE8D62;
+  display: block;
+  margin-top: 5px;
 }
 
-/* logo */
-.logo-wrap { display: flex; justify-content: center; }
-
-/* gold rule below logo */
+/* gold rule */
 .rule {
-  width: 100%;
   height: 1px;
-  background: #AE8D62;
-  margin-top: 48px;
+  background: linear-gradient(to right, transparent, #AE8D62 30%, #AE8D62 70%, transparent);
+  margin: 36px 72px 0;
 }
 
-/* property band — echoes the email's dark band */
+/* ── BAND ── */
 .band {
-  width: 100%;
-  padding: 20px 80px;
-  border-bottom: 1px solid rgba(174,141,98,0.3);
+  padding: 16px 72px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid rgba(174,141,98,0.2);
 }
 .band-name {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 28px;
-  font-weight: 300;
-  font-style: italic;
-  color: #F5F3EF;
-  letter-spacing: 0.02em;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(245,243,239,0.35);
 }
 .band-loc {
   font-size: 10px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: #AE8D62;
+  color: rgba(245,243,239,0.35);
 }
 
-/* info grid — same label/value pattern as the email */
-.info {
-  width: 100%;
+/* ── GREETING ── */
+.greet {
+  padding: 32px 72px 28px;
+  border-bottom: 1px solid rgba(174,141,98,0.15);
+}
+.greet-line {
+  font-size: 15px;
+  line-height: 1.65;
+  color: rgba(245,243,239,0.6);
+}
+.greet-line strong {
+  color: #F5F3EF;
+  font-weight: 600;
+}
+.greet-line + .greet-line { margin-top: 6px; }
+.greet-addr {
+  margin-top: 10px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: rgba(174,141,98,0.7);
+  text-transform: uppercase;
+}
+
+/* ── CODES ── */
+.codes {
   display: flex;
-  border-bottom: 1px solid rgba(174,141,98,0.3);
+  border-bottom: 1px solid rgba(174,141,98,0.15);
 }
-.info-col {
+.code-col {
   flex: 1;
-  padding: 28px 80px;
-  border-right: 1px solid rgba(174,141,98,0.3);
+  padding: 32px 72px;
+  border-right: 1px solid rgba(174,141,98,0.15);
+  text-align: center;
 }
-.info-col:last-child { border-right: none; }
-.lbl {
+.code-col:last-child { border-right: none; }
+.c-lbl {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #6B6560;
+  margin-bottom: 12px;
+}
+.c-pin {
+  display: block;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 72px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #F5F3EF;
+  line-height: 1;
+}
+.c-sub {
+  display: block;
+  font-size: 10px;
+  color: #4A4540;
+  margin-top: 10px;
+  letter-spacing: 0.06em;
+}
+
+/* ── ROOM ── */
+.room {
+  padding: 0 72px;
+  border-bottom: 1px solid rgba(174,141,98,0.15);
+}
+.room-inner {
+  background: #181613;
+  border-left: 2px solid #AE8D62;
+  padding: 20px 28px;
+}
+.r-lbl {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(174,141,98,0.6);
+  margin-bottom: 6px;
+}
+.r-name {
+  display: block;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 34px;
+  font-weight: 400;
+  font-style: italic;
+  color: #F5F3EF;
+  letter-spacing: 0.02em;
+}
+
+/* ── CHECKOUT + WIFI (same row style) ── */
+.row2 {
+  display: flex;
+  border-bottom: 1px solid rgba(174,141,98,0.15);
+}
+.r2-col {
+  flex: 1;
+  padding: 24px 72px;
+  border-right: 1px solid rgba(174,141,98,0.15);
+}
+.r2-col:last-child { border-right: none; }
+.r2-lbl {
   display: block;
   font-size: 9px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: #6B6560;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
-.val {
+.r2-val {
   display: block;
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 400;
   color: #F5F3EF;
   letter-spacing: 0.01em;
   line-height: 1.25;
 }
-.val a {
-  color: #F5F3EF;
-  text-decoration: none;
+.r2-val strong {
+  font-weight: 600;
 }
 
-/* footer brand line */
-.brand-line {
-  width: 100%;
-  padding: 18px 80px;
+/* ── NOTES ── */
+.notes {
+  padding: 24px 72px;
+  border-bottom: 1px solid rgba(174,141,98,0.15);
+}
+.n-lbl {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #6B6560;
+  margin-bottom: 12px;
+}
+.n-line {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(245,243,239,0.45);
+  display: block;
+}
+.n-line + .n-line { margin-top: 4px; }
+
+/* ── CONTACT ── */
+.contact {
+  padding: 28px 72px 32px;
+  border-bottom: 1px solid rgba(174,141,98,0.15);
+}
+.contact-intro {
+  font-size: 13px;
+  color: rgba(245,243,239,0.45);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+.contact-cols { display: flex; gap: 56px; }
+.cc-lbl {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #6B6560;
+  margin-bottom: 4px;
+}
+.cc-val {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #F5F3EF;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+}
+.cc-val[href^="mailto"] {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(174,141,98,0.4);
+}
+
+/* ── KEEP NOTE ── */
+.keep {
+  padding: 14px 72px;
+  border-bottom: 1px solid rgba(174,141,98,0.15);
+}
+.keep p {
+  font-size: 11px;
+  font-style: italic;
+  color: rgba(245,243,239,0.25);
+  letter-spacing: 0.02em;
+}
+
+/* ── FOOTER ── */
+.ft {
+  padding: 20px 72px 28px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.brand-left {
+.ft-l {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 13px;
+  font-style: italic;
+  color: rgba(245,243,239,0.4);
+  letter-spacing: 0.02em;
+}
+.ft-r {
   font-size: 9px;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #4A4540;
-}
-.brand-right {
-  font-size: 9px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: #4A4540;
-}
-
-/* ─── 3 arch photos at bottom ─── */
-.photos {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 430px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 20px;
-  padding: 0 52px;
-  z-index: 1;
-}
-
-/* fade from bg into photos */
-.photos::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 130px;
-  background: linear-gradient(to bottom, #0D0D0B 0%, transparent 100%);
-  z-index: 3;
-  pointer-events: none;
-}
-
-.arch {
-  overflow: hidden;
-  flex-shrink: 0;
-  position: relative;
-}
-.arch-l { width: 280px; height: 370px; border-radius: 160px 160px 0 0; }
-.arch-c { width: 300px; height: 420px; border-radius: 170px 170px 0 0; }
-.arch-r { width: 280px; height: 370px; border-radius: 160px 160px 0 0; }
-
-.arch img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* subtle top vignette on each arch photo */
-.arch::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(13,13,11,0.5) 0%, transparent 35%);
-  pointer-events: none;
+  color: rgba(245,243,239,0.2);
 }
 </style>
 </head>
 <body>
-<div class="post">
+<div class="card">
 
-  <div class="top">
-
-    <!-- Logo — cream/gold version for dark bg -->
-    <div class="logo-wrap">
-      <svg width="280" viewBox="100 270 1200 855" xmlns="http://www.w3.org/2000/svg">
+  <!-- Header: logo + property tag -->
+  <div class="hd">
+    <div class="hd-logo">
+      <svg width="220" viewBox="100 270 1200 855" xmlns="http://www.w3.org/2000/svg">
         <g fill="#F5F3EF" text-anchor="middle">
           <path d="m 762.85505,551.76 c -17.745,17.745 -33.67,30.03 -48.685,36.855 -18.2,8.645 -40.04,12.74 -65.52,12.285 -25.935,-0.455 -46.41,-14.56 -61.88,-41.405 -15.015,-27.3 -22.75,-62.79 -22.75,-106.015 0,-97.825 29.575,-147.875 88.27,-150.605 54.6,-2.275 75.53,21.84 79.625,74.165 h 13.65 v -71.435 c -15.47,-5.915 -26.39,-9.555 -33.215,-10.92 -15.47,-3.185 -35.945,-5.005 -61.425,-5.005 -39.13,0 -71.89,14.56 -98.28,44.135 -27.3,30.485 -40.95,70.525 -41.405,119.665 -0.455,45.045 13.195,83.72 40.495,116.025 27.3,31.85 60.515,47.775 99.19,47.775 26.845,0 48.685,-4.095 65.975,-11.83 19.11,-8.645 36.4,-24.115 52.325,-46.41 z"/>
           <path d="m 900.77012,676.67 h -39.99 V 407.06 h 39.99 v -13.33 h -119.54 v 13.33 h 40.42 V 526.6 h -132.01 V 407.06 h 39.99 v -13.33 h -118.68 v 13.33 h 40.42 v 269.61 h -40.42 V 690 h 118.68 v -13.33 h -39.99 V 541.65 h 132.01 v 135.02 h -40.42 V 690 h 119.54 z"/>
@@ -202,57 +305,96 @@ body {
         <path fill="#AE8D62" d="m 340.10547,1057.9536 v -8.4272 h -6.13916 v -1.3213 h 7.73437 v 10.522 q -1.72412,0.854 -3.78662,1.2729 -2.0625,0.4351 -4.41504,0.4673 -5.2207,0 -8.15332,-3.3032 -2.94873,-3.2871 -2.94873,-9.1685 0,-5.8975 2.94873,-9.2007 2.93262,-3.2871 8.15332,-3.2871 2.15918,0 4.07666,0.4351 1.9336,0.4673 3.54493,1.3696 v 1.563 q -1.62745,-0.9024 -3.48047,-1.3696 -1.83692,-0.4512 -3.86719,-0.4512 -4.8501,0 -7.2832,2.7554 -2.43311,2.7392 -2.43311,8.1855 0,5.5269 2.43311,8.3145 2.4331,2.8037 7.2832,2.8037 1.98193,0 3.54492,-0.274 1.54688,-0.29 2.7876,-0.8862 z m 21.79785,-22.0107 h 1.61133 v 14.6147 q 0,4.5762 1.61133,6.5903 1.59521,1.9981 5.17236,1.9981 3.56103,0 5.15625,-1.9981 1.61133,-2.0141 1.61133,-6.5903 v -14.6147 h 1.61133 v 15.0175 q 0,4.7051 -2.12696,7.106 -2.11084,2.4009 -6.25195,2.4009 -4.15723,0 -6.26807,-2.4009 -2.12695,-2.4009 -2.12695,-7.106 z m 37.47607,0 H 412.979 v 1.3374 h -11.95605 v 9.2329 h 11.45654 v 1.3052 h -11.45654 v 10.8764 h 12.24609 V 1060 h -13.88965 z m 47.30518,1.2085 v 1.5146 q -1.5791,-0.7895 -3.49658,-1.4018 -1.25684,-0.4029 -3.17432,-0.4351 -2.83594,-0.048 -4.6084,1.2568 -1.61132,1.1924 -1.61132,4.0928 0,1.7886 1.2246,2.8359 1.30518,1.1119 3.93165,1.7886 l 1.91748,0.4995 q 2.57812,0.6768 3.97998,1.6114 2.62646,1.7885 2.62646,4.4956 0,3.9155 -2.3042,5.4301 -2.51367,1.6275 -5.15625,1.6275 -2.75537,0 -4.93066,-0.7573 -1.36963,-0.5479 -2.86817,-1.5147 v -1.5791 q 2.25586,1.3374 3.15821,1.708 2.01416,0.8218 3.73828,0.8218 2.94873,0 4.89844,-1.3052 1.83691,-1.2246 1.83691,-4.3022 0,-1.8047 -1.12793,-2.836 -1.62744,-1.4985 -4.22168,-2.1269 l -1.93359,-0.4673 q -2.32032,-0.564 -3.94776,-1.5791 -2.46533,-1.5469 -2.46533,-4.2217 0,-3.3354 2.01416,-5.124 1.86914,-1.6597 5.67188,-1.6758 2.23974,0 3.43212,0.3867 3.06153,0.9991 3.41602,1.2569 z m 17.20557,-1.2085 h 18.70752 v 1.3213 h -8.54004 V 1060 h -1.62744 v -22.7358 h -8.54004 z m 59.93457,0 h 1.62744 v 10.5703 h 13.45459 v -10.5703 h 1.62744 V 1060 h -1.62744 v -12.1816 H 525.45215 V 1060 h -1.62744 z m 53.07373,3.8349 q -2.32032,-3.0132 -6.26807,-3.0132 -3.94775,0 -6.28418,3.0132 -2.32031,3.0132 -2.32031,8.2178 0,5.1724 2.32031,8.1856 2.33643,3.0131 6.28418,3.0131 3.94775,0 6.26807,-3.0131 2.3042,-3.0132 2.3042,-8.1856 0,-5.2046 -2.3042,-8.2178 z m -6.26807,-4.27 q 4.67285,0 7.47656,3.3838 2.80371,3.3999 2.80371,9.104 0,5.688 -2.80371,9.0718 -2.80371,3.3999 -7.47656,3.3999 -4.68896,0 -7.50879,-3.3838 -2.80371,-3.3838 -2.80371,-9.0879 0,-5.7041 2.80371,-9.104 2.81983,-3.3838 7.50879,-3.3838 z m 29.66113,0.4351 h 1.61133 v 14.6147 q 0,4.5762 1.61133,6.5903 1.59521,1.9981 5.17236,1.9981 3.56104,0 5.15625,-1.9981 1.61133,-2.0141 1.61133,-6.5903 v -14.6147 h 1.61133 v 15.0175 q 0,4.7051 -2.12695,7.106 -2.11084,2.4009 -6.25196,2.4009 -4.15722,0 -6.26806,-2.4009 -2.12696,-2.4009 -2.12696,-7.106 z m 50.93067,1.2085 v 1.5146 q -1.5791,-0.7895 -3.49658,-1.4018 -1.25684,-0.4029 -3.17432,-0.4351 -2.83594,-0.048 -4.6084,1.2568 -1.61133,1.1924 -1.61133,4.0928 0,1.7886 1.22461,2.8359 1.30518,1.1119 3.93164,1.7886 l 1.91748,0.4995 q 2.57813,0.6768 3.97998,1.6114 2.62647,1.7885 2.62647,4.4956 0,3.9155 -2.3042,5.4301 -2.51367,1.6275 -5.15625,1.6275 -2.75537,0 -4.93066,-0.7573 -1.36963,-0.5479 -2.86817,-1.5147 v -1.5791 q 2.25586,1.3374 3.1582,1.708 2.01416,0.8218 3.73829,0.8218 2.94873,0 4.89843,-1.3052 1.83692,-1.2246 1.83692,-4.3022 0,-1.8047 -1.12793,-2.836 -1.62744,-1.4985 -4.22168,-2.1269 l -1.9336,-0.4673 q -2.32031,-0.564 -3.94775,-1.5791 -2.46533,-1.5469 -2.46533,-4.2217 0,-3.3354 2.01416,-5.124 1.86914,-1.6597 5.67187,-1.6758 2.23975,0 3.43213,0.3867 3.06153,0.9991 3.41602,1.2569 z m 20.49267,-1.2085 h 13.59961 v 1.3374 H 673.3584 v 9.2329 h 11.45654 v 1.3052 H 673.3584 v 10.8764 h 12.24609 V 1060 h -13.88965 z m 58.6294,0 h 2.23974 l 6.68702,17.8374 6.71923,-17.8374 h 2.22364 V 1060 h -1.64356 v -21.1245 l -6.1875,16.5 h -2.22363 l -6.17139,-16.5 V 1060 h -1.64355 z m 47.36963,1.6274 -5.15625,13.5352 h 10.23193 z m -1.03125,-1.6274 h 2.11084 L 787.99414,1060 h -1.83691 l -2.86817,-7.5571 H 772.05811 L 769.20605,1060 h -1.708 z m 29.40332,0 h 2.38476 l 11.66602,21.9946 v -21.9946 h 1.61133 V 1060 h -2.28809 l -11.73047,-22.1396 V 1060 h -1.64355 z m 44.88818,1.6274 -5.15625,13.5352 h 10.23193 z m -1.03125,-1.6274 h 2.11084 L 861.25439,1060 h -1.83691 l -2.86816,-7.5571 H 845.31836 L 842.46631,1060 h -1.70801 z m 45.29102,22.0107 v -8.4272 h -6.13916 v -1.3213 h 7.73437 v 10.522 q -1.72412,0.854 -3.78662,1.2729 -2.0625,0.4351 -4.41504,0.4673 -5.2207,0 -8.15332,-3.3032 -2.94873,-3.2871 -2.94873,-9.1685 0,-5.8975 2.94873,-9.2007 2.93262,-3.2871 8.15332,-3.2871 2.15918,0 4.07666,0.4351 1.9336,0.4673 3.54492,1.3696 v 1.563 q -1.62744,-0.9024 -3.48047,-1.3696 -1.83691,-0.4512 -3.86718,-0.4512 -4.8501,0 -7.28321,2.7554 -2.4331,2.7392 -2.4331,8.1855 0,5.5269 2.4331,8.3145 2.43311,2.8037 7.28321,2.8037 1.98193,0 3.54492,-0.274 1.54687,-0.29 2.7876,-0.8862 z m 22.12011,-22.0107 h 13.59961 v 1.3374 h -11.95605 v 9.2329 h 11.45654 v 1.3052 h -11.45654 v 10.8764 h 12.24609 V 1060 H 917.354 Z m 35.13965,0 h 2.23975 l 6.68701,17.8374 6.71924,-17.8374 h 2.22363 V 1060 h -1.64355 v -21.1245 l -6.1875,16.5 h -2.22364 l -6.17138,-16.5 V 1060 h -1.64356 z m 40.18311,0 h 13.59964 v 1.3374 h -11.95609 v 9.2329 h 11.45659 v 1.3052 h -11.45659 v 10.8764 h 12.24609 V 1060 h -13.88964 z m 33.83444,0 h 2.3848 l 11.666,21.9946 v -21.9946 h 1.6113 V 1060 h -2.288 l -11.7305,-22.1396 V 1060 h -1.6436 z m 34.4146,0 h 18.7075 v 1.3213 h -8.54 V 1060 h -1.6275 v -22.7358 h -8.54 z"/>
       </svg>
     </div>
-
-    <!-- Gold separator (full width) -->
-    <div class="rule"></div>
-
-    <!-- Property band — like the email's dark property band -->
-    <div class="band">
-      <span class="band-name">St. Helen&rsquo;s Street Townhouse</span>
-      <span class="band-loc">Galway &middot; Ireland</span>
+    <div class="hd-right">
+      <span class="hd-prop">St. Helen&rsquo;s Townhouse</span>
+      <span class="hd-tag">Check-in details</span>
     </div>
-
-    <!-- Info grid — label + value, same as email blocks -->
-    <div class="info">
-      <div class="info-col">
-        <span class="lbl">Address</span>
-        <span class="val">St. Helen&rsquo;s Street<br>Galway</span>
-      </div>
-      <div class="info-col">
-        <span class="lbl">Book direct</span>
-        <span class="val">cityhostings.com</span>
-      </div>
-    </div>
-    <div class="info" style="border-bottom:none;">
-      <div class="info-col">
-        <span class="lbl">Phone</span>
-        <span class="val">083 172 3722</span>
-      </div>
-      <div class="info-col">
-        <span class="lbl">Email</span>
-        <span class="val">reservations@<br>cityhostings.com</span>
-      </div>
-    </div>
-
-    <!-- Footer brand line -->
-    <div class="brand-line">
-      <span class="brand-left">St. Helen&rsquo;s Street &middot; Galway</span>
-      <span class="brand-right">City Hostings Group</span>
-    </div>
-
   </div>
 
-  <!-- Three arched room photos at bottom -->
-  <div class="photos">
-    <div class="arch arch-l">
-      <img src="https://raw.githubusercontent.com/dnpebusiness-lab/lumusagency/claude/stoic-turing-PDaNe/IMG_5840.jpeg" alt="">
+  <div class="rule"></div>
+
+  <!-- Property band -->
+  <div class="band">
+    <span class="band-name">St. Helen&rsquo;s Street Townhouse</span>
+    <span class="band-loc">Galway</span>
+  </div>
+
+  <!-- Greeting -->
+  <div class="greet">
+    <p class="greet-line">Hi <strong>{TAG_FIRST_NAME}</strong>,</p>
+    <p class="greet-line">Your check-in at St. Helen&rsquo;s Street Townhouse is <strong>{TAG_BOOKING_START}</strong>, from 3pm.</p>
+    <p class="greet-addr">St. Helen&rsquo;s Street Townhouse &nbsp;&middot;&nbsp; Galway</p>
+  </div>
+
+  <!-- Access codes -->
+  <div class="codes">
+    <div class="code-col">
+      <span class="c-lbl">Building entrance</span>
+      <span class="c-pin">1981#</span>
+      <span class="c-sub">External front door</span>
     </div>
-    <div class="arch arch-c">
-      <img src="https://raw.githubusercontent.com/dnpebusiness-lab/lumusagency/claude/stoic-turing-PDaNe/IMG_5856.jpeg" alt="">
+    <div class="code-col">
+      <span class="c-lbl">Your room door</span>
+      <span class="c-pin">{TAG_REMOTELOCK_PIN}#</span>
+      <span class="c-sub">Keypad on your door inside</span>
     </div>
-    <div class="arch arch-r">
-      <img src="https://raw.githubusercontent.com/dnpebusiness-lab/lumusagency/claude/stoic-turing-PDaNe/IMG_5850.jpeg" alt="">
+  </div>
+
+  <!-- Room -->
+  <div class="room" style="padding-top:0; padding-bottom:0;">
+    <div class="room-inner">
+      <span class="r-lbl">Your room</span>
+      <span class="r-name">{TAG_ROOM_NAME}</span>
     </div>
+  </div>
+
+  <!-- Checkout + WiFi -->
+  <div class="row2">
+    <div class="r2-col">
+      <span class="r2-lbl">Check out by</span>
+      <span class="r2-val">12:00 noon &nbsp;&middot;&nbsp; <strong>{TAG_BOOKING_END}</strong></span>
+    </div>
+    <div class="r2-col">
+      <span class="r2-lbl">WiFi network</span>
+      <span class="r2-val">VM4855478</span>
+    </div>
+    <div class="r2-col">
+      <span class="r2-lbl">WiFi password</span>
+      <span class="r2-val">by8eTUjshxjd</span>
+    </div>
+  </div>
+
+  <!-- Notes -->
+  <div class="notes">
+    <span class="n-lbl">A few notes</span>
+    <span class="n-line">&#8212;&nbsp; No smoking in the rooms</span>
+    <span class="n-line">&#8212;&nbsp; No private parking on site &mdash; public car parking is available nearby</span>
+  </div>
+
+  <!-- Contact -->
+  <div class="contact">
+    <p class="contact-intro">Any issues during your stay, call or email us.</p>
+    <div class="contact-cols">
+      <div>
+        <span class="cc-lbl">Phone</span>
+        <a class="cc-val" href="tel:0831723722">083 172 3722</a>
+      </div>
+      <div>
+        <span class="cc-lbl">Email</span>
+        <a class="cc-val" href="mailto:reservations@cityhostings.com">reservations@cityhostings.com</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Keep note -->
+  <div class="keep">
+    <p>Keep this email handy on your phone for when you check in.</p>
+  </div>
+
+  <!-- Footer -->
+  <div class="ft">
+    <span class="ft-l">St. Helen&rsquo;s Street &middot; Galway</span>
+    <span class="ft-r">City Hostings Group</span>
   </div>
 
 </div>
