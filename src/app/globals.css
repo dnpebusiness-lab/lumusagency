@@ -1,0 +1,110 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Astra Voice design tokens.
+ *
+ * Direction: an operational tool for a busy host stand, not a marketing page.
+ * Warm graphite neutrals + a single copper accent. Deliberately not the
+ * generic violet-gradient "AI dashboard" look.
+ *
+ * Fonts are a system stack on purpose: no build-time network fetch, no FOUT,
+ * and it renders natively on the iPads restaurants actually use.
+ */
+@theme {
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+
+  /* Warm graphite neutrals */
+  --color-ink-50: #f7f6f4;
+  --color-ink-100: #eeece8;
+  --color-ink-200: #dedad3;
+  --color-ink-300: #c3bdb2;
+  --color-ink-400: #9c948a;
+  --color-ink-500: #7c746a;
+  --color-ink-600: #635c54;
+  --color-ink-700: #4a453f;
+  --color-ink-800: #2f2b27;
+  --color-ink-900: #1c1a17;
+  --color-ink-950: #100f0d;
+
+  /* Copper accent — used sparingly, one accent only */
+  --color-copper-50: #fdf5f0;
+  --color-copper-100: #fae7da;
+  --color-copper-200: #f3cbb2;
+  --color-copper-300: #e9a67f;
+  --color-copper-400: #dd7b4d;
+  --color-copper-500: #c85c2e;
+  --color-copper-600: #a84824;
+  --color-copper-700: #86381f;
+  --color-copper-800: #6a2d1c;
+  --color-copper-900: #55261a;
+
+  /* Semantic status colours (AA contrast on their own surfaces) */
+  --color-success: #2f7a4f;
+  --color-warning: #a8730f;
+  --color-danger: #a32c22;
+  --color-info: #2b5f8a;
+
+  --radius-card: 0.625rem;
+}
+
+:root {
+  --surface: var(--color-ink-50);
+  --surface-raised: #ffffff;
+  --border-subtle: var(--color-ink-200);
+  --text-primary: var(--color-ink-900);
+  --text-secondary: var(--color-ink-600);
+}
+
+.dark {
+  --surface: var(--color-ink-950);
+  --surface-raised: var(--color-ink-900);
+  --border-subtle: var(--color-ink-800);
+  --text-primary: var(--color-ink-50);
+  --text-secondary: var(--color-ink-300);
+}
+
+@layer base {
+  * {
+    border-color: var(--border-subtle);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--surface);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Visible, consistent focus for keyboard users — WCAG 2.1 AA (2.4.7) */
+  :focus-visible {
+    outline: 2px solid var(--color-copper-500);
+    outline-offset: 2px;
+  }
+
+  /* Numeric columns must stay scannable in dense tables */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
