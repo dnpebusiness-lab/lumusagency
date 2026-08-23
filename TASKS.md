@@ -14,16 +14,16 @@ Status legend: `[ ]` todo · `[~]` in progress · `[x]` done · `[!]` blocked
 
 | # | Task | M | Acceptance | Status |
 |---|---|---|---|---|
-| T-001 | Approval gate on all knowledge/menu/allergen reads | M2/M4 | No query path returns `approval_status != 'approved'` to a tool (AC-10) | [ ] |
-| T-002 | Allergen answers from structured data only, never inferred | M4 | Injection + inference scenarios show refusal; agent cites declared data only | [ ] |
+| T-001 | Approval gate on all knowledge/menu/allergen reads | M2/M4 | No query path returns `approval_status != 'approved'` to a tool (AC-10) | [x] DB layer done, `agent` schema + 10 tests; tool endpoints in M4 |
+| T-002 | Allergen answers from structured data only, never inferred | M4 | Injection + inference scenarios show refusal; agent cites declared data only | [~] `agent.get_allergen_info` separates contains / may_contain / free_from / undeclared and never asserts safety |
 | T-003 | Severe-allergy mandatory transfer + escalation log | M5 | Scenario ALL-01/02 transfers and writes an allergen escalation (AC-11) | [ ] |
 | T-004 | `Result`-typed tool contracts; confirmation only on `ok:true` | M5 | Fault-injection tests produce zero false confirmations (AC-04…07) | [ ] |
-| T-005 | RLS enabled and **forced** on every business table | M2 | Cross-tenant suite returns 0 rows for the other org on every table (AC-13) | [ ] |
+| T-005 | RLS enabled on every table in `public`; all privileges revoked from `anon` | M2 | Cross-tenant suite returns 0 rows for the other org on every table, both directions (AC-13) | [x] |
 | T-006 | Webhook signature verification + replay window | M4 | Invalid signature → 401, no writes (AC-14) | [ ] |
 | T-007 | Webhook idempotency via unique `(vendor,event_id)` | M4 | Duplicate delivery processed exactly once (AC-14) | [ ] |
 | T-008 | Prompt-injection sanitisation on write + delimiting on read | M4 | Stored payload does not alter behaviour (AC-12) | [ ] |
 | T-009 | Secrets server-side only; CI check on the client bundle | M1/M8 | Grep of build output finds no secret pattern | [ ] |
-| T-010 | Audit logging on every settings change, approval and PII unmask | M3/M6 | Every mutation produces an `audit_logs` row with before/after (AC-16) | [ ] |
+| T-010 | Audit logging on every settings change, approval and PII unmask | M3/M6 | Every mutation produces an `audit_logs` row with before/after (AC-16) | [~] triggers on 14 tables, approve/unapprove recorded distinctly; viewer UI in M6 |
 
 ## P1 — Core V1 functionality
 
@@ -32,10 +32,10 @@ Status legend: `[ ]` todo · `[~]` in progress · `[x]` done · `[!]` blocked
 | T-020 | Documentation set (PRD/ARCH/SEC/PLAN/TASKS/README) | M1 | Present, consistent, reviewed | [x] |
 | T-021 | Next.js 16 + TS strict + Tailwind v4 + component scaffold | M1 | lint/typecheck/test/build pass | [x] |
 | T-022 | `.env.example` with source and required-when per variable | M1 | Founder can obtain every credential unaided | [x] |
-| T-023 | Database schema + migrations (24 tables) | M2 | Applies cleanly to an empty DB | [ ] |
-| T-024 | Supabase Auth, magic link, invitations, protected routes | M2 | Sign-in → dashboard, scoped to own org | [ ] |
-| T-025 | Organisation + location management | M2 | Create/edit/list, role-gated | [ ] |
-| T-026 | Seed data for the demo restaurant | M2 | ~25 menu items, allergens, hours, 30 historical calls, `is_demo` | [ ] |
+| T-023 | Database schema + migrations (26 tables) | M2 | Applies cleanly to an empty DB | [x] |
+| T-024 | Supabase Auth (email+password), password reset, protected routes | M2 | Code complete; **email flows not yet tested end to end** (no hosted project) | [~] |
+| T-025 | Organisation + location management | M2 | Create/edit/list, role-gated | [x] |
+| T-026 | Seed data for the demo restaurants | M2 | 18 menu items, 35 allergen rows, 13 FAQs, 12 calls, 5 reservations, both tenants `is_demo` | [x] |
 | T-027 | Dashboard shell, navigation, design tokens | M3 | Responsive 375/768/1440, dark mode | [ ] |
 | T-028 | Overview metrics | M3/M6 | Numbers match independently computed values | [ ] |
 | T-029 | Call list + detail (transcript, summary, outcome, events) | M3 | Searchable, filterable, paginated | [ ] |

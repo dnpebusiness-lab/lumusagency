@@ -15,7 +15,7 @@ Version 1.0 · Milestone 1 · Jurisdiction: Ireland / EU
 
 | # | Threat | Impact | Primary control |
 |---|---|---|---|
-| T1 | Cross-tenant data access (restaurant A reads restaurant B) | Fatal to the business | PostgreSQL RLS, forced, tested at SQL level |
+| T1 | Cross-tenant data access (restaurant A reads restaurant B) | Fatal to the business | PostgreSQL RLS on every table, anon revoked, tested at SQL level |
 | T2 | Forged webhook creating fake calls/reservations | Data integrity, fraud | Signature verification + replay window + idempotency |
 | T3 | Prompt injection via knowledge-base content | Agent says harmful/false things | Sanitise on write, delimit on read, tool allow-list |
 | T4 | **Wrong allergen information reaching a caller** | **Physical harm** | Approval gate, no inference, mandatory escalation |
@@ -29,10 +29,27 @@ Version 1.0 · Milestone 1 · Jurisdiction: Ireland / EU
 ## 2. Tenancy isolation
 
 - Every business table has `organisation_id NOT NULL`.
-- `ALTER TABLE ... ENABLE ROW LEVEL SECURITY` **and** `FORCE ROW LEVEL SECURITY` on all of them.
-- Policies derive access from `organisation_members` for `auth.uid()`; there is no client-supplied org id anywhere in a policy.
+- `ALTER TABLE ... ENABLE ROW LEVEL SECURITY` on **every** table in `public` (asserted by test, not by memory).
+- Policies derive access from `organisation_members` for `auth.uid()`; there is no client-supplied org id anywhere in a policy. Changing an id in a request therefore achieves nothing — proved by a dedicated test.
+- Policies are granted `TO authenticated` only, and **every privilege is revoked from `anon`**, so an unauthenticated request is refused by the grant system before a policy is even consulted.
+- Column-level grants narrow writes further where a role may only touch part of a row: `staff` can write `call_sessions.caller_name` and `escalation_notes` and nothing else on that table.
+- Append-only tables (`call_events`, `call_transcripts`, `call_summaries`, `audit_logs`) have SELECT policies only, and INSERT/UPDATE/DELETE revoked from `authenticated`.
 - The dashboard uses the **user's** JWT-scoped Supabase client. The `service_role` key exists only inside webhook/tool/cron routes.
-- A dedicated test suite (`tests/integration/rls.test.ts`) authenticates as user A and asserts that **every** table returns zero rows for organisation B. This is AC-13 and it is a release blocker.
+- A dedicated test suite (`tests/database/rls.test.ts`) authenticates as the owner of organisation A and asserts that **every** tenant table returns zero rows for organisation B, in both directions. This is AC-13 and it is a release blocker.
+
+**`FORCE ROW LEVEL SECURITY` is deliberately not enabled** (Milestone 2 decision). FORCE also
+subjects the *table owner* to the policies, and on Supabase the table owner is the same role that
+runs migrations, the SECURITY DEFINER audit triggers and the seed — exactly the trusted server-side
+path that the design reserves for webhooks and administrative operations. Turning it on without a
+real Supabase project to test against would have been a change we could not verify. Evaluating it on
+the hosted project is a Milestone 8 hardening item, tracked in the checklist below.
+
+**A note on SECURITY DEFINER.** Authorisation helpers that must read `organisation_members` past RLS
+are SECURITY DEFINER with a pinned empty `search_path`. The functions that decide *who is calling*
+(`app.is_trusted_backend()` and the three guard triggers) are deliberately SECURITY INVOKER: as
+DEFINER they would see the function owner rather than the caller and would silently return "trusted"
+for everybody. That mistake was made and caught by `tests/database/integrity.test.ts` during
+Milestone 2; the tests remain as the regression guard.
 
 ## 3. Roles and permissions
 
@@ -122,7 +139,8 @@ Items 1, 2, 3, 5, 7 and 8 are, in my judgement, **hard blockers** for a live pil
 
 ## 11. Production-readiness security checklist
 
-- [ ] RLS enabled **and forced** on every business table; cross-tenant test suite green
+- [x] RLS enabled on every table in `public`; cross-tenant test suite green (22 tests, both directions)
+- [ ] `FORCE ROW LEVEL SECURITY` evaluated against the hosted Supabase project
 - [ ] All webhooks signature-verified, replay-protected, idempotent — with tests
 - [ ] No secret reachable from the browser bundle (automated check in CI)
 - [ ] Rate limits active on auth, tool and webhook routes

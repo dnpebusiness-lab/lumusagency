@@ -122,10 +122,13 @@ routes, never in anything a browser can reach.
 
 ## 5. Data model
 
-20 core entities plus 4 operational ones. Every business table carries `organisation_id`.
+26 tables, implemented in Milestone 2 (`supabase/migrations/`). Every tenant table carries
+`organisation_id`, and `tests/database/rls.test.ts` asserts that the list of tenant tables it walks is
+exactly the set of tables with that column — so a new table cannot quietly escape the isolation test.
 
 **Tenancy & identity**
-`organisations` · `locations` · `users` (mirrors `auth.users`) · `organisation_members` (role) · `subscriptions`
+`organisations` · `locations` · `profiles` (mirrors `auth.users`) · `organisation_members` (role) ·
+`organisation_member_locations` (scopes a location manager) · `subscriptions`
 
 **Agent configuration**
 `agent_configurations` (greeting, languages, voice, transfer number, closed-hours behaviour, prompt version) · `business_hours` (regular + special/holiday overrides) · `escalation_rules`
@@ -141,25 +144,64 @@ Every one of these has: `approval_status ('draft'|'pending'|'approved'|'archived
 **Operations**
 `reservations` (with `source_call_id`, provider ref, status) · `audit_logs` (actor, entity, before/after JSONB) · `webhook_events` (idempotency) · `sms_messages` · `retention_jobs`
 
-**Reference:** `allergens` (the 14 EU-regulated allergens, seeded).
+**Reference (not tenant-owned):** `allergens` (the 14 EU-regulated allergens) · `dietary_attributes`
 
-Full DDL lands in Milestone 2 under `supabase/migrations/`.
+### Roles
+
+Two separate vocabularies, on purpose. `app.org_role` covers the five roles inside an organisation:
+`organisation_owner`, `organisation_admin`, `location_manager`, `staff`, `viewer`.
+`platform_role` is a property of the *person* (us, the platform operator) and lives on `profiles`,
+so no edit to a membership row can ever escalate into it.
+
+### Constraints that encode product rules
+
+A handful of rules are expressed as CHECK constraints rather than application logic, because they are
+the ones where a bug would be expensive:
+
+| Constraint | What it makes impossible |
+|---|---|
+| `reservations_confirmed_has_provider_ref` | a "confirmed" booking with no provider reference — the database half of AC-04 |
+| `menu_item_allergens_free_from_requires_review` | an approved "free from" claim with no review date and no cross-contamination note |
+| `escalation_rules_mandatory_reasons_enabled` | switching off the severe-allergy, complaint, caller-request or out-of-scope escalation |
+| `agent_configurations_recording_requires_consent` | enabling call recording without a consent announcement |
+| `call_sessions_recording_requires_consent` | storing a recording for a call with no recorded consent |
+| `organisations_transcript_retention_bounds` | keeping transcripts longer than 365 days |
+| `menu_items_approved_has_price` | an approved dish the agent would have to quote without a price |
+
+### The approval gate
+
+Two triggers, applied to all six approvable tables:
+
+1. Only someone who may manage the location can set `approval_status = 'approved'`.
+2. **Any content change to an approved row drops it back to `draft`** and clears its approver — even
+   if the same statement also asks for approval, because SQL cannot distinguish a deliberate
+   re-approval from a client echoing the column back. Approval is therefore a separate, explicit act:
+   Save, then Approve. Editing the allergen list of an approved dish silently un-publishes it from
+   the agent until a manager signs it off again.
 
 ### RLS model
 ```sql
--- one helper, used by every policy
-create function app.current_org_ids() returns setof uuid
-  language sql stable security definer as $$
+-- one helper, used by every policy (migration 0007)
+create function app.org_ids() returns setof uuid
+  language sql stable security definer set search_path = '' as $$
     select organisation_id from public.organisation_members
     where user_id = auth.uid() and status = 'active' $$;
 
--- pattern applied to every business table
-create policy read_own_org on public.<table> for select
-  using (organisation_id in (select app.current_org_ids()));
+-- read pattern, applied to every tenant table
+create policy <table>_select on public.<table> for select to authenticated
+  using (app.is_org_member(organisation_id));
+
+-- write pattern for location-scoped content
+create policy <table>_update on public.<table> for update to authenticated
+  using (app.can_manage_location(location_id))
+  with check (app.is_org_member(organisation_id) and app.can_manage_location(location_id));
 ```
-Write policies additionally require role ∈ (`owner`,`manager`); approval columns require an
-explicit `approve_*` policy. RLS is **forced** (`alter table ... force row level security`) so
-even the table owner cannot bypass it accidentally.
+
+Reads require organisation membership; writes require the privilege to manage that specific
+location, which owners and admins hold implicitly and a `location_manager` holds only for the
+locations assigned to them in `organisation_member_locations`. Every privilege is revoked from
+`anon`. Append-only tables have SELECT policies only. `FORCE ROW LEVEL SECURITY` is deliberately not
+used — see `SECURITY_AND_PRIVACY.md` §2 for why, and Milestone 8 for the follow-up.
 
 ## 6. Dashboard information architecture
 

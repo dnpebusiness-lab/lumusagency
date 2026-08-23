@@ -42,7 +42,8 @@ Toolchain available in this environment: Node v22.22.2, npm 10.9.7, git 2.43.0, 
 
 ## 3. Pilot restaurant (seed data)
 
-- **A-20** The fictional pilot restaurant used in seed data is **"Trattoria Marea"**, a fictional Italian restaurant in Dublin 2. It is clearly labelled as demo data (`is_demo = true` on the organisation row) so it can never be confused with a real client.
+- **A-20** The fictional pilot restaurant used in seed data is **"Osteria Vindaro"**, an invented Italian restaurant in Dublin 2, plus a second invented tenant (**"Kestrel Coffee House"**) that exists so the cross-tenant isolation tests have a real neighbour to fail to reach. Both are flagged `is_demo = true` and the dashboard shows a demonstration-data banner for them.
+  *Changed during Milestone 2:* the earlier working name "Trattoria Marea" was dropped because "Marea" is a common restaurant name and real businesses use it. "Vindaro" and "Kestrel Coffee House" are invented compounds.
 - **A-21** All demo phone numbers use reserved test ranges. All demo emails use `@example.com`. No real person's data is ever committed to the repository.
 - **A-22** Business hours in the seed data reflect a realistic Dublin restaurant (closed Mondays, split lunch/dinner service).
 
@@ -67,12 +68,16 @@ Toolchain available in this environment: Node v22.22.2, npm 10.9.7, git 2.43.0, 
 ## 6. Access, roles and tenancy
 
 - **A-50** Authentication: **Supabase Auth**, email + magic link (no passwords to leak). Optional password login can be added later.
-- **A-51** Roles per organisation: `owner`, `manager`, `staff`, plus a platform-level `support` role used only by us with explicit, audited access.
-  - `owner`: everything including billing and deleting the organisation
-  - `manager`: knowledge base, agent settings, approvals, staff invitations
-  - `staff`: read calls and reservations, no settings, no approvals
+- **A-51** Roles per organisation (implemented in Milestone 2): `organisation_owner`, `organisation_admin`, `location_manager`, `staff`, `viewer`.
+  - `organisation_owner`: everything, including billing, retention settings, transferring ownership and deleting the organisation
+  - `organisation_admin`: everything except ownership transfer, deletion and retention settings
+  - `location_manager`: runs the locations **assigned to them** — menu, knowledge, approvals, agent settings
+  - `staff`: reads calls and reservations, updates reservations, annotates a call; no settings, no approvals
+  - `viewer`: read-only
+  `platform_admin` is deliberately **not** an organisation role: it is a property of the person, stored on `profiles.platform_role`, so no edit to a membership row can escalate into it.
 - **A-52** Multi-tenancy from day one: every business table carries `organisation_id`, and PostgreSQL **Row Level Security** enforces it. One restaurant is the pilot, but the schema never needs to be rewritten to add the second.
-- **A-53** Only a `manager` or `owner` may **approve** menu/allergen/knowledge records. Approval is the gate that lets data reach a live phone call.
+- **A-52b** RLS is **enabled** on every table but not **forced**. Forcing it would also bind the table owner, which on Supabase is the role that runs migrations, audit triggers and the seed — i.e. the trusted server-side path. Rationale and the Milestone 8 follow-up are in `SECURITY_AND_PRIVACY.md` §2.
+- **A-53** Only `organisation_owner`, `organisation_admin` or the `location_manager` of that location may **approve** menu/allergen/knowledge records. Approval is the gate that lets data reach a live phone call, and any subsequent content edit revokes it automatically.
 
 ## 7. Data protection (GDPR posture)
 
@@ -98,6 +103,7 @@ Toolchain available in this environment: Node v22.22.2, npm 10.9.7, git 2.43.0, 
 - **A-91** Deployment target **Netlify** (`@netlify/plugin-nextjs`). Webhook endpoints run as Node serverless functions (not Edge) because they need raw-body signature verification and the Supabase service role key.
 - **A-92** Database migrations are plain SQL files under `supabase/migrations/`, applied with the Supabase CLI. No ORM migration magic — SQL is auditable and portable.
 - **A-93** Testing: **Vitest** for unit/integration, **Playwright** for the dashboard end-to-end, plus a scripted **call evaluation pack** (`tests/call-scenarios/`) with at least 20 scenarios.
+- **A-93b** Milestone 2 addition: because Docker (and therefore `supabase start`) is unavailable in the build environment, the database suite runs against a plain PostgreSQL server through `scripts/db-local.sh` and a clearly-labelled local shim (`supabase/local/00_supabase_shim.sql`) that recreates the `auth` schema, `auth.uid()` and the `anon`/`authenticated`/`service_role` roles. The migrations themselves are unmodified and Supabase-native. The shim is never applied to a real project, and the script refuses non-local hosts.
 - **A-94** Package manager: **npm** (already present in the environment, no extra install step for you).
 
 ## 11. What I am explicitly NOT building in V1

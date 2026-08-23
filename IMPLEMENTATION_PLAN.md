@@ -45,26 +45,30 @@ Version 1.0 · Milestone 1
 
 **Needed from you:** nothing.
 
-## Milestone 2 — Data foundation ← NEXT
+## Milestone 2 — Data foundation ✅ DONE
 
-**Delivers**
-- SQL migrations for all 24 tables, enums, indexes, constraints
-- RLS policies on every business table (enabled **and** forced), plus the `app.current_org_ids()` helper
-- Supabase Auth: magic-link sign-in, invitation flow, session handling, protected routes
-- Organisation + location CRUD, member management with roles
-- Generated TypeScript types from the schema
-- Seed data: "Trattoria Marea" — hours, 4 menu categories, ~25 items with allergens, 12 FAQs, policies, 30 realistic historical calls with transcripts
+**Delivered**
+- 10 SQL migrations creating 26 tables, 22 enums, indexes, foreign keys and the CHECK constraints that encode the safety rules
+- RLS enabled on every table in `public`, ~60 policies, all privileges revoked from `anon`, column-level grants where a role may write only part of a row
+- Authorisation helpers (`app.org_ids`, `app.is_org_member`, `app.can_manage_location`, …) and the guard triggers for approval, membership and platform-role escalation
+- The `agent` schema: approved-data-only views and functions, reachable by `service_role` alone
+- Supabase Auth with the current SSR approach: email + password, password reset, protected routes via `proxy.ts`, POST-only sign-out, automatic profile creation by trigger. Magic link is prepared (the callback route already handles it) but not enabled
+- Organisation bootstrap RPC, location management, member roles
+- Seed data for two invented restaurants: 18 menu items (16 approved, 2 not), 35 allergen declarations, 20 dietary attributes, 13 FAQs, 7 knowledge articles, 12 calls with transcripts/summaries/events, 5 reservations, 144 audit rows
+- `scripts/db-local.sh` for environments without Docker, plus `supabase/config.toml` and `SUPABASE_SETUP.md`
 
 **Acceptance**
-- [ ] Migrations apply cleanly to an empty database and are idempotent to re-run
-- [ ] RLS cross-tenant test suite green (AC-13)
-- [ ] Sign in with a magic link, land in the dashboard, see only your organisation
-- [ ] Seed produces a browsable demo restaurant, flagged `is_demo`
-- [ ] Approval columns default to `draft` — nothing is approved by accident
+- [x] Migrations apply cleanly to an empty database, verified repeatedly from zero
+- [x] RLS cross-tenant test suite green — every tenant table, both directions (AC-13)
+- [x] Role permissions tested for owner, admin, manager, staff and viewer
+- [x] Seed produces a browsable demo restaurant, flagged `is_demo`
+- [x] Approval columns default to `draft` — asserted by test, not by memory
+- [x] `format:check`, `lint`, `typecheck`, `test` (125), `build` all pass
+- [ ] **Not verified:** migrations against hosted Supabase; email confirmation and password-reset flows end to end; `npm run db:types` (needs Docker or the linked project)
 
-**Needed from you:** a Supabase project (free tier), and its URL + anon key + service-role key **pasted into Netlify/`.env.local`, never into chat**.
+**Needed from you:** a Supabase project (free tier) — `SUPABASE_SETUP.md` walks through it. Keys go into `.env.local` or Netlify, **never into chat**.
 
-## Milestone 3 — Dashboard and knowledge management
+## Milestone 3 — Dashboard and knowledge management ← NEXT
 
 **Delivers**
 - The six dashboard areas, responsive from 375 px

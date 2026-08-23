@@ -11,8 +11,9 @@ confirmation, and hands the call to a human whenever a human is needed.
 > (cosa manca legalmente prima di usarlo con clienti veri).
 > Per far partire il progetto sul tuo computer, vai alla sezione *Quick start* qui sotto.
 
-🔴 **Status: pilot build, Milestone 1.** Not connected to a phone number, not legally reviewed,
-not for use with real callers. See [`SECURITY_AND_PRIVACY.md`](./SECURITY_AND_PRIVACY.md) §10.
+🔴 **Status: pilot build, Milestone 2.** Database, authentication and multi-tenant access control are
+built and tested. Not connected to a phone number, not legally reviewed, not for use with real
+callers. See [`SECURITY_AND_PRIVACY.md`](./SECURITY_AND_PRIVACY.md) §10.
 
 ---
 
@@ -26,6 +27,7 @@ not for use with real callers. See [`SECURITY_AND_PRIVACY.md`](./SECURITY_AND_PR
 | [`IMPLEMENTATION_PLAN.md`](./IMPLEMENTATION_PLAN.md) | The nine milestones, what each delivers, and what is needed from the founder |
 | [`TASKS.md`](./TASKS.md) | Prioritised backlog with per-task acceptance criteria |
 | [`ASSUMPTIONS.md`](./ASSUMPTIONS.md) | Every decision made without asking, and how to reverse it |
+| [`SUPABASE_SETUP.md`](./SUPABASE_SETUP.md) | **In italiano** — how to create the free Supabase project, where each key goes, how to apply migrations and how to check that RLS is on |
 | `TEST_PLAN.md` | *(Milestone 8)* 20+ scripted call scenarios and honest results |
 | `docs/DEPLOYMENT.md` | *(Milestone 8)* how to deploy |
 | `docs/API_AND_WEBHOOKS.md` | *(Milestone 8)* endpoint and webhook reference |
@@ -50,11 +52,19 @@ enforceable property rather than a hope.
 
 ```bash
 npm install
-cp .env.example .env.local     # Milestone 1 runs with no credentials at all
+cp .env.example .env.local     # the app still boots with no credentials
 npm run dev                    # http://localhost:3000
 ```
 
 Health check: `curl http://localhost:3000/api/health`
+
+To work on the database, see [`SUPABASE_SETUP.md`](./SUPABASE_SETUP.md). With Docker:
+`npm run db:start && npm run db:reset`. Without Docker, against a local PostgreSQL server:
+`scripts/db-local.sh reset`.
+
+Demo sign-ins created by the seed (demo password `AstraDemo!2026`, test projects only):
+`owner.demo@example.com`, `admin.demo@example.com`, `manager.demo@example.com`,
+`staff.demo@example.com`, `viewer.demo@example.com`.
 
 ### Commands
 
@@ -64,7 +74,10 @@ Health check: `curl http://localhost:3000/api/health`
 | `npm run build` | Production build |
 | `npm run lint` | ESLint |
 | `npm run typecheck` | TypeScript, strict, no emit |
-| `npm run test` | Vitest unit + integration tests |
+| `npm run test` | Vitest: unit, integration and database tests (rebuilds the test database first) |
+| `npm run test:db` | Just the database suite: schema, RLS, approval gate, agent surface, integrity |
+| `npm run db:reset` | Drop, migrate and seed the local database |
+| `npm run db:types` | Regenerate TypeScript types (needs Docker or a linked project) |
 | `npm run test:e2e` | Playwright end-to-end *(from Milestone 3)* |
 | `npm run format` | Prettier |
 | `npm run check` | format + lint + typecheck + test — run this before every commit |
@@ -95,7 +108,9 @@ These exist because breaking them is how this specific product hurts someone:
 1. **A confirmation is only ever spoken on a successful tool result.** Providers return `Result<T>`; they do not throw across the boundary. (`src/lib/result.ts`)
 2. **Allergen and menu answers come only from approved structured rows.** Never inferred from a dish name or description.
 3. **Severe-allergy enquiries always transfer to a human** and always write an escalation record.
-4. **Row Level Security is the tenancy boundary**, not application code.
+4. **Row Level Security is the tenancy boundary**, not application code. The permission matrix in
+   `src/lib/auth/rbac.ts` exists to shape the UI and produce readable errors; if it ever disagrees
+   with the database, the database is right and that file is the bug.
 5. **Secrets never cross into the browser.** Nothing sensitive is ever `NEXT_PUBLIC_`.
 6. **Webhooks are signature-verified and idempotent** before anything is written.
 7. **Knowledge-base content is untrusted input** and cannot alter agent instructions.
@@ -103,7 +118,13 @@ These exist because breaking them is how this specific product hurts someone:
 
 ## Current limitations
 
-- No database, authentication or voice integration yet — those are Milestones 2 and 4.
+- No voice integration yet — that is Milestone 4. The dashboard screens for calls, reservations,
+  knowledge and agent settings arrive in Milestone 3.
+- The migrations have **not** yet been applied to a hosted Supabase project, only to a real local
+  PostgreSQL 16 server. The email confirmation and password-reset flows are written but **not yet
+  tested end to end**, because they need Supabase's mail service.
+- `npm run db:types` needs Docker, which the build environment lacks, so `src/lib/db/enums.ts` is
+  hand-maintained — with a test that fails on any drift from the database.
 - Voice quality, latency and accent handling depend on Retell, a third party we do not control.
 - Strong regional accents and noisy rooms will degrade recognition; escalation to a human is the mitigation, not a fix.
 - **The software is not legally compliant by virtue of its features.** A DPIA, DPAs, consent scripts, transfer assessments and AI-disclosure wording all require professional review before a real caller is answered.
