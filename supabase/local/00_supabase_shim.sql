@@ -38,6 +38,10 @@ create table if not exists auth.users (
   created_at           timestamptz default now(),
   updated_at           timestamptz default now(),
   phone                text unique,
+  phone_confirmed_at   timestamptz,
+  -- Also GENERATED on a hosted project. Present so an insert that tries to set
+  -- it fails here rather than in front of the founder.
+  confirmed_at         timestamptz generated always as (least(email_confirmed_at, phone_confirmed_at)) stored,
   deleted_at           timestamptz
 );
 
@@ -50,7 +54,11 @@ create table if not exists auth.identities (
   last_sign_in_at timestamptz,
   created_at      timestamptz default now(),
   updated_at      timestamptz default now(),
-  email           text,
+  -- GENERATED, exactly as on a hosted Supabase project. Declaring it as a plain
+  -- column here is what let a seed that writes to it pass locally and fail on
+  -- the real thing with "cannot insert a non-DEFAULT value into column email".
+  -- The shim is only useful while it reproduces the vendor's constraints.
+  email           text generated always as (lower(identity_data ->> 'email')) stored,
   unique (provider, provider_id)
 );
 

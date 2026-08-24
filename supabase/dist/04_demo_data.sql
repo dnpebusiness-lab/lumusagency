@@ -85,10 +85,14 @@ values
    '{"full_name":"Niamh Kelleher","locale":"en"}'::jsonb, now(), now())
 on conflict (id) do nothing;
 
-insert into auth.identities (provider, provider_id, user_id, identity_data, email, created_at, updated_at)
+-- auth.identities.email is a GENERATED column on Supabase: it derives itself from
+-- identity_data ->> 'email'. Listing it here fails with "cannot insert a
+-- non-DEFAULT value into column email", so identity_data is the only place the
+-- address is written and the column fills itself.
+insert into auth.identities (provider, provider_id, user_id, identity_data, created_at, updated_at)
 select 'email', u.id::text, u.id,
        jsonb_build_object('sub', u.id::text, 'email', u.email, 'email_verified', true),
-       u.email, now(), now()
+       now(), now()
 from auth.users u
 where u.email like '%.demo@example.com'
 on conflict (provider, provider_id) do nothing;
