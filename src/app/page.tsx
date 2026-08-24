@@ -1,20 +1,41 @@
 import { Card, CardDescription, CardTitle } from '@/components/ui/card'
 
+/**
+ * Build state, in the order the work actually happened rather than the order the
+ * plan proposed. M3 was deliberately deferred so that Milestone 4A could prove
+ * one narrow vertical slice — a real inbound call reaching a real dashboard —
+ * before the broader management screens were built.
+ *
+ * "In progress" on M4A means exactly what it says: the implementation is
+ * complete and its automated evidence is green, but no live call has been made
+ * yet. This page must not imply otherwise.
+ */
 const milestones = [
-  { id: 'M0', label: 'Repository inspection & assumptions', state: 'done' },
-  { id: 'M1', label: 'Documentation & scaffold', state: 'done' },
-  { id: 'M2', label: 'Schema, RLS, auth, seed data', state: 'done' },
-  { id: 'M3', label: 'Dashboard & knowledge management', state: 'current' },
-  { id: 'M4', label: 'Retell voice integration & webhooks', state: 'todo' },
-  { id: 'M5', label: 'Reservation, SMS & transfer tools', state: 'todo' },
-  { id: 'M6', label: 'Analytics, audit, retention', state: 'todo' },
-  { id: 'M7', label: 'Stripe test mode & onboarding', state: 'todo' },
-  { id: 'M8', label: 'Tests, deployment, final review', state: 'todo' },
+  { id: 'M0', label: 'Repository inspection & assumptions', state: 'done', note: null },
+  { id: 'M1', label: 'Documentation & scaffold', state: 'done', note: null },
+  { id: 'M2', label: 'Schema, RLS, auth, seed data', state: 'done', note: null },
+  {
+    id: 'M3',
+    label: 'Dashboard & knowledge management',
+    state: 'deferred',
+    note: 'Deferred on purpose, to prove one call end to end first',
+  },
+  {
+    id: 'M4A',
+    label: 'Retell voice integration & webhooks',
+    state: 'current',
+    note: 'Implementation complete; live proof pending',
+  },
+  { id: 'M5', label: 'Reservation, SMS & transfer tools', state: 'todo', note: null },
+  { id: 'M6', label: 'Analytics, audit, retention', state: 'todo', note: null },
+  { id: 'M7', label: 'Stripe test mode & onboarding', state: 'todo', note: null },
+  { id: 'M8', label: 'Tests, deployment, final review', state: 'todo', note: null },
 ] as const
 
 const stateStyles: Record<string, string> = {
   done: 'bg-[var(--color-success)] text-white',
   current: 'bg-copper-600 text-white',
+  deferred: 'bg-ink-300 text-ink-700 dark:bg-ink-700 dark:text-ink-100',
   todo: 'bg-ink-200 text-ink-600 dark:bg-ink-800 dark:text-ink-300',
 }
 
@@ -50,11 +71,18 @@ export default function Home() {
               className="border-ink-200 dark:border-ink-800 dark:bg-ink-900 flex items-center gap-3 rounded-md border bg-white px-4 py-3"
             >
               <span
-                className={`tabular inline-flex h-6 w-8 shrink-0 items-center justify-center rounded text-xs font-semibold ${stateStyles[milestone.state]}`}
+                className={`tabular inline-flex h-6 w-10 shrink-0 items-center justify-center rounded text-xs font-semibold ${stateStyles[milestone.state]}`}
               >
                 {milestone.id}
               </span>
-              <span className="text-ink-700 dark:text-ink-200 text-sm">{milestone.label}</span>
+              <span className="text-ink-700 dark:text-ink-200 text-sm">
+                {milestone.label}
+                {milestone.note ? (
+                  <span className="text-ink-500 dark:text-ink-400 block text-xs">
+                    {milestone.note}
+                  </span>
+                ) : null}
+              </span>
             </li>
           ))}
         </ol>
