@@ -17,13 +17,25 @@
     "transcript_object": [
       {
         "role": "agent",
-        "content": "You're through to Osteria Vindaro. Just so you know, I'm an automated assistant, this call is transcribed, and no audio recording is kept. How can I help?",
-        "words": [{ "word": "You're", "start": 0.2, "end": 0.5 }]
+        "content": "Hi, you’re speaking with Astra, an AI assistant for Osteria Vindaro. I’ll create a text transcript to answer your questions and record the outcome of this call. You can ask for a member of staff at any time. How can I help?",
+        "words": [
+          {
+            "word": "You're",
+            "start": 0.2,
+            "end": 0.5
+          }
+        ]
       },
       {
         "role": "user",
         "content": "Where are you parked, I mean where do I park?",
-        "words": [{ "word": "Where", "start": 10.0, "end": 10.3 }]
+        "words": [
+          {
+            "word": "Where",
+            "start": 10.0,
+            "end": 10.3
+          }
+        ]
       }
     ],
     "call_analysis": {

@@ -31,10 +31,12 @@ with real callers. See [`SECURITY_AND_PRIVACY.md`](./SECURITY_AND_PRIVACY.md) §
 | [`TASKS.md`](./TASKS.md) | Prioritised backlog with per-task acceptance criteria |
 | [`ASSUMPTIONS.md`](./ASSUMPTIONS.md) | Every decision made without asking, and how to reverse it |
 | [`SUPABASE_SETUP.md`](./SUPABASE_SETUP.md) | **In italiano** — how to create the free Supabase project, where each key goes, how to apply migrations and how to check that RLS is on |
-| [`TECHNICAL_PRIVACY_REQUIREMENTS.md`](./TECHNICAL_PRIVACY_REQUIREMENTS.md) | The privacy controls the code must implement, and the test that proves each one |
+| [`TECHNICAL_PRIVACY_REQUIREMENTS.md`](./TECHNICAL_PRIVACY_REQUIREMENTS.md) | **Founder's handoff package** — the privacy controls the code must implement |
+| [`docs/PRIVACY_CONTROLS_IMPLEMENTATION.md`](./docs/PRIVACY_CONTROLS_IMPLEMENTATION.md) | Where each of those requirements is implemented, which test proves it, and what is still not done |
+| [`astra-voice-handoff/`](./astra-voice-handoff/) | The original handoff package, verbatim and unmodified: 14 compliance drafts, the voice QA plan and the M4A brief |
 | [`RETELL_VENDOR_CONSTRAINTS.md`](./RETELL_VENDOR_CONSTRAINTS.md) | Why the voice vendor is gated to internal evaluation, and the seven hard gates before a paying customer |
 | [`compliance/06_AI_AND_RECORDING_DISCLOSURE_SCRIPTS.md`](./compliance/06_AI_AND_RECORDING_DISCLOSURE_SCRIPTS.md) | The exact words the agent says first, in English and Italian |
-| [`voice_qa/VOICE_TEST_CASES.csv`](./voice_qa/VOICE_TEST_CASES.csv) | Behavioural test registry: 45 scenarios, automated vs manual, with honest status |
+| [`voice_qa/`](./voice_qa/) | 46 manual voice-QA scenarios from the package, plus `AUTOMATED_COVERAGE.csv` mapping each to the automated evidence that exists |
 | [`docs/M4A_LIVE_TEST_RUNBOOK.md`](./docs/M4A_LIVE_TEST_RUNBOOK.md) | Exactly what to do to get from green fixtures to a real phone call |
 | `TEST_PLAN.md` | *(Milestone 8)* 20+ scripted call scenarios and honest results |
 | `docs/DEPLOYMENT.md` | *(Milestone 8)* how to deploy |

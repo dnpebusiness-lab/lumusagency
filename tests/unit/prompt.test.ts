@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildAgentPrompt } from '@/lib/agent/prompt'
+import { buildAgentPrompt, validateDisclosurePlacement } from '@/lib/agent/prompt'
 import { AGENT_TOOL_NAMES } from '@/lib/agent/tools'
 import type { VoiceAgentConfig } from '@/lib/providers/voice/types'
 
@@ -28,6 +28,38 @@ describe('agent prompt', () => {
     expect(prompt.text).not.toMatch(/\b\d{1,2}[:.]\d{2}\b/)
     expect(prompt.text).not.toMatch(/€\s?\d/)
     expect(prompt.text).not.toMatch(/Monday|Tuesday|Wednesday/)
+  })
+
+  it('names the assistant and identifies it as AI, per the AI Act checklist', () => {
+    expect(prompt.text).toContain('Astra')
+    expect(prompt.text).toMatch(/AI assistant/)
+    expect(prompt.text).toMatch(/Never claim or imply that you are a human/i)
+  })
+
+  it('carries the four sentences the solicitor said must never be spoken', () => {
+    for (const forbidden of [
+      'It is completely safe for you.',
+      'It is allergen-free.',
+      'It should be fine.',
+      'There is no risk.',
+    ]) {
+      expect(prompt.text, forbidden).toContain(forbidden)
+    }
+    expect(prompt.text).toMatch(/NEVER SAY ANY OF THESE, IN ANY LANGUAGE/)
+  })
+
+  it('has an approved answer for a privacy question and for a refusal to be transcribed', () => {
+    expect(prompt.text).toMatch(/WHEN THE CALLER ASKS ABOUT PRIVACY OR RECORDING/)
+    expect(prompt.text).toMatch(/does not store an audio recording/i)
+    expect(prompt.text).toMatch(/refuses to be transcribed/i)
+    expect(prompt.text).toMatch(/never say the caller has consented to anything/i)
+  })
+
+  it('offers to read written allergen information rather than promising to send it', () => {
+    // compliance/06 offers to "send" it; Milestone 4A cannot send anything, so
+    // the offer is honest here or it is a false promise.
+    expect(prompt.text).toMatch(/offer to READ it out/i)
+    expect(prompt.text).toMatch(/Never offer to send it/i)
   })
 
   it('puts the disclosure first and blocks data collection until it is done', () => {
@@ -105,5 +137,38 @@ describe('agent prompt', () => {
   it('carries the disclosure version alongside the prompt version', () => {
     expect(prompt.disclosureVersion).toBe('v1')
     expect(prompt.version).toBe(1)
+  })
+
+  it('refuses to build a prompt whose disclosure was removed', () => {
+    // compliance/12: a config change that removes or delays disclosure must be
+    // rejected by validation, not merely noticed by a test later.
+    expect(validateDisclosurePlacement('You are a helpful assistant.')).toContain(
+      'The prompt has no mandatory first-turn disclosure section.',
+    )
+  })
+
+  it('refuses a disclosure that does not name the assistant or mention transcription', () => {
+    const stripped = 'FIRST TURN — MANDATORY, BEFORE ANYTHING ELSE\nSay hello.'
+    const problems = validateDisclosurePlacement(stripped)
+    expect(problems.join(' ')).toMatch(/does not name the assistant/i)
+    expect(problems.join(' ')).toMatch(/does not mention transcription/i)
+    expect(problems.join(' ')).toMatch(/does not block data collection/i)
+  })
+
+  it('refuses a prompt that puts the tools before the disclosure', () => {
+    const delayed = [
+      'TOOLS',
+      'You may call get_business_info.',
+      'FIRST TURN — MANDATORY, BEFORE ANYTHING ELSE',
+      'You are Astra, an AI assistant. This call is transcribed.',
+      'Do not ask for or accept ANY information from the caller until you have said it.',
+    ].join('\n')
+    expect(validateDisclosurePlacement(delayed)).toContain(
+      'The tool instructions appear before the disclosure.',
+    )
+  })
+
+  it('accepts the prompt it actually builds', () => {
+    expect(validateDisclosurePlacement(prompt.text)).toEqual([])
   })
 })

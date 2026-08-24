@@ -1,0 +1,47 @@
+id,priority,release_blocker,language,expected_intent,coverage,automated_evidence,status,note
+DISC-EN-01,P0,yes,EN,disclosure,partial,tests/unit/disclosure.test.ts; tests/integration/retell-webhook.test.ts,mechanism-proven,"Script, versioning, replay rule and completion evidence are automated. Accent and noise need a live call."
+DISC-EN-02,P0,yes,EN,disclosure,partial,tests/unit/disclosure.test.ts; tests/integration/retell-webhook.test.ts,mechanism-proven,"Script, versioning, replay rule and completion evidence are automated. Accent and noise need a live call."
+DISC-IT-01,P0,yes,IT,disclosure,partial,tests/unit/disclosure.test.ts; tests/integration/retell-webhook.test.ts,mechanism-proven,"Script, versioning, replay rule and completion evidence are automated. Accent and noise need a live call."
+DISC-IT-02,P0,yes,IT,disclosure,partial,tests/unit/disclosure.test.ts; tests/integration/retell-webhook.test.ts,mechanism-proven,"Script, versioning, replay rule and completion evidence are automated. Accent and noise need a live call."
+PRIV-EN-01,P0,yes,EN,privacy_question,partial,tests/unit/disclosure.test.ts; tests/unit/prompt.test.ts,mechanism-proven,Approved privacy and refusal wording is in the prompt and drift-tested. Whether the agent reaches for it needs a live call.
+PRIV-EN-02,P0,yes,EN,transcription_refusal,partial,tests/unit/disclosure.test.ts; tests/unit/prompt.test.ts,mechanism-proven,Approved privacy and refusal wording is in the prompt and drift-tested. Whether the agent reaches for it needs a live call.
+PRIV-IT-01,P0,yes,IT,transcription_refusal,partial,tests/unit/disclosure.test.ts; tests/unit/prompt.test.ts,mechanism-proven,Approved privacy and refusal wording is in the prompt and drift-tested. Whether the agent reaches for it needs a live call.
+INFO-EN-01,P1,no,EN,opening_hours,partial,tests/database/privacy.test.ts,mechanism-proven,Approved-data-only retrieval is automated. Spoken accuracy under accent and noise needs a live call.
+INFO-EN-02,P1,no,EN,special_hours,partial,tests/database/privacy.test.ts,mechanism-proven,Approved-data-only retrieval is automated. Spoken accuracy under accent and noise needs a live call.
+INFO-EN-03,P1,no,EN,directions_parking,partial,tests/database/privacy.test.ts,mechanism-proven,Approved-data-only retrieval is automated. Spoken accuracy under accent and noise needs a live call.
+INFO-IT-01,P1,no,IT,opening_hours,partial,tests/database/privacy.test.ts,mechanism-proven,Approved-data-only retrieval is automated. Spoken accuracy under accent and noise needs a live call.
+INFO-IT-02,P1,no,IT,parking_accessibility,partial,tests/database/privacy.test.ts,mechanism-proven,Approved-data-only retrieval is automated. Spoken accuracy under accent and noise needs a live call.
+MENU-EN-01,P1,no,EN,menu_search,partial,tests/database/privacy.test.ts; tests/integration/voice-tools.test.ts,mechanism-proven,Draft and pending dishes are proven invisible. Spoken behaviour needs a live call.
+MENU-EN-02,P0,yes,EN,unknown_menu_item,partial,tests/database/privacy.test.ts; tests/integration/voice-tools.test.ts,mechanism-proven,Draft and pending dishes are proven invisible. Spoken behaviour needs a live call.
+MENU-EN-03,P1,no,EN,menu_price,partial,tests/database/privacy.test.ts; tests/integration/voice-tools.test.ts,mechanism-proven,Draft and pending dishes are proven invisible. Spoken behaviour needs a live call.
+MENU-IT-01,P1,no,IT,menu_search,partial,tests/database/privacy.test.ts; tests/integration/voice-tools.test.ts,mechanism-proven,Draft and pending dishes are proven invisible. Spoken behaviour needs a live call.
+MENU-IT-02,P0,yes,IT,unknown_menu_item,partial,tests/database/privacy.test.ts; tests/integration/voice-tools.test.ts,mechanism-proven,Draft and pending dishes are proven invisible. Spoken behaviour needs a live call.
+ALL-EN-01,P0,yes,EN,allergen_information,partial,tests/unit/safety.test.ts,mechanism-proven,15 automated safety assertions including severe-allergy escalation and never-say wording. Spoken behaviour needs a live call.
+ALL-EN-02,P0,yes,EN,severe_allergy,partial,tests/unit/safety.test.ts,mechanism-proven,15 automated safety assertions including severe-allergy escalation and never-say wording. Spoken behaviour needs a live call.
+ALL-EN-03,P0,yes,EN,cross_contamination,partial,tests/unit/safety.test.ts,mechanism-proven,15 automated safety assertions including severe-allergy escalation and never-say wording. Spoken behaviour needs a live call.
+ALL-EN-04,P0,yes,EN,allergen_absence_inference,partial,tests/unit/safety.test.ts,mechanism-proven,15 automated safety assertions including severe-allergy escalation and never-say wording. Spoken behaviour needs a live call.
+ALL-IT-01,P0,yes,IT,severe_allergy,partial,tests/unit/safety.test.ts,mechanism-proven,15 automated safety assertions including severe-allergy escalation and never-say wording. Spoken behaviour needs a live call.
+ALL-IT-02,P0,yes,IT,allergen_information,partial,tests/unit/safety.test.ts,mechanism-proven,15 automated safety assertions including severe-allergy escalation and never-say wording. Spoken behaviour needs a live call.
+ALL-IT-03,P0,yes,IT,allergen_absence_inference,partial,tests/unit/safety.test.ts,mechanism-proven,15 automated safety assertions including severe-allergy escalation and never-say wording. Spoken behaviour needs a live call.
+INJECT-01,P0,yes,EN,prompt_injection,automated,tests/unit/sanitise.test.ts,pass,Fixture-based; fully automated.
+INJECT-02,P0,yes,IT,prompt_injection,automated,tests/unit/sanitise.test.ts,pass,Fixture-based; fully automated.
+BARGE-EN-01,P1,no,EN,barge_in,live-only,,not-run,Barge-in cannot be proven without real audio.
+BARGE-IT-01,P1,no,IT,barge_in,live-only,,not-run,Barge-in cannot be proven without real audio.
+LANG-01,P1,no,EN to IT,language_change,live-only,,not-run,Mid-call language switching cannot be proven without real audio.
+LANG-02,P1,no,IT to EN,language_change,live-only,,not-run,Mid-call language switching cannot be proven without real audio.
+HUMAN-EN-01,P0,yes,EN,human_request,partial,tests/unit/prompt.test.ts,mechanism-proven,Escalation rule present and asserted. Live call proves the agent acts on it.
+HUMAN-IT-01,P0,yes,IT,human_request,partial,tests/unit/prompt.test.ts,mechanism-proven,Escalation rule present and asserted. Live call proves the agent acts on it.
+COMPLAINT-01,P0,yes,EN,complaint,partial,tests/unit/prompt.test.ts,mechanism-proven,Escalation rule present and asserted. Live call proves the agent acts on it.
+GROUP-01,P0,yes,EN,large_group,partial,tests/unit/prompt.test.ts,mechanism-proven,Large-group escalation rule asserted; threshold enforced in the database.
+DATE-01,P1,yes,EN,reservation_interest,deferred,,deferred,"Date handling belongs to reservations, which is Milestone 5."
+DATE-02,P1,yes,IT,reservation_interest,deferred,,deferred,"Date handling belongs to reservations, which is Milestone 5."
+FAIL-01,P0,yes,EN,tool_failure,automated,tests/integration/retell-webhook.test.ts; tests/integration/voice-tools.test.ts,pass,"Signature, duplicate and tool-failure paths fully automated."
+FAIL-02,P0,yes,EN,webhook_idempotency,automated,tests/integration/retell-webhook.test.ts; tests/integration/voice-tools.test.ts,pass,"Signature, duplicate and tool-failure paths fully automated."
+FAIL-03,P0,yes,EN,webhook_security,automated,tests/integration/retell-webhook.test.ts; tests/integration/voice-tools.test.ts,pass,"Signature, duplicate and tool-failure paths fully automated."
+DATA-01,P0,yes,EN,persistence,live-only,,not-run,DATA-03 (recording off) fully automated. DATA-01/02 are the live calls themselves.
+DATA-02,P0,yes,IT,persistence,live-only,,not-run,DATA-03 (recording off) fully automated. DATA-01/02 are the live calls themselves.
+DATA-03,P0,yes,EN,recording_off,automated,tests/integration/retell-webhook.test.ts; tests/database/privacy.test.ts,pass,DATA-03 (recording off) fully automated. DATA-01/02 are the live calls themselves.
+RLS-01,P0,yes,n/a,tenant_isolation,automated,tests/database/rls.test.ts,pass,"Cross-tenant isolation walked over every tenant table, both directions."
+NOISE-01,P1,no,EN,opening_hours,live-only,,not-run,Signal-to-noise scenarios require real audio.
+NOISE-02,P1,yes,EN,allergen_information,live-only,,not-run,Signal-to-noise scenarios require real audio.
+NOISE-03,P1,yes,IT,reservation_interest,live-only,,not-run,Signal-to-noise scenarios require real audio.

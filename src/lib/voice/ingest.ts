@@ -2,7 +2,7 @@ import 'server-only'
 
 import type { LanguageCode } from '@/lib/db/enums'
 import type { VoiceCallEvent, VoiceTranscriptTurn } from '@/lib/providers/voice/types'
-import { DISCLOSURE_VERSION, getDisclosure } from '@/lib/agent/disclosure'
+import { DISCLOSURE_VERSION, disclosureFragments } from '@/lib/agent/disclosure'
 
 /**
  * Turns a normalised vendor event into the payload the transactional ingest RPC
@@ -185,24 +185,17 @@ export function detectDisclosure(
   const opening = agentTurns.slice(0, 3)
 
   for (const language of context.supportedLanguages) {
-    const script = getDisclosure(language, {
-      locationName: context.locationName,
-      recordingEnabled: context.recordingEnabled,
-    })
-    // Compare on a distinctive fragment rather than the whole sentence: speech
-    // synthesis and transcription both perturb punctuation and casing.
-    const needle = script.material
-      .toLowerCase()
-      .replace(/[^a-z ]/g, '')
-      .trim()
-      .slice(0, 40)
+    // Two independent fragments must BOTH appear: the assistant's name and the
+    // word "transcribed". Matching a whole sentence would fail on ordinary
+    // speech-synthesis and transcription noise; matching one fragment alone
+    // would count a greeting that names Astra but never mentions transcription,
+    // which is not a disclosure at all. See compliance/12.
+    const fragments = disclosureFragments(language)
 
-    const turn = opening.find((t) =>
-      t.content
-        .toLowerCase()
-        .replace(/[^a-z ]/g, '')
-        .includes(needle),
-    )
+    const turn = opening.find((t) => {
+      const normalised = t.content.toLowerCase().replace(/[^a-z ]/g, '')
+      return fragments.every((fragment) => normalised.includes(fragment))
+    })
 
     if (turn) {
       const completedAt =

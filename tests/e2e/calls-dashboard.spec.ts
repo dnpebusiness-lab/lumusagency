@@ -47,6 +47,15 @@ test.describe('Calls dashboard', () => {
     await expect(page.getByText('Internal evaluation')).toBeVisible()
   })
 
+  test('shows the disclosure currently deployed, with its version', async ({ page }) => {
+    // compliance/12: the restaurant must be able to see the exact wording its
+    // callers hear, without asking an engineer.
+    await page.goto('/dashboard/calls')
+    await expect(page.getByText('What callers hear first')).toBeVisible()
+    await expect(page.getByText('Version v1')).toBeVisible()
+    await expect(page.getByText(/Astra/).first()).toBeVisible()
+  })
+
   test('filters by language', async ({ page }) => {
     await page.goto('/dashboard/calls')
     await page.getByLabel('Language').selectOption('it')

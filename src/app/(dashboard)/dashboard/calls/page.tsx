@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge'
 import { Alert } from '@/components/ui/alert'
 import { Card, CardDescription, CardTitle } from '@/components/ui/card'
 import { CallFilters } from '@/components/calls/call-filters'
+import { DeployedDisclosure } from '@/components/calls/deployed-disclosure'
 import {
   LANGUAGE_LABELS,
   OUTCOME_LABELS,
@@ -18,6 +19,7 @@ import {
   outcomeTone,
 } from '@/lib/calls/format'
 import type { CallOutcome, CallStatus, LanguageCode } from '@/lib/db/enums'
+import { one } from '@/lib/db/embed'
 
 export const metadata: Metadata = { title: 'Calls' }
 
@@ -52,6 +54,23 @@ export default async function CallsPage({ searchParams }: { searchParams: Promis
 
   const filters = await searchParams
   const supabase = await createServerSupabaseClient()
+
+  // The restaurant is the controller and must be able to see the exact wording
+  // its callers hear (compliance/12). Read through the user's client, so RLS
+  // still decides what is visible.
+  const { data: agentConfig } = await supabase
+    .from('agent_configurations')
+    .select('supported_languages, recording_enabled, locations(name)')
+    .eq('organisation_id', membership.organisationId)
+    .limit(1)
+    .maybeSingle()
+
+  const configRow = agentConfig as {
+    supported_languages: LanguageCode[]
+    recording_enabled: boolean
+    locations: { name: string } | { name: string }[] | null
+  } | null
+  const configLocation = one(configRow?.locations ?? null)
 
   // The authenticated user's client, so RLS decides which rows exist at all.
   // The organisation filter below is for correctness when somebody belongs to
@@ -96,6 +115,14 @@ export default async function CallsPage({ searchParams }: { searchParams: Promis
         <Badge tone="neutral">Audio recording off</Badge>
         <Badge tone="neutral">Internal evaluation</Badge>
       </div>
+
+      {configRow ? (
+        <DeployedDisclosure
+          locationName={configLocation?.name ?? membership.organisationName}
+          languages={configRow.supported_languages ?? ['en']}
+          recordingEnabled={configRow.recording_enabled}
+        />
+      ) : null}
 
       <CallFilters />
 
