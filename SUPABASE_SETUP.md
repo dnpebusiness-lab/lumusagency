@@ -198,7 +198,7 @@ where n.nspname = 'public' and c.relkind = 'r' and not c.relrowsecurity;
 Poi controlla che le regole esistano davvero:
 
 ```sql
--- Deve restituire circa 50 politiche, distribuite su tutte le tabelle.
+-- Deve restituire 71 politiche in totale, distribuite su tutte le 26 tabelle.
 select tablename, count(*) as politiche
 from pg_policies where schemaname = 'public'
 group by tablename order by tablename;
