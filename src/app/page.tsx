@@ -1,4 +1,6 @@
+import Link from 'next/link'
 import { Card, CardDescription, CardTitle } from '@/components/ui/card'
+import { buttonVariants } from '@/components/ui/button'
 
 /**
  * Build state, in the order the work actually happened rather than the order the
@@ -51,6 +53,17 @@ export default function Home() {
         only from information the restaurant has approved, takes reservations, and hands the call to
         a person whenever a person is needed.
       </p>
+
+      {/* The deployed app had no way in from its own front page: the only route to
+          the dashboard was typing /sign-in by hand. */}
+      <div className="mt-8 flex flex-wrap gap-3">
+        <Link href="/sign-in" className={buttonVariants({ variant: 'primary' })}>
+          Sign in
+        </Link>
+        <Link href="/sign-up" className={buttonVariants({ variant: 'outline' })}>
+          Create an account
+        </Link>
+      </div>
 
       <Card className="border-copper-200 bg-copper-50 dark:border-copper-800 dark:bg-ink-900 mt-10">
         <CardTitle>Pilot build — not for public use</CardTitle>
