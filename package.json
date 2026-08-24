@@ -27,6 +27,7 @@
     "db:stop": "supabase stop",
     "db:link": "supabase link --project-ref $SUPABASE_PROJECT_REF",
     "db:push": "supabase db push",
+    "db:bundle": "node scripts/bundle-sql.mjs",
     "test:db": "vitest run tests/database",
     "voice:replay": "node scripts/replay-webhooks.mjs",
     "test:a11y": "playwright test tests/e2e/public-pages.spec.ts"

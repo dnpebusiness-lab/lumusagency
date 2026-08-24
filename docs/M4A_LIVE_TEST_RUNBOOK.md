@@ -26,8 +26,19 @@ The code enforces this with a fail-closed switch: `ASTRA_VOICE_ACTIVATION_MODE` 
 
 ## Step 1 · Supabase (~15 minutes, free)
 
-Follow `SUPABASE_SETUP.md`. It is unchanged except that Milestone 4A adds four migrations, so
-`supabase db push` now applies fourteen files rather than ten.
+Follow `SUPABASE_SETUP.md`. Milestone 4A adds four migrations, so `supabase db push` now applies
+fourteen files rather than ten.
+
+If the Supabase CLI is not installed, use the generated bundles instead — same SQL, same order,
+pasted into *Supabase → SQL Editor* one at a time:
+
+1. `supabase/dist/01_schema.sql`
+2. `supabase/dist/02_event_types.sql` — must run on its own
+3. `supabase/dist/03_voice.sql`
+4. `supabase/dist/04_demo_data.sql` — demonstration data, disposable test projects only
+
+Rebuild them with `npm run db:bundle`; `tests/unit/sql-bundle.test.ts` fails if they fall behind the
+migrations.
 
 Afterwards, confirm the Milestone 4A objects landed:
 

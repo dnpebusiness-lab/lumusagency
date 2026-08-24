@@ -120,12 +120,41 @@ Ti chiederà la **Database Password** salvata al punto 1.
 
 ## 8. Applicare le migrazioni (creare le tabelle)
 
+Ci sono due strade. Il risultato è identico: le stesse istruzioni SQL, nello stesso ordine.
+
+### Strada A — con la CLI (consigliata se hai già fatto il punto 7)
+
 ```bash
 supabase db push
 ```
 
-Questo comando esegue, in ordine, i dieci file in `supabase/migrations/`.
-Al termine il database avrà **26 tabelle**, tutte le regole di sicurezza e i controlli di integrità.
+Esegue, in ordine, i **quattordici** file in `supabase/migrations/` e ne registra lo storico,
+così i prossimi aggiornamenti applicano solo le novità.
+
+### Strada B — senza installare niente, dal browser
+
+Se non vuoi installare la CLI, apri *Supabase → SQL Editor* e incolla **quattro file già pronti**,
+uno alla volta, **in questo ordine**:
+
+| Ordine | File | Cosa fa |
+|---|---|---|
+| 1 | `supabase/dist/01_schema.sql` | tabelle, ruoli, regole di sicurezza |
+| 2 | `supabase/dist/02_event_types.sql` | nuovi tipi di evento (deve stare da solo) |
+| 3 | `supabase/dist/03_voice.sql` | privacy, strumenti vocali, salvataggio chiamate |
+| 4 | `supabase/dist/04_demo_data.sql` | dati dimostrativi — **solo su un progetto di prova** (vedi punto 9) |
+
+Aspetta il `Success` prima di passare al file successivo.
+Il file 2 è separato per un motivo tecnico preciso: PostgreSQL non permette di *usare* un nuovo
+valore di elenco nella stessa transazione in cui lo si aggiunge, e l'editor SQL esegue tutto ciò
+che incolli come una sola transazione. Uniti, i file 2 e 3 darebbero errore.
+
+Questi quattro file sono **generati** dagli stessi file di `supabase/migrations/`
+(`npm run db:bundle`) e un test automatico fallisce se qualcuno li lascia indietro: non possono
+diventare una versione vecchia del database.
+
+### In entrambi i casi
+
+Al termine il database avrà **26 tabelle**, **71 regole di sicurezza (RLS)** e i controlli di integrità.
 
 Per controllare che sia andato tutto bene:
 *Supabase → Table Editor*: devi vedere `organisations`, `locations`, `menu_items`, `call_sessions`, ecc.
@@ -139,7 +168,8 @@ Per controllare che sia andato tutto bene:
 psql "$SUPABASE_DB_URL" -f supabase/seed.sql
 ```
 
-(Se non hai `psql`: apri *Supabase → SQL Editor*, incolla il contenuto di `supabase/seed.sql`, ed esegui.)
+Se non hai `psql`: apri *Supabase → SQL Editor* e incolla `supabase/dist/04_demo_data.sql`
+(è lo stesso contenuto di `supabase/seed.sql`, già pronto per l'editor).
 
 Dopo il caricamento puoi entrare nella dashboard con:
 
