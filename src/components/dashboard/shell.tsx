@@ -4,13 +4,20 @@ import { ROLE_LABELS } from '@/lib/auth/rbac'
 import { switchOrganisation } from '@/app/(dashboard)/actions'
 import type { Membership, SessionContext } from '@/lib/auth/session'
 
+/**
+ * Navigation.
+ *
+ * Milestone 4A ships Overview, Calls and Settings. The Milestone 3 areas are
+ * shown but not linked: a dead link that 404s is worse than an honest "not built
+ * yet", and hiding them entirely would lose the shape of the product.
+ */
 const NAV = [
-  { href: '/dashboard', label: 'Overview' },
-  { href: '/dashboard/calls', label: 'Calls' },
-  { href: '/dashboard/reservations', label: 'Reservations' },
-  { href: '/dashboard/knowledge', label: 'Knowledge' },
-  { href: '/dashboard/agent', label: 'Agent' },
-  { href: '/settings', label: 'Settings' },
+  { href: '/dashboard', label: 'Overview', ready: true },
+  { href: '/dashboard/calls', label: 'Calls', ready: true },
+  { href: '/dashboard/reservations', label: 'Reservations', ready: false },
+  { href: '/dashboard/knowledge', label: 'Knowledge', ready: false },
+  { href: '/dashboard/agent', label: 'Agent', ready: false },
+  { href: '/settings', label: 'Settings', ready: true },
 ] as const
 
 export function DashboardShell({
@@ -84,16 +91,29 @@ export function DashboardShell({
         {activeMembership ? (
           <nav aria-label="Sections" className="mx-auto max-w-6xl overflow-x-auto px-4 sm:px-6">
             <ul className="flex gap-1 pb-2">
-              {NAV.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="text-ink-600 hover:bg-ink-100 hover:text-ink-900 dark:text-ink-300 dark:hover:bg-ink-800 dark:hover:text-ink-50 inline-block rounded-md px-3 py-1.5 text-sm"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
+              {NAV.map((item) =>
+                item.ready ? (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      className="text-ink-600 hover:bg-ink-100 hover:text-ink-900 dark:text-ink-300 dark:hover:bg-ink-800 dark:hover:text-ink-50 inline-block rounded-md px-3 py-1.5 text-sm"
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ) : (
+                  <li key={item.href}>
+                    <span
+                      aria-disabled="true"
+                      title="Arrives in Milestone 3"
+                      className="text-ink-500 dark:text-ink-400 inline-block cursor-not-allowed rounded-md px-3 py-1.5 text-sm"
+                    >
+                      {item.label}
+                      <span className="sr-only"> — not available yet, arrives in Milestone 3</span>
+                    </span>
+                  </li>
+                ),
+              )}
             </ul>
           </nav>
         ) : null}

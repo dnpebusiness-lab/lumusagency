@@ -68,6 +68,46 @@ Version 1.0 · Milestone 1
 
 **Needed from you:** a Supabase project (free tier) — `SUPABASE_SETUP.md` walks through it. Keys go into `.env.local` or Netlify, **never into chat**.
 
+## Milestone 4A — Voice vertical slice ✅ IMPLEMENTATION COMPLETE, LIVE PROOF PENDING
+
+Taken out of order, deliberately: a narrow vertical slice through the whole product proves the
+architecture end to end far earlier than another milestone of dashboard would.
+
+**Delivered**
+- 4 additive migrations (0011–0014): AI-disclosure evidence, a fail-closed recording lockout, a
+  30-day pilot retention default with a testable deletion routine, approved-data-only voice tool
+  entry points, and one transactional idempotent call-ingest function.
+- `VoiceProvider` interface created to the `ARCHITECTURE.md` §3 shape (it had been designed but
+  never implemented), plus the Retell adapter — the only file permitted to import the vendor SDK.
+- Fail-closed commercial gate: `ASTRA_VOICE_ACTIVATION_MODE` must be exactly `internal_evaluation`.
+- Bilingual prompt builder containing no restaurant facts, versioned AI/transcription disclosure
+  with interruption replay, prompt-injection sanitisation and data boundaries, allergen answer
+  shaping that never guarantees safety.
+- Three read-only tool endpoints with a shared secret, per-call rate limits and honest failure
+  responses; signed, replay-protected, idempotent lifecycle webhook.
+- Minimal Calls dashboard: filterable list with masked numbers, detail with transcript, summary and
+  event timeline, demo/live and recording-off badges.
+- Realistic signed fixtures and a replay script that exercises verification, the replay window and
+  the ingest without a telephone.
+
+**Acceptance**
+- [x] Fixture replay produces one complete call with transcript, summary, intent and outcome
+- [x] Invalid signature, tampered body and stale replay each write nothing
+- [x] Duplicate delivery processed exactly once
+- [x] Organisation A cannot read organisation B call data
+- [x] Unapproved menu and allergen rows never reach the tools
+- [x] Prompt injection stored in knowledge does not alter instructions
+- [x] EN and IT disclose AI and transcription before any data collection; interruption replays
+- [x] Recording-off mode stores no audio and no recording URL
+- [x] Severe allergy and absence-inference never produce a safety guarantee
+- [x] Expired transcripts deleted while current data survives
+- [x] `format:check`, `lint`, `typecheck`, `test` (255), `build`, `audit --production` all pass
+- [x] Accessibility and responsive checks pass at 375/768/1440 for every credential-free page
+- [ ] **Calls dashboard accessibility/responsive proof** — spec written, skipped until credentials
+- [ ] **One live English and one live Italian call** — blocked on Retell and Twilio accounts
+
+**Needed from you:** see `docs/M4A_LIVE_TEST_RUNBOOK.md`.
+
 ## Milestone 3 — Dashboard and knowledge management ← NEXT
 
 **Delivers**

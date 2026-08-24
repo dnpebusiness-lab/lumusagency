@@ -23,6 +23,18 @@ const serverSchema = z.object({
   SUPABASE_SERVICE_ROLE_KEY: z.string().min(1).optional(),
   RETELL_API_KEY: z.string().min(1).optional(),
   RETELL_WEBHOOK_SECRET: z.string().min(1).optional(),
+  RETELL_AGENT_ID: z.string().min(1).optional(),
+  // Fail-closed voice activation gate (Milestone 4A). Any value other than the
+  // exact string 'internal_evaluation' denies activation; see
+  // src/lib/security/gate.ts and RETELL_VENDOR_CONSTRAINTS.md.
+  ASTRA_VOICE_ACTIVATION_MODE: z.string().optional(),
+  // Salt for the caller correlation hash. Lets analytics group calls from the
+  // same number without the raw number ever being handled downstream.
+  ASTRA_CALLER_HASH_SALT: z.string().min(8).optional(),
+  // Shared secret required on voice tool requests. Retell's custom-function
+  // calls are not covered by the webhook signature scheme, so the tool
+  // endpoints require this instead. See src/app/api/voice/tools/[tool]/route.ts.
+  ASTRA_TOOL_SHARED_SECRET: z.string().min(16).optional(),
   TWILIO_ACCOUNT_SID: z.string().min(1).optional(),
   TWILIO_AUTH_TOKEN: z.string().min(1).optional(),
   TWILIO_MESSAGING_FROM: z.string().min(1).optional(),

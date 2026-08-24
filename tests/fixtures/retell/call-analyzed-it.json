@@ -1,0 +1,57 @@
+{
+  "event": "call_analyzed",
+  "call": {
+    "call_id": "astra_fixture_it_001",
+    "call_type": "phone_call",
+    "agent_id": "agent_demo_vindaro",
+    "call_status": "ended",
+    "from_number": "+393331110077",
+    "to_number": "+353015550140",
+    "direction": "inbound",
+    "start_timestamp": 1787003600000,
+    "end_timestamp": 1787003655000,
+    "duration_ms": 55000,
+    "disconnection_reason": "user_hangup",
+    "call_cost": { "combined_cost": 14 },
+    "transcript_object": [
+      {
+        "role": "agent",
+        "content": "Ha chiamato Osteria Vindaro. Le segnalo che sono un assistente automatico, la conversazione viene trascritta e non viene conservata alcuna registrazione audio. Come posso aiutarla?",
+        "words": [
+          { "word": "Ha", "start": 0.2, "end": 0.4 },
+          { "word": "aiutarla", "start": 10.8, "end": 11.4 }
+        ]
+      },
+      {
+        "role": "user",
+        "content": "Buonasera, avete piatti vegani?",
+        "words": [
+          { "word": "Buonasera", "start": 12.0, "end": 12.7 },
+          { "word": "vegani", "start": 14.1, "end": 14.6 }
+        ]
+      },
+      {
+        "role": "agent",
+        "content": "Sì. La zuppa di ceci e rosmarino e l'insalata mista sono preparate senza prodotti animali.",
+        "words": [
+          { "word": "Sì", "start": 15.2, "end": 15.4 },
+          { "word": "animali", "start": 21.0, "end": 21.5 }
+        ]
+      },
+      {
+        "role": "user",
+        "content": "Perfetto, grazie mille.",
+        "words": [
+          { "word": "Perfetto", "start": 22.1, "end": 22.7 },
+          { "word": "mille", "start": 23.4, "end": 23.8 }
+        ]
+      }
+    ],
+    "call_analysis": {
+      "call_summary": "Il cliente ha chiesto quali piatti vegani sono disponibili. Risposta data dai dati approvati. Nessuna prenotazione richiesta.",
+      "user_sentiment": "Positive",
+      "call_successful": true,
+      "in_voicemail": false
+    }
+  }
+}

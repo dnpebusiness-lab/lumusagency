@@ -25,7 +25,9 @@
   --color-ink-200: #dedad3;
   --color-ink-300: #c3bdb2;
   --color-ink-400: #9c948a;
-  --color-ink-500: #7c746a;
+  /* 4.65:1 on the light surface. The previous #7c746a measured 4.26 and failed
+     AA for the 12px secondary links on the auth screens. */
+  --color-ink-500: #766e64;
   --color-ink-600: #635c54;
   --color-ink-700: #4a453f;
   --color-ink-800: #2f2b27;
@@ -44,9 +46,20 @@
   --color-copper-800: #6a2d1c;
   --color-copper-900: #55261a;
 
-  /* Semantic status colours (AA contrast on their own surfaces) */
-  --color-success: #2f7a4f;
-  --color-warning: #a8730f;
+  /*
+   * Semantic status colours.
+   *
+   * Each is checked at 4.5:1 against BOTH the page surface and its own 8% tint,
+   * because an Alert paints the text on the tinted version of itself — the case
+   * that actually failed axe. Values chosen by measurement, not by eye:
+   *   warning #925d00  5.13 on surface, 4.62 on tint
+   *   success #2b764b  5.12 on surface, 4.62 on tint
+   *   danger  #a32c22  6.61 on surface, 5.83 on tint
+   *   info    #2b5f8a  6.26 on surface, 5.59 on tint
+   * tests/e2e/public-pages.spec.ts re-measures them on every run.
+   */
+  --color-success: #2b764b;
+  --color-warning: #925d00;
   --color-danger: #a32c22;
   --color-info: #2b5f8a;
 

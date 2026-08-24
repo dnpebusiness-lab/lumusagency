@@ -134,6 +134,13 @@ export const CALL_EVENT_TYPES = [
   'reservation_created',
   'reservation_failed',
   'call_ended',
+  // Added in migration 0011 for Milestone 4A. Order matters: the drift test
+  // compares against pg enumsortorder, and ALTER TYPE ... ADD VALUE appends.
+  'ai_disclosure_started',
+  'ai_disclosure_completed',
+  'ai_disclosure_replayed',
+  'tool_rate_limited',
+  'recording_url_discarded',
 ] as const
 export type CallEventType = (typeof CALL_EVENT_TYPES)[number]
 

@@ -15,13 +15,13 @@ Status legend: `[ ]` todo · `[~]` in progress · `[x]` done · `[!]` blocked
 | # | Task | M | Acceptance | Status |
 |---|---|---|---|---|
 | T-001 | Approval gate on all knowledge/menu/allergen reads | M2/M4 | No query path returns `approval_status != 'approved'` to a tool (AC-10) | [x] DB layer done, `agent` schema + 10 tests; tool endpoints in M4 |
-| T-002 | Allergen answers from structured data only, never inferred | M4 | Injection + inference scenarios show refusal; agent cites declared data only | [~] `agent.get_allergen_info` separates contains / may_contain / free_from / undeclared and never asserts safety |
+| T-002 | Allergen answers from structured data only, never inferred | M4A | 15 safety tests: severe allergy escalates with no claim, undeclared reads as not-confirmed, may-contain never reads as absence | [x] |
 | T-003 | Severe-allergy mandatory transfer + escalation log | M5 | Scenario ALL-01/02 transfers and writes an allergen escalation (AC-11) | [ ] |
 | T-004 | `Result`-typed tool contracts; confirmation only on `ok:true` | M5 | Fault-injection tests produce zero false confirmations (AC-04…07) | [ ] |
 | T-005 | RLS enabled on every table in `public`; all privileges revoked from `anon` | M2 | Cross-tenant suite returns 0 rows for the other org on every table, both directions (AC-13) | [x] |
-| T-006 | Webhook signature verification + replay window | M4 | Invalid signature → 401, no writes (AC-14) | [ ] |
-| T-007 | Webhook idempotency via unique `(vendor,event_id)` | M4 | Duplicate delivery processed exactly once (AC-14) | [ ] |
-| T-008 | Prompt-injection sanitisation on write + delimiting on read | M4 | Stored payload does not alter behaviour (AC-12) | [ ] |
+| T-006 | Webhook signature verification + replay window | M4A | Invalid signature, tampered body and stale replay all rejected with no writes (AC-14) | [x] |
+| T-007 | Webhook idempotency via unique `(vendor,event_id)` | M4A | Duplicate delivery processed exactly once (AC-14) | [x] |
+| T-008 | Prompt-injection sanitisation on write + delimiting on read | M4A | Stored payload does not alter behaviour (AC-12) | [x] |
 | T-009 | Secrets server-side only; CI check on the client bundle | M1/M8 | Grep of build output finds no secret pattern | [ ] |
 | T-010 | Audit logging on every settings change, approval and PII unmask | M3/M6 | Every mutation produces an `audit_logs` row with before/after (AC-16) | [~] triggers on 14 tables, approve/unapprove recorded distinctly; viewer UI in M6 |
 
@@ -42,10 +42,10 @@ Status legend: `[ ]` todo · `[~]` in progress · `[x]` done · `[!]` blocked
 | T-030 | Reservation list + detail with source call link | M3 | Status transitions visible | [ ] |
 | T-031 | Knowledge editors + approval workflow UI | M3 | Manager edits and approves without code (AC-15) | [ ] |
 | T-032 | Agent settings UI (greeting, languages, voice, transfer, hours behaviour) | M3 | Changes reach the agent without deployment | [ ] |
-| T-033 | `VoiceProvider` + Retell adapter + agent sync | M4 | Config change propagates to the live agent | [ ] |
-| T-034 | Prompt builder with bilingual + short-speech rules | M4 | EN and IT calls stay in language (AC-02) | [ ] |
-| T-035 | Knowledge tool endpoints | M4 | Short speakable responses, approved data only | [ ] |
-| T-036 | Call lifecycle webhooks + persistence | M4 | Fixture replay yields complete records (AC-01) | [ ] |
+| T-033 | `VoiceProvider` + Retell adapter + agent sync | M4A | Interface created and adapter written; live agent sync unproven without credentials | [~] |
+| T-034 | Prompt builder with bilingual + short-speech rules | M4A | Built and unit-tested; EN/IT live calls pending credentials | [~] |
+| T-035 | Knowledge tool endpoints | M4A | Three tools, approved-data-only RPCs, rate-limited, honest failures | [x] |
+| T-036 | Call lifecycle webhooks + persistence | M4A | Signed, replay-protected, idempotent, transactional; fixture replay green | [x] |
 | T-037 | `BookingProvider` interface + `internal` engine | M5 | Availability respects hours, capacity, party size | [ ] |
 | T-038 | Cal.com adapter | M5 | Same interface, integration test against sandbox | [ ] |
 | T-039 | Reservation tool with mandatory read-back | M5 | Read-back precedes every creation (AC-04) | [ ] |

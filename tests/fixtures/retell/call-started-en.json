@@ -1,0 +1,13 @@
+{
+  "event": "call_started",
+  "call": {
+    "call_id": "astra_fixture_en_001",
+    "call_type": "phone_call",
+    "agent_id": "agent_demo_vindaro",
+    "call_status": "ongoing",
+    "from_number": "+353871110042",
+    "to_number": "+353015550140",
+    "direction": "inbound",
+    "start_timestamp": 1787000000000
+  }
+}

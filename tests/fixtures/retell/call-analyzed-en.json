@@ -1,0 +1,57 @@
+{
+  "event": "call_analyzed",
+  "call": {
+    "call_id": "astra_fixture_en_001",
+    "call_type": "phone_call",
+    "agent_id": "agent_demo_vindaro",
+    "call_status": "ended",
+    "from_number": "+353871110042",
+    "to_number": "+353015550140",
+    "direction": "inbound",
+    "start_timestamp": 1787000000000,
+    "end_timestamp": 1787000041000,
+    "duration_ms": 41000,
+    "disconnection_reason": "user_hangup",
+    "call_cost": { "combined_cost": 11 },
+    "transcript_object": [
+      {
+        "role": "agent",
+        "content": "You're through to Osteria Vindaro. Just so you know, I'm an automated assistant, this call is transcribed, and no audio recording is kept. How can I help?",
+        "words": [
+          { "word": "You're", "start": 0.2, "end": 0.5 },
+          { "word": "help", "start": 9.4, "end": 9.8 }
+        ]
+      },
+      {
+        "role": "user",
+        "content": "Hi there, are you open on a Monday?",
+        "words": [
+          { "word": "Hi", "start": 10.4, "end": 10.6 },
+          { "word": "Monday", "start": 12.9, "end": 13.4 }
+        ]
+      },
+      {
+        "role": "agent",
+        "content": "We're closed on Mondays. Tuesday to Sunday we do lunch from midday and dinner from half five.",
+        "words": [
+          { "word": "We're", "start": 14.1, "end": 14.4 },
+          { "word": "five", "start": 20.2, "end": 20.6 }
+        ]
+      },
+      {
+        "role": "user",
+        "content": "Grand, thanks a million.",
+        "words": [
+          { "word": "Grand", "start": 21.2, "end": 21.6 },
+          { "word": "million", "start": 22.6, "end": 23.0 }
+        ]
+      }
+    ],
+    "call_analysis": {
+      "call_summary": "Caller asked whether the restaurant opens on Mondays. Answered from approved opening hours. No booking requested.",
+      "user_sentiment": "Neutral",
+      "call_successful": true,
+      "in_voicemail": false
+    }
+  }
+}

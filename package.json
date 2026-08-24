@@ -27,7 +27,9 @@
     "db:stop": "supabase stop",
     "db:link": "supabase link --project-ref $SUPABASE_PROJECT_REF",
     "db:push": "supabase db push",
-    "test:db": "vitest run tests/database"
+    "test:db": "vitest run tests/database",
+    "voice:replay": "node scripts/replay-webhooks.mjs",
+    "test:a11y": "playwright test tests/e2e/public-pages.spec.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.4",
@@ -38,10 +40,14 @@
     "next": "^16.3.2",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
+    "retell-sdk": "^5.64.0",
+    "server-only": "^0.0.1",
     "tailwind-merge": "^2.6.0",
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.62.1",
     "@tailwindcss/postcss": "^4.0.0",
     "@types/node": "^22.10.0",
     "@types/pg": "^8.23.1",

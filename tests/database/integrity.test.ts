@@ -66,7 +66,14 @@ describe('integrity · GDPR guards', () => {
          values ($1, $2, 'test_no_consent', 'https://example.com/audio.mp3', false)`,
         [DEMO.orgVindaro, DEMO.locationVindaro],
       )
-      expect(error.message).toMatch(/call_sessions_recording_requires_consent/)
+      // Two controls now cover this. The Milestone 2 CHECK constraint still
+      // exists, but the Milestone 4A trigger (TPR-1.3) is stricter and fires
+      // first: while recording is disabled for the location, a recording URL is
+      // rejected whether or not consent was recorded. Either message is a pass;
+      // silence would not be.
+      expect(error.message).toMatch(
+        /call_sessions_recording_requires_consent|audio recording is disabled/i,
+      )
       await client.query('rollback')
     })
   })

@@ -11,9 +11,12 @@ confirmation, and hands the call to a human whenever a human is needed.
 > (cosa manca legalmente prima di usarlo con clienti veri).
 > Per far partire il progetto sul tuo computer, vai alla sezione *Quick start* qui sotto.
 
-🔴 **Status: pilot build, Milestone 2.** Database, authentication and multi-tenant access control are
-built and tested. Not connected to a phone number, not legally reviewed, not for use with real
-callers. See [`SECURITY_AND_PRIVACY.md`](./SECURITY_AND_PRIVACY.md) §10.
+🔴 **Status: pilot build. Milestone 2 complete; Milestone 4A implementation complete, live proof
+pending.** The database, authentication, multi-tenant access control and the full voice pipeline are
+built and tested against signed fixtures. **No live call has been made.** The voice vendor is gated
+to internal, non-paying technical evaluation only — see
+[`RETELL_VENDOR_CONSTRAINTS.md`](./RETELL_VENDOR_CONSTRAINTS.md). Not legally reviewed, not for use
+with real callers. See [`SECURITY_AND_PRIVACY.md`](./SECURITY_AND_PRIVACY.md) §10.
 
 ---
 
@@ -28,6 +31,11 @@ callers. See [`SECURITY_AND_PRIVACY.md`](./SECURITY_AND_PRIVACY.md) §10.
 | [`TASKS.md`](./TASKS.md) | Prioritised backlog with per-task acceptance criteria |
 | [`ASSUMPTIONS.md`](./ASSUMPTIONS.md) | Every decision made without asking, and how to reverse it |
 | [`SUPABASE_SETUP.md`](./SUPABASE_SETUP.md) | **In italiano** — how to create the free Supabase project, where each key goes, how to apply migrations and how to check that RLS is on |
+| [`TECHNICAL_PRIVACY_REQUIREMENTS.md`](./TECHNICAL_PRIVACY_REQUIREMENTS.md) | The privacy controls the code must implement, and the test that proves each one |
+| [`RETELL_VENDOR_CONSTRAINTS.md`](./RETELL_VENDOR_CONSTRAINTS.md) | Why the voice vendor is gated to internal evaluation, and the seven hard gates before a paying customer |
+| [`compliance/06_AI_AND_RECORDING_DISCLOSURE_SCRIPTS.md`](./compliance/06_AI_AND_RECORDING_DISCLOSURE_SCRIPTS.md) | The exact words the agent says first, in English and Italian |
+| [`voice_qa/VOICE_TEST_CASES.csv`](./voice_qa/VOICE_TEST_CASES.csv) | Behavioural test registry: 45 scenarios, automated vs manual, with honest status |
+| [`docs/M4A_LIVE_TEST_RUNBOOK.md`](./docs/M4A_LIVE_TEST_RUNBOOK.md) | Exactly what to do to get from green fixtures to a real phone call |
 | `TEST_PLAN.md` | *(Milestone 8)* 20+ scripted call scenarios and honest results |
 | `docs/DEPLOYMENT.md` | *(Milestone 8)* how to deploy |
 | `docs/API_AND_WEBHOOKS.md` | *(Milestone 8)* endpoint and webhook reference |
@@ -78,7 +86,8 @@ Demo sign-ins created by the seed (demo password `AstraDemo!2026`, test projects
 | `npm run test:db` | Just the database suite: schema, RLS, approval gate, agent surface, integrity |
 | `npm run db:reset` | Drop, migrate and seed the local database |
 | `npm run db:types` | Regenerate TypeScript types (needs Docker or a linked project) |
-| `npm run test:e2e` | Playwright end-to-end *(from Milestone 3)* |
+| `npm run test:e2e` | Playwright + axe. Public pages run now at 375/768/1440; the Calls dashboard specs skip until Supabase credentials exist |
+| `npm run voice:replay` | Replay signed Retell fixtures against a running deployment (`--stale` / `--tamper` prove the rejections) |
 | `npm run format` | Prettier |
 | `npm run check` | format + lint + typecheck + test — run this before every commit |
 
@@ -118,8 +127,15 @@ These exist because breaking them is how this specific product hurts someone:
 
 ## Current limitations
 
-- No voice integration yet — that is Milestone 4. The dashboard screens for calls, reservations,
-  knowledge and agent settings arrive in Milestone 3.
+- **No live call has been made.** The whole voice pipeline is proven against signed fixtures and
+  255 automated tests; the telephone half needs Retell and Twilio accounts. See
+  `docs/M4A_LIVE_TEST_RUNBOOK.md`.
+- The voice vendor is usable **only** for internal, non-paying technical evaluation. A paying
+  customer needs written permission from Retell plus a DPA, SCCs and a transfer assessment.
+- Milestone 4A is information-only. It cannot take a reservation, send an SMS or transfer a call,
+  and the agent is instructed to say so rather than improvise. Those are Milestone 5.
+- The knowledge, reservations and agent-settings screens arrive in Milestone 3; their navigation
+  entries are shown but deliberately not linked.
 - The migrations have **not** yet been applied to a hosted Supabase project, only to a real local
   PostgreSQL 16 server. The email confirmation and password-reset flows are written but **not yet
   tested end to end**, because they need Supabase's mail service.

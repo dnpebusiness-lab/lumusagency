@@ -99,9 +99,10 @@ insert into public.organisations (
   id, name, slug, legal_name, country_code, timezone, currency, is_demo,
   transcript_retention_days, metadata_retention_days, created_by
 ) values
+  -- 30-day transcript retention is the Milestone 4A pilot default (TPR-5.1).
   ('a0000000-0000-4000-8000-000000000001', 'Osteria Vindaro', 'osteria-vindaro-demo',
    'Vindaro Hospitality Ltd (fictional)', 'IE', 'Europe/Dublin', 'EUR', true,
-   90, 730, 'c0000000-0000-4000-8000-000000000001'),
+   30, 730, 'c0000000-0000-4000-8000-000000000001'),
   ('a0000000-0000-4000-8000-000000000002', 'Kestrel Coffee House', 'kestrel-coffee-demo',
    'Kestrel Hospitality Ltd (fictional)', 'IE', 'Europe/Dublin', 'EUR', true,
    30, 365, 'c0000000-0000-4000-8000-000000000006');
@@ -256,6 +257,12 @@ insert into public.agent_configurations (
   true, '+353015550141', true,
   'answer_and_book', false, true, 1
 );
+
+-- The Milestone 4A webhook resolves a call to a location through the agent id
+-- the vendor reports. Fixtures and the replay script use this value.
+update public.agent_configurations
+   set retell_agent_id = 'agent_demo_vindaro'
+ where location_id = 'b0000000-0000-4000-8000-000000000001';
 
 insert into public.agent_configurations (
   organisation_id, location_id, is_active,
@@ -744,7 +751,7 @@ select
   v.id, 'a0000000-0000-4000-8000-000000000001', 'b0000000-0000-4000-8000-000000000001',
   'retell', v.provider_call_id, 'inbound', 'completed', v.outcome::app.call_outcome,
   now() - v.age, now() - v.age + make_interval(secs => v.secs),
-  v.caller, encode(digest('demo-salt' || v.caller, 'sha256'), 'hex'), v.caller_name,
+  v.caller, encode(sha256(convert_to('demo-salt' || v.caller, 'UTF8')), 'hex'), v.caller_name,
   v.lang::app.language_code, v.lang::app.language_code, v.intent, v.intents,
   v.transfer::app.transfer_status,
   case when v.transfer <> 'not_requested' then '+353015550141' end,
