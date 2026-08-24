@@ -69,6 +69,43 @@ values
    '{"full_name":"Niamh Kelleher","locale":"en"}'::jsonb, now(), now())
 on conflict (id) do nothing;
 
+-- -----------------------------------------------------------------------------
+-- GoTrue token columns must be '' and never NULL
+-- -----------------------------------------------------------------------------
+-- Supabase's auth service reads these columns into non-nullable Go strings. A
+-- NULL makes the sign-in query fail server-side with "Database error querying
+-- schema", which reaches the browser as a generic authentication failure — so
+-- the symptom is "wrong password" on a password that is perfectly correct.
+--
+-- Supabase's own inserts always write ''. A seed that creates users directly
+-- has to do the same, or every demo account it creates is unusable.
+--
+-- Done column-by-column through the catalogue rather than in a fixed INSERT
+-- list: the exact set of these columns varies between GoTrue versions, and a
+-- seed that names a column the project does not have fails outright.
+do $$
+declare
+  v_column text;
+begin
+  foreach v_column in array array[
+    'confirmation_token', 'recovery_token', 'email_change', 'email_change_token_new',
+    'email_change_token_current', 'phone_change', 'phone_change_token',
+    'reauthentication_token'
+  ]
+  loop
+    if exists (
+      select 1 from information_schema.columns
+      where table_schema = 'auth' and table_name = 'users' and column_name = v_column
+    ) then
+      execute format(
+        'update auth.users set %I = coalesce(%I, %L) where email like %L',
+        v_column, v_column, '', '%.demo@example.com'
+      );
+    end if;
+  end loop;
+end
+$$;
+
 -- auth.identities.email is a GENERATED column on Supabase: it derives itself from
 -- identity_data ->> 'email'. Listing it here fails with "cannot insert a
 -- non-DEFAULT value into column email", so identity_data is the only place the

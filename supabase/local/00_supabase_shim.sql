@@ -29,8 +29,6 @@ create table if not exists auth.users (
   encrypted_password   varchar(255),
   email_confirmed_at   timestamptz,
   invited_at           timestamptz,
-  confirmation_token   varchar(255),
-  recovery_token       varchar(255),
   last_sign_in_at      timestamptz,
   raw_app_meta_data    jsonb default '{}'::jsonb,
   raw_user_meta_data   jsonb default '{}'::jsonb,
@@ -39,6 +37,17 @@ create table if not exists auth.users (
   updated_at           timestamptz default now(),
   phone                text unique,
   phone_confirmed_at   timestamptz,
+  -- GoTrue scans these into non-nullable Go strings. A NULL here makes every
+  -- sign-in fail with "Database error querying schema", which the UI can only
+  -- report as wrong credentials. Supabase's own writes always use ''.
+  confirmation_token         text default '',
+  recovery_token             text default '',
+  email_change               text default '',
+  email_change_token_new     text default '',
+  email_change_token_current text default '',
+  phone_change               text default '',
+  phone_change_token         text default '',
+  reauthentication_token     text default '',
   -- Also GENERATED on a hosted project. Present so an insert that tries to set
   -- it fails here rather than in front of the founder.
   confirmed_at         timestamptz generated always as (least(email_confirmed_at, phone_confirmed_at)) stored,
