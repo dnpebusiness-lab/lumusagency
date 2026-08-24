@@ -2,9 +2,9 @@ import { Card, CardDescription, CardTitle } from '@/components/ui/card'
 
 const milestones = [
   { id: 'M0', label: 'Repository inspection & assumptions', state: 'done' },
-  { id: 'M1', label: 'Documentation & scaffold', state: 'current' },
-  { id: 'M2', label: 'Schema, RLS, auth, seed data', state: 'todo' },
-  { id: 'M3', label: 'Dashboard & knowledge management', state: 'todo' },
+  { id: 'M1', label: 'Documentation & scaffold', state: 'done' },
+  { id: 'M2', label: 'Schema, RLS, auth, seed data', state: 'done' },
+  { id: 'M3', label: 'Dashboard & knowledge management', state: 'current' },
   { id: 'M4', label: 'Retell voice integration & webhooks', state: 'todo' },
   { id: 'M5', label: 'Reservation, SMS & transfer tools', state: 'todo' },
   { id: 'M6', label: 'Analytics, audit, retention', state: 'todo' },
