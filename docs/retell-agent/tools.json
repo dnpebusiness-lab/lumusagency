@@ -1,0 +1,106 @@
+[
+  {
+    "name": "get_business_info",
+    "description": "Approved opening hours, address, parking, accessibility and general policies for this restaurant. Call this instead of stating any such fact from memory.",
+    "url": "<YOUR_APP_URL>/api/voice/tools/get_business_info",
+    "headers": {
+      "x-astra-tool-secret": "<ASTRA_TOOL_SHARED_SECRET>"
+    },
+    "speak_during_execution": false,
+    "speak_after_execution": false,
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "call_id": {
+          "type": "string",
+          "description": "The Retell call id. Retell fills this in; never invent it."
+        },
+        "topic": {
+          "type": "string",
+          "description": "What the caller asked about, e.g. \"opening hours\". Optional."
+        }
+      },
+      "required": [
+        "call_id"
+      ]
+    },
+    "example": {
+      "call_id": "call_demo",
+      "topic": "opening hours"
+    }
+  },
+  {
+    "name": "search_menu",
+    "description": "Search the approved menu. Returns only items the restaurant has approved; unapproved items do not exist as far as this call is concerned.",
+    "url": "<YOUR_APP_URL>/api/voice/tools/search_menu",
+    "headers": {
+      "x-astra-tool-secret": "<ASTRA_TOOL_SHARED_SECRET>"
+    },
+    "speak_during_execution": false,
+    "speak_after_execution": false,
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "call_id": {
+          "type": "string",
+          "description": "The Retell call id. Retell fills this in; never invent it."
+        },
+        "query": {
+          "type": "string",
+          "description": "What the caller asked for, in their own words."
+        },
+        "limit": {
+          "type": "integer",
+          "description": "How many items to return. Default is small."
+        }
+      },
+      "required": [
+        "call_id"
+      ]
+    },
+    "example": {
+      "call_id": "call_demo",
+      "query": "pasta"
+    }
+  },
+  {
+    "name": "get_allergen_info",
+    "description": "Allergen declarations for one dish. SAFETY-CRITICAL: this is the ONLY source of allergen facts. Pass the caller’s own wording in caller_phrasing so a severe allergy can be detected and escalated.",
+    "url": "<YOUR_APP_URL>/api/voice/tools/get_allergen_info",
+    "headers": {
+      "x-astra-tool-secret": "<ASTRA_TOOL_SHARED_SECRET>"
+    },
+    "speak_during_execution": false,
+    "speak_after_execution": false,
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "call_id": {
+          "type": "string",
+          "description": "The Retell call id. Retell fills this in; never invent it."
+        },
+        "menu_item": {
+          "type": "string",
+          "description": "The dish the caller named."
+        },
+        "allergen_code": {
+          "type": "string",
+          "description": "The allergen the caller named, if any, e.g. \"peanuts\"."
+        },
+        "caller_phrasing": {
+          "type": "string",
+          "description": "The caller’s exact words about their allergy. Used only to detect severity; never stored."
+        }
+      },
+      "required": [
+        "call_id",
+        "menu_item"
+      ]
+    },
+    "example": {
+      "call_id": "call_demo",
+      "menu_item": "tagliatelle",
+      "caller_phrasing": "I have a severe nut allergy"
+    }
+  }
+]

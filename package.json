@@ -2,7 +2,7 @@
   "name": "astra-voice",
   "version": "0.1.0",
   "private": true,
-  "description": "AI voice receptionist for restaurants — multi-tenant SaaS (V1 pilot)",
+  "description": "AI voice receptionist for restaurants \u2014 multi-tenant SaaS (V1 pilot)",
   "engines": {
     "node": ">=20.11"
   },
@@ -30,6 +30,7 @@
     "db:bundle": "node scripts/bundle-sql.mjs",
     "test:db": "vitest run tests/database",
     "voice:replay": "node scripts/replay-webhooks.mjs",
+    "agent:artifacts": "ASTRA_WRITE_AGENT_ARTIFACTS=1 vitest run tests/unit/retell-agent-artifacts.test.ts",
     "test:a11y": "playwright test tests/e2e/public-pages.spec.ts"
   },
   "dependencies": {
