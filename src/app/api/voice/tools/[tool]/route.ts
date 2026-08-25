@@ -14,6 +14,7 @@ import {
 } from '@/lib/agent/tools'
 import { assessAllergenQuestion, detectSeverity, type AllergenFacts } from '@/lib/agent/safety'
 import { asDataBlock } from '@/lib/agent/sanitise'
+import { normaliseToolInput } from '@/lib/voice/tool-input'
 
 /**
  * Voice tool endpoints — the agent's only route to restaurant data.
@@ -113,7 +114,7 @@ export async function POST(
     )
   }
 
-  const parsed = TOOL_INPUT_SCHEMAS[toolName].safeParse(rawInput)
+  const parsed = TOOL_INPUT_SCHEMAS[toolName].safeParse(normaliseToolInput(rawInput))
   if (!parsed.success) {
     return NextResponse.json(
       { error: 'Invalid input', correlation_id: correlationId },

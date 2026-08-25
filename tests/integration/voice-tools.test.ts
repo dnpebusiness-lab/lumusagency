@@ -1,4 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { normaliseToolInput } from '@/lib/voice/tool-input'
+import { searchMenuInput } from '@/lib/agent/tools'
 import { NextRequest } from 'next/server'
 import { POST } from '@/app/api/voice/tools/[tool]/route'
 import { rateLimitForTool } from '@/lib/security/rate-limit'
@@ -139,5 +141,42 @@ describe('rate limits (VQ-033)', () => {
 
   it('applies a default ceiling to anything unrecognised', () => {
     expect(rateLimitForTool('something_new').calls).toBeGreaterThan(0)
+  })
+})
+
+describe('the vendor envelope (Retell custom functions)', () => {
+  it('reads call_id from the vendor call object, not from the model args', () => {
+    // Retell posts { call, name, args } rather than the flat body the schemas
+    // describe. Verified against the payload its dashboard sends.
+    const flat = normaliseToolInput({
+      call: { call_id: 'call_real', agent_id: 'agent_x' },
+      name: 'search_menu',
+      args: { query: 'pasta' },
+    })
+    expect(flat).toEqual({ query: 'pasta', call_id: 'call_real' })
+    expect(searchMenuInput.safeParse(flat).success).toBe(true)
+  })
+
+  it('never lets model-composed args choose which call to read', () => {
+    // The blast radius if this were wrong: a prompt-injected agent names another
+    // restaurant's call id and reads its menu and allergen data.
+    const flat = normaliseToolInput({
+      call: { call_id: 'call_mine' },
+      args: { call_id: 'call_of_another_restaurant', query: 'x' },
+    })
+    expect((flat as { call_id: string }).call_id).toBe('call_mine')
+  })
+
+  it('leaves the flat form — our own fixtures and tests — untouched', () => {
+    const flat = { call_id: 'call_demo', query: 'pasta' }
+    expect(normaliseToolInput(flat)).toEqual(flat)
+  })
+
+  it('does not invent a call_id when the vendor sent none', () => {
+    // Better a 400 than a request that reads an arbitrary call.
+    expect(normaliseToolInput({ args: { query: 'pasta' } })).toEqual({ args: { query: 'pasta' } })
+    expect(normaliseToolInput({ call: {}, args: {} })).toEqual({ call: {}, args: {} })
+    expect(normaliseToolInput(null)).toBe(null)
+    expect(normaliseToolInput([1, 2])).toEqual([1, 2])
   })
 })
