@@ -83,7 +83,7 @@ function fn(
 const FUNCTIONS: RetellFunction[] = [
   fn(
     'get_business_info',
-    'Approved opening hours, address, parking, accessibility and general policies for this restaurant. Call this instead of stating any such fact from memory.',
+    'Everything the restaurant has approved about itself: opening hours, when the kitchen stops taking orders, address and directions, phone, plus its own written answers to common questions — parking, accessibility, children, dogs, wifi, the head chef, seating, payment, dress code, groups, anything else it has published. Call this for ANY question about the restaurant that is not a dish or an allergen, and call it before saying you cannot confirm something.',
     {
       topic: {
         type: 'string',
