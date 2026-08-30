@@ -218,13 +218,18 @@ async function execute(
       }
       return {
         spoken: 'Here is what I have on file for the restaurant.',
-        // Business facts are structured, but the free-text articles staff wrote
-        // are wrapped so the model treats them as data, never as instructions.
+        // Business facts are structured, but everything staff wrote in free text
+        // — knowledge articles and the approved answers — is wrapped so the
+        // model treats it as data, never as instructions.
         data: {
           ...(data as Record<string, unknown>),
           articles_block: asDataBlock(
             'knowledge_articles',
             JSON.stringify((data as { articles?: unknown }).articles ?? []),
+          ),
+          faqs_block: asDataBlock(
+            'approved_answers',
+            JSON.stringify((data as { faqs?: unknown }).faqs ?? []),
           ),
         },
       }

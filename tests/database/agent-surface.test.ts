@@ -183,3 +183,39 @@ describe('agent read surface', () => {
     })
   })
 })
+
+describe('the approved answers reach the agent (regression)', () => {
+  it('returns the approved FAQs from get_business_info', async () => {
+    await asServiceRole(async (client) => {
+      const { rows } = await client.query<{ info: { faqs: { question_en: string }[] } }>(
+        'select public.voice_get_business_info($1::uuid) as info',
+        [DEMO.locationVindaro],
+      )
+      const faqs = rows[0]?.info.faqs ?? []
+      // agent.approved_faqs existed from Milestone 2, gated and protected, and
+      // nothing read it. On a live call the opening hours came back correctly —
+      // they are structured data on the same function — while every question the
+      // restaurant answers in its own words produced "I could not confirm that".
+      expect(faqs.length).toBeGreaterThan(0)
+      expect(faqs.some((f) => /opening hours/i.test(f.question_en))).toBe(true)
+    })
+  })
+
+  it('never returns an answer that is not approved', async () => {
+    await asServiceRole(async (client) => {
+      const { rows } = await client.query<{ info: { faqs: { question_en: string }[] } }>(
+        'select public.voice_get_business_info($1::uuid) as info',
+        [DEMO.locationVindaro],
+      )
+      const spoken = new Set((rows[0]?.info.faqs ?? []).map((f) => f.question_en))
+
+      const { rows: unapproved } = await client.query<{ question_en: string }>(
+        `select question_en from public.frequently_asked_questions
+          where location_id = $1::uuid and approval_status <> 'approved'`,
+        [DEMO.locationVindaro],
+      )
+      expect(unapproved.length, 'the seed should carry an unapproved answer').toBeGreaterThan(0)
+      for (const row of unapproved) expect(spoken.has(row.question_en)).toBe(false)
+    })
+  })
+})
