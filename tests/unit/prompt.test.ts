@@ -6,6 +6,7 @@ import type { VoiceAgentConfig } from '@/lib/providers/voice/types'
 const CONFIG: VoiceAgentConfig = {
   locationId: 'b0000000-0000-4000-8000-000000000001',
   organisationId: 'a0000000-0000-4000-8000-000000000001',
+  timezone: 'Europe/Dublin',
   locationName: 'Osteria Vindaro',
   defaultLanguage: 'en',
   supportedLanguages: ['en', 'it'],

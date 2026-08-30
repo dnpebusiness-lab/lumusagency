@@ -23,6 +23,8 @@ export interface VoiceAgentConfig {
   readonly locationId: string
   readonly organisationId: string
   readonly locationName: string
+  /** IANA zone of the location, e.g. Europe/Dublin. The vendor needs it to read hours aloud correctly. */
+  readonly timezone: string
   readonly defaultLanguage: LanguageCode
   readonly supportedLanguages: readonly LanguageCode[]
   readonly voiceId: string | null
@@ -38,6 +40,12 @@ export interface VoiceAgentConfig {
 export interface VoiceAgentRef {
   readonly providerAgentId: string
   readonly syncedAt: string
+  /**
+   * True when the vendor had no agent to update and a new one was created.
+   * The caller has to be told: a new agent id means the phone number is still
+   * pointed at the old one, and silence about that is a dead line.
+   */
+  readonly created: boolean
 }
 
 /** A lifecycle event, normalised away from any vendor's field names. */

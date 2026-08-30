@@ -104,11 +104,22 @@ describe('prohibited features (TPR-6)', () => {
   })
 
   it('never enables vendor audio storage', () => {
-    const adapter = readFileSync(
-      join('src', 'lib', 'providers', 'voice', 'retell', 'index.ts'),
+    // The vendor replaced opt_out_sensitive_data_storage with a three-valued
+    // setting; 'basic_attributes_only' is the one that stores no recording,
+    // transcript or log at their end. Anything else would contradict the
+    // disclosure the caller hears.
+    const definition = readFileSync(
+      join('src', 'lib', 'providers', 'voice', 'retell', 'definition.ts'),
       'utf8',
     )
-    expect(adapter).toMatch(/opt_out_sensitive_data_storage:\s*true/)
+    expect(definition).toMatch(/data_storage_setting:\s*'basic_attributes_only'/)
+
+    const adapterFiles = sourceFiles(join('src', 'lib', 'providers', 'voice', 'retell'))
+    for (const file of adapterFiles) {
+      expect(readFileSync(file, 'utf8'), file).not.toMatch(
+        /data_storage_setting:\s*'(everything|everything_except_pii)'/,
+      )
+    }
   })
 
   it('never persists a recording url from the mapper', () => {

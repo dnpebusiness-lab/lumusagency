@@ -1,24 +1,32 @@
-# Retell agent configuration — what to paste, and where
+# Retell agent configuration
 
 > **Sintesi in italiano**
-> Questa cartella contiene il testo esatto da incollare nel pannello Retell per creare
-> l'agente vocale. I file sono **generati** dal codice: non modificarli a mano, altrimenti
-> l'agente al telefono direbbe cose diverse da quelle che il codice garantisce.
+> Normalmente non serve toccare niente qui: nella dashboard, in **Impostazioni →
+> Agente vocale**, il pulsante *Sync* riscrive l'agente dal database. Questi file
+> sono la stessa configurazione su carta, per leggerla o per ricostruire l'agente
+> a mano se l'applicazione non riesce a raggiungere il fornitore. Sono **generati**
+> dal codice: non modificarli a mano.
 
-Milestone 4A configures the Retell agent by hand, in the vendor dashboard. That is a
-deliberate limit, not an oversight: automatic provisioning is a Milestone 5 concern, and
-`RETELL_VENDOR_CONSTRAINTS.md` forbids building a self-service path to this vendor before
-the commercial gates are cleared.
+**The application configures the agent.** Settings → Voice agent → *Sync* sends the
+whole configuration — prompt, opening line, voice, language, timezone, webhook and all
+three tools — from `agent_configurations` to the vendor, and records the agent id it gets
+back. Nothing needs to be typed into the vendor's dashboard.
 
-Everything here is generated from the same modules the application uses, so what a caller
-hears cannot silently diverge from what the code promises.
+That is `RetellVoiceProvider.syncAgent()`, and it stays behind the fail-closed activation
+gate: it is the internal, non-paying technical evaluation described in
+`RETELL_VENDOR_CONSTRAINTS.md`, not self-service provisioning for customers.
 
-| File | Where it goes in Retell |
+The files in this folder are the same configuration written out, generated from the same
+builders (`src/lib/providers/voice/retell/definition.ts`) the sync uses — so the paper copy
+and the live agent cannot disagree. Use them to review what is sent, or to rebuild the
+agent by hand when the application cannot reach the vendor.
+
+| File | What it is |
 |---|---|
 | `system_prompt.txt` | Agent → **Prompt** (the system/global prompt) |
 | `first_message.txt` | Agent → **Begin message** |
 | `tools.json` | Agent → **Functions** — one custom function per entry |
-| `agent.json` | **Import** — the whole agent in one operation, instead of the three rows above |
+| `agent.json` | The whole agent as one import — the same thing *Sync* sends |
 
 ## Regenerating
 
@@ -31,17 +39,20 @@ if the prompt builder, the disclosure wording or the tool allow-list has moved o
 file here would be worse than no file: it would look authoritative while describing an
 agent that no longer exists.
 
-## Prefer the import
+## Why the button exists
 
-Configuring by hand means twenty fields across four dialogs, and each one is a
-chance to put a header name in the wrong box or leave a timeout at the vendor's
-two-minute default — a caller listening to silence. `agent.json` carries the same
-configuration as a single import. Replace the two placeholders first, then import
-it; the three files above remain useful for checking or editing one piece.
+Configuring by hand meant roughly twenty fields across four dialogs, and each one was a
+chance to put a header name in the wrong box, leave a tool timeout at the vendor's
+two-minute default, or leave an agent id in the database pointing at an agent that had
+been deleted. Every one of those happened, and each cost a live call: the phone answered
+and the caller was told the restaurant's own opening hours could not be confirmed.
 
-## Placeholders you must replace
+Pressing *Sync* overwrites all of it from one row that a manager already edits.
 
-`tools.json` contains two placeholders, because neither belongs in a repository:
+## Placeholders in the published files
+
+The published files carry two placeholders, because neither belongs in a repository. A
+sync substitutes them from the environment; only a hand-import needs them replaced:
 
 * `<YOUR_APP_URL>` — the public HTTPS address of the deployment, e.g. its `.netlify.app`
   address. It is not a secret; it is simply per-deployment.

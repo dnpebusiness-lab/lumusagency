@@ -9,6 +9,12 @@ import { requireSession, assertPermission, membershipFor } from '@/lib/auth/sess
 import { ACTIVE_ORG_COOKIE } from '@/lib/auth/active-organisation'
 import { assignableRoles } from '@/lib/auth/rbac'
 import { locationSchema, memberInviteSchema, organisationSchema } from '@/lib/validation/auth'
+import {
+  AGENT_CONFIGURATION_COLUMNS,
+  toVoiceAgentConfig,
+  type AgentConfigurationRow,
+} from '@/lib/agent/config'
+import { getVoiceProvider } from '@/lib/providers/registry'
 
 export interface ActionState {
   error?: string
@@ -251,6 +257,78 @@ export async function inviteMember(_prev: ActionState, formData: FormData): Prom
 
   revalidatePath('/settings')
   return { message: 'Member added.' }
+}
+
+/**
+ * Push this restaurant's configuration to the voice vendor.
+ *
+ * This exists because the alternative — typing twenty fields into the vendor's
+ * dashboard — is what actually broke the agent, repeatedly: a header in the
+ * wrong box, a tool timeout left at the vendor's default, an agent id in the
+ * database that pointed at nothing. Everything the vendor needs now comes from
+ * the row the manager already edits, and pressing this button overwrites all
+ * of it.
+ *
+ * The activation gate still applies: this is the internal, non-paying
+ * technical evaluation described in RETELL_VENDOR_CONSTRAINTS.md, not
+ * self-service provisioning.
+ */
+export async function syncVoiceAgent(_prev: ActionState, formData: FormData): Promise<ActionState> {
+  const context = await requireSession()
+  const organisationId = String(formData.get('organisationId') ?? '')
+  const locationId = String(formData.get('locationId') ?? '')
+
+  try {
+    assertPermission(context, organisationId, 'agent:configure')
+  } catch {
+    return { error: 'You do not have permission to configure the agent.' }
+  }
+
+  const supabase = await createServerSupabaseClient()
+  const { data: row, error } = await supabase
+    .from('agent_configurations')
+    .select(AGENT_CONFIGURATION_COLUMNS)
+    .eq('location_id', locationId)
+    .eq('organisation_id', organisationId)
+    .maybeSingle()
+
+  if (error) return { error: 'We could not read this restaurant’s agent settings.' }
+  if (!row) {
+    return {
+      error:
+        'This restaurant has no agent settings yet, so there is nothing to send to the vendor.',
+    }
+  }
+
+  const config = toVoiceAgentConfig(row as unknown as AgentConfigurationRow)
+  if (!config.ok) return { error: config.error.message }
+
+  const provider = getVoiceProvider()
+  if (!provider.ok) return { error: provider.error.message }
+
+  const synced = await provider.data.syncAgent(config.data)
+  // Deliberately verbatim. A synchronisation that half-worked and reported
+  // success is the failure this whole button was built to end.
+  if (!synced.ok) return { error: synced.error.message }
+
+  const { error: writeError } = await supabase
+    .from('agent_configurations')
+    .update({ retell_agent_id: synced.data.providerAgentId, synced_at: synced.data.syncedAt })
+    .eq('location_id', locationId)
+
+  if (writeError) {
+    return {
+      error: `The agent was updated at the vendor (id ${synced.data.providerAgentId}) but we could not record that here. Nothing is lost; try again.`,
+    }
+  }
+
+  revalidatePath('/settings')
+
+  return {
+    message: synced.data.created
+      ? `A new agent was created: ${synced.data.providerAgentId}. Point your phone number at it in the vendor dashboard — the old agent is still answering until you do.`
+      : `Agent ${synced.data.providerAgentId} updated. Prompt, opening line and all three tools were overwritten with what is in this database.`,
+  }
 }
 
 /**

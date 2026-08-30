@@ -60,27 +60,26 @@ select exists (select 1 from information_schema.columns
 3. Dashboard → **API Keys** → create one. It goes in `RETELL_API_KEY`.
 4. Leave `RETELL_WEBHOOK_SECRET` **empty**. Verified against `retell-sdk@5.64.0`: Retell signs
    webhooks with the API key itself, and the code falls back to it.
-5. Dashboard → **Webhooks** → point it at `https://<your-deployment>/api/webhooks/retell`.
-6. Create the agent from our configuration rather than by hand — the prompt, the disclosure and the
-   tool list all come from the database. The agent id Retell gives you goes into
-   `agent_configurations.retell_agent_id` for the demo location:
+5. **Do not build the agent by hand.** The application does it. Deploy first (Steps 4 and 5), then
+   sign in and go to **Settings → Voice agent → Sync**. That one press writes the prompt, the
+   opening disclosure, the voice, the languages, the timezone, the webhook URL and all three tool
+   functions — including the `x-astra-tool-secret` header and the ten-second timeouts — and stores
+   the agent id it gets back in `agent_configurations.retell_agent_id`.
 
-   ```sql
-   update public.agent_configurations
-      set retell_agent_id = '<the agent id from Retell>'
-    where location_id = 'b0000000-0000-4000-8000-000000000001';
-   ```
+   The webhook uses that id to work out which restaurant a call belongs to. When it is wrong or
+   stale, the phone still answers and every answer comes back empty: the ingest returns
+   `no_matching_location` and stores nothing.
 
-   The webhook uses this to work out which restaurant a call belongs to. Without it, a deployment
-   with more than one location returns `no_matching_location` and processes nothing.
+   If the sync says **a new agent was created**, go to Retell → Phone Numbers and point your number
+   at the new agent. Until you do, the old agent is still the one answering.
 
-7. Configure the three custom functions, each POSTing to
-   `https://<your-deployment>/api/voice/tools/<name>` with a custom header
-   `x-astra-tool-secret: <ASTRA_TOOL_SHARED_SECRET>`:
-   `get_business_info`, `search_menu`, `get_allergen_info`.
-8. **Leave call recording OFF.** The database rejects a recording URL while it is off, so turning it
+6. If the application genuinely cannot reach Retell, `docs/retell-agent/agent.json` is the same
+   configuration as a single import; `docs/retell-agent/README.md` explains the two placeholders to
+   replace. Configuring the fields by hand is the last resort, not the normal path.
+
+7. **Leave call recording OFF.** The database rejects a recording URL while it is off, so turning it
    on produces failed ingests rather than a stored recording — but do not rely on that: switch it
-   off at the vendor too.
+   off at the vendor too. The sync also refuses to run while recording is enabled.
 
 ## Step 3 · Twilio (allow several days)
 
@@ -137,9 +136,12 @@ select
 placeholder. The webhook resolves the restaurant from the agent id the vendor
 sends; with no match and more than one location it cannot guess, so it answers
 200 `no_matching_location` and stores nothing. No call row means the tools
-cannot resolve the call either, so every answer becomes an escalation. Fix it
-with the update in Step 2, and **read the row it returns** — an update that
-matched nothing looks exactly like an update that worked.
+cannot resolve the call either, so every answer becomes an escalation.
+
+Fix it with **Settings → Voice agent → Sync**: the sync asks the vendor whether
+that id still exists, creates the agent if it does not, and writes the real id
+back. Then read the row it wrote — an id that was never applied looks exactly
+like one that was.
 
 **`events_received` is 0 and the transcript contains HTML.** Look at the tool
 result in the vendor's call detail. If it contains `<html>` or `Sign in`, the

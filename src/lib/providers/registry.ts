@@ -1,7 +1,7 @@
 import 'server-only'
 
 import { err, ok, type Result } from '@/lib/result'
-import { serverEnv } from '@/lib/env'
+import { publicEnv, serverEnv } from '@/lib/env'
 import { assertInternalEvaluation } from '@/lib/security/gate'
 import type { VoiceProvider } from './voice/types'
 import { RetellVoiceProvider } from './voice/retell'
@@ -27,6 +27,8 @@ export function getVoiceProvider(): Result<VoiceProvider> {
     new RetellVoiceProvider({
       apiKey: env.RETELL_API_KEY,
       webhookSecret: env.RETELL_WEBHOOK_SECRET,
+      appUrl: publicEnv.NEXT_PUBLIC_APP_URL,
+      toolSecret: env.ASTRA_TOOL_SHARED_SECRET,
     }),
   )
 }

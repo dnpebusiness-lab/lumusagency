@@ -5,8 +5,8 @@ import Retell from 'retell-sdk'
 import { attempt, err, ok, type Result } from '@/lib/result'
 import { assertInternalEvaluation } from '@/lib/security/gate'
 import { logSafe } from '@/lib/security/redact'
-import { buildAgentPrompt } from '@/lib/agent/prompt'
 import type { VoiceAgentConfig, VoiceAgentRef, VoiceCallEvent, VoiceProvider } from '../types'
+import { buildRetellAgentPayload, buildRetellLlmPayload } from './definition'
 import { mapRetellEvent } from './mapper'
 
 /**
@@ -36,6 +36,10 @@ export interface RetellCredentials {
    * unset it falls back to the API key, which is the documented behaviour.
    */
   readonly webhookSecret?: string | undefined
+  /** Public origin of this deployment. The vendor calls back to it, so it must be reachable. */
+  readonly appUrl?: string | undefined
+  /** Shared secret the tool endpoints require. Written into every tool header. */
+  readonly toolSecret?: string | undefined
 }
 
 export class RetellVoiceProvider implements VoiceProvider {
@@ -47,6 +51,19 @@ export class RetellVoiceProvider implements VoiceProvider {
     return this.credentials.webhookSecret ?? this.credentials.apiKey
   }
 
+  /**
+   * Push the whole configuration to the vendor.
+   *
+   * "Whole" is the point. An earlier version of this method wrote four fields
+   * and left the other twenty to be typed into a dashboard, which is how an
+   * agent ended up with a two-minute tool timeout, a header in the wrong box
+   * and an id that no longer existed. Everything the agent needs now comes
+   * from ./definition.ts, and a sync overwrites all of it.
+   *
+   * Two vendor objects are involved: a Retell LLM holds the prompt and the
+   * tools, and an agent holds the voice, the language and the webhook and
+   * points at that LLM. So the order is LLM first, agent second.
+   */
   async syncAgent(config: VoiceAgentConfig): Promise<Result<VoiceAgentRef>> {
     const gate = assertInternalEvaluation()
     if (!gate.ok) return gate
@@ -67,35 +84,64 @@ export class RetellVoiceProvider implements VoiceProvider {
       })
     }
 
-    const prompt = buildAgentPrompt(config)
+    if (!this.credentials.appUrl) {
+      return err(
+        'invalid_input',
+        'Agent synchronisation refused: NEXT_PUBLIC_APP_URL is not set, so the agent would be given no address to call back to.',
+        { retryable: false },
+      )
+    }
+
+    if (!this.credentials.toolSecret) {
+      return err(
+        'invalid_input',
+        'Agent synchronisation refused: ASTRA_TOOL_SHARED_SECRET is not set, so the tools would be published without the header that protects them.',
+        { retryable: false },
+      )
+    }
+
+    const input = {
+      config,
+      appUrl: this.credentials.appUrl,
+      toolSecret: this.credentials.toolSecret,
+    }
     const client = new Retell({ apiKey: this.credentials.apiKey })
 
     return attempt(async () => {
-      const payload = {
-        agent_name: `astra-${config.locationId}`,
-        voice_id: config.voiceId as string,
-        language: config.defaultLanguage === 'it' ? ('it-IT' as const) : ('en-GB' as const),
-        response_engine: {
-          type: 'retell-llm' as const,
-          llm_id: prompt.promptId,
-        },
-        // Audio storage stays off at the vendor as well as in our database.
-        opt_out_sensitive_data_storage: true,
-      }
+      // A stored agent id can be stale — pointing at an agent that was deleted,
+      // or a placeholder that was never real. Ask the vendor rather than
+      // trusting it, and fall through to creating a fresh agent if it is gone.
+      const existing = config.providerAgentId
+        ? await client.agent.retrieve(config.providerAgentId).catch(() => null)
+        : null
 
-      const agent = config.providerAgentId
-        ? await client.agent.update(config.providerAgentId, payload)
-        : await client.agent.create(payload)
+      const engine = existing?.response_engine
+      const existingLlmId =
+        engine && engine.type === 'retell-llm' ? (engine.llm_id as string) : null
+
+      const llmPayload = buildRetellLlmPayload(input)
+      const llm = existingLlmId
+        ? await client.llm.update(existingLlmId, llmPayload)
+        : await client.llm.create(llmPayload)
+
+      const agentPayload = buildRetellAgentPayload(input, llm.llm_id)
+      const agent = existing
+        ? await client.agent.update(existing.agent_id, agentPayload)
+        : await client.agent.create(
+            agentPayload as unknown as Parameters<typeof client.agent.create>[0],
+          )
 
       logSafe('info', 'retell.agent.synced', {
         location_id: config.locationId,
         prompt_version: config.promptVersion,
-        prompt_id: prompt.promptId,
+        created: existing === null,
+        tool_count: (llmPayload['general_tools'] as unknown[]).length,
       })
 
       return {
         providerAgentId: agent.agent_id,
         syncedAt: new Date().toISOString(),
+        created: existing === null,
       }
     }, 'unavailable')
   }

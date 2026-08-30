@@ -1,13 +1,15 @@
 [
   {
+    "type": "custom",
     "name": "get_business_info",
     "description": "Everything the restaurant has approved about itself: opening hours, when the kitchen stops taking orders, address and directions, phone, plus its own written answers to common questions — parking, accessibility, children, dogs, wifi, the head chef, seating, payment, dress code, groups, anything else it has published. Call this for ANY question about the restaurant that is not a dish or an allergen, and call it before saying you cannot confirm something.",
     "url": "<YOUR_APP_URL>/api/voice/tools/get_business_info",
+    "method": "POST",
+    "timeout_ms": 10000,
     "headers": {
       "x-astra-tool-secret": "<ASTRA_TOOL_SHARED_SECRET>"
     },
-    "speak_during_execution": false,
-    "speak_after_execution": false,
+    "parameter_type": "json",
     "parameters": {
       "type": "object",
       "properties": {
@@ -24,20 +26,24 @@
         "call_id"
       ]
     },
-    "example": {
-      "call_id": "call_demo",
-      "topic": "opening hours"
-    }
+    "query_params": {},
+    "response_variables": {},
+    "args_at_root": false,
+    "speak_during_execution": false,
+    "speak_after_execution": true,
+    "enable_typing_sound": false
   },
   {
+    "type": "custom",
     "name": "search_menu",
     "description": "Search the approved menu. Returns only items the restaurant has approved; unapproved items do not exist as far as this call is concerned.",
     "url": "<YOUR_APP_URL>/api/voice/tools/search_menu",
+    "method": "POST",
+    "timeout_ms": 10000,
     "headers": {
       "x-astra-tool-secret": "<ASTRA_TOOL_SHARED_SECRET>"
     },
-    "speak_during_execution": false,
-    "speak_after_execution": false,
+    "parameter_type": "json",
     "parameters": {
       "type": "object",
       "properties": {
@@ -58,20 +64,24 @@
         "call_id"
       ]
     },
-    "example": {
-      "call_id": "call_demo",
-      "query": "pasta"
-    }
+    "query_params": {},
+    "response_variables": {},
+    "args_at_root": false,
+    "speak_during_execution": false,
+    "speak_after_execution": true,
+    "enable_typing_sound": false
   },
   {
+    "type": "custom",
     "name": "get_allergen_info",
     "description": "Allergen declarations for one dish. SAFETY-CRITICAL: this is the ONLY source of allergen facts. Pass the caller’s own wording in caller_phrasing so a severe allergy can be detected and escalated.",
     "url": "<YOUR_APP_URL>/api/voice/tools/get_allergen_info",
+    "method": "POST",
+    "timeout_ms": 10000,
     "headers": {
       "x-astra-tool-secret": "<ASTRA_TOOL_SHARED_SECRET>"
     },
-    "speak_during_execution": false,
-    "speak_after_execution": false,
+    "parameter_type": "json",
     "parameters": {
       "type": "object",
       "properties": {
@@ -97,10 +107,11 @@
         "menu_item"
       ]
     },
-    "example": {
-      "call_id": "call_demo",
-      "menu_item": "tagliatelle",
-      "caller_phrasing": "I have a severe nut allergy"
-    }
+    "query_params": {},
+    "response_variables": {},
+    "args_at_root": false,
+    "speak_during_execution": false,
+    "speak_after_execution": true,
+    "enable_typing_sound": false
   }
 ]

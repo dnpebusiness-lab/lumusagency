@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge'
 import { Card, CardDescription, CardTitle } from '@/components/ui/card'
 import { AddLocationForm } from '@/components/dashboard/add-location-form'
 import { MemberList } from '@/components/dashboard/member-list'
+import { SyncAgentForm } from '@/components/dashboard/sync-agent-form'
 import type { OrgRole } from '@/lib/db/enums'
 import { one } from '@/lib/db/embed'
 
@@ -24,6 +25,14 @@ interface LocationRow {
 
 type ProfileEmbed = { email: string; full_name: string | null }
 
+interface AgentRow {
+  location_id: string
+  is_active: boolean
+  voice_id: string | null
+  retell_agent_id: string | null
+  synced_at: string | null
+}
+
 interface MemberRow {
   id: string
   role: OrgRole
@@ -39,29 +48,40 @@ export default async function SettingsPage() {
 
   const supabase = await createServerSupabaseClient()
 
-  const [{ data: organisation }, { data: locations }, { data: members }] = await Promise.all([
-    supabase
-      .from('organisations')
-      .select(
-        'name, slug, timezone, country_code, transcript_retention_days, metadata_retention_days, is_demo',
-      )
-      .eq('id', membership.organisationId)
-      .maybeSingle(),
-    supabase
-      .from('locations')
-      .select('id, name, slug, city, phone_e164, is_active, max_party_size_auto_book')
-      .eq('organisation_id', membership.organisationId)
-      .is('deleted_at', null)
-      .order('name'),
-    supabase
-      .from('organisation_members')
-      .select('id, role, status, user_id, profiles(email, full_name)')
-      .eq('organisation_id', membership.organisationId)
-      .order('role'),
-  ])
+  const [{ data: organisation }, { data: locations }, { data: members }, { data: agents }] =
+    await Promise.all([
+      supabase
+        .from('organisations')
+        .select(
+          'name, slug, timezone, country_code, transcript_retention_days, metadata_retention_days, is_demo',
+        )
+        .eq('id', membership.organisationId)
+        .maybeSingle(),
+      supabase
+        .from('locations')
+        .select('id, name, slug, city, phone_e164, is_active, max_party_size_auto_book')
+        .eq('organisation_id', membership.organisationId)
+        .is('deleted_at', null)
+        .order('name'),
+      supabase
+        .from('organisation_members')
+        .select('id, role, status, user_id, profiles(email, full_name)')
+        .eq('organisation_id', membership.organisationId)
+        .order('role'),
+      supabase
+        .from('agent_configurations')
+        .select('location_id, is_active, voice_id, retell_agent_id, synced_at')
+        .eq('organisation_id', membership.organisationId),
+    ])
 
   const canManageMembers = can(membership.role, 'members:manage')
   const canCreateLocation = can(membership.role, 'locations:create')
+  const canConfigureAgent = can(membership.role, 'agent:configure')
+
+  const locationRows = (locations ?? []) as unknown as LocationRow[]
+  const agentByLocation = new Map(
+    ((agents ?? []) as unknown as AgentRow[]).map((a) => [a.location_id, a]),
+  )
 
   return (
     <div className="space-y-10">
@@ -110,7 +130,7 @@ export default async function SettingsPage() {
           </Card>
         ) : (
           <ul className="mt-3 space-y-2">
-            {((locations ?? []) as unknown as LocationRow[]).map((location) => (
+            {locationRows.map((location) => (
               <li
                 key={location.id}
                 className="border-ink-200 dark:border-ink-800 dark:bg-ink-900 flex flex-wrap items-center gap-x-3 gap-y-1 rounded-md border bg-white px-4 py-3"
@@ -136,6 +156,82 @@ export default async function SettingsPage() {
             </div>
           </details>
         ) : null}
+      </section>
+
+      <section aria-labelledby="agent-heading">
+        <h2 id="agent-heading" className="text-sm font-semibold tracking-tight">
+          Voice agent
+        </h2>
+        <p className="text-ink-500 dark:text-ink-400 mt-1 text-xs">
+          Synchronising rewrites the agent at the voice provider from what is in this database: the
+          instructions it follows, the sentence it opens with, and the three lookups it is allowed
+          to make. Nothing needs to be typed into the provider’s own dashboard. It does not touch
+          the menu, the opening hours or the answers themselves — those are read live on every call.
+        </p>
+
+        {locationRows.length === 0 ? (
+          <Card className="mt-3">
+            <CardTitle>No locations yet</CardTitle>
+            <CardDescription>Add a restaurant before configuring an agent.</CardDescription>
+          </Card>
+        ) : (
+          <div className="mt-3 space-y-3">
+            {locationRows.map((location) => {
+              const agent = agentByLocation.get(location.id)
+              return (
+                <Card key={location.id}>
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                    <CardTitle>{location.name}</CardTitle>
+                    {agent?.is_active ? (
+                      <Badge tone="success">Active</Badge>
+                    ) : (
+                      <Badge tone="warning">Not active</Badge>
+                    )}
+                  </div>
+
+                  <dl className="mt-3 grid gap-3 sm:grid-cols-3">
+                    <div>
+                      <dt className="text-ink-500 dark:text-ink-400 text-xs">Agent at provider</dt>
+                      <dd className="mt-0.5 font-mono text-xs break-all">
+                        {agent?.retell_agent_id ?? 'Not created yet'}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="text-ink-500 dark:text-ink-400 text-xs">Voice</dt>
+                      <dd className="mt-0.5 text-sm">{agent?.voice_id ?? 'Not chosen'}</dd>
+                    </div>
+                    <div>
+                      <dt className="text-ink-500 dark:text-ink-400 text-xs">Last synchronised</dt>
+                      <dd className="tabular mt-0.5 text-sm">
+                        {agent?.synced_at
+                          ? new Date(agent.synced_at).toLocaleString('en-IE')
+                          : 'Never'}
+                      </dd>
+                    </div>
+                  </dl>
+
+                  {!agent ? (
+                    <CardDescription className="mt-4">
+                      This restaurant has no agent settings yet, so there is nothing to send.
+                    </CardDescription>
+                  ) : canConfigureAgent ? (
+                    <div className="mt-4">
+                      <SyncAgentForm
+                        organisationId={membership.organisationId}
+                        locationId={location.id}
+                        locationName={location.name}
+                      />
+                    </div>
+                  ) : (
+                    <CardDescription className="mt-4">
+                      Your role cannot change the agent’s configuration.
+                    </CardDescription>
+                  )}
+                </Card>
+              )
+            })}
+          </div>
+        )}
       </section>
 
       <section aria-labelledby="members-heading">
