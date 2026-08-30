@@ -116,6 +116,43 @@ openssl rand -base64 32   # -> ASTRA_CALLER_HASH_SALT
 
 ---
 
+## When a live call answers but knows nothing
+
+Two failures produce the identical symptom — Astra speaks, sounds right, and
+answers "I could not confirm that" to everything — and both were hit on the
+first real call. Neither shows up in the test suite, because the tests call the
+route handlers directly and never cross the boundaries that break.
+
+Run this first. It separates them in one query:
+
+```sql
+select
+  (select count(*) from public.webhook_events)                          as events_received,
+  (select count(*) from public.call_sessions where provider = 'retell') as calls_stored,
+  (select ac.retell_agent_id from public.agent_configurations ac
+    where ac.retell_agent_id is not null limit 1)                       as linked_agent;
+```
+
+**`linked_agent` still reads `agent_demo_vindaro`.** That is the seed's
+placeholder. The webhook resolves the restaurant from the agent id the vendor
+sends; with no match and more than one location it cannot guess, so it answers
+200 `no_matching_location` and stores nothing. No call row means the tools
+cannot resolve the call either, so every answer becomes an escalation. Fix it
+with the update in Step 2, and **read the row it returns** — an update that
+matched nothing looks exactly like an update that worked.
+
+**`events_received` is 0 and the transcript contains HTML.** Look at the tool
+result in the vendor's call detail. If it contains `<html>` or `Sign in`, the
+request was redirected to the sign-in page: the session guard was applied to the
+machine endpoints. A vendor has no cookie and cannot act on a redirect. Nothing
+under `/api` may be answered with one; `tests/unit/route-guard.test.ts` holds
+that line now.
+
+A useful property of both: they leave the vendor's own dashboard looking
+perfectly healthy. The call connects, the agent talks, the call ends normally.
+Only the restaurant's own database shows the truth, which is why the query above
+comes before any theory.
+
 ## Step 6 · Prove the pipeline before you dial
 
 This is the point of the replay script: it exercises real signature verification, the real replay
