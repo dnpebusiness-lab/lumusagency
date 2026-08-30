@@ -11,3 +11,4 @@ package-lock.json
 docs/retell-agent/system_prompt.txt
 docs/retell-agent/first_message.txt
 docs/retell-agent/tools.json
+docs/retell-agent/agent.json

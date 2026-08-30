@@ -127,11 +127,82 @@ const FUNCTIONS: RetellFunction[] = [
   ),
 ]
 
+/**
+ * A whole agent, ready to import.
+ *
+ * Milestone 4A configures the vendor by hand, and by hand means twenty fields
+ * across four dialogs — a header name typed into the wrong box, a description
+ * pasted into the name field, a timeout left at the vendor's two-minute default.
+ * Every one of those happened. This is the same configuration as one import.
+ *
+ * Field shapes and defaults are taken from an agent exported from the dashboard
+ * after it was working, not from documentation. Ids are omitted so the import
+ * creates its own.
+ */
+function agentImport(): Record<string, unknown> {
+  const prompt = buildAgentPrompt(DEMO)
+  return {
+    agent_name: 'Astra — Osteria Vindaro',
+    channel: 'voice',
+    voice_id: 'retell-Cimo',
+    language: ['en-US', 'it-IT'],
+    timezone: 'Europe/Dublin',
+    webhook_url: `${APP_URL}/api/webhooks/retell`,
+    // No stored audio: the disclosure a caller hears says so.
+    data_storage_setting: 'basic_attributes_only',
+    opt_in_signed_url: false,
+    // The agent cannot hang up in this configuration, so silence and duration
+    // are what stop a forgotten line from spending the credit.
+    end_call_after_silence_ms: 62_000,
+    max_call_duration_ms: 208_000,
+    interruption_sensitivity: 0.9,
+    allow_user_dtmf: true,
+    post_call_analysis_model: 'gpt-4.1',
+    pii_config: { categories: [], mode: 'post_call' },
+    handbook_config: { default_personality: true, ai_disclosure: true },
+    response_engine: { type: 'retell-llm' },
+    retellLlmData: {
+      model: 'gpt-4.1',
+      tool_call_strict_mode: true,
+      general_prompt: prompt.text,
+      // The caller must hear the disclosure before saying anything, so the
+      // agent speaks first and speaks our words, not an improvised greeting.
+      start_speaker: 'agent',
+      begin_message: getDisclosure('en', {
+        locationName: DEMO.locationName,
+        recordingEnabled: false,
+      }).full,
+      knowledge_base_ids: [],
+      general_tools: FUNCTIONS.map((f) => ({
+        type: 'custom',
+        name: f.name,
+        description: f.description,
+        url: f.url,
+        method: 'POST',
+        timeout_ms: 10_000,
+        headers: f.headers,
+        parameter_type: 'json',
+        parameters: f.parameters,
+        query_params: {},
+        response_variables: {},
+        // args_at_root false keeps the vendor's call object in the payload; the
+        // endpoint reads which restaurant the call belongs to from it.
+        args_at_root: false,
+        // No invented filler while the lookup runs; the answer itself is spoken.
+        speak_during_execution: false,
+        speak_after_execution: true,
+        enable_typing_sound: false,
+      })),
+    },
+  }
+}
+
 const dir = join(process.cwd(), 'docs', 'retell-agent')
 const artefacts: Record<string, string> = {
   'system_prompt.txt': `${buildAgentPrompt(DEMO).text}\n`,
   'first_message.txt': `${getDisclosure('en', { locationName: DEMO.locationName, recordingEnabled: false }).full}\n`,
   'tools.json': `${JSON.stringify(FUNCTIONS, null, 2)}\n`,
+  'agent.json': `${JSON.stringify(agentImport(), null, 2)}\n`,
 }
 
 if (process.env.ASTRA_WRITE_AGENT_ARTIFACTS === '1') {
@@ -170,6 +241,29 @@ describe('docs/retell-agent artefacts', () => {
     expect(json).toContain('<YOUR_APP_URL>')
     expect(json).toContain('<ASTRA_TOOL_SHARED_SECRET>')
     expect(json).not.toMatch(/https:\/\/(?!<)/)
+  })
+
+  it('ships an importable agent that carries the whole configuration', () => {
+    const agent = JSON.parse(artefacts['agent.json'] as string)
+    expect(agent.retellLlmData.general_tools).toHaveLength(3)
+    expect(agent.retellLlmData.start_speaker).toBe('agent')
+    expect(agent.retellLlmData.begin_message).toContain('AI assistant')
+    expect(agent.data_storage_setting).toBe('basic_attributes_only')
+    expect(agent.timezone).toBe('Europe/Dublin')
+    expect(agent.language).toEqual(['en-US', 'it-IT'])
+    // The vendor's own two-minute default is a caller listening to silence.
+    for (const tool of agent.retellLlmData.general_tools) {
+      expect(tool.timeout_ms).toBe(10_000)
+      expect(tool.args_at_root).toBe(false)
+      expect(tool.speak_during_execution).toBe(false)
+      expect(tool.speak_after_execution).toBe(true)
+      expect(Object.keys(tool.headers)).toEqual(['x-astra-tool-secret'])
+    }
+    // end_call is absent on purpose: the prompt says no other tool exists.
+    expect(agent.retellLlmData.general_tools.map((t: { name: string }) => t.name)).not.toContain(
+      'end_call',
+    )
+    expect(agent.agent_id).toBeUndefined()
   })
 
   it('keeps the safety-critical tool marked as such', () => {

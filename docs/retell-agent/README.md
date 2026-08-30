@@ -18,6 +18,7 @@ hears cannot silently diverge from what the code promises.
 | `system_prompt.txt` | Agent → **Prompt** (the system/global prompt) |
 | `first_message.txt` | Agent → **Begin message** |
 | `tools.json` | Agent → **Functions** — one custom function per entry |
+| `agent.json` | **Import** — the whole agent in one operation, instead of the three rows above |
 
 ## Regenerating
 
@@ -29,6 +30,14 @@ Without that variable the same test *checks* the files instead of writing them, 
 if the prompt builder, the disclosure wording or the tool allow-list has moved on. A stale
 file here would be worse than no file: it would look authoritative while describing an
 agent that no longer exists.
+
+## Prefer the import
+
+Configuring by hand means twenty fields across four dialogs, and each one is a
+chance to put a header name in the wrong box or leave a timeout at the vendor's
+two-minute default — a caller listening to silence. `agent.json` carries the same
+configuration as a single import. Replace the two placeholders first, then import
+it; the three files above remain useful for checking or editing one piece.
 
 ## Placeholders you must replace
 
