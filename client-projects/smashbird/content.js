@@ -421,21 +421,6 @@ window.SMASHBIRD = {
 
   ordering:{ platforms:{ flipdish:{ confirmed:true }, deliveroo:{ confirmed:false } } },
 
-  /* ------------------------------------------------------ photography
-     Served straight from Cloudinary with responsive transformations.
-     ⚠ Filenames indicate AI-generated imagery, which the brand brief rules
-     out. Flagged in contentIssues for client decision.
-     -------------------------------------------------------------------- */
-  photos: {
-    base:'https://res.cloudinary.com/fodeavol/image/upload/',
-    hero:{ id:'v1788172976/ChatGPT_Image_31_ago_2026_10_40_28_2',
-           alt:'Smashbird burger and loaded fried chicken served on metal trays.',
-           aiGenerated:true },
-    secondary:{ id:'v1788172967/ChatGPT_Image_31_ago_2026_10_40_29_3',
-           alt:'Smashbird spread of burgers, wings and Birdhouse sauce bottles.',
-           aiGenerated:true }
-  },
-
   /* -------------------------------------------------------------- reviews */
   reviews: [],
   social: {
@@ -480,7 +465,7 @@ window.SMASHBIRD = {
     { id:10, area:'Birds — flavour-dependent items',  issue:'Tendies, Wings (medium/large) and Chick N Pop have allergens that vary by flavour and are not published per item. None shown.', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:11, area:'Burgers — Rasta Burger',           issue:'Allergens list Crustaceans and Fish via Caribbean Jerk; Birdhouse jerk data is inconsistent. Shown as published, flagged.', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:12, area:'Vegan Junk — Cabbage Fritter',     issue:'No allergens under Vegan Junk; the same item under Sides lists Cereals and Sulphites.', status:'CLIENT_CONFIRMATION_REQUIRED' },
-    { id:13, area:'Photography',                      issue:'Supplied hero images are named "ChatGPT_Image…", indicating AI-generated food photography, which the brand brief rules out. In use pending a decision.', status:'CLIENT_CONFIRMATION_REQUIRED' },
+    { id:13, area:'Photography',                      issue:'All photography removed at client request; the site now runs on CSS 3D instead. Real food photography is still needed before launch — a menu without product images converts worse.', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:14, area:'Opening hours',                    issue:'Only a live open/closed status is available. Regular weekly hours not derived.', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:15, area:'Alcohol',                           issue:'Wine and beer are on the menu. No delivery or age-verification claims made.', status:'CLIENT_CONFIRMATION_REQUIRED' }
   ]

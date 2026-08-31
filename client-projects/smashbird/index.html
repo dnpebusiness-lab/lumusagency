@@ -11,7 +11,6 @@
 <meta property="og:title" content="Smashbird Galway — Serious Burgers">
 <meta property="og:description" content="Smashed burgers, fried chicken, vegan junk and loaded sides &mdash; powered by Birdhouse sauces. Two Galway locations.">
 <meta property="og:locale" content="en_IE">
-<meta property="og:image" content="https://res.cloudinary.com/fodeavol/image/upload/c_fill,g_auto,ar_1.91:1,w_1200,f_auto,q_auto/v1788172976/ChatGPT_Image_31_ago_2026_10_40_28_2">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#000000">
 <script type="application/ld+json">
@@ -865,6 +864,56 @@ footer .logo-mark{width:96px}
   font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
   transition:background .18s,color .18s}
 .mi-order:hover,.mi-order:focus-visible{background:var(--pink);color:#000}
+
+/* ==================== 3D ==================== */
+.b3d{position:absolute;inset:0;display:grid;place-items:center;z-index:1;
+  touch-action:pan-y;cursor:grab}
+.b3d:active{cursor:grabbing}
+.b3d-stage{width:min(74%,430px);aspect-ratio:1;perspective:1100px;perspective-origin:50% 44%}
+.b3d-scene{position:relative;width:100%;height:100%;transform-style:preserve-3d;
+  /* The stack runs along local Z, so the spin must be rotateZ — rotateY would
+     slide every layer sideways and the burger would lean over. */
+  transform:rotateX(var(--rx,58deg)) rotateZ(var(--ry,0deg)) scale(var(--sc,1));
+  will-change:transform}
+.b3d-l{position:absolute;left:50%;top:50%;border-radius:50%;backface-visibility:hidden;
+  transform:translate(-50%,-50%) translateZ(var(--z));
+  background:var(--c)}
+.b3d-seed{position:absolute;left:50%;top:50%;width:7px;height:4px;border-radius:50%;
+  background:#F6E7C8;opacity:.92;
+  transform:translate(-50%,-50%) rotate(var(--a)) translateX(var(--r)) translateZ(var(--z))}
+.b3d-ring{position:absolute;left:50%;top:50%;width:60%;aspect-ratio:1;border-radius:50%;
+  transform:translate(-50%,-50%) translateZ(-6px) scale(var(--k,0));
+  border:3px solid var(--pink);opacity:var(--o,0);pointer-events:none}
+.b3d-hint{position:absolute;left:0;right:0;bottom:22px;text-align:center;z-index:3;
+  font-family:var(--font-b);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(242,232,213,.42);pointer-events:none;transition:opacity .4s}
+.b3d-hint.gone{opacity:0}
+
+/* parole estruse al posto delle foto */
+.c-media{display:grid;place-items:center;min-height:clamp(230px,34vw,380px);overflow:hidden}
+.x3d{width:100%;height:100%;display:grid;place-items:center;perspective:900px}
+.x3d-in{position:relative;transform-style:preserve-3d;
+  transform:rotateX(var(--xrx,14deg)) rotateY(var(--xry,-24deg));will-change:transform}
+.x3d-l{position:absolute;left:50%;top:50%;white-space:nowrap;
+  font-family:var(--font-d);font-weight:900;text-transform:uppercase;
+  font-size:clamp(30px,5.4vw,64px);letter-spacing:-.02em;line-height:1;
+  transform:translate(-50%,-50%) translateZ(var(--z));color:var(--c)}
+.x3d-l.face{position:relative;left:auto;top:auto;transform:translateZ(var(--z))}
+
+@media (prefers-reduced-motion: reduce){
+  .b3d-scene,.x3d-in{transition:none!important}
+  .b3d-hint{display:none}
+}
+
+/* The extruded 3D word now carries the heading visually, so the flat copy is
+   hidden from sight but kept in the document for screen readers and SEO. */
+.craving .c-word{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.craving .c-num{margin-bottom:14px}
+@media(max-width:900px){
+  .c-media{min-height:clamp(180px,44vw,260px)}
+  .x3d-l{font-size:clamp(34px,11vw,58px)}
+}
 </style>
 </head>
 <body>
@@ -976,15 +1025,11 @@ document.documentElement.className += ' js';
     </div>
 
     <div class="hero-right">
-      <figure class="hero-shot">
-        <picture>
-          <source media="(max-width:900px)" srcset="https://res.cloudinary.com/fodeavol/image/upload/c_fill,g_auto,ar_16:10,w_760,f_auto,q_auto/v1788172976/ChatGPT_Image_31_ago_2026_10_40_28_2 760w, https://res.cloudinary.com/fodeavol/image/upload/c_fill,g_auto,ar_16:10,w_1140,f_auto,q_auto/v1788172976/ChatGPT_Image_31_ago_2026_10_40_28_2 1140w" sizes="100vw">
-          <source srcset="https://res.cloudinary.com/fodeavol/image/upload/c_fill,g_auto,ar_4:5,w_800,f_auto,q_auto/v1788172976/ChatGPT_Image_31_ago_2026_10_40_28_2 800w, https://res.cloudinary.com/fodeavol/image/upload/c_fill,g_auto,ar_4:5,w_1200,f_auto,q_auto/v1788172976/ChatGPT_Image_31_ago_2026_10_40_28_2 1200w, https://res.cloudinary.com/fodeavol/image/upload/c_fill,g_auto,ar_4:5,w_1600,f_auto,q_auto/v1788172976/ChatGPT_Image_31_ago_2026_10_40_28_2 1600w" sizes="52vw">
-          <img src="https://res.cloudinary.com/fodeavol/image/upload/c_fill,g_auto,ar_4:5,w_1200,f_auto,q_auto/v1788172976/ChatGPT_Image_31_ago_2026_10_40_28_2"
-               width="1200" height="1500" fetchpriority="high" decoding="async"
-               alt="Smashbird burger and loaded fried chicken served on metal trays.">
-        </picture>
-      </figure>
+      <div class="b3d" id="b3d" role="img"
+           aria-label="A Smashbird burger built in layers: bun, patties, cheese, sauce and pickles.">
+        <div class="b3d-stage"><div class="b3d-scene" id="b3dScene"></div></div>
+        <p class="b3d-hint" id="b3dHint">Drag to spin &middot; tap to smash</p>
+      </div>
       <div class="hero-vert">Galway · H91</div>
     </div>
   </div>
@@ -1004,7 +1049,7 @@ document.documentElement.className += ' js';
         <h2 class="c-word rv"><em>SMASHED</em></h2>
         <p class="c-desc rv">Two thin beef patties pressed hard on a screaming hot flat-top. Crisp lacy edges. American cheese melted through every layer.</p>
       </div>
-      <div class="c-media"><picture><source type="image/webp" srcset="img/spread-640.webp 640w, img/spread-1000.webp 1000w" sizes="(max-width:900px) 100vw, 50vw"><img class="shot f-spread wipe" src="img/spread-1000.jpg" srcset="img/spread-640.jpg 640w, img/spread-1000.jpg 1000w" sizes="(max-width:900px) 100vw, 50vw" width="1000" height="602" loading="lazy" decoding="async" alt="A table of Smashbird food at Cross Street: burgers on metal trays, loaded fried chicken and canned drinks on a pink menu."></picture></div>
+      <div class="c-media"><div class="x3d" data-x3d aria-hidden="true"></div></div>
     </div>
     <div class="craving rev">
       <div class="c-label">
@@ -1012,7 +1057,7 @@ document.documentElement.className += ' js';
         <h2 class="c-word rv">FRIED</h2>
         <p class="c-desc rv">Fried chicken with real crunch. Crispy Bird, Hot Honey, Korean. Choose your sauce. Choose your heat. Never choose safe.</p>
       </div>
-      <div class="c-media"><picture><source type="image/webp" srcset="img/burger-640.webp 640w, img/burger-1000.webp 1000w" sizes="(max-width:900px) 100vw, 50vw"><img class="shot f-burger wipe" src="img/burger-1000.jpg" srcset="img/burger-640.jpg 640w, img/burger-1000.jpg 1000w" sizes="(max-width:900px) 100vw, 50vw" width="1000" height="712" loading="lazy" decoding="async" alt="The Chicken Smashurai: a fried chicken burger with red onion and slaw on a sesame bun, served with fries against the Smashbird graffiti wall."></picture></div>
+      <div class="c-media"><div class="x3d" data-x3d aria-hidden="true"></div></div>
     </div>
     <div class="craving">
       <div class="c-label">
@@ -1020,7 +1065,7 @@ document.documentElement.className += ' js';
         <h2 class="c-word rv">LOADED</h2>
         <p class="c-desc rv">Loaded fries built to collapse under the weight of their own toppings. Share them. Or don't.</p>
       </div>
-      <div class="c-media"><picture><source type="image/webp" srcset="img/chicken2-640.webp 640w, img/chicken2-1000.webp 1000w" sizes="(max-width:900px) 100vw, 50vw"><img class="shot wipe" src="img/chicken2-1000.jpg" srcset="img/chicken2-640.jpg 640w, img/chicken2-1000.jpg 1000w" sizes="(max-width:900px) 100vw, 50vw" width="1000" height="624" loading="lazy" decoding="async" alt="A black tray of loaded fried chicken with chilli, spring onion and a garlic sauce drizzle."></picture></div>
+      <div class="c-media"><div class="x3d" data-x3d aria-hidden="true"></div></div>
     </div>
     <div class="craving rev">
       <div class="c-label">
@@ -1028,7 +1073,7 @@ document.documentElement.className += ' js';
         <h2 class="c-word rv">VEGAN <em>JUNK</em></h2>
         <p class="c-desc rv">Vegan food that isn't trying to be acceptable. The same crunch, the same sauce, the same mess. No apologies.</p>
       </div>
-      <div class="c-media"><div class="ph wipe">Photo needed — vegan burger, full, styled, sauced</div></div>
+      <div class="c-media"><div class="x3d" data-x3d aria-hidden="true"></div></div>
     </div>
   </div>
 
@@ -1119,8 +1164,8 @@ document.documentElement.className += ' js';
     <p class="warn rv">⚠ Founding story and specific brand history to be confirmed with the owner before publishing.</p>
   </div>
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));border-top:1px solid var(--line)">
-    <div class="shot-box wipe" style="height:260px;border-right:1px solid var(--line)"><picture><source type="image/webp" srcset="img/sodas-640.webp 640w, img/sodas-1000.webp 1000w" sizes="(max-width:900px) 100vw, 50vw"><img class="shot f-sodas" src="img/sodas-1000.jpg" srcset="img/sodas-640.jpg 640w, img/sodas-1000.jpg 1000w" sizes="(max-width:900px) 100vw, 50vw" width="1000" height="625" loading="lazy" decoding="async" alt="Solas Sodas cans lined up on a table in front of the painted Smashbird mural."></picture></div>
-    <div class="shot-box wipe" style="height:260px;border-right:1px solid var(--line)"><picture><source type="image/webp" srcset="img/chicken2-640.webp 640w, img/chicken2-1000.webp 1000w" sizes="(max-width:900px) 100vw, 50vw"><img class="shot" src="img/chicken2-1000.jpg" srcset="img/chicken2-640.jpg 640w, img/chicken2-1000.jpg 1000w" sizes="(max-width:900px) 100vw, 50vw" width="1000" height="624" loading="lazy" decoding="async" alt="Loaded fried chicken in a black serving tray."></picture></div>
+    <div class="shot-box wipe" style="height:260px;border-right:1px solid var(--line)"></div>
+    <div class="shot-box wipe" style="height:260px;border-right:1px solid var(--line)"></div>
     <div class="ph wipe" style="height:260px">Photo needed — kitchen, heat, movement</div>
   </div>
   <p class="credit">Photography sourced from the Smashbird brand document and Instagram, cropped for layout. Resolution is limited — a proper shoot is recommended before launch.</p>
@@ -1852,6 +1897,188 @@ safe('boot', function(){
     });
   });
 
+})();
+</script>
+
+<script>
+/* ============================================================
+   CSS 3D — no library. Transforms and opacity only, paused when
+   off-screen, and static when the visitor asks for reduced motion.
+   ============================================================ */
+(function(){
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------------------------------------------- the burger */
+  // Baking the shade into the colour avoids a per-element filter, which was
+  // costing more than everything else combined on mobile.
+  function shade(hex, k){
+    var n = parseInt(hex.slice(1), 16);
+    var r = Math.round(((n >> 16) & 255) * k),
+        g = Math.round(((n >> 8) & 255) * k),
+        b = Math.round((n & 255) * k);
+    return 'rgb(' + r + ',' + g + ',' + b + ')';
+  }
+
+  var scene = document.getElementById('b3dScene');
+  var wrap  = document.getElementById('b3d');
+  if(scene){
+    // top to bottom. Cheese and sauce borrow the brand yellow and pink.
+    var LAYERS = [
+      { w:0.78, t:8, c:'#DFA055' },   // bun crown
+      { w:0.84, t:2, c:'#86C232' },   // lettuce
+      { w:0.80, t:2, c:'#FFD400' },   // cheese
+      { w:0.86, t:6, c:'#4A2C18' },   // patty
+      { w:0.82, t:2, c:'#FB2095' },   // smash sauce
+      { w:0.80, t:2, c:'#FFD400' },   // cheese
+      { w:0.86, t:6, c:'#4A2C18' },   // patty
+      { w:0.74, t:2, c:'#8FA82E' },   // pickles
+      { w:0.80, t:7, c:'#C9873A' }    // bun heel
+    ];
+
+    var box = scene.getBoundingClientRect().width || 420;
+    var z = 130;                       // start high, build downwards
+    var partsTop = [];
+
+    LAYERS.forEach(function(L, li){
+      for(var i = 0; i < L.t; i++){
+        var d = document.createElement('i');
+        d.className = 'b3d-l';
+        var w = Math.round(box * L.w);
+        // crown tapers so the top bun reads as a dome
+        if(li === 0){ var k = 0.62 + 0.38 * Math.sqrt(i / (L.t - 1)); w = Math.round(w * k); }
+        d.style.width = w + 'px';
+        d.style.height = w + 'px';   // circles — rotateX does the foreshortening
+        d.style.setProperty('--z', z + 'px');
+        d.style.setProperty('--c', shade(L.c, 0.70 + 0.30 * (i / Math.max(1, L.t - 1))));
+        scene.appendChild(d);
+        if(li === 0 && i === 0) partsTop.push(z, w);
+        z -= 4.2;
+      }
+      z -= 4.6;                       // gap between ingredients
+    });
+
+    // sesame on the crown
+    var topZ = partsTop[0] || 96, topW = partsTop[1] || 300;
+    for(var sIdx = 0; sIdx < 16; sIdx++){
+      var sd = document.createElement('i');
+      sd.className = 'b3d-seed';
+      sd.style.setProperty('--a', (sIdx * 137.5) + 'deg');
+      sd.style.setProperty('--r', (6 + Math.sqrt(sIdx / 16) * topW * 0.40) + 'px');
+      sd.style.setProperty('--z', (topZ + 2) + 'px');
+      scene.appendChild(sd);
+    }
+
+    var ring = document.createElement('i');
+    ring.className = 'b3d-ring';
+    scene.appendChild(ring);
+
+    var S = { ry: -18, vel: reduce ? 0 : 0.44, drag:false, x0:0, ry0:0,
+              smash:0, live:true };
+
+    function paint(){
+      scene.style.setProperty('--ry', S.ry.toFixed(2) + 'deg');
+      var k = S.smash;
+      scene.style.setProperty('--sc', (1 + k * 0.06).toFixed(3));
+      ring.style.setProperty('--k', (0.6 + k * 1.5).toFixed(2));
+      ring.style.setProperty('--o', (k * 0.7).toFixed(2));
+    }
+
+    // Half-rate animation: 113 layers in one preserve-3d context is enough work
+    // that painting every frame costs more than it looks like. Stepping twice as
+    // far every other frame is visually identical and roughly doubles headroom.
+    var raf, odd = 0;
+    function tick(){
+      raf = requestAnimationFrame(tick);
+      if((odd ^= 1)) return;
+      if(!S.drag) S.ry += S.vel;
+      if(S.smash > 0) S.smash = Math.max(0, S.smash - 0.09);
+      paint();
+    }
+    function start(){ if(!raf && !reduce) raf = requestAnimationFrame(tick); }
+    function stop(){ if(raf){ cancelAnimationFrame(raf); raf = 0; } }
+
+    paint();
+    if(!reduce){
+      if('IntersectionObserver' in window){
+        new IntersectionObserver(function(es){
+          es[0].isIntersecting ? start() : stop();
+        }, {threshold:0.05}).observe(wrap);
+      } else start();
+      document.addEventListener('visibilitychange', function(){
+        document.hidden ? stop() : start();
+      });
+    }
+
+    // drag to spin
+    var hint = document.getElementById('b3dHint');
+    function down(e){
+      S.drag = true; S.x0 = (e.touches ? e.touches[0].clientX : e.clientX); S.ry0 = S.ry;
+      if(hint) hint.classList.add('gone');
+    }
+    function move(e){
+      if(!S.drag) return;
+      var x = (e.touches ? e.touches[0].clientX : e.clientX);
+      S.ry = S.ry0 + (x - S.x0) * 0.55;
+      paint();
+    }
+    function up(){ S.drag = false; }
+    wrap.addEventListener('mousedown', down);
+    addEventListener('mousemove', move);
+    addEventListener('mouseup', up);
+    wrap.addEventListener('touchstart', down, {passive:true});
+    wrap.addEventListener('touchmove', move, {passive:true});
+    addEventListener('touchend', up);
+
+    // tap to smash
+    wrap.addEventListener('click', function(){
+      if(reduce) return;
+      S.smash = 1;
+      if(hint) hint.classList.add('gone');
+    });
+  }
+
+  /* -------------------------------------- extruded category words */
+  var blocks = document.querySelectorAll('[data-x3d]');
+  Array.prototype.forEach.call(blocks, function(host){
+    var craving = host.closest('.craving');
+    var src = craving && craving.querySelector('.c-word');
+    var word = src ? src.textContent.trim() : '';
+    if(!word) return;
+
+    var inner = document.createElement('div');
+    inner.className = 'x3d-in';
+    var DEPTH = 9;
+    for(var i = DEPTH; i >= 0; i--){
+      var l = document.createElement('span');
+      l.className = 'x3d-l' + (i === 0 ? ' face' : '');
+      l.textContent = word;
+      l.style.setProperty('--z', (-i * 4.5) + 'px');
+      l.style.setProperty('--c', i === 0 ? '#F2E8D5'
+        : 'rgba(251,32,149,' + (0.9 - i / DEPTH * 0.72).toFixed(2) + ')');
+      inner.appendChild(l);
+    }
+    host.appendChild(inner);
+
+    if(reduce) return;
+    // gentle parallax tied to scroll position, transform only
+    var seen = false;
+    new IntersectionObserver(function(es){ seen = es[0].isIntersecting; },
+      {threshold:0}).observe(host);
+    var queued = false;
+    function onScroll(){
+      if(!seen || queued) return;
+      queued = true;
+      requestAnimationFrame(function(){
+        queued = false;
+        var r = host.getBoundingClientRect();
+        var p = (r.top + r.height / 2 - innerHeight / 2) / innerHeight; // -1..1
+        inner.style.setProperty('--xry', (-24 + p * 26).toFixed(1) + 'deg');
+        inner.style.setProperty('--xrx', (14 - p * 12).toFixed(1) + 'deg');
+      });
+    }
+    addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+  });
 })();
 </script>
 </body>

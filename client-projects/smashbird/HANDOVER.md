@@ -47,16 +47,22 @@ licensed and are **not** in the repository. No unlicensed font file has been
 downloaded. The stack currently falls back to metrically similar grotesques.
 Supply the licensed web-font files, or confirm a licensed web-font service.
 
-**Photography.** The hero now uses two supplied images served from Cloudinary
-with responsive crops (4:5 on desktop, 16:10 on mobile).
+**Photography — none.** All photographs were removed at client request. The site
+now runs on CSS 3D instead: a layered burger in the hero (drag to spin, tap to
+smash) and extruded category words where the food photos used to be. No library,
+no image files, no `img/` folder.
 
-⚠ Their filenames (`ChatGPT_Image_…`) indicate **AI-generated food photography**,
-which this brief explicitly rules out. In use pending a client decision — see
-Content Issue 13. Real photographs of the food, staff and preparation are still
-the goal.
+⚠ **This is a design decision with a commercial cost.** A food menu without
+product images converts worse — people order with their eyes. The 3D carries the
+brand well, but real photography of the food, the staff and the preparation is
+still recommended before launch, at minimum on the menu cards (the card component
+already supports a per-item image and turns it on automatically).
 
-The secondary section images are the earlier Instagram screenshots at 1000px
-wide, which is below what a full-bleed panel needs on a high-density display.
+**Motion.** The 3D honours `prefers-reduced-motion`: no auto-rotation, no hint
+text, static assembled burger. Animation is throttled to 30fps and pauses when
+the burger scrolls out of view or the tab is hidden. Measured at 39fps in a
+headless container with no GPU; real devices with hardware compositing will do
+better, but it is worth spot-checking on an older phone.
 
 ---
 
