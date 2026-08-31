@@ -3,9 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Smashbird — Proposal by Lumus</title>
-<meta name="description" content="Website concept for Smashbird Galway. Prepared by Lumus.">
+<title>Smashbird Galway — Serious Burgers, Fried Chicken & Birdhouse Sauces</title>
+<meta name="description" content="Smashed burgers, fried chicken, vegan junk and loaded sides in Galway. Winner of Best Burger & American at the Deliveroo Restaurant Awards 2025. Cross Street and Liosb&aacute;n.">
 <meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="restaurant">
+<meta property="og:site_name" content="Smashbird">
+<meta property="og:title" content="Smashbird Galway — Serious Burgers">
+<meta property="og:description" content="Smashed burgers, fried chicken, vegan junk and loaded sides &mdash; powered by Birdhouse sauces. Two Galway locations.">
+<meta property="og:locale" content="en_IE">
+<meta property="og:image" content="img/burger-1000.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#000000">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "name": "Smashbird",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "3 Cross Street Lower",
+    "addressLocality": "Galway",
+    "postalCode": "H91 T995",
+    "addressCountry": "IE"
+  },
+  "sameAs": ["https://www.instagram.com/smashbird_galway/"],
+  "award": "Best Burger & American — Deliveroo Restaurant Awards 2025"
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;0,900;1,900&family=Barlow:wght@400;500;600&family=Caveat:wght@700&display=swap" rel="stylesheet">
@@ -648,9 +672,151 @@ footer .logo-mark{width:96px}
   background:radial-gradient(ellipse 80% 72% at 50% 48%,transparent 52%,rgba(9,9,11,.50));
 }
 @media (max-width:900px){ .hero-shot img{object-position:center 46%;} }
+
+/* ==================== BRIEF COMPONENTS ==================== */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0,0,0,0);white-space:nowrap;border:0}
+:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
+.wrap{max-width:1240px;margin:0 auto;padding:0 clamp(18px,4vw,48px)}
+.bx-head{padding:clamp(38px,6vw,72px) 0 clamp(18px,3vw,30px)}
+.bx-title{font-family:var(--font-d);font-size:clamp(30px,6vw,62px);line-height:.95;
+  letter-spacing:-.01em;color:var(--cream);margin:0}
+.bx-title.sm{font-size:clamp(22px,3.4vw,34px)}
+.bx-sub{margin:12px 0 0;max-width:62ch;color:var(--muted);font-size:clamp(14px,1.5vw,17px);line-height:1.6}
+
+.hero-locline{font-family:var(--font-b);font-size:11px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--muted);margin:18px 0 0}
+.btn-ghost{display:inline-flex;align-items:center;gap:9px;padding:14px 22px;
+  border:2px solid var(--cream);color:var(--cream);text-decoration:none;
+  font-family:var(--font-b);font-weight:700;font-size:13px;letter-spacing:.12em;
+  text-transform:uppercase;transition:background .18s,color .18s}
+.btn-ghost:hover,.btn-ghost:focus-visible{background:var(--cream);color:#000}
+.ext{font-size:.9em}
+
+/* proof strip */
+.proof{list-style:none;display:flex;flex-wrap:wrap;gap:0;margin:0;padding:0;
+  border-top:2px solid var(--pink);border-bottom:2px solid var(--pink);background:#0b0b0d}
+.proof li{flex:1 1 220px;padding:14px 18px;font-family:var(--font-b);font-size:10.5px;
+  font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--cream);
+  border-right:1px solid rgba(255,255,255,.12);line-height:1.5}
+.proof li:first-child{color:var(--yellow)}
+.proof li:last-child{border-right:none}
+@media(max-width:640px){.proof li{flex:1 1 100%;border-right:none;
+  border-bottom:1px solid rgba(255,255,255,.12)}.proof li:last-child{border-bottom:none}}
+
+/* menu */
+.cat-nav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 26px}
+.cat-chip{font-family:var(--font-b);font-size:12px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;padding:9px 15px;border:1px solid rgba(255,255,255,.22);
+  background:transparent;color:var(--cream);cursor:pointer;transition:.16s}
+.cat-chip:hover{border-color:var(--pink)}
+.cat-chip[aria-pressed="true"]{background:var(--pink);border-color:var(--pink);color:#000}
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+  gap:2px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.1);
+  padding-bottom:clamp(30px,5vw,60px)}
+.mi{background:#0b0b0d;padding:20px 18px;min-height:96px;display:flex;
+  flex-direction:column;justify-content:center}
+.mi-name{font-family:var(--font-d);font-size:21px;line-height:1.05;color:var(--cream);margin:0}
+.mi-desc{margin:8px 0 0;font-size:13.5px;line-height:1.5;color:var(--muted)}
+.mi-price{margin:10px 0 0;font-family:var(--font-b);font-weight:700;color:var(--yellow);font-size:15px}
+.mi-tags{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 0}
+.mi-tag{font-family:var(--font-b);font-size:9px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;padding:3px 7px;border:1px solid rgba(255,255,255,.3);color:var(--muted)}
+.menu-note{margin:18px 0 0;font-size:13px;color:var(--muted)}
+
+/* sauces */
+.sauce-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:14px;padding-bottom:clamp(30px,5vw,60px)}
+.sc{border:1px solid rgba(255,255,255,.16);padding:26px 22px;background:#0b0b0d}
+.sc-name{font-family:var(--font-d);font-size:26px;color:var(--cream);margin:0}
+.sc-heat{margin:8px 0 0;font-family:var(--font-b);font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--pink)}
+.sc-desc{margin:10px 0 0;font-size:14px;line-height:1.55;color:var(--muted)}
+
+/* locations */
+.loc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:16px;padding-bottom:clamp(30px,5vw,60px)}
+.lc{border:1px solid rgba(255,255,255,.16);background:#0b0b0d;padding:26px 24px}
+.lc-name{font-family:var(--font-d);font-size:30px;line-height:1;color:var(--cream);margin:0 0 14px}
+.lc-row{margin:0 0 12px}
+.lc-lab{font-family:var(--font-b);font-size:9.5px;font-weight:700;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);margin:0 0 3px}
+.lc-val{margin:0;font-size:14.5px;line-height:1.55;color:var(--cream)}
+.lc-val a{color:var(--cream)}
+
+/* order */
+.order-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:16px;padding-bottom:clamp(30px,5vw,60px)}
+.oc{border:1px solid rgba(255,255,255,.16);background:#0b0b0d;padding:28px 24px;
+  display:flex;flex-direction:column;gap:14px}
+.oc-name{font-family:var(--font-d);font-size:30px;line-height:1;color:var(--cream);margin:0}
+.oc-addr{margin:0;font-size:14px;color:var(--muted);line-height:1.55}
+.oc .btn-slab,.oc .btn-ghost{align-self:flex-start;margin-top:auto}
+
+/* forms */
+.cf{max-width:760px;padding-bottom:clamp(36px,6vw,70px)}
+.cf-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:640px){.cf-row{grid-template-columns:1fr}}
+.cf-field{margin:0 0 16px;display:flex;flex-direction:column}
+.cf-field label{font-family:var(--font-b);font-size:10.5px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);margin:0 0 7px}
+.cf input,.cf select,.cf textarea{background:#0b0b0d;border:1px solid rgba(255,255,255,.24);
+  color:var(--cream);padding:13px 14px;font:inherit;font-size:16px;border-radius:0;min-height:50px}
+.cf textarea{min-height:130px;resize:vertical}
+.cf input:focus,.cf select:focus,.cf textarea:focus{border-color:var(--pink);outline:none}
+.cf-consent{display:flex;gap:11px;align-items:flex-start;margin:6px 0 4px}
+.cf-consent input{min-height:0;width:20px;height:20px;flex:0 0 auto;margin-top:2px}
+.cf-consent label{text-transform:none;letter-spacing:0;font-size:13.5px;font-weight:400;
+  color:var(--muted);margin:0;line-height:1.5}
+.cf-err{margin:6px 0 0;color:var(--red,#E53B2F);font-size:12.5px}
+.cf input[aria-invalid="true"],.cf textarea[aria-invalid="true"]{border-color:var(--red,#E53B2F)}
+.cf-status{margin:16px 0 0;font-size:14px;color:var(--yellow);line-height:1.6}
+
+/* reviews + instagram */
+.reviews-wrap,.ig-wrap{border-top:1px solid rgba(255,255,255,.12)}
+.review-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:16px;padding-bottom:clamp(30px,5vw,60px)}
+.rv-card{border:1px solid rgba(255,255,255,.16);padding:24px;background:#0b0b0d}
+.rv-text{margin:0 0 14px;font-size:15px;line-height:1.6;color:var(--cream)}
+.rv-meta{margin:0;font-size:12px;color:var(--muted)}
+.ig-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;
+  flex-wrap:wrap;padding-top:clamp(34px,5vw,60px);padding-bottom:22px}
+.ig-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:2px}
+.ig-grid img{width:100%;height:100%;aspect-ratio:1;object-fit:cover;display:block}
+
+/* footer */
+.site-foot{background:#000;border-top:2px solid var(--pink);padding:clamp(34px,5vw,58px) 0 26px;margin-top:auto}
+.foot-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:30px}
+.foot-h{font-family:var(--font-b);font-size:10px;font-weight:700;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--pink);margin:0 0 13px}
+.foot-list{list-style:none;margin:0;padding:0}
+.foot-list li{margin:0 0 9px}
+.foot-list a,.foot-loc{color:var(--cream);text-decoration:none;font-size:14px;line-height:1.5}
+.foot-list a:hover{text-decoration:underline}
+.foot-loc{display:block;margin:0 0 14px}
+.foot-loc b{display:block;font-family:var(--font-b);font-size:13px}
+.foot-loc span{color:var(--muted);font-size:13px}
+.foot-base{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  margin-top:34px;padding-top:20px;border-top:1px solid rgba(255,255,255,.14)}
+.foot-base p{margin:0;font-size:12px;color:var(--muted)}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important;scroll-behavior:auto!important}
+}
+
+/* Grid children default to min-width:auto, which lets long content widen the
+   track and push the whole document sideways on narrow screens. */
+.wrap{width:100%}
+.foot-grid>*,.menu-grid>*,.sauce-grid>*,.loc-grid>*,.order-grid>*,
+.review-grid>*,.ig-grid>*,.cf-row>*{min-width:0}
+.foot-loc span,.foot-list a,.lc-val,.oc-addr,.rv-text{overflow-wrap:anywhere}
+.foot-base{min-width:0}
+@media(max-width:520px){.foot-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
+<script src="content.js"></script>
 <script>
 document.documentElement.className += ' js';
 
@@ -721,7 +887,8 @@ document.documentElement.className += ' js';
     <ul class="nav-links" id="navLinks">
       <li><a href="#menu" data-go="menu">Menu</a></li>
       <li><a href="#locations" data-go="locations">Locations</a></li>
-      <li><a href="#sauces" data-go="sauces">Sauces</a></li>
+      <li><a href="#sauces" data-go="sauces">Birdhouse Sauces</a></li>
+      <li><a href="#catering" data-go="catering">Catering</a></li>
       <li><a href="#about" data-go="about">About</a></li>
       <li><a href="#contact" data-go="contact">Contact</a></li>
       <!-- The pink Order button is desktop-only, so the panel carries its own. -->
@@ -741,21 +908,19 @@ document.documentElement.className += ' js';
   <div class="hero-grid">
     <div class="hero-left">
       <div>
-        <p class="hero-eyebrow stamp">Cross Street · Liosban</p>
+        <p class="hero-eyebrow stamp">SMASHBIRD</p>
         <h1 class="hero-hl">
           <span class="stamp" style="display:block">SERIOUS</span>
           <span class="stamp l2" style="display:block">BURGERS.</span>
-          <span class="stamp l3">ZERO SAFE CHOICES</span>
+          <span class="stamp l3">BIG FLAVOUR. NO NONSENSE.</span>
         </h1>
       </div>
-      <p class="hero-sub stamp">Smashed patties. Fried chicken. Vegan junk. An unusually deep sauce range. Built in Galway. Served loud.</p>
+      <p class="hero-sub stamp">Smashed burgers, fried chicken, vegan junk and loaded sides &mdash; powered by Birdhouse sauces.</p>
       <div class="hero-actions">
-        <a href="#order" class="btn-slab stamp" data-go="order"><span>Order Now <em class="arw" style="font-style:normal">→</em></span></a>
-        <div class="hero-locs stamp">
-          <button class="hero-loc-btn" data-go="locations">Cross Street</button>
-          <button class="hero-loc-btn" data-go="locations">Liosban</button>
-        </div>
+        <a href="#order" class="btn-slab stamp" data-go="order"><span>Order Now <em class="arw" style="font-style:normal">&rarr;</em></span></a>
+        <a href="#menu" class="btn-ghost stamp" data-go="menu">View the Menu</a>
       </div>
+      <p class="hero-locline stamp">CROSS STREET &middot; LIOSB&Aacute;N &middot; GALWAY</p>
     </div>
 
     <div class="hero-right">
@@ -773,6 +938,9 @@ document.documentElement.className += ' js';
       <div class="hero-vert">Galway · H91</div>
     </div>
   </div>
+  </div>
+
+  <ul class="proof" id="proofStrip" aria-label="Awards and options"></ul>
 
   <div class="hero-strip" aria-hidden="true">
     <div class="marq"><span>Smashed</span><em>·</em><span>Fried</span><em>·</em><span>Loaded</span><em>·</em><span>Sauced</span><em>·</em><span>Cross Street</span><em>·</em><span>Liosban</span><em>·</em></div>
@@ -818,151 +986,67 @@ document.documentElement.className += ' js';
     <p class="neon rv" id="neonLine">I licked it<br>so it's mine</p>
     <p class="neon-sub rv">On the wall at Cross Street</p>
   </div>
-</section>
 
 <!-- ============================================================
      MENU
      ============================================================ -->
+  <section class="reviews-wrap" id="reviewsSection" aria-label="Reviews" hidden>
+    <div class="wrap">
+      <header class="bx-head">
+        <h2 class="bx-title">GALWAY&rsquo;S GOT OPINIONS.</h2>
+      </header>
+      <div id="reviewGrid" class="review-grid"></div>
+    </div>
+  </section>
+
+  <section class="ig-wrap" aria-label="Instagram">
+    <div class="wrap ig-inner">
+      <div>
+        <h2 class="bx-title sm">FOLLOW THE BIRD.</h2>
+        <p class="bx-sub" id="igHandle"></p>
+      </div>
+      <a class="btn-ghost" id="igLink" href="https://www.instagram.com/smashbird_galway/" target="_blank" rel="noopener noreferrer">
+        Instagram <span class="ext" aria-hidden="true">&#8599;</span><span class="sr-only">(opens in a new tab)</span>
+      </a>
+    </div>
+    <div id="igGrid" class="ig-grid"></div>
+  </section>
+
+</section>
+
 <section id="menu" class="page" aria-label="Menu">
-  <div class="sec-head drip">
-    <h1 class="stamp">THE MENU</h1>
-    <p class="note rv">Prices require verification · Allergen info available on request</p>
+  <div class="wrap">
+    <header class="bx-head">
+      <h2 class="bx-title">PICK YOUR CRAVING.</h2>
+      <p class="bx-sub">Smashed burgers, buttermilk fried chicken, vegan junk and loaded sides.</p>
+    </header>
+    <nav class="cat-nav" id="catNav" aria-label="Menu categories"></nav>
+    <div id="menuGrid" class="menu-grid"></div>
+    <p id="allergenNote" class="menu-note" hidden></p>
   </div>
-
-  <div class="menu-cats" role="tablist" aria-label="Menu categories">
-    <button class="cat-btn active" role="tab" aria-selected="true" data-cat="beef">Beef</button>
-    <button class="cat-btn" role="tab" aria-selected="false" data-cat="chicken">Chicken</button>
-    <button class="cat-btn" role="tab" aria-selected="false" data-cat="vegan">Vegan Junk</button>
-    <button class="cat-btn" role="tab" aria-selected="false" data-cat="loaded">Loaded</button>
-    <button class="cat-btn" role="tab" aria-selected="false" data-cat="sides">Sides</button>
-    <button class="cat-btn" role="tab" aria-selected="false" data-cat="drips">Drips</button>
-    <button class="cat-btn" role="tab" aria-selected="false" data-cat="drinks">Drinks</button>
-  </div>
-
-  <div class="menu-sec active" id="cat-beef">
-    <h2>Beef</h2>
-    <div class="items">
-      <div class="item"><div><div class="i-name">Classic Smash</div><div class="i-desc">Single smashed patty · American cheese · pickles · shredded lettuce · Smash Sauce · brioche bun</div><div class="badges"><span class="badge b-tbc">price tbc</span></div></div><div class="i-price">€ —</div></div>
-      <div class="item"><div><div class="i-name">Double Smash</div><div class="i-desc">Two smashed patties · double American cheese · onions · pickles · Smash Sauce · brioche bun</div><div class="badges"><span class="badge b-tbc">price tbc</span></div></div><div class="i-price">€ —</div></div>
-      <div class="item"><div><div class="i-name">Bird Stack</div><div class="i-desc">Smashed beef · fried chicken · double cheese · Bird Sauce · brioche</div><div class="badges"><span class="badge b-tbc">price tbc</span></div></div><div class="i-price">€ —</div></div>
-      <div class="item"><div><div class="i-name">Smash Dog</div><div class="i-desc">Beef hot dog · American cheese · crispy onions · mustard · ketchup · hot dog bun</div><div class="badges"><span class="badge b-tbc">price tbc</span></div></div><div class="i-price">€ —</div></div>
-    </div>
-  </div>
-
-  <div class="menu-sec" id="cat-chicken">
-    <h2>Chicken</h2>
-    <div class="items">
-      <div class="item"><div><div class="i-name">Crispy Bird</div><div class="i-desc">Crispy fried chicken fillet · slaw · pickles · Bird Sauce · brioche bun</div><div class="badges"><span class="badge b-tbc">price tbc</span></div></div><div class="i-price">€ —</div></div>
-      <div class="item"><div><div class="i-name">Hot Honey Chicken</div><div class="i-desc">Crispy fried chicken · hot honey glaze · pickled jalapeños · slaw · brioche</div><div class="badges"><span class="badge b-hot">hot</span><span class="badge b-tbc">price tbc</span></div></div><div class="i-price">€ —</div></div>
-      <div class="item"><div><div class="i-name">Korean Bird</div><div class="i-desc">Fried chicken · Korean BBQ glaze · kimchi slaw · sesame · spring onion</div><div class="badges"><span class="badge b-hot">hot</span><span class="badge b-tbc">price tbc</span></div></div><div class="i-price">€ —</div></div>
-      <div class="item"><div><div class="i-name">Bird Strips</div><div class="i-desc">Crispy chicken strips · choice of dip sauce · served with fries</div><div class="badges"><span class="badge b-tbc">price tbc</span></div></div><div class="i-price">€ —</div></div>
-    </div>
-  </div>
-
-  <div class="menu-sec" id="cat-vegan">
-    <h2>Vegan Junk</h2>
-    <div class="items">
-      <div class="item"><div><div class="i-name">OG Vegan Smash</div><div class="i-desc">Plant-based smashed patty · vegan cheese · pickles · lettuce · Bird Sauce (vegan) · vegan bun</div><div class="badges"><span class="badge b-v">vegan</span><span class="badge b-tbc">price tbc</span></div></div><div class="i-price">€ —</div></div>
-      <div class="item"><div><div class="i-name">Vegan Crispy Bird</div><div class="i-desc">Crispy plant-based chicken fillet · vegan slaw · pickles · Bird Sauce (vegan) · vegan bun</div><div class="badges"><span class="badge b-v">vegan</span><span class="badge b-tbc">price tbc</span></div></div><div class="i-price">€ —</div></div>
-      <div class="item"><div><div class="i-name">Loaded Vegan Fries</div><div class="i-desc">Fries · vegan cheese sauce · jalapeños · spring onion · vegan Smash Sauce</div><div class="badges"><span class="badge b-v">vegan</span><span class="badge b-gf">gf option</span><span class="badge b-tbc">price tbc</span></div></div><div class="i-price">€ —</div></div>
-    </div>
-  </div>
-
-  <div class="menu-sec" id="cat-loaded">
-    <h2>Loaded</h2>
-    <div class="items">
-      <div class="item"><div><div class="i-name">Loaded Fries</div><div class="i-desc">Fries · cheese sauce · pickled jalapeños · spring onion · Smash Sauce</div><div class="badges"><span class="badge b-tbc">price tbc</span></div></div><div class="i-price">€ —</div></div>
-      <div class="item"><div><div class="i-name">Bird Loaded Fries</div><div class="i-desc">Fries · crispy chicken strips · Bird Sauce · cheese · slaw</div><div class="badges"><span class="badge b-tbc">price tbc</span></div></div><div class="i-price">€ —</div></div>
-      <div class="item"><div><div class="i-name">Smash Loaded Fries</div><div class="i-desc">Fries · smashed beef crumbles · double cheese sauce · crispy onions · Smash Sauce</div><div class="badges"><span class="badge b-tbc">price tbc</span></div></div><div class="i-price">€ —</div></div>
-    </div>
-  </div>
-
-  <div class="menu-sec" id="cat-sides">
-    <h2>Sides</h2>
-    <div class="items">
-      <div class="item"><div><div class="i-name">Fries</div><div class="i-desc">Skin-on fries · sea salt</div><div class="badges"><span class="badge b-v">vegan</span><span class="badge b-gf">gf</span><span class="badge b-tbc">price tbc</span></div></div><div class="i-price">€ —</div></div>
-      <div class="item"><div><div class="i-name">Slaw</div><div class="i-desc">House slaw · ingredients to confirm</div><div class="badges"><span class="badge b-tbc">price tbc</span></div></div><div class="i-price">€ —</div></div>
-      <div class="item"><div><div class="i-name">Onion Rings</div><div class="i-desc">Battered onion rings</div><div class="badges"><span class="badge b-tbc">price tbc</span></div></div><div class="i-price">€ —</div></div>
-    </div>
-  </div>
-
-  <div class="menu-sec" id="cat-drips">
-    <h2>Drips — Sauce Bottles</h2>
-    <div class="items">
-      <div class="item"><div><div class="i-name">Bird Sauce Bottle</div><div class="i-desc">The signature. Take it home. Size and price to confirm.</div><div class="badges"><span class="badge b-tbc">price tbc</span></div></div><div class="i-price">€ —</div></div>
-      <div class="item"><div><div class="i-name">Hot Honey Bottle</div><div class="i-desc">Sweet heat. On everything.</div><div class="badges"><span class="badge b-v">vegan</span><span class="badge b-tbc">price tbc</span></div></div><div class="i-price">€ —</div></div>
-    </div>
-  </div>
-
-  <div class="menu-sec" id="cat-drinks">
-    <h2>Drinks</h2>
-    <div class="items">
-      <div class="item"><div><div class="i-name">Solas Sodas</div><div class="i-desc">Handcrafted Irish soda · Lemon &amp; Mint · Grapefruit Rock Shandy · Spicy Ginger · Elderflower · Natural Cola</div><div class="badges"><span class="badge b-v">vegan</span><span class="badge b-tbc">price tbc</span></div></div><div class="i-price">€ —</div></div>
-      <div class="item"><div><div class="i-name">Soft Drinks</div><div class="i-desc">Range to confirm</div><div class="badges"><span class="badge b-tbc">verify range + price</span></div></div><div class="i-price">€ —</div></div>
-      <div class="item"><div><div class="i-name">Water</div><div class="i-desc">Still / sparkling</div><div class="badges"><span class="badge b-tbc">price tbc</span></div></div><div class="i-price">€ —</div></div>
-    </div>
-  </div>
-
-  <p class="allergen">⚠ All prices require verification. Full allergen information is available in-store and on request. Menu items may vary by location. GF items are prepared in a kitchen that handles gluten — not suitable for coeliac disease. Always inform staff of any allergies.</p>
 </section>
 
-<!-- ============================================================
-     LOCATIONS
-     ============================================================ -->
 <section id="locations" class="page" aria-label="Locations">
-  <div class="sec-head drip"><h1 class="stamp">TWO SPOTS.<br><span class="dim">ONE BIRD.</span></h1></div>
-  <div class="loc-grid">
-    <div class="loc">
-      <p class="loc-num rv">01</p>
-      <h2 class="loc-name rv">Cross<br>Street</h2>
-      <div class="shot-box wipe" style="height:210px;margin-bottom:24px"><picture><source type="image/webp" srcset="img/neon-640.webp 640w, img/neon-1000.webp 1000w" sizes="(max-width:900px) 100vw, 50vw"><img class="shot f-neon" src="img/neon-1000.jpg" srcset="img/neon-640.jpg 640w, img/neon-1000.jpg 1000w" sizes="(max-width:900px) 100vw, 50vw" width="1000" height="625" loading="lazy" decoding="async" alt="The neon wall at Smashbird Cross Street reading &quot;I licked it so it's mine&quot; beside a neon burger sign."></picture></div>
-      <div class="loc-info">
-        <div class="rv"><p class="l-lab">Address</p><p class="l-val">3 Cross Street Lower<br>Galway, H91 T995</p></div>
-        <div class="rv"><p class="l-lab">Opening hours</p><p class="l-val"><small>⚠ Verify before publishing</small></p></div>
-        <div class="rv"><p class="l-lab">Order</p><p class="l-val">Collection · Deliveroo · Flipdish</p></div>
-      </div>
-      <a href="#order" class="loc-cta rv" data-go="order"><span>Order Cross Street</span><span>→</span></a>
-    </div>
-    <div class="loc">
-      <p class="loc-num rv">02</p>
-      <h2 class="loc-name rv">Liosban</h2>
-      <div class="ph wipe">Photo needed — Liosban interior / exterior</div>
-      <div class="loc-info">
-        <div class="rv"><p class="l-lab">Address</p><p class="l-val">Liosban, Galway, H91 D8VP<br><small>⚠ Verify full street address</small></p></div>
-        <div class="rv"><p class="l-lab">Opening hours</p><p class="l-val"><small>⚠ Verify before publishing</small></p></div>
-        <div class="rv"><p class="l-lab">Order</p><p class="l-val">Collection · Deliveroo · Flipdish</p></div>
-      </div>
-      <a href="#order" class="loc-cta rv" data-go="order"><span>Order Liosban</span><span>→</span></a>
-    </div>
-  </div>
-  <div class="map-row">
-    <a class="map-btn" href="https://maps.google.com/?q=3+Cross+Street+Lower+Galway" target="_blank" rel="noopener">Cross Street → Maps ↗</a>
-    <a class="map-btn" href="https://maps.google.com/?q=Liosban+Galway" target="_blank" rel="noopener">Liosban → Maps ↗</a>
+  <div class="wrap">
+    <header class="bx-head">
+      <h2 class="bx-title">TWO SPOTS. ONE BIRD.</h2>
+      <p class="bx-sub">Cross Street in the city centre. Liosb&aacute;n on the north side.</p>
+    </header>
+    <div id="locGrid" class="loc-grid"></div>
   </div>
 </section>
 
-<!-- ============================================================
-     SAUCES
-     ============================================================ -->
-<section id="sauces" class="page" aria-label="Sauces">
-  <div class="sec-head dark drip"><h1 class="stamp">SAUCE IS THE<br>MAIN CHARACTER.</h1></div>
-  <p class="sauce-intro rv">An unusually deep sauce range. Every one matters. Some available in bottles to take home.</p>
-  <div class="rail" id="rail" aria-label="Sauce range">
-    <div class="sauce"><div class="s-name">Bird<br>Sauce</div><div class="heat" aria-label="Heat 1 of 5"><i></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i></div><p class="s-note">The signature. Creamy, tangy, deeply addictive. Exact profile to confirm.</p><span class="s-tag">Vegan · verify</span></div>
-    <div class="sauce" style="--sc:var(--yellow)"><div class="s-name">Hot<br>Honey</div><div class="heat" aria-label="Heat 2 of 5"><i></i><i></i><i class="off"></i><i class="off"></i><i class="off"></i></div><p class="s-note">Sweet heat. Floral, warm, sticky. Goes on everything.</p><span class="s-tag">Verify</span></div>
-    <div class="sauce"><div class="s-name">Chipotle<br>Mayo</div><div class="heat" aria-label="Heat 2 of 5"><i></i><i></i><i class="off"></i><i class="off"></i><i class="off"></i></div><p class="s-note">Smoky, rich, slightly creamy.</p><span class="s-tag">Verify</span></div>
-    <div class="sauce" style="--sc:var(--violet)"><div class="s-name">Korean<br>BBQ</div><div class="heat" aria-label="Heat 2 of 5"><i></i><i></i><i class="off"></i><i class="off"></i><i class="off"></i></div><p class="s-note">Umami-deep, slightly sweet, fermented edge.</p><span class="s-tag">Vegan · verify</span></div>
-    <div class="sauce"><div class="s-name">Smash<br>Sauce</div><div class="heat" aria-label="Heat 1 of 5"><i></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i></div><p class="s-note">The house burger sauce. Sharp, creamy, proprietary.</p><span class="s-tag">Verify</span></div>
-    <div class="sauce" style="--sc:var(--yellow)"><div class="s-name">Chilli<br>Oil</div><div class="heat" aria-label="Heat 4 of 5"><i></i><i></i><i></i><i></i><i class="off"></i></div><p class="s-note">Aromatic, deep heat. Not for the undecided.</p><span class="s-tag">Vegan · verify</span></div>
-    <div class="sauce" style="--sc:var(--cream)"><div class="s-name">Ranch</div><div class="heat" aria-label="Heat 0 of 5"><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i></div><p class="s-note">Cooling. Herby. Plays well with everything.</p><span class="s-tag">Verify</span></div>
-    <div class="rail-end"><b>Pick your<br>poison.</b><small>Bottles available in-store</small></div>
+<section id="sauces" class="page" aria-label="Birdhouse Sauces">
+  <div class="wrap">
+    <header class="bx-head">
+      <h2 class="bx-title">SAUCE IS THE MAIN CHARACTER.</h2>
+      <p class="bx-sub" id="saucesIntro"></p>
+    </header>
+    <div id="sauceGrid" class="sauce-grid"></div>
+    <p class="menu-note"><a id="birdhouseLink" href="#" hidden>Birdhouse &rarr;</a></p>
   </div>
-  <p class="sauce-note">⚠ Sauce range and availability subject to verification. Vegan status, allergens and bottle availability require confirmation before publishing.</p>
 </section>
 
-<!-- ============================================================
-     ABOUT
-     ============================================================ -->
 <section id="about" class="page" aria-label="About">
   <div class="about-top" data-splat>
     <h1 class="about-hl stamp">MAKE THE</h1>
@@ -992,26 +1076,83 @@ document.documentElement.className += ' js';
 <!-- ============================================================
      ORDER
      ============================================================ -->
-<section id="order" class="page" aria-label="Order">
-  <div class="order-wrap drip" data-splat>
-    <h1 class="order-hl stamp">GET</h1>
-    <h1 class="order-hl stamp">STUCK IN.</h1>
-    <p class="order-note rv">Pick your location. Order direct or through Deliveroo.</p>
-    <div class="order-btns">
-      <a href="#" class="order-btn rv"><span class="ob-loc">Location 01</span><span class="ob-name">Cross Street</span><span class="ob-addr">3 Cross Street Lower, Galway</span><span class="ob-act">Order Now →</span></a>
-      <a href="#" class="order-btn rv"><span class="ob-loc">Location 02</span><span class="ob-name">Liosban</span><span class="ob-addr">Galway, H91 D8VP</span><span class="ob-act">Order Now →</span></a>
-    </div>
-    <div class="platforms rv">
-      <p>Also available on</p>
-      <div class="plat-links"><a href="#" class="plat">Deliveroo</a><a href="#" class="plat">Flipdish</a></div>
-    </div>
-    <p class="order-warn">⚠ Order links to be connected to Flipdish / Deliveroo before launch.</p>
+<section id="catering" class="page" aria-label="Catering">
+  <div class="wrap">
+    <header class="bx-head">
+      <h2 class="bx-title">BRING SMASHBIRD TO THE PARTY.</h2>
+      <p class="bx-sub">Birthdays, work parties, weddings or private events &mdash; bring the Smashbird and Birdhouse flavour to your crowd.</p>
+    </header>
+
+    <form class="cf" id="cateringForm" novalidate>
+      <div class="cf-row">
+        <div class="cf-field">
+          <label for="cat-name">Your name <span aria-hidden="true">*</span></label>
+          <input id="cat-name" name="name" type="text" autocomplete="name" required>
+          <p class="cf-err" id="err-cat-name" hidden></p>
+        </div>
+        <div class="cf-field">
+          <label for="cat-email">Email address <span aria-hidden="true">*</span></label>
+          <input id="cat-email" name="email" type="email" autocomplete="email" required>
+          <p class="cf-err" id="err-cat-email" hidden></p>
+        </div>
+      </div>
+      <div class="cf-row">
+        <div class="cf-field">
+          <label for="cat-phone">Phone</label>
+          <input id="cat-phone" name="phone" type="tel" autocomplete="tel">
+        </div>
+        <div class="cf-field">
+          <label for="cat-type">Event type</label>
+          <select id="cat-type" name="eventType">
+            <option value="">Please choose</option>
+            <option>Birthday</option>
+            <option>Work party</option>
+            <option>Wedding</option>
+            <option>Private event</option>
+            <option>Something else</option>
+          </select>
+        </div>
+      </div>
+      <div class="cf-row">
+        <div class="cf-field">
+          <label for="cat-date">Event date</label>
+          <input id="cat-date" name="eventDate" type="date">
+        </div>
+        <div class="cf-field">
+          <label for="cat-guests">Estimated guests</label>
+          <input id="cat-guests" name="guests" type="number" min="1" step="1" inputmode="numeric">
+        </div>
+      </div>
+      <div class="cf-field">
+        <label for="cat-location">Event location</label>
+        <input id="cat-location" name="location" type="text" autocomplete="off">
+      </div>
+      <div class="cf-field">
+        <label for="cat-msg">Message <span aria-hidden="true">*</span></label>
+        <textarea id="cat-msg" name="message" rows="5" required></textarea>
+        <p class="cf-err" id="err-cat-msg" hidden></p>
+      </div>
+      <div class="cf-consent">
+        <input id="cat-consent" name="consent" type="checkbox" required>
+        <label for="cat-consent">I&rsquo;m happy for Smashbird to contact me about this enquiry. <span aria-hidden="true">*</span></label>
+      </div>
+      <p class="cf-err" id="err-cat-consent" hidden></p>
+      <button class="btn-slab" type="submit"><span>Send enquiry <em class="arw" style="font-style:normal">&rarr;</em></span></button>
+      <p class="cf-status" id="cateringStatus" role="status" aria-live="polite"></p>
+    </form>
   </div>
 </section>
 
-<!-- ============================================================
-     CONTACT
-     ============================================================ -->
+<section id="order" class="page" aria-label="Order">
+  <div class="wrap">
+    <header class="bx-head">
+      <h2 class="bx-title">GET STUCK IN.</h2>
+      <p class="bx-sub">Pick your location &mdash; each one takes its own orders.</p>
+    </header>
+    <div id="orderGrid" class="order-grid"></div>
+  </div>
+</section>
+
 <section id="contact" class="page" aria-label="Contact">
   <div class="sec-head dark drip"><h1 class="stamp">GOT A<br>QUESTION?</h1></div>
   <div class="contact-grid">
@@ -1039,38 +1180,35 @@ document.documentElement.className += ' js';
 <!-- ============================================================
      FOOTER
      ============================================================ -->
-<footer>
-  <svg class="logo-mark" viewBox="0 0 400 250" role="img" aria-label="Smashbird Galway">
-    <g fill="none" stroke="currentColor" stroke-width="27" stroke-linecap="round" stroke-linejoin="round">
-      <g transform="rotate(-5 55 68)"><path d="M82 46C82 30 30 28 30 50c0 18 50 14 50 40 0 22-52 20-52 2"/></g>
-      <g transform="rotate(3 127 71)"><path d="M96 108 100 34l27 42 27-42 4 74"/></g>
-      <g transform="rotate(-3 201 70)"><path d="M172 108 201 32l29 76M183 82h36"/></g>
-      <g transform="rotate(4 271 68)"><path d="M298 46c0-16-52-18-52 4 0 18 50 14 50 40 0 22-52 20-52 2"/></g>
-      <g transform="rotate(-2 340 70)"><path d="M312 32v76M368 32v76M312 72h56"/></g>
-    </g>
-    <g fill="currentColor">
-      <rect x="30" y="122" width="27" height="112" rx="13.5"/>
-      <circle cx="92" cy="196" r="32" fill="none" stroke="currentColor" stroke-width="26"/>
-      <circle cx="92" cy="196" r="9.5"/>
-      <rect x="150" y="126" width="27" height="27" rx="13.5"/>
-      <rect x="150" y="166" width="27" height="68" rx="13.5"/>
-      <rect x="196" y="166" width="27" height="68" rx="13.5"/>
-      <path d="M212 180c4-16 30-22 44-11" fill="none" stroke="currentColor" stroke-width="26" stroke-linecap="round"/>
-      <circle cx="320" cy="196" r="32" fill="none" stroke="currentColor" stroke-width="26"/>
-      <circle cx="320" cy="196" r="9.5"/>
-      <rect x="352" y="122" width="27" height="112" rx="13.5"/>
-    </g>
-  </svg>
-  <nav class="f-links" aria-label="Footer">
-    <a href="#menu" data-go="menu">Menu</a>
-    <a href="#locations" data-go="locations">Locations</a>
-    <a href="#sauces" data-go="sauces">Sauces</a>
-    <a href="#about" data-go="about">About</a>
-    <a href="#order" data-go="order">Order</a>
-    <a href="#contact" data-go="contact">Contact</a>
-  </nav>
-  <p class="f-legal">© 2026 Smashbird Galway</p>
-  <p class="f-sign">Website concept prepared by <b>Lumus Agency</b> · Galway · Not a live site</p>
+<footer class="site-foot" id="siteFoot">
+  <div class="wrap foot-grid">
+    <div class="foot-col">
+      <h3 class="foot-h">Locations</h3>
+      <div id="footLocations"></div>
+    </div>
+    <div class="foot-col">
+      <h3 class="foot-h">Order</h3>
+      <ul class="foot-list">
+        <li><a href="#order" data-go="order">Order Online</a></li>
+        <li><a href="#menu" data-go="menu">Menu</a></li>
+        <li><a href="#catering" data-go="catering">Catering</a></li>
+        <li><a href="#contact" data-go="contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h3 class="foot-h">Follow</h3>
+      <ul class="foot-list" id="footSocial"></ul>
+    </div>
+    <div class="foot-col" id="footLegalCol" hidden>
+      <h3 class="foot-h">Legal</h3>
+      <ul class="foot-list" id="footLegal"></ul>
+    </div>
+  </div>
+  <div class="wrap foot-base">
+    <p id="footCompany"></p>
+    <p class="foot-copy">&copy; <span id="footYear"></span> Smashbird Galway</p>
+    <p class="f-sign">Website concept prepared by <b>Lumus Agency</b> &middot; Galway &middot; Not a live site</p>
+  </div>
 </footer>
 
 <script>
@@ -1125,7 +1263,7 @@ function reveal(root){
 /* ============================================================
    2. ROUTING
    ============================================================ */
-var PAGES = ['home','menu','locations','sauces','about','order','contact'];
+var PAGES = ['home','menu','locations','sauces','about','catering','order','contact'];
 
 function showPage(id){
   if(PAGES.indexOf(id) === -1) id = 'home';
@@ -1313,5 +1451,284 @@ safe('boot', function(){
 })();
 </script>
 
+
+<script>
+/* ============================================================
+   RENDER LAYER — everything below reads from content.js.
+   Nothing is invented: a field that is not confirmed is not drawn.
+   ============================================================ */
+(function(){
+  var D = window.SMASHBIRD;
+  if(!D){ return; }
+
+  var $  = function(id){ return document.getElementById(id); };
+  function ok(f){ return !!(f && f.confirmed && f.value); }
+  function el(tag, cls, txt){
+    var n = document.createElement(tag);
+    if(cls) n.className = cls;
+    if(txt != null) n.textContent = txt;
+    return n;
+  }
+  function run(fn){ try{ fn(); }catch(e){ if(window.console) console.warn(e); } }
+
+  /* ---------------------------------------------------- proof strip */
+  run(function(){
+    var w = $('proofStrip'); if(!w) return;
+    D.proof.filter(function(p){ return p.confirmed; })
+           .forEach(function(p){ w.appendChild(el('li', null, p.text)); });
+  });
+
+  /* ---------------------------------------------------------- menu */
+  run(function(){
+    var nav = $('catNav'), grid = $('menuGrid');
+    if(!nav || !grid) return;
+
+    function draw(catId){
+      grid.innerHTML = '';
+      D.menu.filter(function(m){ return m.category === catId && m.available; })
+        .forEach(function(m){
+          var c = el('article','mi');
+          c.appendChild(el('h3','mi-name', m.name));
+          if(m.description) c.appendChild(el('p','mi-desc', m.description));
+          if(m.price != null) c.appendChild(el('p','mi-price', m.price));
+          var tags = [];
+          if(m.vegan) tags.push('Vegan');
+          else if(m.vegetarian) tags.push('Vegetarian');
+          if(m.glutenFree) tags.push('Gluten-free');
+          if(tags.length){
+            var tw = el('div','mi-tags');
+            tags.forEach(function(t){ tw.appendChild(el('span','mi-tag', t)); });
+            c.appendChild(tw);
+          }
+          grid.appendChild(c);
+        });
+      if(!grid.children.length){
+        grid.appendChild(el('article','mi', ''))
+            .appendChild(el('p','mi-desc','Full list available when you order.'));
+      }
+    }
+
+    D.menuCategories.forEach(function(cat, idx){
+      var b = el('button','cat-chip', cat.name);
+      b.type = 'button';
+      b.setAttribute('aria-pressed', idx === 1 ? 'true' : 'false');
+      b.addEventListener('click', function(){
+        Array.prototype.forEach.call(nav.children, function(x){ x.setAttribute('aria-pressed','false'); });
+        b.setAttribute('aria-pressed','true');
+        draw(cat.id);
+      });
+      nav.appendChild(b);
+    });
+    draw('burgers');
+
+    if(D.allergenNote && D.allergenNote.confirmed && D.allergenNote.text){
+      var n = $('allergenNote'); n.textContent = D.allergenNote.text; n.hidden = false;
+    }
+  });
+
+  /* -------------------------------------------------------- sauces */
+  run(function(){
+    var intro = $('saucesIntro'); if(intro) intro.textContent = D.saucesIntro;
+    var g = $('sauceGrid'); if(!g) return;
+    D.sauces.forEach(function(s){
+      var c = el('article','sc');
+      c.appendChild(el('h3','sc-name', s.name));
+      if(s.heat) c.appendChild(el('p','sc-heat', s.heat));
+      if(s.description) c.appendChild(el('p','sc-desc', s.description));
+      if(s.pairing) c.appendChild(el('p','sc-desc','Goes with: ' + s.pairing));
+      g.appendChild(c);
+    });
+    if(D.birdhouseSocial && D.birdhouseSocial.confirmed && D.birdhouseSocial.url){
+      var a = $('birdhouseLink'); a.href = D.birdhouseSocial.url; a.hidden = false;
+    }
+  });
+
+  /* ----------------------------------------------------- locations */
+  function locLines(L){
+    var rows = [];
+    if(ok(L.address))    rows.push(['Address', L.address.value]);
+    else if(ok(L.area))  rows.push(['Where', L.area.value]);
+    if(ok(L.hours))      rows.push(['Opening hours', L.hours.value]);
+    if(ok(L.phone))      rows.push(['Phone', L.phone.value]);
+    var svc = [];
+    if(ok(L.dineIn))     svc.push('Dine-in');
+    if(ok(L.collection)) svc.push('Collection');
+    if(ok(L.delivery))   svc.push('Delivery');
+    if(svc.length)       rows.push(['Services', svc.join(' \u00b7 ')]);
+    return rows;
+  }
+
+  run(function(){
+    var g = $('locGrid'); if(!g) return;
+    D.locations.forEach(function(L){
+      var c = el('article','lc');
+      c.appendChild(el('h3','lc-name', L.short));
+      locLines(L).forEach(function(r){
+        var w = el('div','lc-row');
+        w.appendChild(el('p','lc-lab', r[0]));
+        w.appendChild(el('p','lc-val', r[1]));
+        c.appendChild(w);
+      });
+      if(ok(L.mapsUrl)){
+        var w = el('div','lc-row'), p = el('p','lc-val'),
+            a = el('a', null, 'Open in Google Maps \u2197');
+        a.href = L.mapsUrl.value; a.target = '_blank'; a.rel = 'noopener noreferrer';
+        p.appendChild(a); w.appendChild(p); c.appendChild(w);
+      }
+      g.appendChild(c);
+    });
+  });
+
+  /* -------------------------------------------------- order chooser */
+  run(function(){
+    var g = $('orderGrid'); if(!g) return;
+    D.locations.forEach(function(L){
+      var c = el('article','oc');
+      c.appendChild(el('h3','oc-name', L.short));
+      var where = ok(L.address) ? L.address.value : (ok(L.area) ? L.area.value : '');
+      if(where) c.appendChild(el('p','oc-addr', where));
+
+      if(ok(L.orderUrl)){
+        var a = el('a','btn-slab');
+        a.href = L.orderUrl.value; a.target = '_blank'; a.rel = 'noopener noreferrer';
+        var sp = el('span', null, 'Order ' + L.short + ' \u2197');
+        a.appendChild(sp);
+        a.appendChild(el('span','sr-only','(opens in a new tab)'));
+        c.appendChild(a);
+      } else {
+        // No confirmed link for this branch. A shared link would send people
+        // to the wrong shop, so we route to the branch details instead.
+        var b = el('a','btn-ghost','See ' + L.short);
+        b.href = '#locations';
+        b.setAttribute('data-go','locations');
+        c.appendChild(b);
+      }
+      g.appendChild(c);
+    });
+  });
+
+  /* ------------------------------------------------ reviews + social */
+  run(function(){
+    var real = (D.reviews || []).filter(function(r){
+      return r.text && r.name && r.platform && r.sourceUrl;
+    });
+    if(real.length){
+      var sec = $('reviewsSection'), g = $('reviewGrid');
+      real.forEach(function(r){
+        var c = el('article','rv-card');
+        c.appendChild(el('p','rv-text', '\u201c' + r.text + '\u201d'));
+        var meta = [r.name, r.platform, r.rating ? r.rating + '/5' : null, r.date]
+                     .filter(Boolean).join(' \u00b7 ');
+        c.appendChild(el('p','rv-meta', meta));
+        g.appendChild(c);
+      });
+      sec.hidden = false;
+    }
+
+    var ig = D.social.instagram;
+    if(ig && ig.confirmed){
+      var h = $('igHandle'); if(h) h.textContent = ig.handle;
+      var l = $('igLink');   if(l) l.href = ig.url;
+    }
+    var grid = $('igGrid');
+    if(grid && D.social.grid && D.social.grid.length){
+      D.social.grid.forEach(function(im){
+        var i = new Image();
+        i.src = im.src; i.alt = im.alt || ''; i.loading = 'lazy'; i.decoding = 'async';
+        grid.appendChild(i);
+      });
+    }
+  });
+
+  /* -------------------------------------------------------- footer */
+  run(function(){
+    var y = $('footYear'); if(y) y.textContent = new Date().getFullYear();
+
+    var fl = $('footLocations');
+    if(fl) D.locations.forEach(function(L){
+      var d = el('div','foot-loc');
+      d.appendChild(el('b', null, L.short));
+      var where = ok(L.address) ? L.address.value : (ok(L.area) ? L.area.value : '');
+      if(where) d.appendChild(el('span', null, where));
+      fl.appendChild(d);
+    });
+
+    var fs = $('footSocial');
+    if(fs && D.social.instagram.confirmed){
+      var li = el('li'), a = el('a', null, 'Instagram');
+      a.href = D.social.instagram.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+      li.appendChild(a); fs.appendChild(li);
+    }
+    if(fs && D.birdhouseSocial && D.birdhouseSocial.confirmed && D.birdhouseSocial.url){
+      var li2 = el('li'), a2 = el('a', null, 'Birdhouse');
+      a2.href = D.birdhouseSocial.url; a2.target = '_blank'; a2.rel = 'noopener noreferrer';
+      li2.appendChild(a2); fs.appendChild(li2);
+    }
+
+    // Legal links appear only once real URLs exist.
+    var lg = $('footLegal'), col = $('footLegalCol'), n = 0;
+    [['privacyPolicyUrl','Privacy Policy'],['cookiePolicyUrl','Cookie Policy'],
+     ['termsUrl','Terms & Conditions'],['allergenInfoUrl','Allergen Information']
+    ].forEach(function(p){
+      var f = D.legal[p[0]];
+      if(lg && ok(f)){
+        var li = el('li'), a = el('a', null, p[1]);
+        a.href = f.value; li.appendChild(a); lg.appendChild(li); n++;
+      }
+    });
+    if(col && n) col.hidden = false;
+
+    var fc = $('footCompany');
+    if(fc){
+      var bits = [];
+      if(ok(D.legal.companyName))        bits.push(D.legal.companyName.value);
+      if(ok(D.legal.registrationNumber)) bits.push('Reg. ' + D.legal.registrationNumber.value);
+      if(ok(D.legal.registeredAddress))  bits.push(D.legal.registeredAddress.value);
+      fc.textContent = bits.join(' \u00b7 ');
+    }
+  });
+
+  /* ------------------------------------------------- catering form */
+  run(function(){
+    var f = $('cateringForm'); if(!f) return;
+    var status = $('cateringStatus');
+
+    function setErr(input, msgId, msg){
+      var e = $(msgId);
+      if(msg){ input.setAttribute('aria-invalid','true'); input.setAttribute('aria-describedby', msgId);
+               e.textContent = msg; e.hidden = false; }
+      else   { input.removeAttribute('aria-invalid'); e.hidden = true; e.textContent = ''; }
+      return !msg;
+    }
+
+    f.addEventListener('submit', function(ev){
+      ev.preventDefault();
+      var name = $('cat-name'), email = $('cat-email'),
+          msg  = $('cat-msg'),  cons  = $('cat-consent');
+      var good = true, first = null;
+
+      if(!setErr(name,'err-cat-name', name.value.trim() ? '' : 'Please tell us your name.')){ good=false; first=first||name; }
+      var okMail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
+      if(!setErr(email,'err-cat-email', okMail ? '' : 'Please enter a valid email address.')){ good=false; first=first||email; }
+      if(!setErr(msg,'err-cat-msg', msg.value.trim() ? '' : 'Please tell us about your event.')){ good=false; first=first||msg; }
+
+      var ce = $('err-cat-consent');
+      if(!cons.checked){ ce.textContent = 'Please tick the box so we can reply.'; ce.hidden = false; good=false; first=first||cons; }
+      else { ce.hidden = true; }
+
+      if(!good){ if(first) first.focus(); return; }
+
+      // Honest state: no backend is connected yet (see HANDOVER.md).
+      if(D.catering.formEndpoint && D.catering.formEndpoint.confirmed){
+        f.submit();
+      } else {
+        status.textContent = 'Thanks \u2014 enquiry form is not connected yet. '
+          + 'In the meantime please send your details on Instagram: ' + D.social.instagram.handle + '.';
+      }
+    });
+  });
+
+})();
+</script>
 </body>
 </html>
