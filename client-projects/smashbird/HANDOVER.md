@@ -58,11 +58,10 @@ brand well, but real photography of the food, the staff and the preparation is
 still recommended before launch, at minimum on the menu cards (the card component
 already supports a per-item image and turns it on automatically).
 
-**Motion.** The 3D honours `prefers-reduced-motion`: no auto-rotation, no hint
-text, static assembled burger. Animation is throttled to 30fps and pauses when
-the burger scrolls out of view or the tab is hidden. Measured at 39fps in a
-headless container with no GPU; real devices with hardware compositing will do
-better, but it is worth spot-checking on an older phone.
+**Motion.** The hero burger is a **static** 3D object — no rotation, no drag, no
+tap interaction, so there is no per-frame work for it at all. The only motion left
+is the category words, which tilt with scroll position and stop entirely under
+`prefers-reduced-motion`.
 
 ---
 

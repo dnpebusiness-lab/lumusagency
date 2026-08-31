@@ -866,9 +866,7 @@ footer .logo-mark{width:96px}
 .mi-order:hover,.mi-order:focus-visible{background:var(--pink);color:#000}
 
 /* ==================== 3D ==================== */
-.b3d{position:absolute;inset:0;display:grid;place-items:center;z-index:1;
-  touch-action:pan-y;cursor:grab}
-.b3d:active{cursor:grabbing}
+.b3d{position:absolute;inset:0;display:grid;place-items:center;z-index:1;pointer-events:none}
 .b3d-stage{width:min(74%,430px);aspect-ratio:1;perspective:1100px;perspective-origin:50% 44%}
 .b3d-scene{position:relative;width:100%;height:100%;transform-style:preserve-3d;
   /* The stack runs along local Z, so the spin must be rotateZ — rotateY would
@@ -881,13 +879,6 @@ footer .logo-mark{width:96px}
 .b3d-seed{position:absolute;left:50%;top:50%;width:7px;height:4px;border-radius:50%;
   background:#F6E7C8;opacity:.92;
   transform:translate(-50%,-50%) rotate(var(--a)) translateX(var(--r)) translateZ(var(--z))}
-.b3d-ring{position:absolute;left:50%;top:50%;width:60%;aspect-ratio:1;border-radius:50%;
-  transform:translate(-50%,-50%) translateZ(-6px) scale(var(--k,0));
-  border:3px solid var(--pink);opacity:var(--o,0);pointer-events:none}
-.b3d-hint{position:absolute;left:0;right:0;bottom:22px;text-align:center;z-index:3;
-  font-family:var(--font-b);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;
-  color:rgba(242,232,213,.42);pointer-events:none;transition:opacity .4s}
-.b3d-hint.gone{opacity:0}
 
 /* parole estruse al posto delle foto */
 .c-media{display:grid;place-items:center;min-height:clamp(230px,34vw,380px);overflow:hidden}
@@ -901,9 +892,8 @@ footer .logo-mark{width:96px}
 .x3d-l.face{position:relative;left:auto;top:auto;transform:translateZ(var(--z))}
 
 @media (prefers-reduced-motion: reduce){
-  .b3d-scene,.x3d-in{transition:none!important}
-  .b3d-hint{display:none}
-}
+  .x3d-in{transition:none!important}
+  }
 
 /* The extruded 3D word now carries the heading visually, so the flat copy is
    hidden from sight but kept in the document for screen readers and SEO. */
@@ -1028,7 +1018,6 @@ document.documentElement.className += ' js';
       <div class="b3d" id="b3d" role="img"
            aria-label="A Smashbird burger built in layers: bun, patties, cheese, sauce and pickles.">
         <div class="b3d-stage"><div class="b3d-scene" id="b3dScene"></div></div>
-        <p class="b3d-hint" id="b3dHint">Drag to spin &middot; tap to smash</p>
       </div>
       <div class="hero-vert">Galway · H91</div>
     </div>
@@ -1968,73 +1957,9 @@ safe('boot', function(){
       scene.appendChild(sd);
     }
 
-    var ring = document.createElement('i');
-    ring.className = 'b3d-ring';
-    scene.appendChild(ring);
-
-    var S = { ry: -18, vel: reduce ? 0 : 0.44, drag:false, x0:0, ry0:0,
-              smash:0, live:true };
-
-    function paint(){
-      scene.style.setProperty('--ry', S.ry.toFixed(2) + 'deg');
-      var k = S.smash;
-      scene.style.setProperty('--sc', (1 + k * 0.06).toFixed(3));
-      ring.style.setProperty('--k', (0.6 + k * 1.5).toFixed(2));
-      ring.style.setProperty('--o', (k * 0.7).toFixed(2));
-    }
-
-    // Half-rate animation: 113 layers in one preserve-3d context is enough work
-    // that painting every frame costs more than it looks like. Stepping twice as
-    // far every other frame is visually identical and roughly doubles headroom.
-    var raf, odd = 0;
-    function tick(){
-      raf = requestAnimationFrame(tick);
-      if((odd ^= 1)) return;
-      if(!S.drag) S.ry += S.vel;
-      if(S.smash > 0) S.smash = Math.max(0, S.smash - 0.09);
-      paint();
-    }
-    function start(){ if(!raf && !reduce) raf = requestAnimationFrame(tick); }
-    function stop(){ if(raf){ cancelAnimationFrame(raf); raf = 0; } }
-
-    paint();
-    if(!reduce){
-      if('IntersectionObserver' in window){
-        new IntersectionObserver(function(es){
-          es[0].isIntersecting ? start() : stop();
-        }, {threshold:0.05}).observe(wrap);
-      } else start();
-      document.addEventListener('visibilitychange', function(){
-        document.hidden ? stop() : start();
-      });
-    }
-
-    // drag to spin
-    var hint = document.getElementById('b3dHint');
-    function down(e){
-      S.drag = true; S.x0 = (e.touches ? e.touches[0].clientX : e.clientX); S.ry0 = S.ry;
-      if(hint) hint.classList.add('gone');
-    }
-    function move(e){
-      if(!S.drag) return;
-      var x = (e.touches ? e.touches[0].clientX : e.clientX);
-      S.ry = S.ry0 + (x - S.x0) * 0.55;
-      paint();
-    }
-    function up(){ S.drag = false; }
-    wrap.addEventListener('mousedown', down);
-    addEventListener('mousemove', move);
-    addEventListener('mouseup', up);
-    wrap.addEventListener('touchstart', down, {passive:true});
-    wrap.addEventListener('touchmove', move, {passive:true});
-    addEventListener('touchend', up);
-
-    // tap to smash
-    wrap.addEventListener('click', function(){
-      if(reduce) return;
-      S.smash = 1;
-      if(hint) hint.classList.add('gone');
-    });
+    // Static by request: the burger is a still 3D object. No auto-rotation,
+    // no drag, no tap-to-smash — so there is no per-frame work at all here.
+    scene.style.setProperty('--ry', '-20deg');
   }
 
   /* -------------------------------------- extruded category words */
