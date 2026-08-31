@@ -1495,7 +1495,19 @@ safe('form', function(){
   cform.addEventListener('submit', function(e){
     e.preventDefault();
     var SB = window.SMASHBIRD;
-    if(SB && SB.forms && SB.forms.netlify && SB.forms.netlify.enabled){ cform.submit(); return; }
+    var st = document.getElementById('cfStatus');
+    if(SB && SB.forms && SB.forms.netlify && SB.forms.netlify.enabled){
+      st.textContent = 'Sending\u2026';
+      sendForm(cform, function(){
+        cform.reset();
+        st.textContent = 'Thanks \u2014 message received. We\u2019ll reply by email.';
+      }, function(){
+        st.textContent = 'Something went wrong sending that. Please try again, '
+          + 'or DM us on Instagram: '
+          + ((SB.social && SB.social.instagram.handle) || '@smashbird_galway') + '.';
+      });
+      return;
+    }
     // No backend yet. Say so plainly and give people a route that works —
     // never developer instructions, and never a fake "sent" confirmation.
     document.getElementById('cfStatus').textContent =
@@ -1587,6 +1599,19 @@ safe('boot', function(){
     return n;
   }
   function run(fn){ try{ fn(); }catch(e){ if(window.console) console.warn(e); } }
+
+  /* Netlify Forms accepts a urlencoded POST to any path on the site. Sending it
+     in the background keeps people on the page instead of bouncing them to
+     Netlify's own thank-you screen. */
+  function sendForm(form, onOk, onFail){
+    var data = new URLSearchParams(new FormData(form)).toString();
+    fetch('/', { method:'POST',
+                 headers:{'Content-Type':'application/x-www-form-urlencoded'},
+                 body:data })
+      .then(function(r){ r.ok ? onOk() : onFail(); })
+      .catch(onFail);
+  }
+
 
   /* --------------------------------- staggered reveal on the grids */
   function stagger(sel, step){
@@ -1963,7 +1988,15 @@ safe('boot', function(){
       // Honest state: no backend is connected yet (see HANDOVER.md).
       if((D.forms && D.forms.netlify && D.forms.netlify.enabled) ||
          (D.catering.formEndpoint && D.catering.formEndpoint.confirmed)){
-        f.submit();
+        status.textContent = 'Sending\u2026';
+        sendForm(f, function(){
+          f.reset();
+          status.textContent = 'Thanks \u2014 your enquiry is with us. '
+            + 'We\u2019ll come back to you by email.';
+        }, function(){
+          status.textContent = 'Something went wrong sending that. '
+            + 'Please try again, or DM us on Instagram: ' + D.social.instagram.handle + '.';
+        });
       } else {
         status.textContent = 'Enquiry not sent \u2014 our booking form isn\u2019t live yet. '
           + 'In the meantime send your details by DM on Instagram: ' + D.social.instagram.handle + '.';

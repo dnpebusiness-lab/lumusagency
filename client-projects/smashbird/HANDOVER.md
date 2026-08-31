@@ -148,22 +148,35 @@ grid beside the link.
 
 ---
 
-## 8. FORMS — needs a backend
+## 8. FORMS — ready, one switch away
 
-The contact and catering forms validate in the browser and are fully labelled and
-keyboard-accessible, but **submit nowhere**. This is a static site on Netlify with
-no build step.
+Both forms are wired for **Netlify Forms** and send in the background, so people
+stay on the site instead of landing on Netlify's own thank-you page. They are
+inert until the switch is flipped.
 
-Two options:
-1. **Netlify Forms** — add `data-netlify="true"` and a hidden `form-name` field to
-   each `<form>`. No environment variables needed.
-2. **External endpoint** — set `catering.formEndpoint` / `contact.formEndpoint`.
+**To make enquiries arrive at a Smashbird inbox:**
 
-Until one is connected the submit handler shows an inline message and does not
-pretend the message was sent.
+1. Netlify → the project → **Forms** → enable form detection.
+2. Redeploy (detection reads the deployed HTML, so it needs one deploy to see
+   the two forms).
+3. Forms → `catering` and `contact` → **Form notifications** → Add notification →
+   **Email notification** → enter the Smashbird address.
+4. In `content.js` set `forms.netlify.enabled = true`.
+
+The destination address lives in the Netlify dashboard, **not in the repository**
+— it never appears in the page source, so spam crawlers cannot scrape it. Change
+it later without touching code.
+
+Free tier covers 100 submissions a month. Both forms carry a honeypot field
+(`bot-field`) against bots.
+
+**Until step 4:** each form validates, then says plainly that it is not live yet
+and points to Instagram. It never shows a fake "sent" confirmation.
 
 The catering form collects: name, email, phone, event type, event date, location,
 estimated guests, message, consent checkbox.
+
+Alternative: set `catering.formEndpoint` for a third-party endpoint instead.
 
 ---
 
