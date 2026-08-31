@@ -47,11 +47,16 @@ licensed and are **not** in the repository. No unlicensed font file has been
 downloaded. The stack currently falls back to metrically similar grotesques.
 Supply the licensed web-font files, or confirm a licensed web-font service.
 
-**Photography.** Four professional product photographs were shared in conversation
-but could not be retrieved (image host blocked by network policy) and are **not** in
-the repository. The site currently uses the earlier lower-resolution photographs
-(1000px wide — below what a full-bleed hero needs on a high-density display).
-Supply the originals as files.
+**Photography.** The hero now uses two supplied images served from Cloudinary
+with responsive crops (4:5 on desktop, 16:10 on mobile).
+
+⚠ Their filenames (`ChatGPT_Image_…`) indicate **AI-generated food photography**,
+which this brief explicitly rules out. In use pending a client decision — see
+Content Issue 13. Real photographs of the food, staff and preparation are still
+the goal.
+
+The secondary section images are the earlier Instagram screenshots at 1000px
+wide, which is below what a full-bleed panel needs on a high-density display.
 
 ---
 
@@ -172,7 +177,8 @@ block in `index.html` together.
 
 | Service | Needed for | Status |
 |---|---|---|
-| Flipdish and/or Deliveroo | Order CTA | URLs required |
+| Flipdish | Order CTA | ✅ live, one URL per branch |
+| Deliveroo | Optional second channel | No URL supplied |
 | Netlify Forms *or* form endpoint | Contact + catering | Not connected |
 | Licensed Nimbus Sans web fonts | Typography | Not supplied |
 | Analytics (optional) | — | Not installed. Requires consent gate first |
