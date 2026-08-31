@@ -11,7 +11,7 @@
 <meta property="og:title" content="Smashbird Galway — Serious Burgers">
 <meta property="og:description" content="Smashed burgers, fried chicken, vegan junk and loaded sides &mdash; powered by Birdhouse sauces. Two Galway locations.">
 <meta property="og:locale" content="en_IE">
-<meta property="og:image" content="img/burger-1000.jpg">
+<meta property="og:image" content="https://res.cloudinary.com/fodeavol/image/upload/c_fill,g_auto,ar_1.91:1,w_1200,f_auto,q_auto/v1788172976/ChatGPT_Image_31_ago_2026_10_40_28_2">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#000000">
 <script type="application/ld+json">
@@ -813,6 +813,14 @@ footer .logo-mark{width:96px}
 .foot-loc span,.foot-list a,.lc-val,.oc-addr,.rv-text{overflow-wrap:anywhere}
 .foot-base{min-width:0}
 @media(max-width:520px){.foot-grid{grid-template-columns:1fr}}
+
+.cat-note{margin:-14px 0 22px;font-size:13px;color:var(--muted);font-style:italic}
+.mi-alg{margin:10px 0 0;font-size:11px;line-height:1.45;color:var(--muted);
+  padding-top:9px;border-top:1px solid rgba(255,255,255,.12)}
+.sc-alg{margin:12px 0 0;font-size:11.5px;line-height:1.5;color:var(--muted)}
+.btn-ghost.sm{margin-top:16px;padding:9px 15px;font-size:11px;border-width:1px}
+.sc{display:flex;flex-direction:column}
+.mi{min-height:0}
 </style>
 </head>
 <body>
@@ -926,13 +934,11 @@ document.documentElement.className += ' js';
     <div class="hero-right">
       <figure class="hero-shot">
         <picture>
-          <source type="image/webp" srcset="img/burger-640.webp 640w, img/burger-1000.webp 1000w"
-                  sizes="(max-width:900px) 100vw, 52vw">
-          <img src="img/burger-1000.jpg"
-               srcset="img/burger-640.jpg 640w, img/burger-1000.jpg 1000w"
-               sizes="(max-width:900px) 100vw, 52vw"
-               width="1000" height="712" fetchpriority="high" decoding="async"
-               alt="The Chicken Smashurai — fried chicken burger with kimchi slaw on a metal tray at Smashbird Cross Street.">
+          <source media="(max-width:900px)" srcset="https://res.cloudinary.com/fodeavol/image/upload/c_fill,g_auto,ar_16:10,w_760,f_auto,q_auto/v1788172976/ChatGPT_Image_31_ago_2026_10_40_28_2 760w, https://res.cloudinary.com/fodeavol/image/upload/c_fill,g_auto,ar_16:10,w_1140,f_auto,q_auto/v1788172976/ChatGPT_Image_31_ago_2026_10_40_28_2 1140w" sizes="100vw">
+          <source srcset="https://res.cloudinary.com/fodeavol/image/upload/c_fill,g_auto,ar_4:5,w_800,f_auto,q_auto/v1788172976/ChatGPT_Image_31_ago_2026_10_40_28_2 800w, https://res.cloudinary.com/fodeavol/image/upload/c_fill,g_auto,ar_4:5,w_1200,f_auto,q_auto/v1788172976/ChatGPT_Image_31_ago_2026_10_40_28_2 1200w, https://res.cloudinary.com/fodeavol/image/upload/c_fill,g_auto,ar_4:5,w_1600,f_auto,q_auto/v1788172976/ChatGPT_Image_31_ago_2026_10_40_28_2 1600w" sizes="52vw">
+          <img src="https://res.cloudinary.com/fodeavol/image/upload/c_fill,g_auto,ar_4:5,w_1200,f_auto,q_auto/v1788172976/ChatGPT_Image_31_ago_2026_10_40_28_2"
+               width="1200" height="1500" fetchpriority="high" decoding="async"
+               alt="Smashbird burger and loaded fried chicken served on metal trays.">
         </picture>
       </figure>
       <div class="hero-vert">Galway · H91</div>
@@ -1021,8 +1027,10 @@ document.documentElement.className += ' js';
       <p class="bx-sub">Smashed burgers, buttermilk fried chicken, vegan junk and loaded sides.</p>
     </header>
     <nav class="cat-nav" id="catNav" aria-label="Menu categories"></nav>
+    <p class="cat-note" id="catNote" hidden></p>
     <div id="menuGrid" class="menu-grid"></div>
     <p id="allergenNote" class="menu-note" hidden></p>
+    <p class="menu-note" id="menuNote"></p>
   </div>
 </section>
 
@@ -1043,6 +1051,7 @@ document.documentElement.className += ' js';
       <p class="bx-sub" id="saucesIntro"></p>
     </header>
     <div id="sauceGrid" class="sauce-grid"></div>
+    <p class="menu-note" id="saucesDisclaimer" hidden></p>
     <p class="menu-note"><a id="birdhouseLink" href="#" hidden>Birdhouse &rarr;</a></p>
   </div>
 </section>
@@ -1485,33 +1494,46 @@ safe('boot', function(){
 
     function draw(catId){
       grid.innerHTML = '';
+      var cat = D.menuCategories.filter(function(c){ return c.id === catId; })[0];
+      var note = $('catNote');
+      if(note){ note.textContent = (cat && cat.note) || ''; note.hidden = !(cat && cat.note); }
+
+      if(catId === 'drips' && D.dips){
+        D.dips.list.forEach(function(d){
+          var c = el('article','mi');
+          c.appendChild(el('h3','mi-name', d.name + (d.label ? ' ' + d.label : '')));
+          if(d.allergens && d.allergens.length)
+            c.appendChild(el('p','mi-alg','Allergens: ' + d.allergens.join(', ')));
+          grid.appendChild(c);
+        });
+        return;
+      }
+
       D.menu.filter(function(m){ return m.category === catId && m.available; })
         .forEach(function(m){
           var c = el('article','mi');
           c.appendChild(el('h3','mi-name', m.name));
           if(m.description) c.appendChild(el('p','mi-desc', m.description));
-          if(m.price != null) c.appendChild(el('p','mi-price', m.price));
+          if(m.price) c.appendChild(el('p','mi-price', m.price));
           var tags = [];
-          if(m.vegan) tags.push('Vegan');
-          else if(m.vegetarian) tags.push('Vegetarian');
-          if(m.glutenFree) tags.push('Gluten-free');
+          if(m.vegan === true) tags.push('Vegan');
+          else if(m.vegetarian === true) tags.push('Vegetarian');
+          if(m.glutenFree === true) tags.push('Gluten-free');
           if(tags.length){
             var tw = el('div','mi-tags');
             tags.forEach(function(t){ tw.appendChild(el('span','mi-tag', t)); });
             c.appendChild(tw);
           }
+          if(m.allergens && m.allergens.length)
+            c.appendChild(el('p','mi-alg','Allergens: ' + m.allergens.join(', ')));
           grid.appendChild(c);
         });
-      if(!grid.children.length){
-        grid.appendChild(el('article','mi', ''))
-            .appendChild(el('p','mi-desc','Full list available when you order.'));
-      }
     }
 
     D.menuCategories.forEach(function(cat, idx){
       var b = el('button','cat-chip', cat.name);
       b.type = 'button';
-      b.setAttribute('aria-pressed', idx === 1 ? 'true' : 'false');
+      b.setAttribute('aria-pressed', idx === 0 ? 'true' : 'false');
       b.addEventListener('click', function(){
         Array.prototype.forEach.call(nav.children, function(x){ x.setAttribute('aria-pressed','false'); });
         b.setAttribute('aria-pressed','true');
@@ -1521,6 +1543,7 @@ safe('boot', function(){
     });
     draw('burgers');
 
+    var mn = $('menuNote'); if(mn && D.menuNote) mn.textContent = D.menuNote;
     if(D.allergenNote && D.allergenNote.confirmed && D.allergenNote.text){
       var n = $('allergenNote'); n.textContent = D.allergenNote.text; n.hidden = false;
     }
@@ -1530,14 +1553,26 @@ safe('boot', function(){
   run(function(){
     var intro = $('saucesIntro'); if(intro) intro.textContent = D.saucesIntro;
     var g = $('sauceGrid'); if(!g) return;
-    D.sauces.forEach(function(s){
+    D.sauces.forEach(function(x){
       var c = el('article','sc');
-      c.appendChild(el('h3','sc-name', s.name));
-      if(s.heat) c.appendChild(el('p','sc-heat', s.heat));
-      if(s.description) c.appendChild(el('p','sc-desc', s.description));
-      if(s.pairing) c.appendChild(el('p','sc-desc','Goes with: ' + s.pairing));
+      c.appendChild(el('h3','sc-name', x.name));
+      var meta = [];
+      if(x.price) meta.push(x.price);
+      if(x.size)  meta.push(x.size);
+      if(x.heat)  meta.push('Heat ' + x.heat);
+      if(meta.length) c.appendChild(el('p','sc-heat', meta.join('  \u00b7  ')));
+      if(x.description) c.appendChild(el('p','sc-desc', x.description));
+      if(x.allergenAdvice) c.appendChild(el('p','sc-alg', x.allergenAdvice));
+      if(x.buyUrl){
+        var a = el('a','btn-ghost sm','Buy on Birdhouse');
+        a.href = x.buyUrl; a.target = '_blank'; a.rel = 'noopener noreferrer';
+        a.appendChild(el('span','sr-only',' (opens in a new tab)'));
+        c.appendChild(a);
+      }
       g.appendChild(c);
     });
+    var disc = $('saucesDisclaimer');
+    if(disc && D.saucesDisclaimer){ disc.textContent = D.saucesDisclaimer; disc.hidden = false; }
     if(D.birdhouseSocial && D.birdhouseSocial.confirmed && D.birdhouseSocial.url){
       var a = $('birdhouseLink'); a.href = D.birdhouseSocial.url; a.hidden = false;
     }

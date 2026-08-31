@@ -55,69 +55,70 @@ Supply the originals as files.
 
 ---
 
-## 3. MENU — content required
+## 3. MENU — supplied and live
 
-Real product names and the eleven category names are in place. Not supplied, so
-**not shown**: prices, descriptions, allergens, product photography, per-item
-availability, per-item order URLs.
+Verified against the official Smashbird Flipdish site on 31 August 2026 and now
+live in `content.js`. Cross Street and Liosbán show the same menu and prices, so
+one list serves both — stated on the menu page.
 
-Products render as name-only tiles until filled in. Each supports:
-`name, description, price, image, allergens, vegan, vegetarian, glutenFree,
-available, orderUrl`.
+Categories are exactly what the official site shows: Burgers, Birds, Vegan Junk,
+Dawgs, Sides, Drips, Drinks, Sauce Bottles, Kids Menu. There is deliberately **no
+"Meal Deals" and no "Loaded"** category. No Deliveroo prices were imported.
 
-⚠ **Category assignment needs a check.** Products were grouped by best inference
-from their names (e.g. *The Melter* → Burgers, *Disco Fries* → Loaded). Confirm the
-real grouping — especially *Birdhouse Tendies & Fries*, which may belong under
-Meal Deals rather than Birds.
+"From €X" prices are kept as "From". Allergens are shown per item exactly as
+published — nothing added, nothing inferred. Gluten-free is never claimed on an
+item; the proof strip says only that options are available.
 
-Also required: how allergen information is provided to customers
-(`allergenNote`). No claim is currently made.
-
-Gluten-free is stated only as **"options available"** — never as a blanket claim
-across the menu.
+Still required: product photography, per-item availability, and confirmation of
+how allergen information is given in store (`allergenNote`).
 
 ---
 
-## 4. SAUCES — content required
+## 4. SAUCES — supplied and live
 
-Three Birdhouse sauces are named: **Buckie BBQ**, **Bum Burner**, **Burnt**.
+Seven Birdhouse retail bottles with prices, sizes, descriptions, allergen advice
+and links to birdhouse.ie. Two have no heat rating shown because the source
+contradicts itself (see Content Issues).
 
-Not supplied and therefore not shown: bottle imagery/logos, flavour descriptions,
-heat levels, allergens, recommended pairings, bottle availability, purchase links.
-Descriptions and heat levels have **not** been invented.
+The Sauce Bottles category on the menu lists only the six bottles the Smashbird
+menu actually sells. **Bum Burner and Burnt Butter Buffalo are not listed as
+available in store** even though Birdhouse.ie sells them online.
 
-Also required: the Birdhouse social link (`birdhouseSocial`).
+Birdhouse descriptions are marketing copy, not legal ingredient lists — the site
+says so under the sauce grid.
 
----
+Wholesale tubs (1L/5L/10L) exist but prices are unpublished, so nothing about
+wholesale appears on the site.
 
-## 5. LOCATIONS — content required
-
-**Cross Street** — address confirmed and published:
-`3 Cross Street Lower, Galway, H91 T995`
-
-**Liosbán** — only the area is published: `Liosbán Industrial Estate, Galway`.
-An eircode of `H91 D8VP` was previously supplied but the unit and street are
-unconfirmed, so the full address stays unpublished.
-
-Required for **both**: Google Maps URL, opening hours, phone, dine-in status,
-collection status, delivery status, location-specific ordering URL, real
-exterior/interior photograph.
-
-**Dominick Street** closed 31 December 2025. It does not appear anywhere in the
-site, and a repository-wide search confirms zero occurrences. Keep it that way.
+Still required: bottle imagery, the Birdhouse social link.
 
 ---
 
-## 6. ORDERING — blocking for the primary CTA
+## 5. LOCATIONS — addresses and ordering confirmed
 
-`ORDER NOW` opens a location chooser (Cross Street / Liosbán) as specified. **No
-ordering URLs were supplied**, so no generic link is used — a single shared link
-would send customers to the wrong branch.
+| | Cross Street | Liosbán |
+|---|---|---|
+| Address | 3 Cross Street Lower, Galway, H91 T995 | Unit 8, Liosban Industrial Estate, 1 Kilkerrian Park, Tuam Rd, Galway, H91 D8VP |
+| Collection | ✅ live | ✅ live |
 
-Required: one URL per location (`locations[].orderUrl`), and confirmation of which
-platform each branch uses (`ordering.platforms` — Flipdish and/or Deliveroo).
+Both order links point at the official Flipdish collection URLs, one per branch.
 
-Until then the chooser routes to that location's details rather than off-site.
+Still required: Google Maps URLs, **regular weekly opening hours** (a live
+open/closed status is not weekly hours and was not used), phone numbers, dine-in
+and delivery status, real photographs.
+
+**Dominick Street** closed 31 December 2025. Zero occurrences in the repository.
+Birdhouse.ie still shows that old address — it must never be copied across.
+
+---
+
+## 6. ORDERING — live
+
+`ORDER NOW` opens a per-branch chooser and each button goes to that branch's own
+Flipdish collection URL. No shared link is used.
+
+Deliveroo is not wired up: the award is displayed, but no Deliveroo ordering URL
+was supplied and no Deliveroo prices were imported.
 
 ---
 
@@ -195,3 +196,30 @@ project, so:
 If a build pipeline is wanted later, migrating to Astro (the agency default) would
 suit this site — but that is a rebuild decision, not a fix, and was out of scope
 here.
+
+---
+
+## 12. CONTENT ISSUES — unresolved, nothing guessed
+
+Machine-readable copies live in `content.js` under `contentIssues`.
+
+| # | Where | Problem | What the site does |
+|---|---|---|---|
+| 1 | Birdhouse — Burnt Butter Buffalo | Heat given as 5/10, 6/10 and 2/3 in three places | No rating shown |
+| 2 | Birdhouse — Jerk BBQ | Heat given as 4/10, 2/10 and .5/3 | No rating shown |
+| 3 | Birdhouse — Mango Mazzaleen | No allergen advice on the product page | Nothing shown; dip allergens **not** carried across — different product |
+| 4 | Birdhouse — Teeling Whiskey | Page says 250ml, extra info mentions 105ml and 250ml | Only 250ml shown |
+| 5 | Birdhouse — all bottles | No complete ingredient labels published | Descriptions labelled as marketing copy, not ingredients |
+| 6 | Sauce bottles in store | Bum Burner and Burnt Butter Buffalo sell online but are not on the Smashbird menu | Not listed as available in store |
+| 7 | Drips — Burnt Butter Buffalo | Source shows `(V0)` | Not reproduced; no dietary label shown |
+| 8 | Dawgs — The Stray | Described as vegan merguez, but allergens list Eggs and Milk | Allergens shown as published; **no vegan claim made** |
+| 9 | Sides — Jalapeño Jam Fries V | Description reads "Saberno fior de latter, jalapeño jam" | Description withheld; cheese/brand not guessed |
+| 10 | Birds — Tendies, Wings ×2, Chick N Pop | Allergens vary by flavour, not published per item | No allergens shown |
+| 11 | Burgers — Rasta Burger | Crustaceans and Fish via Caribbean Jerk; Birdhouse jerk data inconsistent | Shown as published, flagged |
+| 12 | Vegan Junk — Cabbage Fritter | No allergens there; the Sides copy lists Cereals and Sulphites | Sides entry shows them, Vegan Junk entry does not |
+| 13 | **Photography** | Supplied hero images are named `ChatGPT_Image…`, i.e. AI-generated food photography, which the brand brief rules out | In use pending a decision |
+| 14 | Opening hours | Only a live open/closed status available | No hours published |
+| 15 | Alcohol | Wine and beer on the menu | Listed; no delivery or age-verification claims made |
+
+Presentation fixes applied: `Allergan` → `Allergen`. No ingredient or allergen
+meaning was altered anywhere.
