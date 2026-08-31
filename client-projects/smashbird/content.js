@@ -429,6 +429,20 @@ window.SMASHBIRD = {
   },
 
   /* ------------------------------------------------------------- catering */
+  /* ---------------------------------------------------------------- forms
+     Where enquiries go. Right now: nowhere — both forms validate and then say
+     so honestly instead of pretending to send.
+
+     To turn them on:
+       1. In Netlify: Project -> Forms -> enable form detection, then redeploy.
+       2. Set enabled: true below.
+     Submissions then land in the Netlify Forms inbox and email notifications
+     are configured there. No API key, no environment variable.
+     -------------------------------------------------------------------- */
+  forms: {
+    netlify: { enabled: false, formNames: ['catering', 'contact'] }
+  },
+
   catering:{
     headline:'BRING SMASHBIRD TO THE PARTY.',
     body:'Birthdays, work parties, weddings or private events — bring the Smashbird and Birdhouse flavour to your crowd.',
