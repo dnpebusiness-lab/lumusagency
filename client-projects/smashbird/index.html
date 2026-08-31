@@ -821,6 +821,50 @@ footer .logo-mark{width:96px}
 .btn-ghost.sm{margin-top:16px;padding:9px 15px;font-size:11px;border-width:1px}
 .sc{display:flex;flex-direction:column}
 .mi{min-height:0}
+
+/* ---- sticky order bar (mobile) ---- */
+.order-bar{
+  position:fixed;left:0;right:0;bottom:0;z-index:60;
+  padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));
+  background:rgba(9,9,11,.94);backdrop-filter:blur(8px);
+  border-top:2px solid var(--pink);
+}
+.order-bar-btn{
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  background:var(--pink);color:var(--black);text-decoration:none;
+  font-family:var(--font-d);font-size:19px;font-weight:900;letter-spacing:.1em;
+  text-transform:uppercase;padding:16px 20px;min-height:56px;
+}
+.order-bar-btn:active{background:var(--yellow)}
+@media(min-width:901px){ .order-bar{display:none!important} }
+@media(max-width:900px){ body.has-order-bar{padding-bottom:86px} }
+
+/* ---- hero: brand line was a 36% stroke on black — barely legible ---- */
+.hero-hl .l3{
+  -webkit-text-stroke:2px rgba(242,232,213,.72);
+  text-wrap:balance;
+}
+/* ---- hero: CTAs were stacked and mismatched (245x67 vs 173x52) ---- */
+@media(min-width:721px){
+  .hero-actions{flex-direction:row;align-items:stretch;gap:14px;flex-wrap:wrap}
+  .hero-actions .btn-slab,.hero-actions .btn-ghost{
+    min-height:64px;display:inline-flex;align-items:center;justify-content:center}
+  .hero-actions .btn-ghost{padding-inline:26px}
+}
+
+/* ---- menu cards: pin price + allergens to the bottom so rows line up ---- */
+.mi{display:flex;flex-direction:column;gap:0}
+.mi-foot{margin-top:auto;padding-top:12px}
+.mi-price{margin:0}
+.mi-foot .mi-alg{margin-top:9px}
+.mi-shot{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;
+  margin:0 0 14px;background:#141416}
+.mi-order{display:inline-flex;align-items:center;gap:8px;margin-top:12px;
+  align-self:flex-start;padding:9px 14px;border:1px solid var(--pink);
+  color:var(--pink);text-decoration:none;font-family:var(--font-b);
+  font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  transition:background .18s,color .18s}
+.mi-order:hover,.mi-order:focus-visible{background:var(--pink);color:#000}
 </style>
 </head>
 <body>
@@ -1461,6 +1505,12 @@ safe('boot', function(){
 </script>
 
 
+<!-- Sticky order bar: on mobile the pink nav button is hidden, so the primary
+     action would otherwise live behind the hamburger. -->
+<div class="order-bar" id="orderBar" hidden>
+  <a href="#order" class="order-bar-btn" data-go="order">Order Now <span aria-hidden="true">&rarr;</span></a>
+</div>
+
 <script>
 /* ============================================================
    RENDER LAYER — everything below reads from content.js.
@@ -1512,9 +1562,19 @@ safe('boot', function(){
       D.menu.filter(function(m){ return m.category === catId && m.available; })
         .forEach(function(m){
           var c = el('article','mi');
+
+          // Photograph, when one has been supplied for this item.
+          if(m.image){
+            var im = new Image();
+            im.className = 'mi-shot'; im.src = m.image;
+            im.alt = m.imageAlt || m.name;
+            im.loading = 'lazy'; im.decoding = 'async';
+            c.appendChild(im);
+          }
+
           c.appendChild(el('h3','mi-name', m.name));
           if(m.description) c.appendChild(el('p','mi-desc', m.description));
-          if(m.price) c.appendChild(el('p','mi-price', m.price));
+
           var tags = [];
           if(m.vegan === true) tags.push('Vegan');
           else if(m.vegetarian === true) tags.push('Vegetarian');
@@ -1524,8 +1584,22 @@ safe('boot', function(){
             tags.forEach(function(t){ tw.appendChild(el('span','mi-tag', t)); });
             c.appendChild(tw);
           }
+
+          // Order straight from the card once a per-item URL exists.
+          if(m.orderUrl){
+            var oa = el('a','mi-order','Order');
+            oa.href = m.orderUrl; oa.target = '_blank'; oa.rel = 'noopener noreferrer';
+            oa.appendChild(el('span','sr-only',' ' + m.name + ' (opens in a new tab)'));
+            c.appendChild(oa);
+          }
+
+          // Price and allergens sit in a footer so they align across a row.
+          var foot = el('div','mi-foot');
+          if(m.price) foot.appendChild(el('p','mi-price', m.price));
           if(m.allergens && m.allergens.length)
-            c.appendChild(el('p','mi-alg','Allergens: ' + m.allergens.join(', ')));
+            foot.appendChild(el('p','mi-alg','Allergens: ' + m.allergens.join(', ')));
+          if(foot.children.length) c.appendChild(foot);
+
           grid.appendChild(c);
         });
     }
@@ -1721,6 +1795,21 @@ safe('boot', function(){
       if(ok(D.legal.registeredAddress))  bits.push(D.legal.registeredAddress.value);
       fc.textContent = bits.join(' \u00b7 ');
     }
+  });
+
+  /* ------------------------------------------------ sticky order bar */
+  run(function(){
+    var bar = $('orderBar'); if(!bar) return;
+    bar.hidden = false;
+    document.body.classList.add('has-order-bar');
+    // Hide it on the order page itself — the choice is already on screen.
+    function sync(){
+      var onOrder = (location.hash || '') === '#order';
+      bar.style.display = onOrder ? 'none' : '';
+    }
+    addEventListener('hashchange', sync);
+    document.addEventListener('click', function(){ setTimeout(sync, 60); }, true);
+    sync();
   });
 
   /* ------------------------------------------------- catering form */
