@@ -865,20 +865,7 @@ footer .logo-mark{width:96px}
   transition:background .18s,color .18s}
 .mi-order:hover,.mi-order:focus-visible{background:var(--pink);color:#000}
 
-/* ==================== 3D ==================== */
-.b3d{position:absolute;inset:0;display:grid;place-items:center;z-index:1;pointer-events:none}
-.b3d-stage{width:min(74%,430px);aspect-ratio:1;perspective:1100px;perspective-origin:50% 44%}
-.b3d-scene{position:relative;width:100%;height:100%;transform-style:preserve-3d;
-  /* The stack runs along local Z, so the spin must be rotateZ — rotateY would
-     slide every layer sideways and the burger would lean over. */
-  transform:rotateX(var(--rx,58deg)) rotateZ(var(--ry,0deg)) scale(var(--sc,1));
-  will-change:transform}
-.b3d-l{position:absolute;left:50%;top:50%;border-radius:50%;backface-visibility:hidden;
-  transform:translate(-50%,-50%) translateZ(var(--z));
-  background:var(--c)}
-.b3d-seed{position:absolute;left:50%;top:50%;width:7px;height:4px;border-radius:50%;
-  background:#F6E7C8;opacity:.92;
-  transform:translate(-50%,-50%) rotate(var(--a)) translateX(var(--r)) translateZ(var(--z))}
+/* ==================== MOTION ==================== */
 
 /* parole estruse al posto delle foto */
 .c-media{display:grid;place-items:center;min-height:clamp(230px,34vw,380px);overflow:hidden}
@@ -903,6 +890,33 @@ footer .logo-mark{width:96px}
 @media(max-width:900px){
   .c-media{min-height:clamp(180px,44vw,260px)}
   .x3d-l{font-size:clamp(34px,11vw,58px)}
+}
+
+/* ---- kinetic brand lines (hero panel) ---- */
+.kin{position:absolute;inset:0;display:grid;place-items:center;padding:0 8%;
+  perspective:900px;pointer-events:none}
+.kin-rail{position:relative;width:100%;height:1px;transform-style:preserve-3d}
+.kin-l{position:absolute;left:0;right:0;top:0;transform:translateY(-50%) rotateX(var(--r,0deg));
+  transform-origin:50% 50%;opacity:0;
+  font-family:var(--font-d);font-weight:900;text-transform:uppercase;
+  font-size:clamp(30px,4.2vw,60px);line-height:.94;letter-spacing:-.015em;
+  color:var(--cream);text-wrap:balance;
+  transition:transform .62s cubic-bezier(.16,.9,.24,1),opacity .5s ease}
+.kin-l.on{opacity:1;--r:0deg}
+.kin-l.out{opacity:0;--r:-62deg}
+.kin-l.in{opacity:0;--r:62deg}
+.kin-l b{color:var(--pink);font-weight:900}
+
+/* ---- staggered reveals ---- */
+.rise{opacity:0;transform:translateY(16px);
+  transition:opacity .5s ease,transform .5s cubic-bezier(.16,.9,.24,1);
+  transition-delay:var(--d,0ms)}
+.rise.up{opacity:1;transform:none}
+
+@media (prefers-reduced-motion: reduce){
+  .kin-l{transition:none}
+  .kin-l.out,.kin-l.in{opacity:0}
+  .rise{opacity:1!important;transform:none!important;transition:none}
 }
 </style>
 </head>
@@ -1015,9 +1029,9 @@ document.documentElement.className += ' js';
     </div>
 
     <div class="hero-right">
-      <div class="b3d" id="b3d" role="img"
-           aria-label="A Smashbird burger built in layers: bun, patties, cheese, sauce and pickles.">
-        <div class="b3d-stage"><div class="b3d-scene" id="b3dScene"></div></div>
+      <div class="kin" id="kin" aria-hidden="true">
+        <div class="kin-rail" id="kinRail"></div>
+      </div>
       </div>
       <div class="hero-vert">Galway · H91</div>
     </div>
@@ -1564,6 +1578,19 @@ safe('boot', function(){
   }
   function run(fn){ try{ fn(); }catch(e){ if(window.console) console.warn(e); } }
 
+  /* --------------------------------- staggered reveal on the grids */
+  function stagger(sel, step){
+    var els = document.querySelectorAll(sel);
+    Array.prototype.forEach.call(els, function(el, i){
+      el.classList.add('rise');
+      el.style.setProperty('--d', Math.min(i, 12) * (step || 45) + 'ms');
+    });
+    requestAnimationFrame(function(){
+      Array.prototype.forEach.call(els, function(el){ el.classList.add('up'); });
+    });
+  }
+  window.__sbStagger = stagger;
+
   /* ---------------------------------------------------- proof strip */
   run(function(){
     var w = $('proofStrip'); if(!w) return;
@@ -1636,6 +1663,9 @@ safe('boot', function(){
 
           grid.appendChild(c);
         });
+
+      // Cards fade up in sequence, including when the category changes.
+      if(window.__sbStagger) window.__sbStagger('#menuGrid .mi', 32);
     }
 
     D.menuCategories.forEach(function(cat, idx){
@@ -1657,6 +1687,49 @@ safe('boot', function(){
     }
   });
 
+
+  /* ------------------------------------ kinetic brand lines (hero) */
+  run(function(){
+    var rail = document.getElementById('kinRail');
+    if(!rail) return;
+    var L = D.lines;
+    // The approved brand lines, cycling. Pink half is the second sentence.
+    var SET = [
+      ['CRUNCH FIRST.', 'QUESTIONS LATER.'],
+      ['SAUCE IS', 'THE MAIN CHARACTER.'],
+      ['NOT ANOTHER', 'BURGER PLACE.'],
+      ['NEW DROP.', 'GET STUCK IN.']
+    ];
+    var nodes = SET.map(function(pair, i){
+      var el = document.createElement('p');
+      el.className = 'kin-l' + (i === 0 ? ' on' : ' in');
+      el.innerHTML = pair[0] + '<br><b>' + pair[1] + '</b>';
+      rail.appendChild(el);
+      return el;
+    });
+
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var at = 0, timer = null;
+    function step(){
+      var cur = nodes[at], nxt = nodes[at = (at + 1) % nodes.length];
+      cur.className = 'kin-l out';
+      nxt.className = 'kin-l in';
+      // next frame, so the browser registers the start state before animating
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){ nxt.className = 'kin-l on'; });
+      });
+    }
+    function play(){ if(!timer) timer = setInterval(step, 3600); }
+    function pause(){ if(timer){ clearInterval(timer); timer = null; } }
+    play();
+    document.addEventListener('visibilitychange', function(){
+      document.hidden ? pause() : play();
+    });
+  });
+
+
+  /* -------------------------------------------------- */
   /* -------------------------------------------------------- sauces */
   run(function(){
     var intro = $('saucesIntro'); if(intro) intro.textContent = D.saucesIntro;
@@ -1679,6 +1752,7 @@ safe('boot', function(){
       }
       g.appendChild(c);
     });
+    if(window.__sbStagger) window.__sbStagger('#sauceGrid .sc', 60);
     var disc = $('saucesDisclaimer');
     if(disc && D.saucesDisclaimer){ disc.textContent = D.saucesDisclaimer; disc.hidden = false; }
     if(D.birdhouseSocial && D.birdhouseSocial.confirmed && D.birdhouseSocial.url){
@@ -1896,71 +1970,6 @@ safe('boot', function(){
    ============================================================ */
 (function(){
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* ---------------------------------------------- the burger */
-  // Baking the shade into the colour avoids a per-element filter, which was
-  // costing more than everything else combined on mobile.
-  function shade(hex, k){
-    var n = parseInt(hex.slice(1), 16);
-    var r = Math.round(((n >> 16) & 255) * k),
-        g = Math.round(((n >> 8) & 255) * k),
-        b = Math.round((n & 255) * k);
-    return 'rgb(' + r + ',' + g + ',' + b + ')';
-  }
-
-  var scene = document.getElementById('b3dScene');
-  var wrap  = document.getElementById('b3d');
-  if(scene){
-    // top to bottom. Cheese and sauce borrow the brand yellow and pink.
-    var LAYERS = [
-      { w:0.78, t:8, c:'#DFA055' },   // bun crown
-      { w:0.84, t:2, c:'#86C232' },   // lettuce
-      { w:0.80, t:2, c:'#FFD400' },   // cheese
-      { w:0.86, t:6, c:'#4A2C18' },   // patty
-      { w:0.82, t:2, c:'#FB2095' },   // smash sauce
-      { w:0.80, t:2, c:'#FFD400' },   // cheese
-      { w:0.86, t:6, c:'#4A2C18' },   // patty
-      { w:0.74, t:2, c:'#8FA82E' },   // pickles
-      { w:0.80, t:7, c:'#C9873A' }    // bun heel
-    ];
-
-    var box = scene.getBoundingClientRect().width || 420;
-    var z = 130;                       // start high, build downwards
-    var partsTop = [];
-
-    LAYERS.forEach(function(L, li){
-      for(var i = 0; i < L.t; i++){
-        var d = document.createElement('i');
-        d.className = 'b3d-l';
-        var w = Math.round(box * L.w);
-        // crown tapers so the top bun reads as a dome
-        if(li === 0){ var k = 0.62 + 0.38 * Math.sqrt(i / (L.t - 1)); w = Math.round(w * k); }
-        d.style.width = w + 'px';
-        d.style.height = w + 'px';   // circles — rotateX does the foreshortening
-        d.style.setProperty('--z', z + 'px');
-        d.style.setProperty('--c', shade(L.c, 0.70 + 0.30 * (i / Math.max(1, L.t - 1))));
-        scene.appendChild(d);
-        if(li === 0 && i === 0) partsTop.push(z, w);
-        z -= 4.2;
-      }
-      z -= 4.6;                       // gap between ingredients
-    });
-
-    // sesame on the crown
-    var topZ = partsTop[0] || 96, topW = partsTop[1] || 300;
-    for(var sIdx = 0; sIdx < 16; sIdx++){
-      var sd = document.createElement('i');
-      sd.className = 'b3d-seed';
-      sd.style.setProperty('--a', (sIdx * 137.5) + 'deg');
-      sd.style.setProperty('--r', (6 + Math.sqrt(sIdx / 16) * topW * 0.40) + 'px');
-      sd.style.setProperty('--z', (topZ + 2) + 'px');
-      scene.appendChild(sd);
-    }
-
-    // Static by request: the burger is a still 3D object. No auto-rotation,
-    // no drag, no tap-to-smash — so there is no per-frame work at all here.
-    scene.style.setProperty('--ry', '-20deg');
-  }
 
   /* -------------------------------------- extruded category words */
   var blocks = document.querySelectorAll('[data-x3d]');

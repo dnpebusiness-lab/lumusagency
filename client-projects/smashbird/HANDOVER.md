@@ -47,21 +47,22 @@ licensed and are **not** in the repository. No unlicensed font file has been
 downloaded. The stack currently falls back to metrically similar grotesques.
 Supply the licensed web-font files, or confirm a licensed web-font service.
 
-**Photography — none.** All photographs were removed at client request. The site
-now runs on CSS 3D instead: a layered burger in the hero (drag to spin, tap to
-smash) and extruded category words where the food photos used to be. No library,
-no image files, no `img/` folder.
+**Photography — none.** All photographs were removed at client request, and so
+was the 3D burger. No image files, no `img/` folder.
 
-⚠ **This is a design decision with a commercial cost.** A food menu without
-product images converts worse — people order with their eyes. The 3D carries the
-brand well, but real photography of the food, the staff and the preparation is
-still recommended before launch, at minimum on the menu cards (the card component
-already supports a per-item image and turns it on automatically).
+⚠ **This carries a commercial cost.** A food menu without product images converts
+worse — people order with their eyes. Real photography of the food, staff and
+preparation is still recommended before launch, at minimum on the menu cards (the
+card component already supports a per-item image and turns it on automatically).
 
-**Motion.** The hero burger is a **static** 3D object — no rotation, no drag, no
-tap interaction, so there is no per-frame work for it at all. The only motion left
-is the category words, which tilt with scroll position and stop entirely under
-`prefers-reduced-motion`.
+**Motion.** Three pieces, all transform/opacity only:
+1. Hero panel — the approved brand lines cycle every 3.6s on a 3D flip.
+2. Category words (SMASHED / FRIED / LOADED / VEGAN JUNK) — extruded type that
+   tilts with scroll position.
+3. Menu and sauce cards — staggered fade-up, replayed when the category changes.
+
+All three stop under `prefers-reduced-motion`; the cycling panel also pauses when
+the tab is hidden. 61fps on mobile in a headless container.
 
 ---
 
