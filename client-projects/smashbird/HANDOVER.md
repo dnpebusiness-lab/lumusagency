@@ -182,6 +182,57 @@ and it is a lot of mobile data for someone deciding what to eat.
 ⚠ Still worth saying: a food menu without product images converts worse. This
 makes adding them cheap — the remaining work is a photographer.
 
+### The wall sign, and a correction
+
+**"I licked it so it's mine"** is painted on the wall at Cross Street. The
+art-direction rebuild deleted it, along with several other pieces of the
+client's own copy — the category descriptions, the six About tiles, the
+section headings (`PICK YOUR CRAVING.`, `GALWAY'S GOT OPINIONS.`, `FOLLOW THE
+BIRD.`, `MAKE THE MESS COUNT.`, `GET STUCK IN.`, `GOT A QUESTION?`) and the
+contact form's Subject field.
+
+That was a mistake in method: the file was rewritten from scratch rather than
+migrated section by section, so the copy got regenerated along with the code.
+The wall line specifically was dropped because it used a handwriting face that
+is not in the brand system — but the typeface was the treatment and the line
+was the content. **All of it is restored verbatim.** The only things
+deliberately left out are the internal `⚠` reviewer notes and photo
+placeholders, which should never have been on a public page.
+
+The category copy and the wall line now live in `content.js` (`strips` and
+`wallSign`) rather than hard-coded in markup, so there is one place to edit
+them and no way to lose them in a rebuild again.
+
+### Neon
+
+Two tiers, and they are rationed on purpose:
+
+- `.neon` — quiet and static. Location names, active nav item.
+- `.neon-sign` — the full sign. **Two elements on the entire site:** the hero
+  line and the wall sign.
+
+**On the purple.** The brief asked for a purple neon heading. The brand has no
+purple — slide 07 is pink, black, paper, yellow, red — and the art-direction
+brief itself rules out adding one: a purple *feeling* must come "through Smash
+Pink lighting, bloom, shadows and neighbouring light values."
+
+So the violet appears only in the two outermost, lowest-alpha shadow layers.
+This is also how neon genuinely photographs: a hot near-white tube core, then
+the gas colour, then scatter that cools toward violet as it falls off through
+air. Read the sign and it is purple; sample a letterform and it is `#FB2095`.
+Nothing was added to the palette. To push the violet further, raise the alpha
+on the last two layers of `.neon-sign` — that is the only knob.
+
+Behaviour: unlit at 0.32 opacity, strikes when it scrolls into view (a starter
+failing twice before the tube catches, ~1.35s), then holds with a 7s breathing
+cycle that moves the glow only and never the text opacity. Hover intensifies
+via `filter: drop-shadow` rather than `text-shadow`, so it cannot fight the
+breathing animation for the same property. Under `prefers-reduced-motion`
+there is no flicker and no breathing — the sign is simply shown already lit.
+
+The glow interpolates via a registered `@property --neon`. Where that is
+unsupported the sign still lights correctly, it just steps rather than eases.
+
 **Motion.** Four pieces, all transform/opacity only, all 160–600ms:
 
 1. **Neon ignition** — the hero's "CHICKEN." powers on once, 900ms after load,

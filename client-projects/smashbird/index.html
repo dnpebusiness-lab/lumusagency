@@ -176,12 +176,28 @@ body::after{
 .eyebrow.plain::before{display:none}
 .lede{max-width:56ch;color:var(--muted);font-size:var(--fs-body);line-height:1.7}
 
-/* ---- NEON — deck-driven, deliberately rationed ---------------------------
-   An art-directed accent, not a filter over the whole site. Three layers:
-   a tight white-hot core so the glyph edge stays sharp, a mid pink bloom,
-   and a wide low-opacity ambience. It is applied to a handful of words:
-   one hero line, the location names, the active nav item. NEVER the logo —
-   deck slide 06 forbids adding glow to the mark. */
+/* ==========================================================================
+   NEON
+   Two tiers, deliberately rationed. Never the logo — deck slide 06 forbids
+   adding glow to the mark, and that is enforced by only ever putting these
+   classes on type.
+
+   .neon       quiet, static. Location names, active nav item.
+   .neon-sign  the real thing. Two elements on the whole site: the hero line
+               and the wall sign at Cross Street.
+
+   ON THE COLOUR — why this reads purple without a purple in the palette.
+   The brand has no purple (deck slide 07 is pink, black, paper, yellow, red)
+   and the art-direction brief is explicit: a purple *feeling* is achieved
+   "through Smash Pink lighting, bloom, shadows and neighbouring light values
+   rather than introducing a completely new purple brand colour."
+
+   That is also how neon genuinely photographs. A tube has a hot near-white
+   core, then the gas colour, and the scatter cools toward violet as it falls
+   off through the air. So the violet lives ONLY in the two outermost layers,
+   at low alpha. Read the sign and it is purple. Sample a letterform and it
+   is Smash Pink. Nothing in the palette changed.
+   ========================================================================== */
 .neon{
   color:var(--pink);
   text-shadow:
@@ -190,14 +206,63 @@ body::after{
     0 0 30px rgba(251,32,149,.3),
     0 0 64px rgba(179,0,95,.22);
 }
-.js .neon-ignite{text-shadow:none;opacity:.78}
-.js .neon-ignite.lit{animation:ignite 900ms var(--ease) forwards}
-@keyframes ignite{
-  0%  {opacity:.78;text-shadow:none}
-  25% {opacity:1;  text-shadow:0 0 6px rgba(251,32,149,.35)}
-  35% {opacity:.86;text-shadow:none}
-  50% {opacity:1;  text-shadow:0 0 1px rgba(255,255,255,.5),0 0 9px rgba(251,32,149,.5),0 0 30px rgba(251,32,149,.3),0 0 64px rgba(179,0,95,.22)}
-  100%{opacity:1;  text-shadow:0 0 1px rgba(255,255,255,.5),0 0 9px rgba(251,32,149,.5),0 0 30px rgba(251,32,149,.3),0 0 64px rgba(179,0,95,.22)}
+
+/* Registering the property is what makes the glow interpolate instead of
+   snapping between keyframes. Where @property is unsupported the sign still
+   lights correctly, it just steps rather than eases. */
+@property --neon{ syntax:'<number>'; initial-value:1; inherits:false }
+
+.neon-sign{
+  --neon:1;
+  color:var(--pink);
+  text-shadow:
+    0 0 calc(1px   * var(--neon)) rgba(255,255,255,.62),  /* tube core      */
+    0 0 calc(7px   * var(--neon)) rgba(255,138,205,.72),  /* hot near field */
+    0 0 calc(17px  * var(--neon)) rgba(251,32,149,.60),   /* the gas itself */
+    0 0 calc(38px  * var(--neon)) rgba(251,32,149,.32),   /* bloom          */
+    0 0 calc(76px  * var(--neon)) rgba(146,52,214,.30),   /* violet scatter */
+    0 0 calc(124px * var(--neon)) rgba(120,40,190,.17);   /* far ambience   */
+  transition:filter var(--t) var(--ease);
+}
+/* Hover rides on `filter`, not text-shadow, so it never fights the breathing
+   animation over the same property — no snap when the pointer leaves. */
+.neon-sign:hover{filter:drop-shadow(0 0 13px rgba(251,32,149,.4))}
+
+/* Unlit until it enters the viewport. A dim tube is low opacity, not a
+   different colour — that is what an unpowered sign actually looks like. */
+.js .neon-sign{opacity:.32;--neon:0}
+.js .neon-sign.lit{
+  animation:
+    neon-on 1350ms var(--ease) forwards,
+    neon-breathe 7s ease-in-out 1400ms infinite;
+}
+/* The stutter is a starter failing twice before the tube catches, then a
+   slight overshoot as it settles. Opacity and glow only — nothing moves. */
+@keyframes neon-on{
+  0%  {opacity:.30;--neon:0}
+  7%  {opacity:.76;--neon:.50}
+  11% {opacity:.34;--neon:.05}
+  19% {opacity:.86;--neon:.68}
+  24% {opacity:.36;--neon:.08}
+  38% {opacity:.93;--neon:.86}
+  45% {opacity:.72;--neon:.56}
+  62% {opacity:1;  --neon:1.07}
+  72% {opacity:1;  --neon:.96}
+  100%{opacity:1;  --neon:1}
+}
+/* Breathing touches the glow only, never the text opacity — the letters must
+   never appear to fade while someone is reading them. */
+@keyframes neon-breathe{
+  0%,100%{--neon:1}
+  50%    {--neon:1.07}
+}
+
+/* If a sign ever lands on Wrap Paper the bloom is wrong and pink-on-cream is
+   weak, so the glow tightens and the ink drops to the deeper pink. The text
+   stays readable instead of washing out. */
+.menu-panel .neon-sign,.reviews .neon-sign{
+  color:var(--pink-deep);
+  text-shadow:0 0 calc(5px * var(--neon)) rgba(179,0,95,.26);
 }
 
 /* Neon tube rule — a divider that reads as lit glass, used sparingly. */
@@ -471,6 +536,38 @@ html:not(.js) .page{display:block}
 }
 
 /* ==========================================================================
+   THE WALL SIGN
+   "I licked it so it's mine" is painted on the wall at Cross Street. It is a
+   real line in a real room and it cannot be rewritten, only quoted — so it
+   gets the site's one proper neon moment.
+
+   Set in sentence case, not the usual uppercase display treatment: it is a
+   scrawl on a wall, not a headline shouting. The original used a handwriting
+   face; that face is not in the brand system, so the condensed display face
+   carries it instead and the character comes from the light.
+   ========================================================================== */
+.sign{
+  position:relative;overflow:hidden;text-align:center;
+  padding:var(--s8) var(--gutter);background:var(--ink);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+/* The wall behind it catching the light. */
+.sign::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 48% 64% at 50% 44%,rgba(251,32,149,.11),transparent 72%);
+}
+.sign-line{
+  position:relative;font-family:var(--font-d);font-weight:900;
+  font-size:clamp(38px,7.6vw,104px);line-height:.94;letter-spacing:-.02em;
+}
+.sign-note{
+  position:relative;margin-top:var(--s4);
+  font-size:var(--fs-micro);font-weight:700;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--muted-2);
+}
+@media(max-width:640px){.sign{padding:var(--s6) var(--gutter)}}
+
+/* ==========================================================================
    REVIEWS — full-bleed Smash Pink.
    Black on pink is 5.44:1, the deck's default pairing (slide 08), and this
    band is what gives the home page its second beat of colour: the run is
@@ -683,6 +780,10 @@ html:not(.js) .page{display:block}
 }
 .fact b em{font-style:normal;color:var(--pink)}
 .fact p{font-size:var(--fs-sm);color:var(--muted);line-height:1.65}
+.about-close{
+  margin-top:var(--s6);max-width:62ch;
+  font-size:clamp(18px,2vw,24px);line-height:1.6;color:var(--paper);
+}
 
 /* ==========================================================================
    SOCIAL
@@ -816,9 +917,8 @@ html:not(.js) .page{display:block}
   }
   .js .rv{opacity:1;transform:none}
   .js .ticker-track{animation:none}
-  .js .neon-ignite{opacity:1;text-shadow:
-    0 0 1px rgba(255,255,255,.5),0 0 9px rgba(251,32,149,.5),
-    0 0 30px rgba(251,32,149,.3),0 0 64px rgba(179,0,95,.22)}
+  /* No flicker, no breathing — the sign is simply shown already lit. */
+  .js .neon-sign,.js .neon-sign.lit{animation:none!important;opacity:1;--neon:1}
   .hero-bird{transform:none!important}
 }
 </style>
@@ -857,7 +957,7 @@ html:not(.js) .page{display:block}
       <p class="eyebrow hero-eyebrow rv">Galway street food</p>
       <h1 class="display hero-hl">
         <span class="l1 rv">Burgers.</span>
-        <span class="l2 rv neon neon-ignite" id="heroNeon">Chicken.</span>
+        <span class="l2 rv neon-sign" id="heroNeon">Chicken.</span>
       </h1>
       <p class="hero-where rv"><b>Cross Street</b> &middot; <b>Liosb&aacute;n</b> &middot; Galway</p>
       <div class="hero-actions rv">
@@ -874,11 +974,18 @@ html:not(.js) .page{display:block}
 
   <div id="strips"></div>
 
+  <!-- The wall at Cross Street. Copy lives in content.js under `wallSign`. -->
+  <section class="sign" id="wallSign" aria-label="On the wall at Cross Street" hidden>
+    <p class="sign-line neon-sign" id="signLine"></p>
+    <p class="sign-note" id="signNote"></p>
+  </section>
+
   <!-- Renders only when genuine reviews exist in content.js. Nothing here is
        written by us — see the note above `reviews` in that file. -->
-  <section class="reviews" id="reviewsSection" aria-label="What people say" hidden>
+  <section class="reviews" id="reviewsSection" aria-label="Reviews" hidden>
     <div class="wrap">
       <p class="eyebrow">What people say</p>
+      <h2 class="display" style="font-size:var(--fs-d2);margin-bottom:var(--s5)">Galway&rsquo;s got opinions.</h2>
       <div id="reviewList"></div>
     </div>
   </section>
@@ -887,7 +994,7 @@ html:not(.js) .page{display:block}
     <div class="wrap">
       <div class="ig-head">
         <div>
-          <p class="eyebrow" style="margin-bottom:var(--s2)">Follow</p>
+          <p class="eyebrow" style="margin-bottom:var(--s2)">Follow the bird.</p>
           <h2 class="display" style="font-size:var(--fs-d2)" id="igHandle">@smashbird_galway</h2>
         </div>
         <a class="btn ghost sm" id="igLink" href="https://www.instagram.com/smashbird_galway/" target="_blank" rel="noopener noreferrer"><span>Open Instagram &nearr;</span></a>
@@ -903,8 +1010,8 @@ html:not(.js) .page{display:block}
     <div class="wrap">
       <header class="head">
         <p class="eyebrow">The food</p>
-        <h1 class="display">Choose your<br>sauce.</h1>
-        <p class="lede" id="menuIntro"></p>
+        <h1 class="display">Pick your<br>craving.</h1>
+        <p class="lede">Smashed burgers, buttermilk fried chicken, vegan junk and loaded sides.</p>
       </header>
       <div class="cats" id="catNav" role="tablist" aria-label="Menu categories"></div>
       <p class="cat-note" id="catNote" hidden></p>
@@ -950,15 +1057,19 @@ html:not(.js) .page{display:block}
   <div class="wrap">
     <header class="head">
       <p class="eyebrow">Who we are</p>
-      <h1 class="display" id="aboutHl"></h1>
-      <p class="lede" id="aboutBody"></p>
+      <h1 class="display">Make the<br>mess count.</h1>
+      <p class="lede">Smashbird is a family-run street-food brand from Galway. Built around serious flavour, an unusually deep sauce range and no interest in playing it safe.</p>
     </header>
+    <!-- The six tiles are the client's own copy. Restored verbatim. -->
     <div class="facts">
-      <div class="fact rv"><b><em>Family</em><br>run</b><p>Independent and local. Not a franchise.</p></div>
-      <div class="fact rv"><b><em>Two</em><br>kitchens</b><p>Cross Street and Liosb&aacute;n, same menu, same prices.</p></div>
-      <div class="fact rv"><b><em>Award</em><br>winning</b><p>Best Burger &amp; American, Deliveroo Restaurant Awards 2025.</p></div>
-      <div class="fact rv"><b><em>Sauce</em><br>led</b><p>A deep range of Birdhouse sauces, made in Ireland.</p></div>
+      <div class="fact rv"><b><em>Family</em><br>run</b><p>Independent. Local. Not a franchise.</p></div>
+      <div class="fact rv"><b>Galway<br>based</b><p>Cross Street and Liosb&aacute;n. Two spots, one identity.</p></div>
+      <div class="fact rv"><b>Sauce<br><em>first</em></b><p>The sauce range is the competitive difference. Not an afterthought.</p></div>
+      <div class="fact rv"><b>Smashed<br>patties</b><p>Pressed hard on a flat-top. Lacy edges. No exceptions.</p></div>
+      <div class="fact rv"><b>Fried<br>chicken</b><p>Real crunch. Worth the mess.</p></div>
+      <div class="fact rv"><b>Vegan<br><em>&amp; GF</em></b><p>Options that belong in the same conversation, not in a footnote.</p></div>
     </div>
+    <p class="about-close rv">Smashbird does not do subtle. The food is built to be immediate, textural and worth talking about. The sauce range is deeper than it needs to be. The menu keeps changing. The attitude does not.</p>
   </div>
 </section>
 
@@ -1009,8 +1120,8 @@ html:not(.js) .page{display:block}
   <div class="wrap">
     <header class="head">
       <p class="eyebrow">Collection</p>
-      <h1 class="display">Order<br>now.</h1>
-      <p class="lede">Pick your branch. Each one has its own ordering page.</p>
+      <h1 class="display">Get stuck in.</h1>
+      <p class="lede">Pick your location &mdash; each one takes its own orders.</p>
     </header>
     <div class="order-grid" id="orderList"></div>
   </div>
@@ -1021,7 +1132,7 @@ html:not(.js) .page{display:block}
   <div class="wrap">
     <header class="head">
       <p class="eyebrow">Say hello</p>
-      <h1 class="display">Get in<br>touch.</h1>
+      <h1 class="display">Got a<br>question?</h1>
       <p class="lede">For anything that is not an order — press, stockists, feedback or a question about allergens.</p>
     </header>
     <form class="form" id="contactForm" name="contact" method="POST"
@@ -1031,6 +1142,14 @@ html:not(.js) .page{display:block}
       <div class="f-row">
         <div class="f-field"><label for="k-name">Name</label><input id="k-name" name="name" autocomplete="name" required></div>
         <div class="f-field"><label for="k-email">Email</label><input id="k-email" name="email" type="email" autocomplete="email" required></div>
+      </div>
+      <div class="f-field"><label for="k-subject">Subject</label>
+        <select id="k-subject" name="subject">
+          <option>General enquiry</option>
+          <option>Catering / events</option>
+          <option>Press / media</option>
+          <option>Something else</option>
+        </select>
       </div>
       <div class="f-field"><label for="k-msg">Message</label><textarea id="k-msg" name="message" required></textarea></div>
       <p class="f-err" id="contactErr" role="alert"></p>
@@ -1178,12 +1297,49 @@ run('navscroll', function(){
   }, {passive:true});
 });
 
-/* ------------------------------------------------------------ hero: neon
-   Ignites once, then holds. A sign that keeps flickering reads as broken,
-   not as atmosphere. */
+/* -------------------------------------------------------- the wall sign
+   Runs BEFORE the neon block on purpose. The section starts `hidden`, and an
+   element with no layout box produces no IntersectionObserver entries — so
+   if the observer were attached first, this sign would never strike. */
+run('wallsign', function(){
+  var W = D.wallSign, sec = $('wallSign');
+  if(!sec || !W || !W.confirmed || !W.line1) return;
+  var line = $('signLine');
+  line.appendChild(document.createTextNode(W.line1));
+  if(W.line2){
+    line.appendChild(document.createElement('br'));
+    line.appendChild(document.createTextNode(W.line2));
+  }
+  if(W.note) $('signNote').textContent = W.note;
+  sec.hidden = false;
+});
+
+/* ------------------------------------------------------------------ neon
+   Each sign strikes when it enters the viewport, then holds — the breathing
+   afterwards is in the CSS and is meant to be almost invisible. A sign that
+   keeps flickering reads as broken, not as atmosphere.
+
+   Lighting is one-shot: unobserve immediately, so scrolling back up does not
+   re-strike a sign that is already on. */
 run('neon', function(){
-  var n = $('heroNeon'); if(!n || REDUCED) return;
-  setTimeout(function(){ n.classList.add('lit'); }, 620);
+  var signs = document.querySelectorAll('.neon-sign');
+  if(!signs.length) return;
+
+  if(REDUCED || !('IntersectionObserver' in window)){
+    Array.prototype.forEach.call(signs, function(n){ n.classList.add('lit'); });
+    return;
+  }
+  var o = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      o.unobserve(e.target);
+      var n = e.target;
+      // A beat before it strikes, so you catch the sign coming on rather
+      // than finding it already lit.
+      setTimeout(function(){ n.classList.add('lit'); }, 220);
+    });
+  }, {threshold:.35, rootMargin:'0px 0px -8% 0px'});
+  Array.prototype.forEach.call(signs, function(n){ o.observe(n); });
 });
 
 /* ------------------------------------------------- hero: bird parallax
@@ -1228,16 +1384,9 @@ run('ticker', function(){
    Alternating split; the flip is the rhythm, not decoration. */
 run('strips', function(){
   var host = $('strips'); if(!host) return;
-  var SET = [
-    {n:'01', word:'Smashed', em:null, go:'menu',
-     copy:'Two thin patties pressed hard on a screaming hot flat-top. Crisp lacy edges, cheese melted through every layer.'},
-    {n:'02', word:'Fried',   em:null, go:'menu',
-     copy:'Buttermilk fried chicken with real crunch. Pick your sauce, pick your heat. Never pick safe.'},
-    {n:'03', word:'Loaded',  em:null, go:'menu',
-     copy:'Fries that are a meal on their own. Cheese, sauce, and enough of it to share — or not.'},
-    {n:'04', word:'Vegan',   em:'Junk', go:'menu',
-     copy:'Plant-based and still junk food. No apology, no salad energy, same sauces.'}
-  ];
+  // Copy comes from content.js. It is the client's own wording — see the
+  // warning above `strips` in that file before touching it.
+  var SET = D.strips || [];
   SET.forEach(function(s,i){
     var strip = el('section', 'strip' + (i % 2 ? ' flip' : ''));
     var inner = el('div','wrap');
@@ -1256,7 +1405,7 @@ run('strips', function(){
        a page look generated — and the menu is already in the nav and the
        sticky bar, so three more of them buy nothing. */
     if(i === 0){
-      var a = el('a','btn ghost sm'); a.href = '#'+s.go; a.setAttribute('data-go', s.go);
+      var a = el('a','btn ghost sm'); a.href = '#menu'; a.setAttribute('data-go','menu');
       a.appendChild(el('span', null, 'See the menu'));
       c.appendChild(a);
     }
@@ -1269,9 +1418,6 @@ run('strips', function(){
 run('menu', function(){
   var nav = $('catNav'), list = $('menuList');
   if(!nav || !list) return;
-
-  var intro = $('menuIntro');
-  if(intro) intro.textContent = D.about ? D.about.body : '';
 
   function render(catId){
     list.innerHTML = '';

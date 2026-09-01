@@ -78,6 +78,34 @@ window.SMASHBIRD = {
          'sauces. No playing it safe. No boring bites. Just serious food made to get stuck into.'
   },
 
+  /* ------------------------------------------------------ category strips
+     The four things Smashbird makes, in the brand's own words.
+
+     ⚠ This copy is the client's. A rebuild replaced it with shorter
+     paraphrases written here, which was wrong — it is restored verbatim and
+     should not be "improved" again without being asked. */
+  strips: [
+    { n:'01', word:'Smashed', em:null,
+      copy:'Two thin beef patties pressed hard on a screaming hot flat-top. Crisp lacy edges. American cheese melted through every layer.' },
+    { n:'02', word:'Fried', em:null,
+      copy:'Fried chicken with real crunch. Crispy Bird, Hot Honey, Korean. Choose your sauce. Choose your heat. Never choose safe.' },
+    { n:'03', word:'Loaded', em:null,
+      copy:"Loaded fries built to collapse under the weight of their own toppings. Share them. Or don't." },
+    { n:'04', word:'Vegan', em:'Junk',
+      copy:"Vegan food that isn't trying to be acceptable. The same crunch, the same sauce, the same mess. No apologies." }
+  ],
+
+  /* --------------------------------------------------------------- wall sign
+     Painted on the wall at Cross Street. A real line in a real room, and the
+     least replaceable sentence on this site — it cannot be rewritten, only
+     quoted. Rendered on the home page as a neon sign. */
+  wallSign: {
+    line1: 'I licked it',
+    line2: "so it's mine",
+    note:  'On the wall at Cross Street',
+    confirmed: true
+  },
+
   /* ----------------------------------------------------------- proof strip */
   proof: [
     { text:'WINNER — BEST BURGER & AMERICAN, DELIVEROO RESTAURANT AWARDS 2025', confirmed:true },
