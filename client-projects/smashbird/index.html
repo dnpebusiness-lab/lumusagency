@@ -1999,7 +1999,7 @@ safe('boot', function(){
         container.appendChild(img);
       }
 
-      // Hero photo (behind kinetic panel)
+      // Hero photo (behind kinetic panel, but kin panel stays on top)
       if(placements.hero && placements.hero.id){
         var heroRight = document.querySelector('.hero-right');
         if(heroRight){
@@ -2010,19 +2010,26 @@ safe('boot', function(){
           heroPhoto.alt = placements.hero.alt || '';
           heroPhoto.loading = 'eager'; heroPhoto.decoding = 'async';
           heroPhoto.onerror = function(){ if(heroPhoto.parentNode) heroPhoto.parentNode.removeChild(heroPhoto); };
-          heroRight.insertBefore(heroPhoto, heroRight.firstChild);
+          // Insert after first child so kinetic panel stays on top
+          heroRight.insertBefore(heroPhoto, heroRight.querySelector('.kin').nextSibling);
         }
       }
 
       // Category photos (burgers, birds, vegan) in craving sections
       var cravings = document.querySelectorAll('.craving .c-media');
       if(cravings.length > 0 && placements.burgers && placements.burgers.id){
+        var x3d = cravings[0].querySelector('.x3d');
+        if(x3d) x3d.style.display = 'none';
         renderPlacementPhoto(placements.burgers.id, placements.burgers.alt, cravings[0]);
       }
       if(cravings.length > 1 && placements.birds && placements.birds.id){
+        var x3d = cravings[1].querySelector('.x3d');
+        if(x3d) x3d.style.display = 'none';
         renderPlacementPhoto(placements.birds.id, placements.birds.alt, cravings[1]);
       }
       if(cravings.length > 2 && placements.vegan && placements.vegan.id){
+        var x3d = cravings[2].querySelector('.x3d');
+        if(x3d) x3d.style.display = 'none';
         renderPlacementPhoto(placements.vegan.id, placements.vegan.alt, cravings[2]);
       }
 
