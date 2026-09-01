@@ -142,7 +142,7 @@ describe('docs/retell-agent artefacts', () => {
       expect(tool.speak_during_execution).toBe(false)
       // Without this the agent looks the answer up and then says nothing.
       expect(tool.speak_after_execution).toBe(true)
-      expect(Object.keys(tool.headers)).toEqual(['x-astra-tool-secret'])
+      expect(Object.keys(tool.headers ?? {})).toEqual(['x-astra-tool-secret'])
       expect(tool.url).toBe(`<YOUR_APP_URL>/api/voice/tools/${tool.name}`)
     }
     // end_call is absent on purpose: the prompt says no other tool exists.

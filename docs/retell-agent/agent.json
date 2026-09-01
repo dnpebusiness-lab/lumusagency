@@ -1,6 +1,5 @@
 {
   "agent_name": "Astra — Osteria Vindaro",
-  "channel": "voice",
   "voice_id": "retell-Cimo",
   "language": [
     "en-US",
@@ -23,6 +22,7 @@
     "default_personality": true,
     "ai_disclosure": true
   },
+  "channel": "voice",
   "response_engine": {
     "type": "retell-llm"
   },

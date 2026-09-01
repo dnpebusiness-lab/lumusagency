@@ -133,15 +133,13 @@ export class RetellVoiceProvider implements VoiceProvider {
       const agentPayload = buildRetellAgentPayload(input, llm.llm_id)
       const agent = existing
         ? await client.agent.update(existing.agent_id, agentPayload)
-        : await client.agent.create(
-            agentPayload as unknown as Parameters<typeof client.agent.create>[0],
-          )
+        : await client.agent.create(agentPayload)
 
       logSafe('info', 'retell.agent.synced', {
         location_id: config.locationId,
         prompt_version: config.promptVersion,
         created: existing === null,
-        tool_count: (llmPayload['general_tools'] as unknown[]).length,
+        tool_count: llmPayload.general_tools?.length ?? 0,
       })
 
       return {

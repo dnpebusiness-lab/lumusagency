@@ -1,3 +1,4 @@
+import type Retell from 'retell-sdk'
 import type { LanguageCode } from '@/lib/db/enums'
 import { buildAgentPrompt } from '@/lib/agent/prompt'
 import { getDisclosure } from '@/lib/agent/disclosure'
@@ -19,14 +20,18 @@ import type { VoiceAgentConfig } from '../types'
  *
  * Because both come from this file they cannot disagree.
  *
- * No vendor SDK type is imported: the payloads are plain data, which keeps this
- * file readable from a test without pulling retell-sdk into the bundle. The
- * shapes are taken from an agent exported from the dashboard after it was
- * working, not from documentation.
+ * The payloads are typed against the vendor's own parameter definitions — a
+ * type-only import, so nothing of retell-sdk is loaded at runtime and the
+ * artefact test can read this file freely. That typing is not decoration: it
+ * is the only check available without a network, and it is what proves a field
+ * name or an enum value is one the vendor actually accepts rather than one
+ * that merely looked right.
  */
 
+type RetellLanguage = Extract<Retell.AgentCreateParams['language'], readonly unknown[]>[number]
+
 /** How our two-letter language codes are spelled at the vendor. */
-const RETELL_LANGUAGE: Record<LanguageCode, string> = {
+const RETELL_LANGUAGE: Record<LanguageCode, RetellLanguage> = {
   en: 'en-US',
   it: 'it-IT',
 }
@@ -39,23 +44,10 @@ export interface RetellDefinitionInput {
   readonly toolSecret: string
 }
 
-export interface RetellCustomTool {
-  readonly type: 'custom'
-  readonly name: string
-  readonly description: string
-  readonly url: string
-  readonly method: 'POST'
-  readonly timeout_ms: number
-  readonly headers: Record<string, string>
-  readonly parameter_type: 'json'
-  readonly parameters: Record<string, unknown>
-  readonly query_params: Record<string, string>
-  readonly response_variables: Record<string, string>
-  readonly args_at_root: boolean
-  readonly speak_during_execution: boolean
-  readonly speak_after_execution: boolean
-  readonly enable_typing_sound: boolean
-}
+export type RetellCustomTool = Extract<
+  NonNullable<Retell.LlmCreateParams['general_tools']>[number],
+  { type: 'custom' }
+>
 
 /**
  * A caller listening to silence is the vendor's two-minute default timeout.
@@ -163,7 +155,7 @@ export function buildRetellTools(input: RetellDefinitionInput): RetellCustomTool
 }
 
 /** The response engine: prompt, opening line and tools. */
-export function buildRetellLlmPayload(input: RetellDefinitionInput): Record<string, unknown> {
+export function buildRetellLlmPayload(input: RetellDefinitionInput): Retell.LlmCreateParams {
   const prompt = buildAgentPrompt(input.config)
 
   return {
@@ -183,14 +175,13 @@ export function buildRetellLlmPayload(input: RetellDefinitionInput): Record<stri
 }
 
 /**
- * Everything about the agent that is not the response engine.
- * `llmId` is omitted when the payload is going into an import file rather than
- * onto an existing engine.
+ * Everything about the agent except which engine answers with it.
+ * Split out so the same settings serve an API call, which must name an engine,
+ * and an import file, which must not name one that belongs to this account.
  */
-export function buildRetellAgentPayload(
+function agentSettings(
   input: RetellDefinitionInput,
-  llmId?: string,
-): Record<string, unknown> {
+): Omit<Retell.AgentCreateParams, 'response_engine'> {
   const { config } = input
   const languages = [
     config.defaultLanguage,
@@ -199,7 +190,6 @@ export function buildRetellAgentPayload(
 
   return {
     agent_name: `Astra — ${config.locationName}`,
-    channel: 'voice',
     voice_id: config.voiceId ?? '',
     language: languages,
     timezone: config.timezone,
@@ -216,8 +206,21 @@ export function buildRetellAgentPayload(
     allow_user_dtmf: true,
     post_call_analysis_model: 'gpt-4.1',
     pii_config: { categories: [], mode: 'post_call' },
+    // ai_disclosure: when a caller asks outright, the vendor's own layer
+    // acknowledges being a virtual assistant too. Our prompt already requires
+    // it; this is the second lock on the same door.
     handbook_config: { default_personality: true, ai_disclosure: true },
-    response_engine: llmId ? { type: 'retell-llm', llm_id: llmId } : { type: 'retell-llm' },
+  }
+}
+
+/** The agent as the vendor's create/update endpoint wants it. */
+export function buildRetellAgentPayload(
+  input: RetellDefinitionInput,
+  llmId: string,
+): Retell.AgentCreateParams {
+  return {
+    ...agentSettings(input),
+    response_engine: { type: 'retell-llm', llm_id: llmId },
   }
 }
 
@@ -228,7 +231,11 @@ export function buildRetellAgentPayload(
  */
 export function buildRetellAgentImport(input: RetellDefinitionInput): Record<string, unknown> {
   return {
-    ...buildRetellAgentPayload(input),
+    ...agentSettings(input),
+    // Present in a dashboard export, but not something the create endpoint
+    // accepts — so it belongs to the import file only.
+    channel: 'voice',
+    response_engine: { type: 'retell-llm' },
     retellLlmData: buildRetellLlmPayload(input),
   }
 }
