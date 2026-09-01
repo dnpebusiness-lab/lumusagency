@@ -339,11 +339,20 @@ body::after{
    ========================================================================== */
 .nav{
   position:fixed;top:var(--bar);left:0;right:0;height:var(--nav-h);z-index:200;
-  background:rgba(9,9,11,.92);backdrop-filter:blur(12px);
   border-bottom:2px solid var(--pink);
   display:flex;align-items:center;justify-content:space-between;
   gap:var(--s4);padding:0 var(--gutter);
   transition:border-bottom-width var(--t) var(--ease);
+}
+/* The blur lives on a layer INSIDE the nav, not on the nav itself.
+   `backdrop-filter` creates a containing block for position:fixed
+   descendants — with it on .nav, the mobile drawer anchored to the 68px bar
+   instead of the viewport and the first two links landed off-screen at
+   negative coordinates. Putting it on a pseudo-element keeps the effect and
+   gives the drawer the viewport back. */
+.nav::before{
+  content:'';position:absolute;inset:0;z-index:-1;
+  background:rgba(9,9,11,.92);backdrop-filter:blur(12px);
 }
 .nav.scrolled{border-bottom-width:4px}
 /* The mark sits in its own clear space and carries no effects of any kind. */
@@ -392,8 +401,14 @@ body::after{
   .only-mobile{display:block}
   .nav-links{
     position:fixed;top:var(--top);left:0;right:0;bottom:0;
-    flex-direction:column;align-items:flex-start;justify-content:center;
-    gap:var(--s4);padding:var(--gutter);background:var(--black);
+    flex-direction:column;align-items:flex-start;justify-content:flex-start;
+    gap:var(--s3);padding:var(--s5) var(--gutter);background:var(--black);
+    /* Top-aligned and scrollable rather than centred. Centring a flex column
+       that overflows pushes items off BOTH ends, and the ones above the top
+       edge cannot be scrolled back to — which is how the first two links
+       became unreachable. In landscape there genuinely is not room for seven
+       items, so it has to scroll. */
+    overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;
     transform:translateX(100%);transition:transform var(--t-slow) var(--ease);
   }
   .nav-links.open{transform:translateX(0)}
