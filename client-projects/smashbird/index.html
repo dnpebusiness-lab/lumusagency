@@ -3,21 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Smashbird Galway — Serious Burgers, Fried Chicken & Birdhouse Sauces</title>
-<meta name="description" content="Smashed burgers, fried chicken, vegan junk and loaded sides in Galway. Winner of Best Burger & American at the Deliveroo Restaurant Awards 2025. Cross Street and Liosb&aacute;n.">
+<title>Smashbird Galway — Burgers. Chicken.</title>
+<meta name="description" content="Smashed burgers, fried chicken, vegan junk and loaded sides in Galway. Winner of Best Burger &amp; American, Deliveroo Restaurant Awards 2025. Cross Street and Liosb&aacute;n.">
 <meta name="robots" content="noindex, nofollow">
 <meta property="og:type" content="restaurant">
 <meta property="og:site_name" content="Smashbird">
-<meta property="og:title" content="Smashbird Galway — Serious Burgers">
-<meta property="og:description" content="Smashed burgers, fried chicken, vegan junk and loaded sides &mdash; powered by Birdhouse sauces. Two Galway locations.">
+<meta property="og:title" content="Smashbird Galway — Burgers. Chicken.">
+<meta property="og:description" content="Smashed burgers, fried chicken, vegan junk and loaded sides &mdash; powered by Birdhouse sauces. Cross Street and Liosb&aacute;n.">
 <meta property="og:locale" content="en_IE">
+<meta property="og:image" content="img/logo-stacked.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#000000">
+<meta name="twitter:image" content="img/logo-stacked.png">
+<meta name="theme-color" content="#09090B">
+<link rel="icon" href="img/icon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="img/icon-180.png">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Restaurant",
   "name": "Smashbird",
+  "image": "img/logo-stacked.png",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "3 Cross Street Lower",
@@ -29,2214 +34,1552 @@
   "award": "Best Burger & American — Deliveroo Restaurant Awards 2025"
 }
 </script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;0,900;1,900&family=Barlow:wght@400;500;600&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<!-- Fonts are served from this domain, not from Google.
+     Three reasons, in order of weight: a request to fonts.gstatic.com sends
+     the visitor's IP to a third party, which is a live GDPR question for an
+     Irish business and one this site should not have to answer in its cookie
+     policy; it removes a render-blocking third-party round trip; and the type
+     renders identically for everyone instead of silently falling back when a
+     CDN is slow or blocked. Latin subset only — 109KB for five weights. -->
+<link rel="preload" href="fonts/barlowcondensed-900.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/barlow-400.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-/* ============================================================
-   SMASHBIRD GALWAY — website concept
-   Prepared by Lumus Agency.
+@font-face{font-family:'Barlow';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/barlow-400.woff2) format('woff2')}
+@font-face{font-family:'Barlow';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/barlow-600.woff2) format('woff2')}
+@font-face{font-family:'Barlow';font-style:normal;font-weight:700;font-display:swap;src:url(fonts/barlow-700.woff2) format('woff2')}
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:700;font-display:swap;src:url(fonts/barlowcondensed-700.woff2) format('woff2')}
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:900;font-display:swap;src:url(fonts/barlowcondensed-900.woff2) format('woff2')}
+
+/* ==========================================================================
+   SMASHBIRD GALWAY
+   Built to the Smashbird Brand Identity & Art Direction deck (Lumus, 2026).
+
+   The deck is the authority for every value in the token block below —
+   colours (slide 07), contrast rules (08), type roles (09), the 8px grid
+   (10), illustration use (11) and the hero composition (15).
+
+   THE ONE RULE THAT SHAPES THIS FILE
+   Slides 01, 12 and 16: "No photo dependency." The layout has to hold on
+   type, colour, logo and rhythm alone. Photography is an enhancement that
+   switches on from content.js — never a hole the design is waiting to fill.
 
    PROGRESSIVE ENHANCEMENT
-   Every piece of content is visible with no JavaScript at all.
-   The `.js` class is added to <html> by an inline script; only
-   then do the entrance animations arm themselves. If the script
-   never runs, the page is a plain, fully readable site.
-   ============================================================ */
+   Every piece of content is readable with no JavaScript. The `.js` class is
+   added to <html> by an inline script; only then do routing and entrance
+   motion arm themselves.
+   ========================================================================== */
 
 :root{
-  --pink:#FF1493; --pink-hi:#FF5CB8; --pink-deep:#C2005F;
-  --black:#09090B; --black-2:#121215; --line:#1E1E22;
-  --yellow:#FFD400; --cream:#F2E8D5; --violet:#8B2BE2;
+  /* ---- COLOUR — deck slide 07, exact values. Pink and black lead. -------- */
+  --pink:#FB2095;          /* Smash Pink   ~40% */
+  --black:#09090B;         /* Night Black  ~35% */
+  --paper:#F2E8D5;         /* Wrap Paper   ~15% */
+  --yellow:#FFD400;        /* Hot Sauce      7% — heat, price, urgency ONLY */
+  --red:#E53B2F;           /* Chilli Red     3% — urgency ONLY */
+
+  /* Neutrals are biased toward the pink, never a flat grey — a true grey
+     next to this pink reads as unconsidered. */
+  --ink:#0E0B10;
+  --ink-2:#171119;
+  --pink-deep:#B3005F;
+  --pink-hi:#FF6BBA;
+
+  --line:rgba(242,232,213,.14);
+  --line-hot:rgba(251,32,149,.34);
+  --muted:rgba(242,232,213,.62);
+  --muted-2:rgba(242,232,213,.42);
+  --on-paper:#09090B;
+  --on-paper-muted:rgba(9,9,11,.64);
+
+  /* ---- TYPE — deck slide 09. One narrow display voice, one clear voice. --
+     Nimbus Sans Narrow Bold / Nimbus Sans are licensed and were not supplied.
+     Barlow Condensed / Barlow stand in as deliberate metric-adjacent
+     substitutes — same roles, same narrow-vs-neutral contrast. Logged as
+     content issue 16. */
   --font-d:'Barlow Condensed','Arial Narrow',Arial,sans-serif;
-  --font-b:'Barlow',Arial,sans-serif;
-  --font-s:'Caveat','Segoe Script',cursive;
-  --bar:30px; --nav-h:64px;
-  --top: calc(var(--bar) + var(--nav-h));
+  --font-b:'Barlow','Helvetica Neue',Helvetica,Arial,sans-serif;
+
+  --fs-hero:clamp(56px,11.5vw,132px);
+  --fs-d1:clamp(38px,6.6vw,78px);
+  --fs-d2:clamp(30px,4.2vw,54px);
+  --fs-d3:clamp(22px,2.6vw,32px);
+  --fs-body:17px;
+  --fs-sm:15px;
+  --fs-util:14px;
+  --fs-micro:12px;
+
+  /* ---- SPACE — deck slide 10, 8px base grid. No number off this scale. --- */
+  --s1:8px;  --s2:16px; --s3:24px; --s4:32px;
+  --s5:48px; --s6:64px; --s7:96px; --s8:128px;
+  --gutter:clamp(20px,5vw,64px);
+  --maxw:1320px;
+
+  /* ---- MOTION — brief: 150–600ms. Editorial reveals may run slower. ------ */
+  --t-fast:160ms;
+  --t:260ms;
+  --t-slow:420ms;
+  --t-ed:600ms;
   --ease:cubic-bezier(.22,1,.36,1);
-  --ease-b:cubic-bezier(.34,1.56,.64,1);
+
+  --nav-h:72px;
+  --bar:30px;
+  --top:calc(var(--bar) + var(--nav-h));
 }
 
+/* ==========================================================================
+   RESET
+   ========================================================================== */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{
-  background:var(--black); color:var(--cream);
-  font-family:var(--font-b); font-size:16px; line-height:1.55;
-  overflow-x:hidden; -webkit-font-smoothing:antialiased;
+  background:var(--black);color:var(--paper);
+  font-family:var(--font-b);font-size:var(--fs-body);line-height:1.6;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  display:flex;flex-direction:column;min-height:100vh;
 }
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
-button{cursor:pointer;border:none;background:none;font-family:inherit;color:inherit}
+button{cursor:pointer;border:none;background:none;font:inherit;color:inherit}
 ul{list-style:none}
+/* Yellow focus ring: 12:1 on Night Black. Pink would be 3.3:1. */
 :focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
-button,a,input,select,textarea{-webkit-tap-highlight-color:rgba(255,20,147,.25)}
-
-body::after{
-  content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.04;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size:190px;
+a,button,input,select,textarea{-webkit-tap-highlight-color:rgba(251,32,149,.22)}
+::selection{background:var(--pink);color:var(--black)}
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
 }
 
-/* ============================================================
-   PROPOSAL BAR — this is a concept, and says so
-   ============================================================ */
+/* Print/press grain. Physical, not digital — the brand references signage
+   and wrap paper, both of which have tooth. */
+body::after{
+  content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:180px;
+}
+
+/* ==========================================================================
+   PRIMITIVES
+   ========================================================================== */
+.wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter)}
+
+.display{
+  font-family:var(--font-d);font-weight:900;line-height:.86;
+  text-transform:uppercase;letter-spacing:-.02em;text-wrap:balance;
+}
+.eyebrow{
+  font-family:var(--font-b);font-size:var(--fs-micro);font-weight:700;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--pink);
+  display:flex;align-items:center;gap:var(--s2);
+}
+.eyebrow::before{content:'';width:32px;height:2px;background:var(--pink);flex:0 0 auto}
+.eyebrow.plain::before{display:none}
+.lede{max-width:56ch;color:var(--muted);font-size:var(--fs-body);line-height:1.7}
+
+/* ---- NEON — deck-driven, deliberately rationed ---------------------------
+   An art-directed accent, not a filter over the whole site. Three layers:
+   a tight white-hot core so the glyph edge stays sharp, a mid pink bloom,
+   and a wide low-opacity ambience. It is applied to a handful of words:
+   one hero line, the location names, the active nav item. NEVER the logo —
+   deck slide 06 forbids adding glow to the mark. */
+.neon{
+  color:var(--pink);
+  text-shadow:
+    0 0 1px rgba(255,255,255,.5),
+    0 0 9px rgba(251,32,149,.5),
+    0 0 30px rgba(251,32,149,.3),
+    0 0 64px rgba(179,0,95,.22);
+}
+.js .neon-ignite{text-shadow:none;opacity:.78}
+.js .neon-ignite.lit{animation:ignite 900ms var(--ease) forwards}
+@keyframes ignite{
+  0%  {opacity:.78;text-shadow:none}
+  25% {opacity:1;  text-shadow:0 0 6px rgba(251,32,149,.35)}
+  35% {opacity:.86;text-shadow:none}
+  50% {opacity:1;  text-shadow:0 0 1px rgba(255,255,255,.5),0 0 9px rgba(251,32,149,.5),0 0 30px rgba(251,32,149,.3),0 0 64px rgba(179,0,95,.22)}
+  100%{opacity:1;  text-shadow:0 0 1px rgba(255,255,255,.5),0 0 9px rgba(251,32,149,.5),0 0 30px rgba(251,32,149,.3),0 0 64px rgba(179,0,95,.22)}
+}
+
+/* Neon tube rule — a divider that reads as lit glass, used sparingly. */
+.tube{
+  height:2px;border:0;background:var(--pink);
+  box-shadow:0 0 8px rgba(251,32,149,.6),0 0 24px rgba(251,32,149,.3);
+}
+
+/* ---- THE BIRD — deck slide 11 -------------------------------------------
+   Supplied illustration, painted through a CSS mask so it is always exactly
+   one brand colour and the source file is never recoloured. One large mark
+   per moment, cropped by its container. Two placements on the whole site. */
+.bird{
+  -webkit-mask:url(img/bird.png) no-repeat center/contain;
+          mask:url(img/bird.png) no-repeat center/contain;
+  background:currentColor;pointer-events:none;
+}
+
+/* ---- BUTTONS — deck slide 08: black on pink is the default CTA ----------- */
+.btn{
+  --btn-bg:var(--pink); --btn-fg:var(--black); --btn-wipe:var(--yellow);
+  position:relative;overflow:hidden;isolation:isolate;
+  display:inline-flex;align-items:center;gap:var(--s2);
+  background:var(--btn-bg);color:var(--btn-fg);
+  font-family:var(--font-d);font-size:19px;font-weight:900;
+  letter-spacing:.09em;text-transform:uppercase;
+  padding:var(--s2) var(--s4);min-height:56px;
+  border:2px solid var(--btn-bg);
+  transition:color var(--t) var(--ease),border-color var(--t) var(--ease);
+}
+.btn>*{position:relative;z-index:1}
+.btn::before{
+  content:'';position:absolute;inset:0;z-index:0;background:var(--btn-wipe);
+  transform:translateY(101%);transition:transform var(--t-slow) var(--ease);
+}
+.btn:hover::before{transform:translateY(0)}
+.btn .arw{transition:transform var(--t-slow) var(--ease)}
+.btn:hover .arw{transform:translateX(6px)}
+.btn.ghost{
+  --btn-bg:transparent; --btn-fg:var(--paper); --btn-wipe:var(--paper);
+  border-color:var(--line);
+}
+.btn.ghost:hover{color:var(--black);border-color:var(--paper)}
+.btn.sm{font-size:15px;min-height:44px;padding:var(--s1) var(--s3)}
+/* On touch there is no hover; a latched wipe looks broken. Give a press
+   state instead. */
+@media (hover:none){
+  .btn:hover::before{transform:translateY(101%)}
+  .btn:active::before{transform:translateY(0)}
+  .btn:hover .arw{transform:none}
+}
+
+/* ---- REVEAL — one system for the whole site ------------------------------ */
+.js .rv{opacity:0;transform:translateY(20px);
+  transition:opacity var(--t-ed) var(--ease),transform var(--t-ed) var(--ease);
+  transition-delay:var(--d,0ms)}
+.js .rv.in{opacity:1;transform:none}
+
+/* ==========================================================================
+   PROPOSAL BAR — this is a concept and says so
+   ========================================================================== */
 .pbar{
   position:fixed;top:0;left:0;right:0;height:var(--bar);z-index:300;
-  background:var(--cream);color:var(--black);
-  display:flex;align-items:center;justify-content:space-between;gap:12px;
-  padding:0 16px;font-family:var(--font-b);font-size:9.5px;font-weight:600;
-  letter-spacing:.16em;text-transform:uppercase;
+  background:var(--paper);color:var(--black);
+  display:flex;align-items:center;justify-content:space-between;gap:var(--s2);
+  padding:0 var(--gutter);
+  font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
 }
-.pbar b{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pbar b{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .pbar em{font-style:normal;color:var(--pink-deep);white-space:nowrap}
 
-/* ============================================================
-   LOGO
-   ============================================================ */
-.logo-mark{display:block;height:auto;color:var(--pink)}
-.nav-logo{display:flex;align-items:center;gap:11px;cursor:pointer;flex-shrink:0}
-.nav-logo .logo-mark{width:86px}
-.nav-logo b{
-  font-family:var(--font-b);font-size:9px;font-weight:600;letter-spacing:.3em;
-  text-transform:uppercase;color:rgba(242,232,213,.5);
-  border-left:1px solid var(--line);padding-left:11px;
-}
-
-/* ============================================================
-   NAV
-   ============================================================ */
+/* ==========================================================================
+   NAV — deck slide 06: horizontal lockup, minimum 160px, clear space kept
+   ========================================================================== */
 .nav{
-  position:fixed;top:var(--bar);left:0;right:0;z-index:200;height:var(--nav-h);
-  background:var(--black);border-bottom:2px solid var(--pink);
-  display:flex;align-items:center;
+  position:fixed;top:var(--bar);left:0;right:0;height:var(--nav-h);z-index:200;
+  background:rgba(9,9,11,.92);backdrop-filter:blur(12px);
+  border-bottom:2px solid var(--pink);
+  display:flex;align-items:center;justify-content:space-between;
+  gap:var(--s4);padding:0 var(--gutter);
+  transition:border-bottom-width var(--t) var(--ease);
 }
-.nav-inner{width:100%;max-width:1320px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:18px}
-.nav-links{display:flex;align-items:center}
-/* Both the li and the a are blockified. An inline <a> with vertical padding
-   paints outside its line box and overlaps its neighbour, which makes the
-   wrong link receive the tap. */
-.nav-links li{display:flex}
-.nav-links .only-mobile{display:none}
+.nav.scrolled{border-bottom-width:4px}
+/* The mark sits in its own clear space and carries no effects of any kind. */
+.nav-logo{display:block;flex:0 0 auto;line-height:0}
+.nav-logo img{width:168px;height:auto}
+.nav-links{display:flex;align-items:center;gap:var(--s4)}
 .nav-links a{
-  position:relative;display:flex;align-items:center;
-  font-family:var(--font-b);font-size:11px;font-weight:600;
-  letter-spacing:.2em;text-transform:uppercase;color:rgba(242,232,213,.65);
-  padding:10px 15px;transition:color .2s;
+  position:relative;font-family:var(--font-d);font-size:17px;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  padding:var(--s1) 0;transition:color var(--t) var(--ease);
 }
 .nav-links a::after{
-  content:'';position:absolute;left:15px;right:15px;bottom:2px;height:2px;
+  content:'';position:absolute;left:0;right:0;bottom:0;height:2px;
   background:var(--pink);transform:scaleX(0);transform-origin:left;
-  transition:transform .3s var(--ease);
+  transition:transform var(--t) var(--ease);
 }
-.nav-links a:hover,.nav-links a.active{color:var(--cream)}
-.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}
-.nav-order{
-  position:relative;overflow:hidden;background:var(--pink);color:var(--black);
-  font-family:var(--font-d);font-size:15px;font-weight:900;letter-spacing:.1em;
-  text-transform:uppercase;padding:0 20px;height:40px;display:flex;align-items:center;
-  flex-shrink:0;transition:color .25s;
+.nav-links a:hover{color:var(--paper)}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-links a.active{
+  color:var(--pink);
+  text-shadow:0 0 10px rgba(251,32,149,.45),0 0 30px rgba(251,32,149,.22);
 }
-.nav-order span{position:relative;z-index:2}
-.nav-order::before{content:'';position:absolute;inset:0;background:var(--yellow);transform:translateY(101%);transition:transform .3s var(--ease)}
-.nav-order:hover::before{transform:translateY(0)}
-.nav-burger{display:none;width:44px;height:44px;align-items:center;justify-content:center;flex-direction:column;gap:6px}
-.nav-burger span{display:block;width:24px;height:2px;background:var(--cream);transition:transform .3s var(--ease),opacity .2s}
-.nav-burger[aria-expanded="true"] span:nth-child(1){transform:translateY(8px) rotate(45deg)}
-.nav-burger[aria-expanded="true"] span:nth-child(2){opacity:0}
-.nav-burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+.nav-links a.active::after{transform:scaleX(1)}
+.only-mobile{display:none}
+.nav-burger{
+  display:none;width:44px;height:44px;flex:0 0 auto;
+  align-items:center;justify-content:center;
+}
+.nav-burger i{
+  display:block;width:24px;height:2px;background:var(--paper);position:relative;
+  transition:background var(--t) var(--ease);
+}
+.nav-burger i::before,.nav-burger i::after{
+  content:'';position:absolute;left:0;width:24px;height:2px;background:var(--paper);
+  transition:transform var(--t) var(--ease);
+}
+.nav-burger i::before{top:-7px}
+.nav-burger i::after{top:7px}
+.nav-burger[aria-expanded="true"] i{background:transparent}
+.nav-burger[aria-expanded="true"] i::before{transform:translateY(7px) rotate(45deg)}
+.nav-burger[aria-expanded="true"] i::after{transform:translateY(-7px) rotate(-45deg)}
 
-@media(max-width:900px){
-  .nav-links{display:none}
-  .nav-order{display:none}
+@media(max-width:980px){
   .nav-burger{display:flex}
-  .js .nav-links.open{
-    display:flex;flex-direction:column;position:fixed;top:var(--top);left:0;right:0;bottom:0;
-    background:var(--black);z-index:199;padding:20px 24px;overflow-y:auto;align-items:stretch;
+  .nav-order{display:none}
+  .only-mobile{display:block}
+  .nav-links{
+    position:fixed;top:var(--top);left:0;right:0;bottom:0;
+    flex-direction:column;align-items:flex-start;justify-content:center;
+    gap:var(--s4);padding:var(--gutter);background:var(--black);
+    transform:translateX(100%);transition:transform var(--t-slow) var(--ease);
   }
-  .js .nav-links.open li{display:block;width:100%}
-  .js .nav-links.open a{
-    display:block;width:100%;box-sizing:border-box;
-    border-bottom:1px solid var(--line);padding:22px 4px;
-    font-size:15px;color:var(--cream);
-  }
-  .js .nav-links.open a::after{display:none}
-  .js .nav-links.open a:active{color:var(--pink)}
-  .js .nav-links.open .only-mobile{display:block;width:100%;margin-top:18px}
-  .js .nav-links.open .only-mobile a{
-    background:var(--pink);color:var(--black);text-align:center;border-bottom:none;
-    font-family:var(--font-d);font-size:20px;font-weight:900;letter-spacing:.1em;padding:20px 4px;
-  }
-  .js .nav-links.open .only-mobile a:active{background:var(--yellow);color:var(--black)}
+  .nav-links.open{transform:translateX(0)}
+  .nav-links a{font-size:clamp(30px,8vw,46px);font-weight:900;letter-spacing:.02em}
 }
 
-/* ============================================================
-   PAGE ROUTING — JS only. Without it, every section is shown
-   stacked, so the proposal still reads end to end.
-   ============================================================ */
-/* NEVER set `display` on a bare #home rule: an id (1-0-0) outranks
-   `.js .page` (0-2-0), so the home section would refuse to hide and every
-   other page would render underneath it, off-screen. Layout for #home is
-   only ever declared through a selector that also carries `.js .page`
-   specificity or higher. */
+/* ==========================================================================
+   PAGE ROUTING
+   Specificity note: `.js .page` is 0-2-0. A bare `#home{}` rule would be
+   1-0-0 and would beat it, so #home is only ever styled through `.js`.
+   ========================================================================== */
 .js .page{display:none}
 .js .page.active{display:block}
-.js #home.active{display:flex;flex-direction:column}
-html:not(.js) #home{display:flex;flex-direction:column}
-.page{padding-top:var(--top)}
-#home{padding-top:var(--top)}
+.page{padding-top:var(--top);flex:1 0 auto}
+html:not(.js) .page{display:block}
 
-/* ============================================================
-   HERO
-   ============================================================ */
-#home{min-height:100vh;min-height:100svh;position:relative;overflow:hidden}
-.hero-grid{
-  flex:1;display:grid;grid-template-columns:minmax(0,1fr) 46%;
-  min-height:calc(100vh - var(--top));
+/* ==========================================================================
+   HERO — deck slide 15 specifies this composition literally:
+   SMASHBIRD / BURGERS. / CHICKEN. / Cross Street · Liosbán / ORDER NOW
+   One headline. One action. Nothing arguing with it.
+   ========================================================================== */
+.hero{
+  position:relative;overflow:hidden;
   min-height:calc(100svh - var(--top));
+  display:flex;flex-direction:column;justify-content:center;
+  padding:var(--s7) 0 var(--s6);
 }
-.hero-left{padding:48px 24px 48px 40px;display:flex;flex-direction:column;justify-content:center;gap:34px;position:relative;z-index:2}
-.hero-eyebrow{
-  font-family:var(--font-b);font-size:10px;font-weight:600;letter-spacing:.34em;
-  text-transform:uppercase;color:var(--pink);display:flex;align-items:center;gap:12px;
+/* The bird is the ONLY graphic element in the hero.
+   An earlier pass also had an angled pink field here. Two overlapping
+   low-opacity shapes turned the top-right corner to mud and the polygon was
+   a decorative shape with no brand meaning — so it is gone. Deck slide 11:
+   one large mark, scaled deliberately, never a scatter.
+   Cropped by the viewport at the tail so the head and breast read whole. */
+.hero-bird{
+  position:absolute;z-index:0;right:-4%;bottom:-4%;
+  width:min(44vw,540px);aspect-ratio:900/820;
+  color:var(--pink);opacity:.14;
+  transform:translate3d(0,var(--py,0px),0);
+  will-change:transform;
 }
-.hero-eyebrow::before{content:'';width:40px;height:2px;background:var(--pink);flex-shrink:0}
-.hero-hl{
-  font-family:var(--font-d);font-weight:900;font-size:clamp(58px,10vw,142px);
-  line-height:.84;text-transform:uppercase;letter-spacing:-.015em;color:var(--pink);
+.hero .wrap{position:relative;z-index:1}
+.hero-eyebrow{margin-bottom:var(--s3)}
+.hero-hl{font-size:var(--fs-hero);margin-bottom:var(--s4)}
+.hero-hl span{display:block}
+.hero-hl .l1{color:var(--paper)}
+.hero-hl .l2{color:var(--pink)}
+.hero-where{
+  font-family:var(--font-d);font-size:clamp(17px,2vw,22px);font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  margin-bottom:var(--s5);
 }
-.hero-hl .l2{color:var(--cream)}
-.hero-hl .l3{
-  display:block;font-size:clamp(24px,3.8vw,52px);color:transparent;
-  -webkit-text-stroke:2px rgba(242,232,213,.36);margin-top:12px;letter-spacing:0;
+.hero-where b{color:var(--paper);font-weight:700}
+.hero-actions{display:flex;flex-wrap:wrap;gap:var(--s2);align-items:center}
+
+/* Award line. One thin sentence, not a grid of badges. */
+.proof{
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  padding:var(--s3) 0;margin-top:var(--s6);
+  display:flex;flex-wrap:wrap;gap:var(--s2) var(--s4);align-items:center;
+  font-size:var(--fs-micro);font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);
 }
-.hero-sub{max-width:360px;font-size:15px;color:rgba(242,232,213,.62);line-height:1.75}
-.hero-actions{display:flex;flex-direction:column;gap:16px;align-items:flex-start}
-.btn-slab{
-  position:relative;overflow:hidden;background:var(--pink);color:var(--black);
-  font-family:var(--font-d);font-size:20px;font-weight:900;letter-spacing:.1em;
-  text-transform:uppercase;padding:18px 32px;display:inline-flex;align-items:center;gap:14px;
-  transition:color .25s;
-}
-.btn-slab span{position:relative;z-index:2;display:inline-flex;align-items:center;gap:14px}
-.btn-slab::before{content:'';position:absolute;inset:0;background:var(--yellow);transform:translateY(101%);transition:transform .34s var(--ease)}
-.btn-slab:hover::before{transform:translateY(0)}
-.btn-slab .arw{transition:transform .34s var(--ease)}
-.btn-slab:hover .arw{transform:translateX(8px)}
-.hero-locs{display:flex}
-.hero-loc-btn{
-  font-family:var(--font-b);font-size:10.5px;font-weight:600;letter-spacing:.18em;
-  text-transform:uppercase;color:rgba(242,232,213,.55);padding:14px 22px;
-  border:1px solid var(--line);transition:.25s var(--ease);
-}
-.hero-loc-btn+.hero-loc-btn{border-left:none}
-.hero-loc-btn:hover{color:var(--black);background:var(--pink);border-color:var(--pink)}
-
-.hero-right{position:relative;overflow:hidden;border-left:1px solid var(--line);min-height:300px}
-.hero-right::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse 62% 48% at 52% 46%,rgba(255,20,147,.22),transparent 68%),
-             radial-gradient(ellipse 40% 34% at 74% 74%,rgba(139,43,226,.18),transparent 70%);
-  z-index:0;
-}
-.hero-photo{position:absolute;inset:0;z-index:-1;opacity:.35;object-fit:cover;display:block;width:100%;height:100%}
-.hero-vert{
-  position:absolute;right:0;top:0;bottom:0;width:36px;background:var(--pink);z-index:6;
-  display:flex;align-items:center;justify-content:center;writing-mode:vertical-rl;
-  font-family:var(--font-b);font-size:9px;font-weight:600;letter-spacing:.26em;
-  text-transform:uppercase;color:var(--black);
-}
-.hero-strip{
-  background:var(--pink);padding:11px 0;font-family:var(--font-d);font-size:13px;font-weight:900;
-  letter-spacing:.2em;text-transform:uppercase;color:var(--black);
-  display:flex;overflow:hidden;white-space:nowrap;position:relative;z-index:5;
-}
-.marq{display:flex;flex-shrink:0;gap:30px;padding-right:30px}
-.js .marq{animation:marq 34s linear infinite}
-.marq em{font-style:normal;opacity:.42}
-@keyframes marq{to{transform:translateX(-100%)}}
-
-@media(max-width:1000px){
-  .hero-grid{grid-template-columns:1fr}
-  .hero-left{padding:38px 22px 46px;order:2;gap:28px}
-  .hero-right{order:1;height:44vh;min-height:260px;max-height:400px;border-left:none;border-bottom:1px solid var(--line)}
-  .hero-vert{display:none}
-}
-
-/* ============================================================
-   3D BURGER — progressively added. The CSS fallback below is a
-   flat stacked mark, so the panel is never empty.
-   ============================================================ */
-
-
-
-.blayer{position:absolute;left:0;top:0;transform-style:preserve-3d;transform:translateZ(var(--z,0px))}
-
-.seed{position:absolute;left:0;top:0;background:var(--yellow);border-radius:50%;opacity:.92}
-.b-shadow{
-  position:absolute;left:0;top:0;transform:translate(-50%,-50%) translateZ(-4px);
-  width:300px;height:300px;border-radius:50%;
-  background:radial-gradient(circle,rgba(255,20,147,.30) 0%,rgba(255,20,147,.12) 38%,rgba(255,20,147,.04) 56%,transparent 70%);
-}
-
-
-
-.fleck{position:absolute;left:0;top:0;border-radius:50%;opacity:0}
-.fleck.go{animation:fleck .78s cubic-bezier(.2,.8,.3,1) forwards}
-@keyframes fleck{0%{opacity:1;transform:translate(-50%,-50%) translate3d(0,0,0) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) translate3d(var(--fx),var(--fy),var(--fz)) scale(.35)}}
-
-/* Flat fallback stack — removed by JS once the 3D build succeeds */
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* ============================================================
-   NEON BAND
-   ============================================================ */
-.neon-band{position:relative;background:var(--black-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:76px 24px 84px;text-align:center;overflow:hidden}
-.neon-band::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 54% 70% at 50% 50%,rgba(255,20,147,.16),transparent 70%)}
-.neon{
-  position:relative;font-family:var(--font-s);font-weight:700;
-  font-size:clamp(40px,7.5vw,100px);line-height:1.02;color:#FFE9F6;
-  text-shadow:0 0 6px #fff,0 0 14px var(--pink-hi),0 0 32px var(--pink),0 0 62px var(--pink),0 0 108px var(--pink-deep);
-}
-.neon.on{animation:flick 6.5s infinite}
-@keyframes flick{0%,17%,19%,21.5%,23%,100%{opacity:1}18%,22%{opacity:.34}20%{opacity:.66}}
-.neon-sub{position:relative;margin-top:24px;font-family:var(--font-b);font-size:10px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:rgba(242,232,213,.36)}
-
-/* ============================================================
-   REVEAL — armed only when JS is present
-   ============================================================ */
-.js .rv{opacity:0;transform:translateY(28px);transition:opacity .75s var(--ease),transform .75s var(--ease)}
-.js .rv.in{opacity:1;transform:none}
-.js .stamp{opacity:0;transform:translateY(42px) scale(1.06);filter:blur(8px);transition:opacity .8s var(--ease),transform .9s var(--ease-b),filter .7s var(--ease)}
-.js .stamp.in{opacity:1;transform:none;filter:none}
-.js .wipe{clip-path:inset(0 100% 0 0);transition:clip-path 1s var(--ease)}
-.js .wipe.in{clip-path:inset(0 0 0 0)}
-
-/* No blanket "reveal everything" rule here on purpose. An earlier version
-   forced every .rv/.stamp visible 2.5s after load, which meant nothing was
-   left to animate by the time you scrolled. The safety net now lives in JS
-   and only touches elements that are on screen and still hidden. */
-
-/* ============================================================
-   CRAVING STRIPS
-   ============================================================ */
-.craving{display:grid;grid-template-columns:1fr 1fr;min-height:420px;border-top:2px solid var(--pink);position:relative;overflow:hidden}
-.craving.rev .c-label{order:2;border-right:none;border-left:1px solid var(--line)}
-.c-label{padding:52px 40px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--line);position:relative;z-index:2}
-.c-num{font-family:var(--font-d);font-size:11px;font-weight:700;letter-spacing:.26em;color:var(--pink);margin-bottom:12px}
-.c-word{font-family:var(--font-d);font-weight:900;font-size:clamp(44px,7.5vw,104px);line-height:.86;text-transform:uppercase;letter-spacing:-.02em;color:var(--cream);margin-bottom:18px}
-.c-word em{font-style:italic;color:var(--pink)}
-.c-desc{font-size:15px;color:rgba(242,232,213,.55);line-height:1.75;max-width:400px}
-.c-media{position:relative;overflow:hidden;background:var(--black-2);min-height:300px}
-.c-media .ph{position:absolute;inset:0}
-
-.ph{
-  background:repeating-linear-gradient(45deg,rgba(255,20,147,.05) 0 12px,transparent 12px 24px),var(--black-2);
-  border:1px dashed rgba(255,20,147,.32);
-  display:flex;align-items:flex-end;padding:16px;
-  font-family:var(--font-b);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-  color:rgba(255,20,147,.75);line-height:1.6;
-}
-
-/* ---- Real photography ----
-   These are tall source frames dropped into wide boxes, so the focal point is
-   set per image rather than left at the default centre crop. */
-.shot{display:block;width:100%;height:100%;object-fit:cover;background:var(--black-2)}
-.c-media .shot{position:absolute;inset:0}
-.shot.f-spread {object-position:center 50%}
-.shot.f-burger {object-position:center 52%}
-.shot.f-sodas  {object-position:center 50%}
-.shot.f-neon   {object-position:center 50%}
-.shot-box{position:relative;overflow:hidden;background:var(--black-2)}
-.hero-bg{
-  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-  opacity:.55;z-index:0;filter:saturate(1.15) contrast(1.05);
-}
-/* Darken just the middle so the 3D burger keeps its contrast against the photo. */
-.hero-right::after{
-  content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:radial-gradient(ellipse 58% 46% at 50% 46%,rgba(9,9,11,.72),rgba(9,9,11,.30) 60%,transparent 80%);
-}
-.credit{
-  padding:16px 40px 40px;font-size:11.5px;line-height:1.7;
-  color:rgba(242,232,213,.3);letter-spacing:.04em;max-width:820px;
-}
-@media(max-width:860px){
-  .craving,.craving.rev{grid-template-columns:1fr}
-  .craving .c-label,.craving.rev .c-label{order:2;border-right:none;border-left:none;border-top:1px solid var(--line);padding:34px 22px}
-  .c-media{order:1;min-height:0;aspect-ratio:16/10}
-}
-
-/* ============================================================
-   SECTION HEADERS
-   ============================================================ */
-.sec-head{position:relative;padding:52px 40px 44px;background:var(--pink)}
-.sec-head h1{font-family:var(--font-d);font-weight:900;font-size:clamp(40px,8vw,112px);line-height:.85;text-transform:uppercase;color:var(--black);letter-spacing:-.025em}
-.sec-head h1 .dim{color:rgba(9,9,11,.3)}
-.sec-head .note{margin-top:16px;font-family:var(--font-b);font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(9,9,11,.55)}
-.sec-head.dark{background:var(--black)}
-.sec-head.dark h1{color:var(--pink)}
-.sec-head.dark .note{color:rgba(242,232,213,.4)}
-.drip-edge{position:absolute;left:0;right:0;top:100%;height:0;pointer-events:none;z-index:3;overflow:hidden}
-.drip-edge i{position:absolute;top:-2px;display:block;background:var(--drip-c,var(--pink));border-radius:0 0 999px 999px}
-.splat{position:absolute;border-radius:50%;pointer-events:none;z-index:1}
-
-/* ============================================================
-   MENU
-   ============================================================ */
-.menu-cats{display:flex;overflow-x:auto;overscroll-behavior-x:contain;background:var(--black);border-bottom:1px solid var(--line);position:sticky;top:var(--top);z-index:60;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.menu-cats::-webkit-scrollbar{display:none}
-.cat-btn{
-  flex-shrink:0;font-family:var(--font-d);font-size:15px;font-weight:900;letter-spacing:.13em;
-  text-transform:uppercase;color:rgba(242,232,213,.45);padding:18px 24px;
-  border-right:1px solid var(--line);transition:.22s;position:relative;
-}
-.cat-btn::after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--pink);transform:scaleX(0);transition:transform .3s var(--ease)}
-.cat-btn:hover{color:var(--cream)}
-.cat-btn.active{color:var(--pink)}
-.cat-btn.active::after{transform:scaleX(1)}
-.js .menu-sec{display:none}
-.js .menu-sec.active{display:block}
-.menu-sec{padding:44px 40px 56px}
-.menu-sec h2{font-family:var(--font-d);font-weight:900;font-size:clamp(28px,4.4vw,54px);text-transform:uppercase;color:var(--pink);margin-bottom:26px;line-height:1}
-.items{display:grid;max-width:940px}
-.item{position:relative;display:grid;grid-template-columns:1fr auto;gap:22px;align-items:start;padding:22px 20px;border-bottom:1px solid var(--line);transition:padding .3s var(--ease)}
-.item::before{content:'';position:absolute;inset:0;background:var(--pink);transform:scaleX(0);transform-origin:left;transition:transform .38s var(--ease);z-index:0}
-.item:hover::before{transform:scaleX(1)}
-.item>*{position:relative;z-index:1;transition:color .28s}
-.item:hover{padding-left:30px}
-.i-name{font-family:var(--font-d);font-weight:900;font-size:24px;text-transform:uppercase;color:var(--cream);line-height:1.1}
-.i-desc{font-size:14px;color:rgba(242,232,213,.52);margin-top:6px;line-height:1.65;max-width:560px}
-.i-price{font-family:var(--font-d);font-weight:900;font-size:24px;color:var(--pink);white-space:nowrap;font-variant-numeric:tabular-nums}
-.item:hover .i-name,.item:hover .i-price{color:var(--black)}
-.item:hover .i-desc{color:rgba(9,9,11,.72)}
-.badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
-.badge{font-family:var(--font-b);font-size:8.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;padding:4px 9px;border:1px solid}
-.b-v{color:#7FE06B;border-color:rgba(127,224,107,.42)}
-.b-gf{color:#6BC9E0;border-color:rgba(107,201,224,.42)}
-.b-hot{color:var(--yellow);border-color:rgba(255,212,0,.45)}
-.b-tbc{color:rgba(242,232,213,.34);border-color:rgba(242,232,213,.2)}
-.item:hover .badge{color:var(--black);border-color:rgba(9,9,11,.45)}
-.allergen{padding:24px 40px 56px;font-size:12.5px;color:rgba(242,232,213,.38);line-height:1.85;max-width:860px}
-
-/* ============================================================
-   LOCATIONS
-   ============================================================ */
-.loc-grid{display:grid;grid-template-columns:1fr 1fr}
-.loc{padding:44px 40px 52px;border-right:1px solid var(--line);position:relative}
-.loc:last-child{border-right:none}
-.loc-num{font-family:var(--font-d);font-size:11px;font-weight:700;letter-spacing:.26em;color:var(--pink);margin-bottom:10px}
-.loc-name{font-family:var(--font-d);font-weight:900;font-size:clamp(36px,5.6vw,76px);line-height:.86;text-transform:uppercase;color:var(--cream);letter-spacing:-.02em;margin-bottom:24px}
-.loc .ph{height:210px;margin-bottom:24px}
-.loc-info{display:grid;gap:18px;margin-bottom:26px}
-.l-lab{font-family:var(--font-b);font-size:9px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--pink);margin-bottom:5px}
-.l-val{font-size:14.5px;color:rgba(242,232,213,.72);line-height:1.65}
-.l-val small{color:rgba(255,212,0,.7);font-size:12px}
-.loc-cta{
-  position:relative;display:flex;align-items:center;justify-content:space-between;
-  border:2px solid var(--pink);padding:16px 20px;font-family:var(--font-d);font-weight:900;
-  font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:var(--pink);
-  overflow:hidden;transition:color .28s;
-}
-.loc-cta span{position:relative;z-index:2}
-.loc-cta::before{content:'';position:absolute;inset:0;background:var(--pink);transform:translateX(-101%);transition:transform .35s var(--ease)}
-.loc-cta:hover{color:var(--black)}
-.loc-cta:hover::before{transform:translateX(0)}
-.map-row{display:flex;gap:12px;flex-wrap:wrap;padding:28px 40px;border-top:1px solid var(--line)}
-.map-btn{font-family:var(--font-d);font-weight:900;font-size:13px;letter-spacing:.13em;text-transform:uppercase;color:var(--cream);padding:14px 20px;border:1px solid var(--line);transition:.25s}
-.map-btn:hover{border-color:var(--pink);color:var(--pink)}
-@media(max-width:860px){.loc-grid{grid-template-columns:1fr}.loc{border-right:none;border-bottom:1px solid var(--line)}}
-
-/* ============================================================
-   SAUCES
-   ============================================================ */
-.sauce-intro{padding:36px 40px 30px;max-width:640px;font-size:15px;color:rgba(242,232,213,.55);line-height:1.75}
-.rail{display:flex;overflow-x:auto;overscroll-behavior-x:contain;padding:0 0 8px;scrollbar-width:none;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
-.rail::-webkit-scrollbar{display:none}
-.js .rail{cursor:grab}
-.js .rail.grab{cursor:grabbing}
-.sauce{flex:0 0 280px;padding:34px 28px 32px;border-right:1px solid var(--line);border-top:1px solid var(--line);scroll-snap-align:start;position:relative;transition:background .35s var(--ease)}
-.sauce::before{content:'';position:absolute;left:0;top:0;width:100%;height:5px;background:var(--sc,var(--pink));transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease)}
-.sauce:hover::before{transform:scaleX(1)}
-.sauce:hover{background:var(--black-2)}
-.s-name{font-family:var(--font-d);font-weight:900;font-size:40px;line-height:.9;text-transform:uppercase;color:var(--sc,var(--pink));margin-bottom:18px}
-.heat{display:flex;gap:6px;margin-bottom:16px}
-.heat i{width:11px;height:11px;border-radius:50%;background:var(--sc,var(--pink))}
-.heat i.off{background:none;border:1px solid var(--line)}
-.s-note{font-size:14px;color:rgba(242,232,213,.52);line-height:1.7;margin-bottom:18px}
-.s-tag{display:inline-block;font-family:var(--font-b);font-size:8.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--sc,var(--pink));border:1px solid;padding:5px 10px;opacity:.7}
-.rail-end{flex:0 0 280px;padding:34px 28px;border-top:1px solid var(--line);display:flex;flex-direction:column;justify-content:center;background:var(--pink)}
-.rail-end b{font-family:var(--font-d);font-weight:900;font-size:32px;line-height:.94;text-transform:uppercase;color:var(--black)}
-.rail-end small{font-family:var(--font-b);font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(9,9,11,.55);margin-top:10px}
-.sauce-note{padding:26px 40px 56px;font-size:12.5px;color:rgba(242,232,213,.36);line-height:1.85;max-width:820px}
-
-/* ============================================================
-   ABOUT
-   ============================================================ */
-.about-top{padding:58px 40px 50px;position:relative;overflow:hidden}
-.about-hl{font-family:var(--font-d);font-weight:900;font-size:clamp(44px,10vw,144px);line-height:.82;text-transform:uppercase;letter-spacing:-.03em;color:var(--cream)}
-.about-hl.p{color:var(--pink)}
-.about-lead{font-size:15.5px;color:rgba(242,232,213,.55);max-width:520px;line-height:1.8;margin-top:26px}
-.frags{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));border-top:1px solid var(--line)}
-.frag{padding:34px 30px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);transition:background .35s}
-.frag:hover{background:var(--black-2)}
-.frag b{display:block;font-family:var(--font-d);font-weight:900;font-size:32px;line-height:.92;text-transform:uppercase;color:var(--cream);margin-bottom:12px}
-.frag b em{font-style:italic;color:var(--pink)}
-.frag p{font-size:14px;color:rgba(242,232,213,.5);line-height:1.7}
-.fact{background:var(--cream);color:var(--black);padding:50px 40px}
-.fact p{font-size:17px;line-height:1.75;max-width:760px}
-.fact .warn{margin-top:16px;font-size:13px;color:rgba(9,9,11,.5)}
-
-/* ============================================================
-   ORDER
-   ============================================================ */
-.order-wrap{background:var(--pink);padding:60px 40px 52px;position:relative;overflow:hidden}
-.order-hl{font-family:var(--font-d);font-weight:900;font-size:clamp(50px,12vw,172px);line-height:.82;text-transform:uppercase;color:var(--black);letter-spacing:-.03em}
-.order-note{font-size:14.5px;color:rgba(9,9,11,.62);margin:20px 0 36px;max-width:420px}
-.order-btns{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;max-width:900px}
-.order-btn{position:relative;overflow:hidden;background:var(--black);padding:28px 26px;display:flex;flex-direction:column;gap:4px;transition:transform .32s var(--ease)}
-.order-btn:hover{transform:translateY(-6px)}
-.order-btn::after{content:'';position:absolute;left:0;bottom:0;height:4px;width:100%;background:var(--yellow);transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease)}
-.order-btn:hover::after{transform:scaleX(1)}
-.ob-loc{font-family:var(--font-b);font-size:9px;font-weight:600;letter-spacing:.26em;text-transform:uppercase;color:var(--pink)}
-.ob-name{font-family:var(--font-d);font-weight:900;font-size:34px;line-height:1;text-transform:uppercase;color:var(--cream)}
-.ob-addr{font-size:13.5px;color:rgba(242,232,213,.48)}
-.ob-act{font-family:var(--font-d);font-weight:900;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--yellow);margin-top:12px}
-.platforms{margin-top:38px}
-.platforms p{font-family:var(--font-b);font-size:9.5px;font-weight:600;letter-spacing:.26em;text-transform:uppercase;color:rgba(9,9,11,.5);margin-bottom:12px}
-.plat-links{display:flex;gap:10px;flex-wrap:wrap}
-.plat{font-family:var(--font-d);font-weight:900;font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:var(--black);border:2px solid var(--black);padding:12px 20px;transition:.25s}
-.plat:hover{background:var(--black);color:var(--pink)}
-.order-warn{font-size:12px;color:rgba(9,9,11,.55);margin-top:24px;letter-spacing:.04em}
-
-/* ============================================================
-   CONTACT
-   ============================================================ */
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;background:var(--cream);color:var(--black)}
-.contact-col{padding:48px 40px}
-.contact-col:first-child{border-right:2px solid var(--black)}
-.contact-col h2{font-family:var(--font-d);font-weight:900;font-size:30px;text-transform:uppercase;margin-bottom:26px}
-.cd{margin-bottom:24px}
-.cd-lab{font-family:var(--font-b);font-size:9px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--pink-deep);margin-bottom:5px}
-.cd-val{font-size:15px;line-height:1.65}
-.cd-val small{color:rgba(9,9,11,.48);font-size:12px}
-.cf{display:grid;gap:18px}
-.cf label{display:block;font-family:var(--font-b);font-size:9px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:rgba(9,9,11,.6);margin-bottom:6px}
-/* 16px is deliberate — anything smaller makes iOS Safari zoom on focus */
-.cf input,.cf select,.cf textarea{
-  width:100%;font-family:var(--font-b);font-size:16px;padding:14px;
-  border:2px solid var(--black);background:transparent;color:var(--black);
-  border-radius:0;-webkit-appearance:none;appearance:none;min-height:50px;
-}
-.cf select{
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%2309090B' stroke-width='2'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 14px center;background-size:12px;padding-right:40px;
-}
-.cf textarea{min-height:120px;resize:vertical}
-.cf input:focus,.cf select:focus,.cf textarea:focus{outline:none;border-color:var(--pink)}
-.cf-submit{position:relative;overflow:hidden;background:var(--black);color:var(--cream);font-family:var(--font-d);font-weight:900;font-size:17px;letter-spacing:.12em;text-transform:uppercase;padding:17px 28px;justify-self:start;transition:color .25s}
-.cf-submit span{position:relative;z-index:2}
-.cf-submit::before{content:'';position:absolute;inset:0;background:var(--pink);transform:translateY(101%);transition:transform .32s var(--ease)}
-.cf-submit:hover::before{transform:translateY(0)}
-.cf-submit:hover{color:var(--black)}
-@media(max-width:860px){.contact-grid{grid-template-columns:1fr}.contact-col:first-child{border-right:none;border-bottom:2px solid var(--black)}}
-
-/* ============================================================
-   FOOTER
-   ============================================================ */
-footer{background:var(--black);border-top:2px solid var(--pink);padding:40px;display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between}
-footer .logo-mark{width:96px}
-.f-links{display:flex;gap:20px;flex-wrap:wrap}
-.f-links a{font-family:var(--font-b);font-size:10.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(242,232,213,.5);transition:color .22s;padding:6px 0}
-.f-links a:hover{color:var(--pink)}
-.f-legal{font-family:var(--font-b);font-size:10.5px;color:rgba(242,232,213,.28);letter-spacing:.1em}
-.f-sign{width:100%;border-top:1px solid var(--line);padding-top:22px;font-family:var(--font-b);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(242,232,213,.34)}
-.f-sign b{color:var(--pink);font-weight:600}
-
-/* ============================================================
-   TOUCH — hover latches on tap, so neutralise it
-   ============================================================ */
-@media (hover:none){
-  .item:hover{padding-left:20px}
-  .item:hover::before{transform:scaleX(0)}
-  .item:hover .i-name,.item:hover .i-price{color:inherit}
-  .item:hover .i-desc{color:rgba(242,232,213,.52)}
-  .item:hover .badge{color:inherit;border-color:inherit}
-  .item:active::before{transform:scaleX(1)}
-  .item:active .i-name,.item:active .i-price{color:var(--black)}
-  .item:active .i-desc{color:rgba(9,9,11,.72)}
-  .btn-slab:hover::before,.nav-order:hover::before,.cf-submit:hover::before{transform:translateY(101%)}
-  .btn-slab:active::before,.nav-order:active::before,.cf-submit:active::before{transform:translateY(0)}
-  .btn-slab:hover .arw{transform:none}
-  .loc-cta:hover::before{transform:translateX(-101%)}
-  .loc-cta:hover{color:var(--pink)}
-  .loc-cta:active::before{transform:translateX(0)}
-  .loc-cta:active{color:var(--black)}
-  .order-btn:hover{transform:none}
-  .order-btn:active{transform:translateY(-4px)}
-  .plat:hover{background:none;color:var(--black)}
-  .plat:active{background:var(--black);color:var(--pink)}
-  .hero-loc-btn:hover{color:rgba(242,232,213,.55);background:none;border-color:var(--line)}
-  .hero-loc-btn:active{color:var(--black);background:var(--pink);border-color:var(--pink)}
-  .frag:hover,.sauce:hover{background:none}
-  .map-btn:hover{border-color:var(--line);color:var(--cream)}
-  .nav-links a:hover::after{transform:scaleX(0)}
-  .nav-links a.active::after{transform:scaleX(1)}
-
-}
-
-/* ============================================================
-   SMALL SCREENS
-   ============================================================ */
-@media (max-width:640px){
-  :root{--bar:26px;--nav-h:60px}
-  .pbar{font-size:8.5px;letter-spacing:.12em;padding:0 12px}
-  .nav-inner{padding:0 18px}
-  .nav-logo .logo-mark{width:76px}
-  .nav-logo b{display:none}
-
-  .sec-head{padding:34px 20px 30px}
-  .neon-band{padding:56px 20px 60px}
-  .about-top{padding:38px 20px 34px}
-  .frag{padding:28px 20px;border-right:none}
-  .fact{padding:34px 20px}
-  .order-wrap{padding:42px 20px 38px}
-  .map-row{padding:20px}
-  .loc{padding:30px 20px 38px}
-  .menu-sec{padding:28px 16px 40px}
-  .allergen{padding:18px 16px 40px}
-  .sauce-intro{padding:28px 20px 24px}
-  .sauce-note{padding:24px 20px 48px}
-  .contact-col{padding:32px 20px}
-  footer{padding:28px 20px;gap:18px}
-
-  .item{padding:18px 12px;gap:14px}
-  .item:hover,.item:active{padding-left:16px}
-  .i-name,.i-price{font-size:21px}
-  .cat-btn{padding:17px 20px;font-size:14px}
-
-  .btn-slab{width:100%;justify-content:center;padding:19px 22px}
-  .hero-locs{width:100%}
-  .hero-loc-btn{flex:1;text-align:center;padding:15px 8px}
-  .cf-submit{justify-self:stretch;width:100%;text-align:center}
-  .map-btn{flex:1;text-align:center;min-width:150px}
-  .plat{flex:1;text-align:center}
-
-  .sauce,.rail-end{flex-basis:76vw;max-width:280px}
-  .s-name{font-size:34px}
-  .ob-name{font-size:30px}
-  .frag b{font-size:28px}
-  .contact-col h2{font-size:26px}
-  .rail-end b{font-size:28px}
-}
-
-@media (max-width:380px){
-  .hero-hl{font-size:52px}
-  .hero-left{padding:32px 18px 40px}
-}
-
-@media (max-height:520px) and (orientation:landscape){
-  .hero-right{height:58vh;min-height:190px}
-  #home{min-height:0}
-  .hero-grid{min-height:0}
-}
-
-/* ============================================================
-   REDUCED MOTION
-   ============================================================ */
-@media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
-  .js .rv,.js .stamp{opacity:1!important;transform:none!important;filter:none!important}
-  .js .wipe{clip-path:none!important}
-  .js .marq{animation:none}
-}
-
-/* ---- HERO FOTOGRAFICO (sostituisce il burger 3D) ---- */
-.hero-shot{position:absolute;inset:0;margin:0;z-index:0;}
-.hero-shot picture{display:block;width:100%;height:100%;}
-.hero-shot img{
-  width:100%;height:100%;object-fit:cover;object-position:center 42%;
-  display:block;filter:saturate(1.08) contrast(1.04);
-}
-/* il velo scuro centrale serviva a staccare il burger 3D: ora vignettatura */
-.hero-right::after{
-  background:radial-gradient(ellipse 80% 72% at 50% 48%,transparent 52%,rgba(9,9,11,.50));
-}
-@media (max-width:900px){ .hero-shot img{object-position:center 46%;} }
-
-/* ==================== BRIEF COMPONENTS ==================== */
-.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
-  clip:rect(0,0,0,0);white-space:nowrap;border:0}
-:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
-.wrap{max-width:1240px;margin:0 auto;padding:0 clamp(18px,4vw,48px)}
-.bx-head{padding:clamp(38px,6vw,72px) 0 clamp(18px,3vw,30px)}
-.bx-title{font-family:var(--font-d);font-size:clamp(30px,6vw,62px);line-height:.95;
-  letter-spacing:-.01em;color:var(--cream);margin:0}
-.bx-title.sm{font-size:clamp(22px,3.4vw,34px)}
-.bx-sub{margin:12px 0 0;max-width:62ch;color:var(--muted);font-size:clamp(14px,1.5vw,17px);line-height:1.6}
-
-.hero-locline{font-family:var(--font-b);font-size:11px;letter-spacing:.2em;
-  text-transform:uppercase;color:var(--muted);margin:18px 0 0}
-.btn-ghost{display:inline-flex;align-items:center;gap:9px;padding:14px 22px;
-  border:2px solid var(--cream);color:var(--cream);text-decoration:none;
-  font-family:var(--font-b);font-weight:700;font-size:13px;letter-spacing:.12em;
-  text-transform:uppercase;transition:background .18s,color .18s}
-.btn-ghost:hover,.btn-ghost:focus-visible{background:var(--cream);color:#000}
-.ext{font-size:.9em}
-
-/* proof strip */
-.proof{list-style:none;display:flex;flex-wrap:wrap;gap:0;margin:0;padding:0;
-  border-top:2px solid var(--pink);border-bottom:2px solid var(--pink);background:#0b0b0d}
-.proof li{flex:1 1 220px;padding:14px 18px;font-family:var(--font-b);font-size:10.5px;
-  font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--cream);
-  border-right:1px solid rgba(255,255,255,.12);line-height:1.5}
+.proof li{display:flex;align-items:center;gap:var(--s2)}
+.proof li+li::before{content:'';width:4px;height:4px;background:var(--pink);flex:0 0 auto}
 .proof li:first-child{color:var(--yellow)}
-.proof li:last-child{border-right:none}
-@media(max-width:640px){.proof li{flex:1 1 100%;border-right:none;
-  border-bottom:1px solid rgba(255,255,255,.12)}.proof li:last-child{border-bottom:none}}
 
-/* menu */
-.cat-nav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 26px}
-.cat-chip{font-family:var(--font-b);font-size:12px;font-weight:700;letter-spacing:.1em;
-  text-transform:uppercase;padding:9px 15px;border:1px solid rgba(255,255,255,.22);
-  background:transparent;color:var(--cream);cursor:pointer;transition:.16s}
-.cat-chip:hover{border-color:var(--pink)}
-.cat-chip[aria-pressed="true"]{background:var(--pink);border-color:var(--pink);color:#000}
-.menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
-  gap:2px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.1);
-  padding-bottom:clamp(30px,5vw,60px)}
-.mi{background:#0b0b0d;padding:20px 18px;min-height:96px;display:flex;
-  flex-direction:column;justify-content:center}
-.mi-name{font-family:var(--font-d);font-size:21px;line-height:1.05;color:var(--cream);margin:0}
-.mi-desc{margin:8px 0 0;font-size:13.5px;line-height:1.5;color:var(--muted)}
-.mi-price{margin:10px 0 0;font-family:var(--font-b);font-weight:700;color:var(--yellow);font-size:15px}
-.mi-tags{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 0}
-.mi-tag{font-family:var(--font-b);font-size:9px;font-weight:700;letter-spacing:.12em;
-  text-transform:uppercase;padding:3px 7px;border:1px solid rgba(255,255,255,.3);color:var(--muted)}
-.menu-note{margin:18px 0 0;font-size:13px;color:var(--muted)}
-
-/* sauces */
-.sauce-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:14px;padding-bottom:clamp(30px,5vw,60px)}
-.sc{border:1px solid rgba(255,255,255,.16);padding:26px 22px;background:#0b0b0d}
-.sc-name{font-family:var(--font-d);font-size:26px;color:var(--cream);margin:0}
-.sc-heat{margin:8px 0 0;font-family:var(--font-b);font-size:11px;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--pink)}
-.sc-desc{margin:10px 0 0;font-size:14px;line-height:1.55;color:var(--muted)}
-
-/* locations */
-.loc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  gap:16px;padding-bottom:clamp(30px,5vw,60px)}
-.lc{border:1px solid rgba(255,255,255,.16);background:#0b0b0d;padding:26px 24px}
-.lc .c-media{margin:-26px -24px 18px -24px;height:160px;overflow:hidden;border-radius:4px}
-.lc-name{font-family:var(--font-d);font-size:30px;line-height:1;color:var(--cream);margin:0 0 14px}
-.lc-row{margin:0 0 12px}
-.lc-lab{font-family:var(--font-b);font-size:9.5px;font-weight:700;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--muted);margin:0 0 3px}
-.lc-val{margin:0;font-size:14.5px;line-height:1.55;color:var(--cream)}
-.lc-val a{color:var(--cream)}
-
-/* order */
-.order-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:16px;padding-bottom:clamp(30px,5vw,60px)}
-.oc{border:1px solid rgba(255,255,255,.16);background:#0b0b0d;padding:28px 24px;
-  display:flex;flex-direction:column;gap:14px}
-.oc-name{font-family:var(--font-d);font-size:30px;line-height:1;color:var(--cream);margin:0}
-.oc-addr{margin:0;font-size:14px;color:var(--muted);line-height:1.55}
-.oc .btn-slab,.oc .btn-ghost{align-self:flex-start;margin-top:auto}
-
-/* forms */
-.cf{max-width:760px;padding-bottom:clamp(36px,6vw,70px)}
-.cf-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media(max-width:640px){.cf-row{grid-template-columns:1fr}}
-.cf-field{margin:0 0 16px;display:flex;flex-direction:column}
-.cf-field label{font-family:var(--font-b);font-size:10.5px;font-weight:700;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--muted);margin:0 0 7px}
-.cf input,.cf select,.cf textarea{background:#0b0b0d;border:1px solid rgba(255,255,255,.24);
-  color:var(--cream);padding:13px 14px;font:inherit;font-size:16px;border-radius:0;min-height:50px}
-.cf textarea{min-height:130px;resize:vertical}
-.cf input:focus,.cf select:focus,.cf textarea:focus{border-color:var(--pink);outline:none}
-.cf-consent{display:flex;gap:11px;align-items:flex-start;margin:6px 0 4px}
-.cf-consent input{min-height:0;width:20px;height:20px;flex:0 0 auto;margin-top:2px}
-.cf-consent label{text-transform:none;letter-spacing:0;font-size:13.5px;font-weight:400;
-  color:var(--muted);margin:0;line-height:1.5}
-.cf-err{margin:6px 0 0;color:var(--red,#E53B2F);font-size:12.5px}
-.cf input[aria-invalid="true"],.cf textarea[aria-invalid="true"]{border-color:var(--red,#E53B2F)}
-.cf-status{margin:16px 0 0;font-size:14px;color:var(--yellow);line-height:1.6}
-
-/* reviews + instagram */
-.reviews-wrap,.ig-wrap{border-top:1px solid rgba(255,255,255,.12)}
-.review-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:16px;padding-bottom:clamp(30px,5vw,60px)}
-.rv-card{border:1px solid rgba(255,255,255,.16);padding:24px;background:#0b0b0d}
-.rv-text{margin:0 0 14px;font-size:15px;line-height:1.6;color:var(--cream)}
-.rv-meta{margin:0;font-size:12px;color:var(--muted)}
-.ig-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;
-  flex-wrap:wrap;padding-top:clamp(34px,5vw,60px);padding-bottom:22px}
-.ig-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:2px}
-.ig-grid img{width:100%;height:100%;aspect-ratio:1;object-fit:cover;display:block}
-
-/* footer */
-.site-foot{background:#000;border-top:2px solid var(--pink);padding:clamp(34px,5vw,58px) 0 26px;margin-top:auto}
-.foot-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:30px}
-.foot-h{font-family:var(--font-b);font-size:10px;font-weight:700;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--pink);margin:0 0 13px}
-.foot-list{list-style:none;margin:0;padding:0}
-.foot-list li{margin:0 0 9px}
-.foot-list a,.foot-loc{color:var(--cream);text-decoration:none;font-size:14px;line-height:1.5}
-.foot-list a:hover{text-decoration:underline}
-.foot-loc{display:block;margin:0 0 14px}
-.foot-loc b{display:block;font-family:var(--font-b);font-size:13px}
-.foot-loc span{color:var(--muted);font-size:13px}
-.foot-base{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
-  margin-top:34px;padding-top:20px;border-top:1px solid rgba(255,255,255,.14)}
-.foot-base p{margin:0;font-size:12px;color:var(--muted)}
-
-@media (prefers-reduced-motion: reduce){
-  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;
-    transition-duration:.001ms!important;scroll-behavior:auto!important}
+@media(max-width:860px){
+  .hero{min-height:0;padding:var(--s5) 0 var(--s4)}
+  .hero-bird{width:76vw;right:-20%;bottom:-2%;opacity:.11}
+  /* Two CTAs of different widths read as an accident. Full width and equal
+     is both tidier and a bigger thumb target. */
+  .hero-actions{flex-direction:column;align-items:stretch;gap:var(--s2)}
+  .hero-actions .btn{width:100%;justify-content:center}
+  .hero-where{margin-bottom:var(--s4)}
+  .hero-hl{margin-bottom:var(--s3)}
+  .proof{margin-top:var(--s5)}
 }
 
-/* Grid children default to min-width:auto, which lets long content widen the
-   track and push the whole document sideways on narrow screens. */
-.wrap{width:100%}
-.foot-grid>*,.menu-grid>*,.sauce-grid>*,.loc-grid>*,.order-grid>*,
-.review-grid>*,.ig-grid>*,.cf-row>*{min-width:0}
-.foot-loc span,.foot-list a,.lc-val,.oc-addr,.rv-text{overflow-wrap:anywhere}
-.foot-base{min-width:0}
-@media(max-width:520px){.foot-grid{grid-template-columns:1fr}}
+/* ==========================================================================
+   MARQUEE — a real ticker: the track is duplicated and shifted by exactly
+   half, so it never shows a seam at any viewport width.
+   ========================================================================== */
+.ticker{
+  background:var(--pink);color:var(--black);
+  padding:var(--s2) 0;overflow:hidden;
+  border-top:2px solid var(--black);border-bottom:2px solid var(--black);
+}
+.ticker-track{display:flex;width:max-content}
+.js .ticker-track{animation:roll 36s linear infinite}
+.ticker-group{
+  display:flex;gap:var(--s5);padding-right:var(--s5);flex:0 0 auto;
+  font-family:var(--font-d);font-size:clamp(15px,1.8vw,19px);font-weight:900;
+  letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;
+}
+.ticker-group i{font-style:normal;opacity:.45}
+@keyframes roll{to{transform:translateX(-50%)}}
 
-.cat-note{margin:-14px 0 22px;font-size:13px;color:var(--muted);font-style:italic}
-.mi-alg{margin:10px 0 0;font-size:11px;line-height:1.45;color:var(--muted);
-  padding-top:9px;border-top:1px solid rgba(255,255,255,.12)}
-.sc-alg{margin:12px 0 0;font-size:11.5px;line-height:1.5;color:var(--muted)}
-.btn-ghost.sm{margin-top:16px;padding:9px 15px;font-size:11px;border-width:1px}
-.sc{display:flex;flex-direction:column}
-.mi{min-height:0}
+/* ==========================================================================
+   CATEGORY STRIPS — the four things Smashbird makes.
+   Asymmetric on purpose: the number column, the word, then the copy, with
+   the split flipping every other row. No cards.
+   ========================================================================== */
+.strip{
+  position:relative;border-bottom:1px solid var(--line);
+  padding:var(--s6) 0;overflow:hidden;
+}
+.strip:first-child{border-top:1px solid var(--line)}
+/* Two columns, not three: the word owns the row and the copy sits against
+   it. An earlier pass gave the number its own column, which pushed the word
+   into the middle and left the type looking small in a lot of dead air.
+   `align-items:end` drops the copy onto the word's baseline — the detail
+   that makes the row read as set rather than stacked. */
+.strip-in{
+  display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);
+  gap:var(--s3) var(--s6);align-items:end;
+}
+.strip.flip .strip-head{order:2}
+.strip.flip .strip-copy{order:1;text-align:right}
+.strip-num{
+  font-family:var(--font-d);font-size:var(--fs-micro);font-weight:700;
+  letter-spacing:.24em;color:var(--pink);margin-bottom:var(--s1);
+}
+/* Oversized on purpose — deck slide 09's SMASH / CRUNCH / DRIP energy.
+   Tight tracking and .82 leading so a two-line word still reads as one block. */
+.strip-word{
+  font-size:clamp(56px,11vw,148px);line-height:.82;letter-spacing:-.03em;
+  color:var(--paper);
+}
+.strip-word em{font-style:normal;color:var(--pink)}
+.strip-copy{color:var(--muted);font-size:var(--fs-sm);line-height:1.7;padding-bottom:var(--s1)}
+.strip-copy p{max-width:38ch}
+.strip.flip .strip-copy p{margin-left:auto}
+.strip-copy .btn{margin-top:var(--s3)}
+@media(max-width:860px){
+  .strip{padding:var(--s5) 0}
+  .strip-in,.strip.flip .strip-in{grid-template-columns:1fr;gap:var(--s3);align-items:start}
+  .strip.flip .strip-head{order:0}
+  .strip.flip .strip-copy{order:0;text-align:left}
+  .strip.flip .strip-copy p{margin-left:0}
+}
 
-/* ---- sticky order bar (mobile) ---- */
+/* ==========================================================================
+   SECTION HEADS
+   ========================================================================== */
+.head{padding:var(--s7) 0 var(--s5)}
+.head h1,.head h2{font-size:var(--fs-d1);color:var(--paper);margin-bottom:var(--s3)}
+.head .lede{margin-top:var(--s3)}
+.head .eyebrow{margin-bottom:var(--s3)}
+
+/* ==========================================================================
+   MENU — deck slide 08: "Black on paper 17.28:1 — preferred for menus and
+   long information." So the menu is a Wrap Paper panel, set as an editorial
+   price list. Not a grid of cards. This is also what gives the site its
+   colour rhythm: black, pink, then a full field of paper.
+   ========================================================================== */
+.menu-panel{background:var(--paper);color:var(--on-paper);padding:var(--s6) 0 var(--s7)}
+.menu-panel .head h1{color:var(--on-paper)}
+.menu-panel .lede{color:var(--on-paper-muted)}
+.menu-panel .eyebrow{color:var(--pink-deep)}
+.menu-panel .eyebrow::before{background:var(--pink-deep)}
+
+.cats{
+  display:flex;gap:var(--s1);overflow-x:auto;overscroll-behavior-x:contain;
+  scrollbar-width:none;-webkit-overflow-scrolling:touch;
+  padding-bottom:var(--s2);margin-bottom:var(--s5);
+  border-bottom:2px solid var(--on-paper);
+}
+.cats::-webkit-scrollbar{display:none}
+.cat{
+  flex:0 0 auto;font-family:var(--font-d);font-size:18px;font-weight:900;
+  letter-spacing:.08em;text-transform:uppercase;
+  color:var(--on-paper-muted);padding:var(--s2) var(--s3);
+  border:2px solid transparent;
+  transition:color var(--t) var(--ease),background var(--t) var(--ease);
+}
+.cat:hover{color:var(--on-paper)}
+.cat[aria-selected="true"]{background:var(--on-paper);color:var(--paper)}
+
+.cat-note{
+  font-size:var(--fs-util);color:var(--on-paper-muted);
+  margin-bottom:var(--s4);font-style:italic;
+}
+
+/* The price list. Two columns of rows on wide screens — a menu board reads
+   in columns, not in a 4-across card grid. */
+.items{display:grid;grid-template-columns:1fr;gap:0;max-width:1100px}
+@media(min-width:900px){
+  .items{grid-template-columns:1fr 1fr;column-gap:var(--s7)}
+}
+.item{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;
+  gap:var(--s1) var(--s3);align-items:baseline;
+  padding:var(--s3) 0;border-bottom:1px solid rgba(9,9,11,.16);
+}
+.item-name{
+  font-family:var(--font-d);font-size:var(--fs-d3);font-weight:900;
+  line-height:1.05;text-transform:uppercase;letter-spacing:-.005em;
+  color:var(--on-paper);
+}
+.item-price{
+  font-family:var(--font-d);font-size:21px;font-weight:900;
+  color:var(--on-paper);font-variant-numeric:tabular-nums;white-space:nowrap;
+}
+/* "From" sits inline and smaller, the way it reads on a printed menu —
+   stacked above the figure it looked like a stray label. */
+.item-price .from{
+  font-family:var(--font-b);font-size:11px;font-weight:700;
+  letter-spacing:.1em;color:var(--on-paper-muted);margin-right:5px;
+}
+.item-desc{
+  grid-column:1/-1;font-size:var(--fs-sm);line-height:1.6;
+  color:var(--on-paper-muted);max-width:52ch;
+}
+.item-meta{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:var(--s1);align-items:center}
+.tag{
+  font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  padding:3px var(--s1);border:1px solid rgba(9,9,11,.3);color:var(--on-paper);
+}
+.tag.v{background:var(--on-paper);color:var(--paper);border-color:var(--on-paper)}
+.item-alg{
+  font-size:var(--fs-micro);color:var(--on-paper-muted);
+  letter-spacing:.02em;line-height:1.5;
+}
+.menu-note{
+  margin-top:var(--s5);font-size:var(--fs-util);color:var(--on-paper-muted);
+  max-width:60ch;
+}
+.menu-cta{margin-top:var(--s5);display:flex;flex-wrap:wrap;gap:var(--s2)}
+.menu-panel .btn.ghost{--btn-fg:var(--on-paper);--btn-wipe:var(--on-paper);border-color:rgba(9,9,11,.3)}
+.menu-panel .btn.ghost:hover{color:var(--paper);border-color:var(--on-paper)}
+
+/* ==========================================================================
+   SAUCES — ranked by heat. The heat number is the one place Hot Sauce
+   yellow appears at size, which is exactly what the deck reserves it for.
+   ========================================================================== */
+.sauces{display:grid;gap:0;border-top:1px solid var(--line)}
+.sauce{
+  display:grid;grid-template-columns:auto minmax(0,1fr) auto;
+  gap:var(--s2) var(--s4);align-items:center;
+  padding:var(--s4) 0;border-bottom:1px solid var(--line);
+  transition:background var(--t) var(--ease);
+}
+.sauce:hover{background:var(--ink)}
+.heat{
+  font-family:var(--font-d);font-size:clamp(30px,4vw,50px);font-weight:900;
+  line-height:1;color:var(--yellow);font-variant-numeric:tabular-nums;
+  min-width:2.5ch;
+}
+.heat small{font-size:.4em;color:var(--muted-2);display:block;letter-spacing:.16em}
+.heat.none{color:var(--muted-2);font-size:clamp(18px,2vw,24px)}
+.sauce-name{font-family:var(--font-d);font-size:var(--fs-d3);font-weight:900;
+  text-transform:uppercase;line-height:1.05;color:var(--paper)}
+.sauce-desc{font-size:var(--fs-sm);color:var(--muted);line-height:1.65;max-width:60ch;margin-top:var(--s1)}
+.sauce-alg{font-size:var(--fs-micro);color:var(--muted-2);margin-top:var(--s1)}
+.sauce-buy{text-align:right;display:flex;flex-direction:column;gap:var(--s1);align-items:flex-end}
+.sauce-price{font-family:var(--font-d);font-size:22px;font-weight:900;color:var(--paper);font-variant-numeric:tabular-nums}
+.sauce-size{font-size:var(--fs-micro);color:var(--muted-2);letter-spacing:.14em;text-transform:uppercase}
+@media(max-width:780px){
+  .sauce{grid-template-columns:auto minmax(0,1fr);gap:var(--s2) var(--s3)}
+  .sauce-buy{grid-column:2;text-align:left;align-items:flex-start;flex-direction:row;gap:var(--s3);align-items:baseline}
+}
+
+/* ==========================================================================
+   LOCATIONS — two large panels, not two cards. Location names get the neon
+   treatment: these are the words a Galway signage reference belongs on.
+   ========================================================================== */
+.locs{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid var(--line)}
+@media(min-width:900px){.locs{grid-template-columns:1fr 1fr}}
+.loc{
+  position:relative;overflow:hidden;
+  padding:var(--s6) var(--gutter) var(--s6) 0;
+  border-bottom:1px solid var(--line);
+}
+@media(min-width:900px){
+  .loc{padding:var(--s7) var(--s6) var(--s7) 0}
+  .loc+.loc{padding-left:var(--s6);border-left:1px solid var(--line)}
+}
+.loc-num{font-family:var(--font-d);font-size:var(--fs-micro);font-weight:700;
+  letter-spacing:.24em;color:var(--pink);margin-bottom:var(--s2)}
+.loc-name{font-size:var(--fs-d2);margin-bottom:var(--s4)}
+.loc-rows{display:grid;gap:var(--s3);margin-bottom:var(--s5)}
+.loc-row{display:grid;gap:4px}
+.loc-lab{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted-2)}
+.loc-val{font-size:var(--fs-sm);color:var(--paper);line-height:1.55}
+.loc-val a{text-decoration:underline;text-underline-offset:3px;color:var(--pink)}
+
+/* ==========================================================================
+   ORDER
+   ========================================================================== */
+.order-grid{display:grid;grid-template-columns:1fr;gap:var(--s3)}
+@media(min-width:800px){.order-grid{grid-template-columns:1fr 1fr;gap:var(--s4)}}
+.order-card{
+  border:2px solid var(--line);padding:var(--s5) var(--s4);
+  display:flex;flex-direction:column;gap:var(--s2);
+  transition:border-color var(--t) var(--ease),background var(--t) var(--ease);
+}
+.order-card:hover{border-color:var(--line-hot);background:var(--ink)}
+.order-card h3{font-family:var(--font-d);font-size:var(--fs-d3);font-weight:900;text-transform:uppercase;color:var(--paper)}
+.order-card p{font-size:var(--fs-sm);color:var(--muted);flex:1 0 auto}
+.order-card .btn{margin-top:var(--s2);align-self:flex-start}
+
+/* ==========================================================================
+   ABOUT
+   ========================================================================== */
+.facts{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:0;border-top:1px solid var(--line);
+}
+.fact{padding:var(--s5) var(--s4) var(--s5) 0;border-bottom:1px solid var(--line)}
+.fact+.fact{padding-left:var(--s4)}
+.fact b{
+  display:block;font-family:var(--font-d);font-size:var(--fs-d3);font-weight:900;
+  line-height:.95;text-transform:uppercase;color:var(--paper);margin-bottom:var(--s2);
+}
+.fact b em{font-style:normal;color:var(--pink)}
+.fact p{font-size:var(--fs-sm);color:var(--muted);line-height:1.65}
+
+/* ==========================================================================
+   SOCIAL
+   ========================================================================== */
+.ig{padding:var(--s7) 0;border-top:1px solid var(--line)}
+.ig-head{display:flex;flex-wrap:wrap;gap:var(--s3);align-items:center;justify-content:space-between;margin-bottom:var(--s4)}
+.ig-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:2px}
+.ig-grid img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--ink);
+  transition:opacity var(--t) var(--ease)}
+.ig-grid a:hover img{opacity:.82}
+
+/* ==========================================================================
+   FORMS
+   ========================================================================== */
+.form{display:grid;gap:var(--s3);max-width:720px}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3)}
+@media(max-width:640px){.f-row{grid-template-columns:1fr}}
+.f-field{display:grid;gap:var(--s1)}
+.f-field label{
+  font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--muted-2);
+}
+.form input,.form select,.form textarea{
+  width:100%;background:var(--ink);color:var(--paper);
+  border:1px solid var(--line);padding:var(--s2);
+  font-family:var(--font-b);font-size:16px;/* 16px stops iOS zoom on focus */
+  transition:border-color var(--t) var(--ease);
+}
+.form textarea{min-height:132px;resize:vertical}
+.form input:focus,.form select:focus,.form textarea:focus{border-color:var(--pink);outline:none}
+.form input:focus-visible,.form select:focus-visible,.form textarea:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+.f-consent{display:flex;gap:var(--s2);align-items:flex-start}
+.f-consent input{width:20px;height:20px;flex:0 0 auto;margin-top:2px}
+.f-consent label{font-size:var(--fs-util);color:var(--muted);letter-spacing:0;text-transform:none;font-weight:400}
+.f-err{font-size:var(--fs-micro);color:var(--red);min-height:1em}
+.f-status{font-size:var(--fs-sm);color:var(--muted);min-height:1.5em}
+.f-status.bad{color:var(--red)}
+.hp{position:absolute;left:-9999px}
+
+/* ==========================================================================
+   FOOTER — part of the campaign, not an afterthought.
+   Stacked lockup, one large cropped bird, big Order action.
+   ========================================================================== */
+.foot{
+  position:relative;overflow:hidden;background:#000;
+  border-top:2px solid var(--pink);margin-top:auto;
+  padding:var(--s7) 0 var(--s4);
+}
+/* Flipped to face back into the page, and positioned so the head and body
+   read rather than a random crop of the legs. */
+.foot-bird{
+  position:absolute;z-index:0;right:-4%;top:6%;
+  width:min(38vw,400px);aspect-ratio:900/820;
+  color:var(--pink);opacity:.09;transform:scaleX(-1);
+}
+@media(max-width:900px){.foot-bird{width:64vw;right:-14%;top:auto;bottom:4%;opacity:.07}}
+.foot .wrap{position:relative;z-index:1}
+.foot-cta{
+  display:flex;flex-wrap:wrap;gap:var(--s4);align-items:center;
+  justify-content:space-between;padding-bottom:var(--s6);
+  border-bottom:1px solid var(--line);margin-bottom:var(--s5);
+}
+.foot-cta h2{font-size:var(--fs-d1);color:var(--paper)}
+.foot-cta h2 em{font-style:normal;color:var(--pink)}
+.foot-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:var(--s5);align-items:start;
+}
+.foot-logo img{width:168px;height:auto}   /* deck minimum for stacked is 96px */
+.foot-col h3{
+  font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--pink);margin-bottom:var(--s2);
+}
+/* 44px minimum hit area — these are the smallest targets on the site and
+   they sit at the bottom of a phone screen, which is exactly where a thumb
+   is least accurate. The padding doubles as the list's spacing. */
+.foot-col li a{
+  display:inline-flex;align-items:center;min-height:44px;min-width:44px;
+  font-size:var(--fs-sm);color:var(--muted);
+  transition:color var(--t) var(--ease);
+}
+.foot-col li a:hover{color:var(--paper)}
+.foot-loc{margin-bottom:var(--s2)}
+.foot-loc b{display:block;font-size:var(--fs-sm);color:var(--paper);font-weight:600}
+.foot-loc span{display:block;font-size:var(--fs-micro);color:var(--muted-2);line-height:1.5}
+.foot-base{
+  margin-top:var(--s6);padding-top:var(--s3);border-top:1px solid var(--line);
+  display:flex;flex-wrap:wrap;gap:var(--s2) var(--s4);
+  justify-content:space-between;align-items:baseline;
+  font-size:var(--fs-micro);color:var(--muted-2);
+}
+.foot-base p{max-width:64ch}
+
+/* ==========================================================================
+   STICKY ORDER BAR — mobile. The primary action is never behind a hamburger.
+   ========================================================================== */
 .order-bar{
-  position:fixed;left:0;right:0;bottom:0;z-index:60;
-  padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));
-  background:rgba(9,9,11,.94);backdrop-filter:blur(8px);
-  border-top:2px solid var(--pink);
+  position:fixed;left:0;right:0;bottom:0;z-index:180;display:none;
+  padding:var(--s2) var(--gutter) calc(var(--s2) + env(safe-area-inset-bottom));
+  background:rgba(9,9,11,.94);backdrop-filter:blur(12px);
+  border-top:1px solid var(--line);
 }
-.order-bar-btn{
-  display:flex;align-items:center;justify-content:center;gap:12px;
-  background:var(--pink);color:var(--black);text-decoration:none;
-  font-family:var(--font-d);font-size:19px;font-weight:900;letter-spacing:.1em;
-  text-transform:uppercase;padding:16px 20px;min-height:56px;
-}
-.order-bar-btn:active{background:var(--yellow)}
-@media(min-width:901px){ .order-bar{display:none!important} }
-@media(max-width:900px){ body.has-order-bar{padding-bottom:86px} }
-
-/* ---- hero: brand line was a 36% stroke on black — barely legible ---- */
-.hero-hl .l3{
-  -webkit-text-stroke:2px rgba(242,232,213,.72);
-  text-wrap:balance;
-}
-/* ---- hero: CTAs were stacked and mismatched (245x67 vs 173x52) ---- */
-@media(min-width:721px){
-  .hero-actions{flex-direction:row;align-items:stretch;gap:14px;flex-wrap:wrap}
-  .hero-actions .btn-slab,.hero-actions .btn-ghost{
-    min-height:64px;display:inline-flex;align-items:center;justify-content:center}
-  .hero-actions .btn-ghost{padding-inline:26px}
+.order-bar .btn{width:100%;justify-content:center}
+@media(max-width:980px){
+  .order-bar{display:block}
+  body.has-bar{padding-bottom:88px}
 }
 
-/* ---- menu cards: pin price + allergens to the bottom so rows line up ---- */
-.mi{display:flex;flex-direction:column;gap:0}
-.mi-foot{margin-top:auto;padding-top:12px}
-.mi-price{margin:0}
-.mi-foot .mi-alg{margin-top:9px}
-.mi-shot{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;
-  margin:0 0 14px;background:#141416}
-.mi-order{display:inline-flex;align-items:center;gap:8px;margin-top:12px;
-  align-self:flex-start;padding:9px 14px;border:1px solid var(--pink);
-  color:var(--pink);text-decoration:none;font-family:var(--font-b);
-  font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
-  transition:background .18s,color .18s}
-.mi-order:hover,.mi-order:focus-visible{background:var(--pink);color:#000}
+/* ==========================================================================
+   SMALL SCREENS
+   ========================================================================== */
+@media(max-width:640px){
+  /* Nav height is set by the logo, not the other way round: the horizontal
+     lockup is 160×45 at its deck minimum and slide 06 asks for clear space
+     around it, so 68px leaves ~11px top and bottom. */
+  :root{--bar:26px;--nav-h:68px;--fs-body:16px}
+  .nav-logo img{width:160px}
+  .pbar{font-size:9px}
+  .pbar b{max-width:60%}
+  .head{padding:var(--s5) 0 var(--s4)}
+  .foot-cta{flex-direction:column;align-items:flex-start;gap:var(--s3)}
+}
 
-/* ==================== MOTION ==================== */
-
-/* parole estruse al posto delle foto */
-.c-media{display:grid;place-items:center;min-height:clamp(230px,34vw,380px);overflow:hidden}
-.x3d{width:100%;height:100%;display:grid;place-items:center;perspective:900px}
-.x3d-in{position:relative;transform-style:preserve-3d;
-  transform:rotateX(var(--xrx,14deg)) rotateY(var(--xry,-24deg));will-change:transform}
-.x3d-l{position:absolute;left:50%;top:50%;white-space:nowrap;
-  font-family:var(--font-d);font-weight:900;text-transform:uppercase;
-  font-size:clamp(30px,5.4vw,64px);letter-spacing:-.02em;line-height:1;
-  transform:translate(-50%,-50%) translateZ(var(--z));color:var(--c)}
-.x3d-l.face{position:relative;left:auto;top:auto;transform:translateZ(var(--z))}
-
-@media (prefers-reduced-motion: reduce){
-  .x3d-in{transition:none!important}
+/* ==========================================================================
+   REDUCED MOTION — one block, and it is total.
+   ========================================================================== */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;animation-iteration-count:1!important;
+    transition-duration:.01ms!important;scroll-behavior:auto!important;
   }
-
-/* The extruded 3D word now carries the heading visually, so the flat copy is
-   hidden from sight but kept in the document for screen readers and SEO. */
-.craving .c-word{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;
-  overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-.craving .c-num{margin-bottom:14px}
-@media(max-width:900px){
-  .c-media{min-height:clamp(180px,44vw,260px)}
-  .x3d-l{font-size:clamp(34px,11vw,58px)}
+  .js .rv{opacity:1;transform:none}
+  .js .ticker-track{animation:none}
+  .js .neon-ignite{opacity:1;text-shadow:
+    0 0 1px rgba(255,255,255,.5),0 0 9px rgba(251,32,149,.5),
+    0 0 30px rgba(251,32,149,.3),0 0 64px rgba(179,0,95,.22)}
+  .hero-bird{transform:none!important}
 }
-
-/* ---- kinetic brand lines (hero panel) ---- */
-.kin{position:absolute;inset:0;display:grid;place-items:center;padding:0 8%;
-  perspective:900px;pointer-events:none}
-.kin-rail{position:relative;width:100%;height:1px;transform-style:preserve-3d}
-.kin-l{position:absolute;left:0;right:0;top:0;transform:translateY(-50%) rotateX(var(--r,0deg));
-  transform-origin:50% 50%;opacity:0;
-  font-family:var(--font-d);font-weight:900;text-transform:uppercase;
-  font-size:clamp(30px,4.2vw,60px);line-height:.94;letter-spacing:-.015em;
-  color:var(--cream);text-wrap:balance;
-  transition:transform .62s cubic-bezier(.16,.9,.24,1),opacity .5s ease}
-.kin-l.on{opacity:1;--r:0deg}
-.kin-l.out{opacity:0;--r:-62deg}
-.kin-l.in{opacity:0;--r:62deg}
-.kin-l b{color:var(--pink);font-weight:900}
-
-/* ---- staggered reveals ---- */
-.rise{opacity:0;transform:translateY(16px);
-  transition:opacity .5s ease,transform .5s cubic-bezier(.16,.9,.24,1);
-  transition-delay:var(--d,0ms)}
-.rise.up{opacity:1;transform:none}
-
-@media (prefers-reduced-motion: reduce){
-  .kin-l{transition:none}
-  .kin-l.out,.kin-l.in{opacity:0}
-  .rise{opacity:1!important;transform:none!important;transition:none}
-}
-
-/* ---- hero video ---- */
-.hv{position:absolute;inset:0}
-.hv-poster,.hv-vid{position:absolute;inset:0;width:100%;height:100%;
-  object-fit:cover;display:block}
-.hv-vid{opacity:0;transition:opacity .5s ease}
-.hv-vid.ready{opacity:1}
-
-/* photo grid under the Instagram link */
-.ig-grid{gap:3px}
-.ig-grid.on{padding-bottom:clamp(30px,5vw,56px)}
-.ig-grid img{background:#141416;transition:opacity .5s ease,transform .5s cubic-bezier(.16,.9,.24,1)}
-.ig-grid img:hover{transform:scale(1.03)}
-@media(max-width:640px){.ig-grid{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
-<script src="content.js"></script>
-<script>
-document.documentElement.className += ' js';
 
-/* Safety net, in its own script so even a syntax error further down cannot
-   disable it. It reveals ONLY elements that are inside the viewport and still
-   hidden — the real "blank screen" failure. Anything below the fold keeps its
-   scroll-triggered animation. */
-(function(){
-  function sweep(){
-    var vh = window.innerHeight || 800;
-    var els = document.querySelectorAll('.rv:not(.in),.stamp:not(.in),.wipe:not(.in)');
-    for(var i=0;i<els.length;i++){
-      var el = els[i];
-      if(el.offsetParent === null) continue;        // lives on a hidden page
-      var r = el.getBoundingClientRect();
-      if(r.bottom > -40 && r.top < vh + 40) el.classList.add('in');
-    }
-  }
-  var ticks = 0;
-  var iv = setInterval(function(){ sweep(); if(++ticks > 14) clearInterval(iv); }, 800);
-  var queued = false;
-  addEventListener('scroll', function(){
-    if(queued) return;
-    queued = true;
-    requestAnimationFrame(function(){ queued = false; sweep(); });
-  }, {passive:true});
-  addEventListener('load', sweep);
-})();
-</script>
+<script>document.documentElement.className+=' js';</script>
 
-<!-- ============================================================
-     PROPOSAL BAR
-     ============================================================ -->
 <div class="pbar">
-  <b>Website concept · Smashbird Galway</b>
+  <b>Website concept &middot; Smashbird Galway</b>
   <em>Proposal by Lumus</em>
 </div>
 
-<!-- ============================================================
-     NAV
-     ============================================================ -->
-<nav class="nav" id="nav" aria-label="Main">
-  <div class="nav-inner">
-    <div class="nav-logo" role="button" tabindex="0" data-go="home" aria-label="Smashbird — home">
-      <svg class="logo-mark" viewBox="0 0 400 250" role="img" aria-label="Smashbird">
-        <g fill="none" stroke="currentColor" stroke-width="27" stroke-linecap="round" stroke-linejoin="round">
-          <g transform="rotate(-5 55 68)"><path d="M82 46C82 30 30 28 30 50c0 18 50 14 50 40 0 22-52 20-52 2"/></g>
-          <g transform="rotate(3 127 71)"><path d="M96 108 100 34l27 42 27-42 4 74"/></g>
-          <g transform="rotate(-3 201 70)"><path d="M172 108 201 32l29 76M183 82h36"/></g>
-          <g transform="rotate(4 271 68)"><path d="M298 46c0-16-52-18-52 4 0 18 50 14 50 40 0 22-52 20-52 2"/></g>
-          <g transform="rotate(-2 340 70)"><path d="M312 32v76M368 32v76M312 72h56"/></g>
-        </g>
-        <g fill="currentColor">
-          <rect x="30" y="122" width="27" height="112" rx="13.5"/>
-          <circle cx="92" cy="196" r="32" fill="none" stroke="currentColor" stroke-width="26"/>
-          <circle cx="92" cy="196" r="9.5"/>
-          <rect x="150" y="126" width="27" height="27" rx="13.5"/>
-          <rect x="150" y="166" width="27" height="68" rx="13.5"/>
-          <rect x="196" y="166" width="27" height="68" rx="13.5"/>
-          <path d="M212 180c4-16 30-22 44-11" fill="none" stroke="currentColor" stroke-width="26" stroke-linecap="round"/>
-          <circle cx="320" cy="196" r="32" fill="none" stroke="currentColor" stroke-width="26"/>
-          <circle cx="320" cy="196" r="9.5"/>
-          <rect x="352" y="122" width="27" height="112" rx="13.5"/>
-        </g>
-      </svg>
-      <b>Galway</b>
-    </div>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#menu" data-go="menu">Menu</a></li>
-      <li><a href="#locations" data-go="locations">Locations</a></li>
-      <li><a href="#sauces" data-go="sauces">Birdhouse Sauces</a></li>
-      <li><a href="#catering" data-go="catering">Catering</a></li>
-      <li><a href="#about" data-go="about">About</a></li>
-      <li><a href="#contact" data-go="contact">Contact</a></li>
-      <!-- The pink Order button is desktop-only, so the panel carries its own. -->
-      <li class="only-mobile"><a href="#order" data-go="order">Order Now →</a></li>
-    </ul>
-    <a href="#order" class="nav-order" data-go="order"><span>Order Now →</span></a>
-    <button class="nav-burger" id="navBurger" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
+<nav class="nav" id="nav">
+  <a class="nav-logo" href="#home" data-go="home" aria-label="Smashbird — home">
+    <img src="img/logo-horizontal.png" width="720" height="203" alt="Smashbird">
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#menu" data-go="menu">Menu</a></li>
+    <li><a href="#sauces" data-go="sauces">Sauces</a></li>
+    <li><a href="#locations" data-go="locations">Locations</a></li>
+    <li><a href="#about" data-go="about">About</a></li>
+    <li><a href="#catering" data-go="catering">Catering</a></li>
+    <li><a href="#contact" data-go="contact">Contact</a></li>
+    <li class="only-mobile"><a href="#order" data-go="order">Order Now</a></li>
+  </ul>
+  <a href="#order" class="btn sm nav-order" data-go="order"><span>Order Now</span></a>
+  <button class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false" aria-controls="navLinks"><i></i></button>
 </nav>
 
-<!-- ============================================================
-     HOME
-     ============================================================ -->
+<!-- ===================================================================== HOME -->
 <section id="home" class="page active" aria-label="Home">
-  <div class="hero-grid">
-    <div class="hero-left">
-      <div>
-        <p class="hero-eyebrow stamp">SMASHBIRD</p>
-        <h1 class="hero-hl">
-          <span class="stamp" style="display:block">SERIOUS</span>
-          <span class="stamp l2" style="display:block">BURGERS.</span>
-          <span class="stamp l3">BIG FLAVOUR. NO NONSENSE.</span>
-        </h1>
-      </div>
-      <p class="hero-sub stamp">Smashed burgers, fried chicken, vegan junk and loaded sides &mdash; powered by Birdhouse sauces.</p>
-      <div class="hero-actions">
-        <a href="#order" class="btn-slab stamp" data-go="order"><span>Order Now <em class="arw" style="font-style:normal">&rarr;</em></span></a>
-        <a href="#menu" class="btn-ghost stamp" data-go="menu">View the Menu</a>
-      </div>
-      <p class="hero-locline stamp">CROSS STREET &middot; LIOSB&Aacute;N &middot; GALWAY</p>
-    </div>
-
-    <div class="hero-right">
-      <div class="kin" id="kin" aria-hidden="true">
-        <div class="kin-rail" id="kinRail"></div>
-      </div>
-      <div class="hero-vert">Galway · H91</div>
-    </div>
-  </div>
-
-  <ul class="proof" id="proofStrip" aria-label="Awards and options"></ul>
-
-  <div class="hero-strip" aria-hidden="true">
-    <div class="marq"><span>Smashed</span><em>·</em><span>Fried</span><em>·</em><span>Loaded</span><em>·</em><span>Sauced</span><em>·</em><span>Cross Street</span><em>·</em><span>Liosban</span><em>·</em></div>
-    <div class="marq"><span>Smashed</span><em>·</em><span>Fried</span><em>·</em><span>Loaded</span><em>·</em><span>Sauced</span><em>·</em><span>Cross Street</span><em>·</em><span>Liosban</span><em>·</em></div>
-  </div>
-
-  <div>
-    <div class="craving">
-      <div class="c-label">
-        <p class="c-num rv">01</p>
-        <h2 class="c-word rv"><em>SMASHED</em></h2>
-        <p class="c-desc rv">Two thin beef patties pressed hard on a screaming hot flat-top. Crisp lacy edges. American cheese melted through every layer.</p>
-      </div>
-      <div class="c-media"><div class="x3d" data-x3d aria-hidden="true"></div></div>
-    </div>
-    <div class="craving rev">
-      <div class="c-label">
-        <p class="c-num rv">02</p>
-        <h2 class="c-word rv">FRIED</h2>
-        <p class="c-desc rv">Fried chicken with real crunch. Crispy Bird, Hot Honey, Korean. Choose your sauce. Choose your heat. Never choose safe.</p>
-      </div>
-      <div class="c-media"><div class="x3d" data-x3d aria-hidden="true"></div></div>
-    </div>
-    <div class="craving">
-      <div class="c-label">
-        <p class="c-num rv">03</p>
-        <h2 class="c-word rv">LOADED</h2>
-        <p class="c-desc rv">Loaded fries built to collapse under the weight of their own toppings. Share them. Or don't.</p>
-      </div>
-      <div class="c-media"><div class="x3d" data-x3d aria-hidden="true"></div></div>
-    </div>
-    <div class="craving rev">
-      <div class="c-label">
-        <p class="c-num rv">04</p>
-        <h2 class="c-word rv">VEGAN <em>JUNK</em></h2>
-        <p class="c-desc rv">Vegan food that isn't trying to be acceptable. The same crunch, the same sauce, the same mess. No apologies.</p>
-      </div>
-      <div class="c-media"><div class="x3d" data-x3d aria-hidden="true"></div></div>
-    </div>
-  </div>
-
-  <div class="neon-band" data-splat>
-    <p class="neon rv" id="neonLine">I licked it<br>so it's mine</p>
-    <p class="neon-sub rv">On the wall at Cross Street</p>
-  </div>
-
-<!-- ============================================================
-     MENU
-     ============================================================ -->
-  <section class="reviews-wrap" id="reviewsSection" aria-label="Reviews" hidden>
+  <div class="hero">
+    <span class="bird hero-bird" id="heroBird" aria-hidden="true"></span>
     <div class="wrap">
-      <header class="bx-head">
-        <h2 class="bx-title">GALWAY&rsquo;S GOT OPINIONS.</h2>
-      </header>
-      <div id="reviewGrid" class="review-grid"></div>
-    </div>
-  </section>
-
-  <section class="ig-wrap" aria-label="Instagram">
-    <div class="wrap ig-inner">
-      <div>
-        <h2 class="bx-title sm">FOLLOW THE BIRD.</h2>
-        <p class="bx-sub" id="igHandle"></p>
+      <p class="eyebrow hero-eyebrow rv">Galway street food</p>
+      <h1 class="display hero-hl">
+        <span class="l1 rv">Burgers.</span>
+        <span class="l2 rv neon neon-ignite" id="heroNeon">Chicken.</span>
+      </h1>
+      <p class="hero-where rv"><b>Cross Street</b> &middot; <b>Liosb&aacute;n</b> &middot; Galway</p>
+      <div class="hero-actions rv">
+        <a href="#order" class="btn" data-go="order"><span>Order Now <em class="arw" style="font-style:normal">&rarr;</em></span></a>
+        <a href="#menu" class="btn ghost" data-go="menu"><span>See the Menu</span></a>
       </div>
-      <a class="btn-ghost" id="igLink" href="https://www.instagram.com/smashbird_galway/" target="_blank" rel="noopener noreferrer">
-        Instagram <span class="ext" aria-hidden="true">&#8599;</span><span class="sr-only">(opens in a new tab)</span>
-      </a>
+      <ul class="proof rv" id="proofStrip" aria-label="Awards and options"></ul>
     </div>
-    <div id="igGrid" class="ig-grid"></div>
-  </section>
+  </div>
 
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track" id="tickerTrack"></div>
+  </div>
+
+  <div id="strips"></div>
+
+  <section class="ig" aria-label="Instagram">
+    <div class="wrap">
+      <div class="ig-head">
+        <div>
+          <p class="eyebrow" style="margin-bottom:var(--s2)">Follow</p>
+          <h2 class="display" style="font-size:var(--fs-d2)" id="igHandle">@smashbird_galway</h2>
+        </div>
+        <a class="btn ghost sm" id="igLink" href="https://www.instagram.com/smashbird_galway/" target="_blank" rel="noopener noreferrer"><span>Open Instagram &nearr;</span></a>
+      </div>
+      <div id="igGrid" class="ig-grid"></div>
+    </div>
+  </section>
 </section>
 
+<!-- ===================================================================== MENU -->
 <section id="menu" class="page" aria-label="Menu">
-  <div class="wrap">
-    <header class="bx-head">
-      <h2 class="bx-title">PICK YOUR CRAVING.</h2>
-      <p class="bx-sub">Smashed burgers, buttermilk fried chicken, vegan junk and loaded sides.</p>
-    </header>
-    <nav class="cat-nav" id="catNav" aria-label="Menu categories"></nav>
-    <p class="cat-note" id="catNote" hidden></p>
-    <div id="menuGrid" class="menu-grid"></div>
-    <p id="allergenNote" class="menu-note" hidden></p>
-    <p class="menu-note" id="menuNote"></p>
+  <div class="menu-panel">
+    <div class="wrap">
+      <header class="head">
+        <p class="eyebrow">The food</p>
+        <h1 class="display">Choose your<br>sauce.</h1>
+        <p class="lede" id="menuIntro"></p>
+      </header>
+      <div class="cats" id="catNav" role="tablist" aria-label="Menu categories"></div>
+      <p class="cat-note" id="catNote" hidden></p>
+      <div class="items" id="menuList" role="tabpanel" aria-live="polite"></div>
+      <p class="menu-note" id="allergenNote" hidden></p>
+      <p class="menu-note" id="menuNote"></p>
+      <div class="menu-cta">
+        <a href="#order" class="btn" data-go="order"><span>Order Now <em class="arw" style="font-style:normal">&rarr;</em></span></a>
+        <a href="#sauces" class="btn ghost" data-go="sauces"><span>The Sauces</span></a>
+      </div>
+    </div>
   </div>
 </section>
 
+<!-- =================================================================== SAUCES -->
+<section id="sauces" class="page" aria-label="Birdhouse sauces">
+  <div class="wrap">
+    <header class="head">
+      <p class="eyebrow">Birdhouse</p>
+      <h1 class="display">Sauce is the<br>main character.</h1>
+      <p class="lede" id="saucesIntro"></p>
+    </header>
+    <div class="sauces" id="sauceList"></div>
+    <p class="menu-note" style="color:var(--muted-2)" id="saucesDisclaimer"></p>
+    <p class="menu-note"><a id="birdhouseLink" class="btn ghost sm" href="#" hidden target="_blank" rel="noopener noreferrer"><span>Birdhouse &nearr;</span></a></p>
+  </div>
+</section>
+
+<!-- ================================================================ LOCATIONS -->
 <section id="locations" class="page" aria-label="Locations">
   <div class="wrap">
-    <header class="bx-head">
-      <h2 class="bx-title">TWO SPOTS. ONE BIRD.</h2>
-      <p class="bx-sub">Cross Street in the city centre. Liosb&aacute;n on the north side.</p>
+    <header class="head">
+      <p class="eyebrow">Find us</p>
+      <h1 class="display">Two spots.<br>One bird.</h1>
+      <p class="lede">Cross Street in the city centre. Liosb&aacute;n on the north side.</p>
     </header>
-    <div id="locGrid" class="loc-grid"></div>
   </div>
+  <div class="wrap"><div class="locs" id="locList"></div></div>
 </section>
 
-<section id="sauces" class="page" aria-label="Birdhouse Sauces">
-  <div class="wrap">
-    <header class="bx-head">
-      <h2 class="bx-title">SAUCE IS THE MAIN CHARACTER.</h2>
-      <p class="bx-sub" id="saucesIntro"></p>
-    </header>
-    <div id="sauceGrid" class="sauce-grid"></div>
-    <p class="menu-note" id="saucesDisclaimer" hidden></p>
-    <p class="menu-note"><a id="birdhouseLink" href="#" hidden>Birdhouse &rarr;</a></p>
-  </div>
-</section>
-
+<!-- ==================================================================== ABOUT -->
 <section id="about" class="page" aria-label="About">
-  <div class="about-top" data-splat>
-    <h1 class="about-hl stamp">MAKE THE</h1>
-    <h1 class="about-hl p stamp">MESS COUNT.</h1>
-    <p class="about-lead rv">Smashbird is a family-run street-food brand from Galway. Built around serious flavour, an unusually deep sauce range and no interest in playing it safe.</p>
+  <div class="wrap">
+    <header class="head">
+      <p class="eyebrow">Who we are</p>
+      <h1 class="display" id="aboutHl"></h1>
+      <p class="lede" id="aboutBody"></p>
+    </header>
+    <div class="facts">
+      <div class="fact rv"><b><em>Family</em><br>run</b><p>Independent and local. Not a franchise.</p></div>
+      <div class="fact rv"><b><em>Two</em><br>kitchens</b><p>Cross Street and Liosb&aacute;n, same menu, same prices.</p></div>
+      <div class="fact rv"><b><em>Award</em><br>winning</b><p>Best Burger &amp; American, Deliveroo Restaurant Awards 2025.</p></div>
+      <div class="fact rv"><b><em>Sauce</em><br>led</b><p>A deep range of Birdhouse sauces, made in Ireland.</p></div>
+    </div>
   </div>
-  <div class="frags">
-    <div class="frag rv"><b><em>FAMILY</em><br>RUN</b><p>Independent. Local. Not a franchise.</p></div>
-    <div class="frag rv"><b>GALWAY<br>BASED</b><p>Cross Street and Liosban. Two spots, one identity.</p></div>
-    <div class="frag rv"><b>SAUCE<br><em>FIRST</em></b><p>The sauce range is the competitive difference. Not an afterthought.</p></div>
-    <div class="frag rv"><b>SMASHED<br>PATTIES</b><p>Pressed hard on a flat-top. Lacy edges. No exceptions.</p></div>
-    <div class="frag rv"><b>FRIED<br>CHICKEN</b><p>Real crunch. Worth the mess.</p></div>
-    <div class="frag rv"><b>VEGAN<br><em>&amp; GF</em></b><p>Options that belong in the same conversation, not in a footnote.</p></div>
-  </div>
-  <div class="fact">
-    <p class="rv">Smashbird does not do subtle. The food is built to be immediate, textural and worth talking about. The sauce range is deeper than it needs to be. The menu keeps changing. The attitude does not.</p>
-    <p class="warn rv">⚠ Founding story and specific brand history to be confirmed with the owner before publishing.</p>
-  </div>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));border-top:1px solid var(--line)">
-    <div class="shot-box wipe" style="height:260px;border-right:1px solid var(--line)"></div>
-    <div class="shot-box wipe" style="height:260px;border-right:1px solid var(--line)"></div>
-    <div class="ph wipe" style="height:260px">Photo needed — kitchen, heat, movement</div>
-  </div>
-  <p class="credit">Photography sourced from the Smashbird brand document and Instagram, cropped for layout. Resolution is limited — a proper shoot is recommended before launch.</p>
 </section>
 
-<!-- ============================================================
-     ORDER
-     ============================================================ -->
+<!-- ================================================================= CATERING -->
 <section id="catering" class="page" aria-label="Catering">
   <div class="wrap">
-    <header class="bx-head">
-      <h2 class="bx-title">BRING SMASHBIRD TO THE PARTY.</h2>
-      <p class="bx-sub">Birthdays, work parties, weddings or private events &mdash; bring the Smashbird and Birdhouse flavour to your crowd.</p>
+    <header class="head">
+      <p class="eyebrow">Catering</p>
+      <h1 class="display" id="cateringHl"></h1>
+      <p class="lede" id="cateringBody"></p>
     </header>
-
-    <form class="cf" id="cateringForm" name="catering" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+    <form class="form" id="cateringForm" name="catering" method="POST"
+          data-netlify="true" netlify-honeypot="bot-field" novalidate>
       <input type="hidden" name="form-name" value="catering">
-      <p hidden><label>Leave this empty <input name="bot-field"></label></p>
-      <div class="cf-row">
-        <div class="cf-field">
-          <label for="cat-name">Your name <span aria-hidden="true">*</span></label>
-          <input id="cat-name" name="name" type="text" autocomplete="name" required>
-          <p class="cf-err" id="err-cat-name" hidden></p>
-        </div>
-        <div class="cf-field">
-          <label for="cat-email">Email address <span aria-hidden="true">*</span></label>
-          <input id="cat-email" name="email" type="email" autocomplete="email" required>
-          <p class="cf-err" id="err-cat-email" hidden></p>
-        </div>
+      <p class="hp"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+      <div class="f-row">
+        <div class="f-field"><label for="c-name">Name</label><input id="c-name" name="name" autocomplete="name" required></div>
+        <div class="f-field"><label for="c-email">Email</label><input id="c-email" name="email" type="email" autocomplete="email" required></div>
       </div>
-      <div class="cf-row">
-        <div class="cf-field">
-          <label for="cat-phone">Phone</label>
-          <input id="cat-phone" name="phone" type="tel" autocomplete="tel">
-        </div>
-        <div class="cf-field">
-          <label for="cat-type">Event type</label>
-          <select id="cat-type" name="eventType">
-            <option value="">Please choose</option>
-            <option>Birthday</option>
-            <option>Work party</option>
-            <option>Wedding</option>
-            <option>Private event</option>
-            <option>Something else</option>
+      <div class="f-row">
+        <div class="f-field"><label for="c-phone">Phone</label><input id="c-phone" name="phone" type="tel" autocomplete="tel"></div>
+        <div class="f-field"><label for="c-type">Event type</label>
+          <select id="c-type" name="eventType">
+            <option value="">Select</option><option>Birthday</option><option>Work party</option>
+            <option>Wedding</option><option>Private event</option><option>Other</option>
           </select>
         </div>
       </div>
-      <div class="cf-row">
-        <div class="cf-field">
-          <label for="cat-date">Event date</label>
-          <input id="cat-date" name="eventDate" type="date">
-        </div>
-        <div class="cf-field">
-          <label for="cat-guests">Estimated guests</label>
-          <input id="cat-guests" name="guests" type="number" min="1" step="1" inputmode="numeric">
-        </div>
+      <div class="f-row">
+        <div class="f-field"><label for="c-date">Event date</label><input id="c-date" name="eventDate" type="date"></div>
+        <div class="f-field"><label for="c-guests">Estimated guests</label><input id="c-guests" name="guests" type="number" min="1" inputmode="numeric"></div>
       </div>
-      <div class="cf-field">
-        <label for="cat-location">Event location</label>
-        <input id="cat-location" name="location" type="text" autocomplete="off">
+      <div class="f-field"><label for="c-where">Location</label><input id="c-where" name="location"></div>
+      <div class="f-field"><label for="c-msg">Message</label><textarea id="c-msg" name="message" required></textarea></div>
+      <div class="f-consent">
+        <input type="checkbox" id="c-consent" name="consent" required>
+        <label for="c-consent">I'm happy for Smashbird to contact me about this enquiry.</label>
       </div>
-      <div class="cf-field">
-        <label for="cat-msg">Message <span aria-hidden="true">*</span></label>
-        <textarea id="cat-msg" name="message" rows="5" required></textarea>
-        <p class="cf-err" id="err-cat-msg" hidden></p>
-      </div>
-      <div class="cf-consent">
-        <input id="cat-consent" name="consent" type="checkbox" required>
-        <label for="cat-consent">I&rsquo;m happy for Smashbird to contact me about this enquiry. <span aria-hidden="true">*</span></label>
-      </div>
-      <p class="cf-err" id="err-cat-consent" hidden></p>
-      <button class="btn-slab" type="submit"><span>Send enquiry <em class="arw" style="font-style:normal">&rarr;</em></span></button>
-      <p class="cf-status" id="cateringStatus" role="status" aria-live="polite"></p>
+      <p class="f-err" id="cateringErr" role="alert"></p>
+      <button type="submit" class="btn" id="cateringSubmit"><span>Send enquiry <em class="arw" style="font-style:normal">&rarr;</em></span></button>
+      <p class="f-status" id="cateringStatus" role="status" aria-live="polite"></p>
     </form>
   </div>
 </section>
 
+<!-- ==================================================================== ORDER -->
 <section id="order" class="page" aria-label="Order">
   <div class="wrap">
-    <header class="bx-head">
-      <h2 class="bx-title">GET STUCK IN.</h2>
-      <p class="bx-sub">Pick your location &mdash; each one takes its own orders.</p>
+    <header class="head">
+      <p class="eyebrow">Collection</p>
+      <h1 class="display">Order<br>now.</h1>
+      <p class="lede">Pick your branch. Each one has its own ordering page.</p>
     </header>
-    <div id="orderGrid" class="order-grid"></div>
+    <div class="order-grid" id="orderList"></div>
   </div>
 </section>
 
+<!-- ================================================================== CONTACT -->
 <section id="contact" class="page" aria-label="Contact">
-  <div class="sec-head dark drip"><h1 class="stamp">GOT A<br>QUESTION?</h1></div>
-  <div class="contact-grid">
-    <div class="contact-col">
-      <h2 class="rv">Locations</h2>
-      <div class="cd rv"><p class="cd-lab">Cross Street</p><p class="cd-val">3 Cross Street Lower<br>Galway, H91 T995</p></div>
-      <div class="cd rv"><p class="cd-lab">Liosban</p><p class="cd-val">Galway, H91 D8VP<br><small>⚠ Full address to verify</small></p></div>
-      <div class="cd rv"><p class="cd-lab">Instagram</p><p class="cd-val"><a href="https://instagram.com/smashbird_galway" target="_blank" rel="noopener" style="text-decoration:underline;color:var(--pink-deep)">@smashbird_galway</a></p></div>
-      <div class="cd rv"><p class="cd-lab">Email</p><p class="cd-val"><small>⚠ Verify contact email before publishing</small></p></div>
-    </div>
-    <div class="contact-col">
-      <h2 class="rv">Send a message</h2>
-      <form class="cf rv" id="cform" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+  <div class="wrap">
+    <header class="head">
+      <p class="eyebrow">Say hello</p>
+      <h1 class="display">Get in<br>touch.</h1>
+      <p class="lede">For anything that is not an order — press, stockists, feedback or a question about allergens.</p>
+    </header>
+    <form class="form" id="contactForm" name="contact" method="POST"
+          data-netlify="true" netlify-honeypot="bot-field" novalidate>
       <input type="hidden" name="form-name" value="contact">
-      <p hidden><label>Leave this empty <input name="bot-field"></label></p>
-        <div><label for="c-name">Your name</label><input type="text" id="c-name" name="name" autocomplete="name"></div>
-        <div><label for="c-email">Email address</label><input type="email" id="c-email" name="email" autocomplete="email"></div>
-        <div><label for="c-subject">Subject</label><select id="c-subject" name="subject"><option>General enquiry</option><option>Catering / events</option><option>Press / media</option><option>Something else</option></select></div>
-        <div><label for="c-msg">Message</label><textarea id="c-msg" name="message"></textarea></div>
-        <button type="submit" class="cf-submit"><span>Send message →</span></button>
-        <p id="cfStatus" role="status" aria-live="polite" style="font-size:13px;color:rgba(9,9,11,.55)"></p>
-      </form>
-    </div>
+      <p class="hp"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+      <div class="f-row">
+        <div class="f-field"><label for="k-name">Name</label><input id="k-name" name="name" autocomplete="name" required></div>
+        <div class="f-field"><label for="k-email">Email</label><input id="k-email" name="email" type="email" autocomplete="email" required></div>
+      </div>
+      <div class="f-field"><label for="k-msg">Message</label><textarea id="k-msg" name="message" required></textarea></div>
+      <p class="f-err" id="contactErr" role="alert"></p>
+      <button type="submit" class="btn" id="contactSubmit"><span>Send <em class="arw" style="font-style:normal">&rarr;</em></span></button>
+      <p class="f-status" id="contactStatus" role="status" aria-live="polite"></p>
+    </form>
   </div>
 </section>
 
-<!-- ============================================================
-     FOOTER
-     ============================================================ -->
-<footer class="site-foot" id="siteFoot">
-  <div class="wrap foot-grid">
-    <div class="foot-col">
-      <h3 class="foot-h">Locations</h3>
-      <div id="footLocations"></div>
+<!-- =================================================================== FOOTER -->
+<footer class="foot">
+  <span class="bird foot-bird" aria-hidden="true"></span>
+  <div class="wrap">
+    <div class="foot-cta">
+      <h2 class="display">Hungry <em>yet?</em></h2>
+      <a href="#order" class="btn" data-go="order"><span>Order Now <em class="arw" style="font-style:normal">&rarr;</em></span></a>
     </div>
-    <div class="foot-col">
-      <h3 class="foot-h">Order</h3>
-      <ul class="foot-list">
-        <li><a href="#order" data-go="order">Order Online</a></li>
-        <li><a href="#menu" data-go="menu">Menu</a></li>
-        <li><a href="#catering" data-go="catering">Catering</a></li>
-        <li><a href="#contact" data-go="contact">Contact</a></li>
-      </ul>
+    <div class="foot-grid">
+      <div class="foot-col foot-logo">
+        <img src="img/logo-stacked.png" width="640" height="640" alt="Smashbird">
+      </div>
+      <div class="foot-col">
+        <h3>Find us</h3>
+        <div id="footLocations"></div>
+      </div>
+      <div class="foot-col">
+        <h3>Browse</h3>
+        <ul>
+          <li><a href="#menu" data-go="menu">Menu</a></li>
+          <li><a href="#sauces" data-go="sauces">Sauces</a></li>
+          <li><a href="#locations" data-go="locations">Locations</a></li>
+          <li><a href="#catering" data-go="catering">Catering</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h3>Follow</h3>
+        <ul id="footSocial"></ul>
+      </div>
+      <div class="foot-col" id="footLegalCol" hidden>
+        <h3>Legal</h3>
+        <ul id="footLegal"></ul>
+      </div>
     </div>
-    <div class="foot-col">
-      <h3 class="foot-h">Follow</h3>
-      <ul class="foot-list" id="footSocial"></ul>
+    <div class="foot-base">
+      <p id="footCompany"></p>
+      <p>&copy; <span id="footYear"></span> Smashbird. Website concept by Lumus.</p>
     </div>
-    <div class="foot-col" id="footLegalCol" hidden>
-      <h3 class="foot-h">Legal</h3>
-      <ul class="foot-list" id="footLegal"></ul>
-    </div>
-  </div>
-  <div class="wrap foot-base">
-    <p id="footCompany"></p>
-    <p class="foot-copy">&copy; <span id="footYear"></span> Smashbird Galway</p>
-    <p class="f-sign">Website concept prepared by <b>Lumus Agency</b> &middot; Galway &middot; Not a live site</p>
   </div>
 </footer>
 
+<div class="order-bar" id="orderBar">
+  <a href="#order" class="btn" data-go="order"><span>Order Now <em class="arw" style="font-style:normal">&rarr;</em></span></a>
+</div>
+
+<script src="content.js"></script>
 <script>
-/* ============================================================
-   Every subsystem runs inside safe(), so one failure can never
-   take the page down with it.
-   ============================================================ */
+/* ==========================================================================
+   BEHAVIOUR + RENDER
+   One IIFE, so there is no cross-scope call like the previous build had.
+   Everything reads content.js. A fact that is not confirmed is not drawn.
+   ========================================================================== */
 (function(){
 'use strict';
-var REDUCED = false;
-try { REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e){}
+var D = window.SMASHBIRD;
+var $  = function(id){ return document.getElementById(id); };
+var el = function(t,c,x){ var n=document.createElement(t); if(c)n.className=c; if(x!=null)n.textContent=x; return n; };
+function ok(f){ return !!(f && f.confirmed && f.value); }
+function run(name,fn){ try{ fn(); }catch(e){ if(window.console) console.warn('[smashbird] '+name, e); } }
+var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-function safe(name, fn){
-  try { fn(); } catch(err){ if(window.console) console.error('[smashbird] '+name, err); }
-}
+if(!D){ return; }
 
-/* ---- burger API: no-op until the real build succeeds ---- */
-var burger = { start:function(){}, stop:function(){}, explode:function(){} };
-
-/* ============================================================
-   1. REVEAL
-   ============================================================ */
-var io = null;
-safe('observer', function(){
-  if(REDUCED || !('IntersectionObserver' in window)) return;
-  io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
-    });
-  }, {threshold:.1, rootMargin:'0px 0px -6% 0px'});
-});
+/* ---------------------------------------------------------------- reveal */
+var io = 'IntersectionObserver' in window ? new IntersectionObserver(function(es){
+  es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+}, {threshold:.12, rootMargin:'0px 0px -6% 0px'}) : null;
 
 function reveal(root){
-  safe('reveal', function(){
-    var els = root.querySelectorAll('.rv,.wipe,.stamp');
-    if(!io){
-      Array.prototype.forEach.call(els, function(el){ el.classList.add('in'); });
-      return;
-    }
-    Array.prototype.forEach.call(els, function(el){
-      if(el.classList.contains('in')) return;
-      io.observe(el);
-    });
-    // Anything already on screen shows immediately, staggered.
-    var stamps = root.querySelectorAll('.stamp');
-    Array.prototype.forEach.call(stamps, function(el, i){
-      setTimeout(function(){ el.classList.add('in'); }, 70 + i*80);
-    });
+  var n = (root||document).querySelectorAll('.rv:not(.in)');
+  if(!io){ Array.prototype.forEach.call(n, function(x){ x.classList.add('in'); }); return; }
+  Array.prototype.forEach.call(n, function(x){
+    /* Stagger within the element's own group, not across the whole document.
+       Indexing globally meant a section halfway down the page inherited the
+       delay of everything above it — you scrolled to it and then waited.
+       Capped low: this is a reveal, not a performance. */
+    var sibs = x.parentNode ? x.parentNode.children : [x];
+    var i = Array.prototype.indexOf.call(sibs, x);
+    x.style.setProperty('--d', Math.min(i, 5) * 45 + 'ms');
+    io.observe(x);
   });
 }
 
-/* ============================================================
-   2. ROUTING
-   ============================================================ */
-var PAGES = ['home','menu','locations','sauces','about','catering','order','contact'];
+/* --------------------------------------------------------------- routing
+   pushState + popstate, so Back genuinely goes back. Modified clicks are
+   left alone so links still open in a new tab. */
+var PAGES = ['home','menu','sauces','locations','about','catering','order','contact'];
 
-function showPage(id){
+function showPage(id, push){
   if(PAGES.indexOf(id) === -1) id = 'home';
   PAGES.forEach(function(p){
-    var el = document.getElementById(p);
-    if(el) el.classList.toggle('active', p === id);
+    var s = $(p); if(s) s.classList.toggle('active', p === id);
   });
-  var links = document.querySelectorAll('.nav-links a');
-  Array.prototype.forEach.call(links, function(a){
-    a.classList.toggle('active', a.getAttribute('data-go') === id);
+  Array.prototype.forEach.call(document.querySelectorAll('.nav-links a'), function(a){
+    var on = a.getAttribute('data-go') === id;
+    a.classList.toggle('active', on);
+    if(on) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current');
   });
-  var nl = document.getElementById('navLinks');
-  if(nl) nl.classList.remove('open');
-  var nb = document.getElementById('navBurger');
-  if(nb) nb.setAttribute('aria-expanded','false');
+  var links = $('navLinks'), burger = $('navBurger');
+  if(links) links.classList.remove('open');
+  if(burger) burger.setAttribute('aria-expanded','false');
   document.body.style.overflow = '';
-  try { window.scrollTo(0,0); } catch(e){}
-
-  var sec = document.getElementById(id);
-  if(sec) reveal(sec);
-  if(id === 'home'){ burger.explode(0); burger.start(); } else { burger.stop(); }
-  try { history.replaceState(null,'','#'+id); } catch(e){}
+  window.scrollTo(0,0);
+  var sec = $(id); if(sec) reveal(sec);
+  var bar = $('orderBar'); if(bar) bar.style.display = (id === 'order') ? 'none' : '';
+  if(push) history.pushState({page:id}, '', '#'+id);
 }
 
-safe('routing', function(){
+run('routing', function(){
   document.addEventListener('click', function(e){
-    var t = e.target && e.target.closest ? e.target.closest('[data-go]') : null;
+    if(e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+    var t = e.target.closest ? e.target.closest('[data-go]') : null;
     if(!t) return;
     e.preventDefault();
-    showPage(t.getAttribute('data-go'));
+    showPage(t.getAttribute('data-go'), true);
   });
-  var lg = document.querySelector('.nav-logo');
-  if(lg) lg.addEventListener('keydown', function(e){
-    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); showPage('home'); }
-  });
-});
-
-/* ============================================================
-   3. MENU TABS
-   ============================================================ */
-safe('tabs', function(){
-  var btns = document.querySelectorAll('.cat-btn');
-  Array.prototype.forEach.call(btns, function(btn){
-    btn.addEventListener('click', function(){
-      Array.prototype.forEach.call(btns, function(b){
-        b.classList.remove('active'); b.setAttribute('aria-selected','false');
-      });
-      var secs = document.querySelectorAll('.menu-sec');
-      Array.prototype.forEach.call(secs, function(s){ s.classList.remove('active'); });
-      btn.classList.add('active'); btn.setAttribute('aria-selected','true');
-      var sec = document.getElementById('cat-' + btn.getAttribute('data-cat'));
-      if(sec){ sec.classList.add('active'); reveal(sec); }
-    });
+  window.addEventListener('popstate', function(){
+    showPage((location.hash||'').replace('#',''), false);
   });
 });
 
-/* ============================================================
-   4. MOBILE NAV
-   ============================================================ */
-safe('mobilenav', function(){
-  var burgerBtn = document.getElementById('navBurger');
-  var links = document.getElementById('navLinks');
-  if(!burgerBtn || !links) return;
-  burgerBtn.addEventListener('click', function(){
-    var open = links.classList.toggle('open');
-    burgerBtn.setAttribute('aria-expanded', String(open));
+run('mobilenav', function(){
+  var b = $('navBurger'), l = $('navLinks');
+  if(!b || !l) return;
+  b.addEventListener('click', function(){
+    var open = l.classList.toggle('open');
+    b.setAttribute('aria-expanded', open ? 'true' : 'false');
     document.body.style.overflow = open ? 'hidden' : '';
   });
 });
 
-/* ============================================================
-   5. SAUCE RAIL — mouse drag only; touch uses native scrolling
-   ============================================================ */
-safe('rail', function(){
-  var rail = document.getElementById('rail');
-  if(!rail) return;
-  var down=false, sx=0, sl=0, moved=false, v=0, raf=null;
-  rail.addEventListener('pointerdown', function(e){
-    if(e.pointerType === 'touch') return;
-    down=true; moved=false; sx=e.clientX; sl=rail.scrollLeft; v=0;
-    rail.classList.add('grab');
-  });
-  rail.addEventListener('pointermove', function(e){
-    if(!down) return;
-    var dx = e.clientX - sx;
-    if(Math.abs(dx) > 4) moved = true;
-    v = dx*0.15;
-    rail.scrollLeft = sl - dx;
-  });
-  function release(){
-    if(!down) return;
-    down=false; rail.classList.remove('grab');
-    if(raf) cancelAnimationFrame(raf);
-    (function glide(){
-      if(Math.abs(v) < 0.4) return;
-      rail.scrollLeft -= v; v *= 0.93;
-      raf = requestAnimationFrame(glide);
-    })();
-  }
-  rail.addEventListener('pointerup', release);
-  rail.addEventListener('pointerleave', release);
-  rail.addEventListener('click', function(e){ if(moved) e.preventDefault(); }, true);
-});
-
-/* ============================================================
-   6. NEON
-   ============================================================ */
-safe('neon', function(){
-  var neon = document.getElementById('neonLine');
-  if(!neon || REDUCED) return;
-  if(!('IntersectionObserver' in window)){ neon.classList.add('on'); return; }
-  var nio = new IntersectionObserver(function(en){
-    en.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('on'); nio.unobserve(e.target); } });
-  }, {threshold:.35});
-  nio.observe(neon);
-});
-
-/* ============================================================
-   7. FORM
-   ============================================================ */
-safe('form', function(){
-  var cform = document.getElementById('cform');
-  if(!cform) return;
-  cform.addEventListener('submit', function(e){
-    e.preventDefault();
-    var SB = window.SMASHBIRD;
-    var st = document.getElementById('cfStatus');
-    if(SB && SB.forms && SB.forms.netlify && SB.forms.netlify.enabled){
-      st.textContent = 'Sending\u2026';
-      sendForm(cform, function(){
-        cform.reset();
-        st.textContent = 'Thanks \u2014 message received. We\u2019ll reply by email.';
-      }, function(){
-        st.textContent = 'Something went wrong sending that. Please try again, '
-          + 'or DM us on Instagram: '
-          + ((SB.social && SB.social.instagram.handle) || '@smashbird_galway') + '.';
-      });
-      return;
-    }
-    // No backend yet. Say so plainly and give people a route that works —
-    // never developer instructions, and never a fake "sent" confirmation.
-    document.getElementById('cfStatus').textContent =
-      'Message not sent — our contact form isn\u2019t live yet. '
-      + 'In the meantime send us a DM on Instagram: '
-      + ((SB && SB.social && SB.social.instagram.handle) || '@smashbird_galway') + '.';
-  });
-});
-
-/* ============================================================
-   8. DRIPS + SPLATTER
-   ============================================================ */
-safe('decor', function(){
-  var DRIPS = [[4,15,26],[11,9,44],[19,13,20],[27,11,60],[35,16,30],[43,10,74],[51,14,22],
-               [58,12,48],[66,17,34],[74,10,64],[82,13,26],[90,15,52],[96,11,36]];
-  Array.prototype.forEach.call(document.querySelectorAll('.drip'), function(sec){
-    var edge = document.createElement('div');
-    edge.className = 'drip-edge';
-    var isDark = sec.classList.contains('dark');
-    edge.style.setProperty('--drip-c', isDark ? '#09090B' : '#FF1493');
-    if(isDark) return;                       // dark headers sit on dark — no drip needed
-    DRIPS.forEach(function(d){
-      var i = document.createElement('i');
-      i.style.left = d[0]+'%'; i.style.width = d[1]+'px'; i.style.height = d[2]+'px';
-      edge.appendChild(i);
-    });
-    sec.appendChild(edge);
-  });
-
-  var SPLAT = [[8,22,9,'#FFD400',.5],[16,72,5,'#FF1493',.6],[27,14,13,'#FF1493',.35],
-               [39,64,7,'#FFD400',.45],[52,26,10,'#8B2BE2',.4],[63,78,6,'#FF1493',.55],
-               [71,18,15,'#FFD400',.28],[84,58,8,'#FF1493',.5],[92,30,11,'#8B2BE2',.34]];
-  Array.prototype.forEach.call(document.querySelectorAll('[data-splat]'), function(sec){
-    SPLAT.forEach(function(s){
-      var d = document.createElement('span');
-      d.className = 'splat';
-      d.style.left = s[0]+'%'; d.style.top = s[1]+'%';
-      d.style.width = s[2]+'px'; d.style.height = s[2]+'px';
-      d.style.background = s[3]; d.style.opacity = s[4];
-      sec.appendChild(d);
-    });
-  });
-});
-
-/* ============================================================
-   9. NAV SHRINK — subtle border thickening only, so the fixed
-   offsets never change and nothing can misalign.
-   ============================================================ */
-safe('navscroll', function(){
-  var nav = document.getElementById('nav');
-  if(!nav) return;
+run('navscroll', function(){
+  var n = $('nav'); if(!n) return;
   window.addEventListener('scroll', function(){
-    nav.style.borderBottomWidth = window.pageYOffset > 80 ? '4px' : '2px';
+    n.classList.toggle('scrolled', window.pageYOffset > 60);
   }, {passive:true});
 });
 
-/* ============================================================
-   BOOT
-   ============================================================ */
-safe('boot', function(){
-  var hash = (location.hash || '').replace('#','');
-  showPage(PAGES.indexOf(hash) !== -1 ? hash : 'home');
+/* ------------------------------------------------------------ hero: neon
+   Ignites once, then holds. A sign that keeps flickering reads as broken,
+   not as atmosphere. */
+run('neon', function(){
+  var n = $('heroNeon'); if(!n || REDUCED) return;
+  setTimeout(function(){ n.classList.add('lit'); }, 620);
 });
-})();
-</script>
 
-
-<!-- Sticky order bar: on mobile the pink nav button is hidden, so the primary
-     action would otherwise live behind the hamburger. -->
-<div class="order-bar" id="orderBar" hidden>
-  <a href="#order" class="order-bar-btn" data-go="order">Order Now <span aria-hidden="true">&rarr;</span></a>
-</div>
-
-<script>
-/* ============================================================
-   RENDER LAYER — everything below reads from content.js.
-   Nothing is invented: a field that is not confirmed is not drawn.
-   ============================================================ */
-(function(){
-  var D = window.SMASHBIRD;
-  if(!D){ return; }
-
-  var $  = function(id){ return document.getElementById(id); };
-  function ok(f){ return !!(f && f.confirmed && f.value); }
-  function el(tag, cls, txt){
-    var n = document.createElement(tag);
-    if(cls) n.className = cls;
-    if(txt != null) n.textContent = txt;
-    return n;
+/* ------------------------------------------------- hero: bird parallax
+   Transform only, rAF-throttled, and it stops entirely off-screen. */
+run('parallax', function(){
+  var b = $('heroBird'); if(!b || REDUCED) return;
+  var ticking = false;
+  function set(){
+    var y = window.pageYOffset;
+    if(y < window.innerHeight * 1.5) b.style.setProperty('--py', (y * 0.12) + 'px');
+    ticking = false;
   }
-  function run(fn){ try{ fn(); }catch(e){ if(window.console) console.warn(e); } }
+  window.addEventListener('scroll', function(){
+    if(!ticking){ ticking = true; requestAnimationFrame(set); }
+  }, {passive:true});
+});
 
-  /* Product name -> Cloudinary public ID, so uploading a correctly named file
-     is the whole job. Accents are stripped so "Jalapeño Hatch" resolves. */
-  function slugify(name){
-    return name.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-               .toLowerCase().replace(/&/g, ' ')
-               .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-  }
-  function cloudUrl(id, w){
-    var P = D.photos;
-    return 'https://res.cloudinary.com/' + P.cloud + '/image/upload/'
-         + P.transform + ',w_' + w + '/' + P.folder + '/' + id;
-  }
-  function photoFor(item){
-    if(item.image) return { src:item.image, srcset:null };       // explicit wins
-    var P = D.photos;
-    if(!P || !P.enabled) return null;
-    var id = slugify(item.name);
+/* ------------------------------------------------------------------ hero */
+run('hero', function(){
+  var p = $('proofStrip'); if(!p) return;
+  (D.proof||[]).filter(function(x){ return x.confirmed; })
+    .forEach(function(x){ p.appendChild(el('li', null, x.text)); });
+});
 
-    // Local files: whatever sits in the deployed folder. No srcset, because
-    // there is only the one file — resize before deploying.
-    if(P.source === 'local'){
-      return { src: P.localFolder + '/' + id + P.localExt, srcset: null };
+/* ---------------------------------------------------------------- ticker
+   Two identical groups, animated to -50%: the loop is seamless at any width. */
+run('ticker', function(){
+  var t = $('tickerTrack'); if(!t) return;
+  var words = ['Smashed','Fried','Loaded','Sauced','Vegan Junk','Cross Street','Liosbán'];
+  for(var g=0; g<2; g++){
+    var grp = el('div','ticker-group');
+    words.forEach(function(w){
+      grp.appendChild(el('span', null, w));
+      grp.appendChild(el('i', null, '·'));
+    });
+    t.appendChild(grp);
+  }
+});
+
+/* --------------------------------------------------------------- strips
+   Four category strips, built from data so the copy has one home.
+   Alternating split; the flip is the rhythm, not decoration. */
+run('strips', function(){
+  var host = $('strips'); if(!host) return;
+  var SET = [
+    {n:'01', word:'Smashed', em:null, go:'menu',
+     copy:'Two thin patties pressed hard on a screaming hot flat-top. Crisp lacy edges, cheese melted through every layer.'},
+    {n:'02', word:'Fried',   em:null, go:'menu',
+     copy:'Buttermilk fried chicken with real crunch. Pick your sauce, pick your heat. Never pick safe.'},
+    {n:'03', word:'Loaded',  em:null, go:'menu',
+     copy:'Fries that are a meal on their own. Cheese, sauce, and enough of it to share — or not.'},
+    {n:'04', word:'Vegan',   em:'Junk', go:'menu',
+     copy:'Plant-based and still junk food. No apology, no salad energy, same sauces.'}
+  ];
+  SET.forEach(function(s,i){
+    var strip = el('section', 'strip' + (i % 2 ? ' flip' : ''));
+    var inner = el('div','wrap');
+    var grid  = el('div','strip-in');
+    var head = el('div','strip-head rv');
+    head.appendChild(el('p','strip-num', s.n));
+    var w = el('h2','display strip-word');
+    w.appendChild(document.createTextNode(s.word));
+    if(s.em){ w.appendChild(document.createElement('br')); var e=el('em',null,s.em); w.appendChild(e); }
+    head.appendChild(w);
+    grid.appendChild(head);
+    var c = el('div','strip-copy rv');
+    c.appendChild(el('p', null, s.copy));
+    /* The link appears once, on the first strip. Repeating the same ghost
+       button under all four is the heading/paragraph/button rhythm that makes
+       a page look generated — and the menu is already in the nav and the
+       sticky bar, so three more of them buy nothing. */
+    if(i === 0){
+      var a = el('a','btn ghost sm'); a.href = '#'+s.go; a.setAttribute('data-go', s.go);
+      a.appendChild(el('span', null, 'See the menu'));
+      c.appendChild(a);
     }
-    return {
-      src: cloudUrl(id, P.widths[P.widths.length - 1]),
-      srcset: P.widths.map(function(w){ return cloudUrl(id, w) + ' ' + w + 'w'; }).join(', ')
-    };
-  }
-
-
-  /* Netlify Forms accepts a urlencoded POST to any path on the site. Sending it
-     in the background keeps people on the page instead of bouncing them to
-     Netlify's own thank-you screen. */
-  function sendForm(form, onOk, onFail){
-    var data = new URLSearchParams(new FormData(form)).toString();
-    fetch('/', { method:'POST',
-                 headers:{'Content-Type':'application/x-www-form-urlencoded'},
-                 body:data })
-      .then(function(r){ r.ok ? onOk() : onFail(); })
-      .catch(onFail);
-  }
-
-
-  /* --------------------------------- staggered reveal on the grids */
-  function stagger(sel, step){
-    var els = document.querySelectorAll(sel);
-    Array.prototype.forEach.call(els, function(el, i){
-      el.classList.add('rise');
-      el.style.setProperty('--d', Math.min(i, 12) * (step || 45) + 'ms');
-    });
-    requestAnimationFrame(function(){
-      Array.prototype.forEach.call(els, function(el){ el.classList.add('up'); });
-    });
-  }
-  window.__sbStagger = stagger;
-
-  /* ---------------------------------------------------- proof strip */
-  run(function(){
-    var w = $('proofStrip'); if(!w) return;
-    D.proof.filter(function(p){ return p.confirmed; })
-           .forEach(function(p){ w.appendChild(el('li', null, p.text)); });
+    grid.appendChild(c);
+    inner.appendChild(grid); strip.appendChild(inner); host.appendChild(strip);
   });
+});
 
-  /* ---------------------------------------------------------- menu */
-  run(function(){
-    var nav = $('catNav'), grid = $('menuGrid');
-    if(!nav || !grid) return;
+/* ------------------------------------------------------------------ menu */
+run('menu', function(){
+  var nav = $('catNav'), list = $('menuList');
+  if(!nav || !list) return;
 
-    function draw(catId){
-      grid.innerHTML = '';
-      var cat = D.menuCategories.filter(function(c){ return c.id === catId; })[0];
-      var note = $('catNote');
-      if(note){ note.textContent = (cat && cat.note) || ''; note.hidden = !(cat && cat.note); }
+  var intro = $('menuIntro');
+  if(intro) intro.textContent = D.about ? D.about.body : '';
 
-      if(catId === 'drips' && D.dips){
-        D.dips.list.forEach(function(d){
-          var c = el('article','mi');
-          c.appendChild(el('h3','mi-name', d.name + (d.label ? ' ' + d.label : '')));
-          if(d.allergens && d.allergens.length)
-            c.appendChild(el('p','mi-alg','Allergens: ' + d.allergens.join(', ')));
-          grid.appendChild(c);
-        });
-        return;
-      }
+  function render(catId){
+    list.innerHTML = '';
+    var cat = (D.menuCategories||[]).filter(function(c){ return c.id === catId; })[0];
 
-      D.menu.filter(function(m){ return m.category === catId && m.available; })
-        .forEach(function(m){
-          var c = el('article','mi');
-
-          // Photograph, resolved by naming convention (see content.js photos).
-          var ph = photoFor(m);
-          if(ph){
-            var im = new Image();
-            im.className = 'mi-shot';
-            im.src = ph.src;
-            if(ph.srcset){ im.srcset = ph.srcset; im.sizes = '(max-width:900px) 90vw, 300px'; }
-            im.alt = m.imageAlt || m.name;
-            im.loading = 'lazy'; im.decoding = 'async';
-            // Not uploaded yet? Drop the image rather than show a broken icon.
-            im.onerror = function(){ if(im.parentNode) im.parentNode.removeChild(im); };
-            c.appendChild(im);
-          }
-
-          c.appendChild(el('h3','mi-name', m.name));
-          if(m.description) c.appendChild(el('p','mi-desc', m.description));
-
-          var tags = [];
-          if(m.vegan === true) tags.push('Vegan');
-          else if(m.vegetarian === true) tags.push('Vegetarian');
-          if(m.glutenFree === true) tags.push('Gluten-free');
-          if(tags.length){
-            var tw = el('div','mi-tags');
-            tags.forEach(function(t){ tw.appendChild(el('span','mi-tag', t)); });
-            c.appendChild(tw);
-          }
-
-          // Order straight from the card once a per-item URL exists.
-          if(m.orderUrl){
-            var oa = el('a','mi-order','Order');
-            oa.href = m.orderUrl; oa.target = '_blank'; oa.rel = 'noopener noreferrer';
-            oa.appendChild(el('span','sr-only',' ' + m.name + ' (opens in a new tab)'));
-            c.appendChild(oa);
-          }
-
-          // Price and allergens sit in a footer so they align across a row.
-          var foot = el('div','mi-foot');
-          if(m.price) foot.appendChild(el('p','mi-price', m.price));
-          if(m.allergens && m.allergens.length)
-            foot.appendChild(el('p','mi-alg','Allergens: ' + m.allergens.join(', ')));
-          if(foot.children.length) c.appendChild(foot);
-
-          grid.appendChild(c);
-        });
-
-      // Cards fade up in sequence, including when the category changes.
-      if(window.__sbStagger) window.__sbStagger('#menuGrid .mi', 32);
+    var note = $('catNote');
+    if(note){
+      if(cat && cat.note){ note.textContent = cat.note; note.hidden = false; }
+      else note.hidden = true;
     }
 
-    D.menuCategories.forEach(function(cat, idx){
-      var b = el('button','cat-chip', cat.name);
-      b.type = 'button';
-      b.setAttribute('aria-pressed', idx === 0 ? 'true' : 'false');
-      b.addEventListener('click', function(){
-        Array.prototype.forEach.call(nav.children, function(x){ x.setAttribute('aria-pressed','false'); });
-        b.setAttribute('aria-pressed','true');
-        draw(cat.id);
+    // Drips are a dip list with one shared price, not priced products.
+    if(catId === 'drips' && D.dips){
+      (D.dips.list||[]).forEach(function(d){
+        var row = el('div','item');
+        var nm  = el('p','item-name', d.name);
+        row.appendChild(nm);
+        row.appendChild(el('p','item-price', ''));
+        var meta = el('div','item-meta');
+        if(d.label) meta.appendChild(el('span','tag v', d.label));
+        if(d.allergens && d.allergens.length)
+          meta.appendChild(el('span','item-alg', 'Allergens: ' + d.allergens.join(', ')));
+        if(meta.childNodes.length) row.appendChild(meta);
+        list.appendChild(row);
       });
-      nav.appendChild(b);
-    });
-    draw('burgers');
-
-    var mn = $('menuNote'); if(mn && D.menuNote) mn.textContent = D.menuNote;
-    if(D.allergenNote && D.allergenNote.confirmed && D.allergenNote.text){
-      var n = $('allergenNote'); n.textContent = D.allergenNote.text; n.hidden = false;
-    }
-  });
-
-
-
-  /* ----------------------------------------------- hero video (optional) */
-  run(function(){
-    var V = D.video;
-    if(!V || !V.enabled || !V.hero || !V.hero.id) return;
-    var host = document.getElementById('kin');
-    if(!host) return;
-
-    var base = 'https://res.cloudinary.com/' + V.cloud + '/video/upload/';
-    var id   = V.folder + '/' + V.hero.id;
-    var poster = base + 'so_' + V.posterAt + ',' + V.transform + '/' + id + '.jpg';
-
-    var wrap = document.createElement('div');
-    wrap.className = 'hv';
-
-    var img = new Image();          // poster carries the panel on its own
-    img.className = 'hv-poster';
-    img.src = poster;
-    img.alt = V.hero.alt || '';
-    img.decoding = 'async';
-    wrap.appendChild(img);
-
-    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var conn   = navigator.connection || {};
-    var thrifty = conn.saveData === true || /2g/.test(conn.effectiveType || '');
-
-    if(!reduce && !thrifty){
-      var v = document.createElement('video');
-      v.className = 'hv-vid';
-      v.muted = true;               // set before autoplay, or Safari refuses
-      v.defaultMuted = true;
-      v.autoplay = true;
-      v.loop = true;
-      v.playsInline = true;
-      v.setAttribute('muted','');
-      v.setAttribute('playsinline','');
-      v.setAttribute('aria-hidden','true');
-      v.preload = 'none';
-      v.poster = poster;
-      v.src = base + V.transform + '/' + id + '.mp4';
-      // Only reveal the clip once it can actually play, so the panel never
-      // flashes empty on a slow connection.
-      v.addEventListener('canplay', function(){ v.classList.add('ready'); });
-      wrap.appendChild(v);
-      v.load();
+      return;
     }
 
-    host.textContent = '';
-    host.appendChild(wrap);
-  });
+    (D.menu||[]).filter(function(m){
+      return m.category === catId && m.available !== false && m.confirmed !== false;
+    }).forEach(function(m){
+      var row = el('div','item');
+      row.appendChild(el('p','item-name', m.name));
 
-  /* ------------------------------------ kinetic brand lines (hero) */
-  run(function(){
-    var rail = document.getElementById('kinRail');
-    if(!rail) return;
-    var L = D.lines;
-    // The approved brand lines, cycling. Pink half is the second sentence.
-    var SET = [
-      ['CRUNCH FIRST.', 'QUESTIONS LATER.'],
-      ['SAUCE IS', 'THE MAIN CHARACTER.'],
-      ['NOT ANOTHER', 'BURGER PLACE.'],
-      ['NEW DROP.', 'GET STUCK IN.']
-    ];
-    var nodes = SET.map(function(pair, i){
-      var el = document.createElement('p');
-      el.className = 'kin-l' + (i === 0 ? ' on' : ' in');
-      el.innerHTML = pair[0] + '<br><b>' + pair[1] + '</b>';
-      rail.appendChild(el);
-      return el;
-    });
-
-    if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    var at = 0, timer = null;
-    function step(){
-      var cur = nodes[at], nxt = nodes[at = (at + 1) % nodes.length];
-      cur.className = 'kin-l out';
-      nxt.className = 'kin-l in';
-      // next frame, so the browser registers the start state before animating
-      requestAnimationFrame(function(){
-        requestAnimationFrame(function(){ nxt.className = 'kin-l on'; });
-      });
-    }
-    function play(){ if(!timer) timer = setInterval(step, 3600); }
-    function pause(){ if(timer){ clearInterval(timer); timer = null; } }
-    play();
-    document.addEventListener('visibilitychange', function(){
-      document.hidden ? pause() : play();
-    });
-  });
-
-
-  /* -------------------------------------------------- */
-  /* -------------------------------------------------------- sauces */
-  run(function(){
-    var intro = $('saucesIntro'); if(intro) intro.textContent = D.saucesIntro;
-    var g = $('sauceGrid'); if(!g) return;
-    D.sauces.forEach(function(x){
-      var c = el('article','sc');
-      c.appendChild(el('h3','sc-name', x.name));
-      var meta = [];
-      if(x.price) meta.push(x.price);
-      if(x.size)  meta.push(x.size);
-      if(x.heat)  meta.push('Heat ' + x.heat);
-      if(meta.length) c.appendChild(el('p','sc-heat', meta.join('  \u00b7  ')));
-      if(x.description) c.appendChild(el('p','sc-desc', x.description));
-      if(x.allergenAdvice) c.appendChild(el('p','sc-alg', x.allergenAdvice));
-      if(x.buyUrl){
-        var a = el('a','btn-ghost sm','Buy on Birdhouse');
-        a.href = x.buyUrl; a.target = '_blank'; a.rel = 'noopener noreferrer';
-        a.appendChild(el('span','sr-only',' (opens in a new tab)'));
-        c.appendChild(a);
+      var pr = el('p','item-price');
+      if(m.price){
+        var v = String(m.price);
+        if(/^from /i.test(v)){
+          pr.appendChild(el('span','from','From'));
+          pr.appendChild(document.createTextNode(v.replace(/^from\s*/i,'')));
+        } else pr.textContent = v;
       }
-      g.appendChild(c);
+      row.appendChild(pr);
+
+      if(m.description) row.appendChild(el('p','item-desc', m.description));
+
+      var meta = el('div','item-meta');
+      if(m.vegan)            meta.appendChild(el('span','tag v','Vegan'));
+      else if(m.vegetarian)  meta.appendChild(el('span','tag','Veg'));
+      if(m.allergens && m.allergens.length)
+        meta.appendChild(el('span','item-alg','Allergens: ' + m.allergens.join(', ')));
+      if(meta.childNodes.length) row.appendChild(meta);
+
+      list.appendChild(row);
     });
-    if(window.__sbStagger) window.__sbStagger('#sauceGrid .sc', 60);
-    var disc = $('saucesDisclaimer');
-    if(disc && D.saucesDisclaimer){ disc.textContent = D.saucesDisclaimer; disc.hidden = false; }
-    if(D.birdhouseSocial && D.birdhouseSocial.confirmed && D.birdhouseSocial.url){
-      var a = $('birdhouseLink'); a.href = D.birdhouseSocial.url; a.hidden = false;
-    }
+  }
+
+  (D.menuCategories||[]).forEach(function(c,i){
+    var b = el('button','cat', c.name);
+    b.type = 'button';
+    b.setAttribute('role','tab');
+    b.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+    b.addEventListener('click', function(){
+      Array.prototype.forEach.call(nav.children, function(x){ x.setAttribute('aria-selected','false'); });
+      b.setAttribute('aria-selected','true');
+      render(c.id);
+    });
+    nav.appendChild(b);
   });
 
-  /* ----------------------------------------------------- locations */
-  function locLines(L){
-    var rows = [];
-    if(ok(L.address))    rows.push(['Address', L.address.value]);
-    else if(ok(L.area))  rows.push(['Where', L.area.value]);
-    if(ok(L.hours))      rows.push(['Opening hours', L.hours.value]);
-    if(ok(L.phone))      rows.push(['Phone', L.phone.value]);
+  if(D.menuCategories && D.menuCategories.length) render(D.menuCategories[0].id);
+
+  var an = $('allergenNote');
+  if(an && D.allergenNote && D.allergenNote.confirmed && D.allergenNote.text){
+    an.textContent = D.allergenNote.text; an.hidden = false;
+  }
+  var mn = $('menuNote'); if(mn && D.menuNote) mn.textContent = D.menuNote;
+});
+
+/* ---------------------------------------------------------------- sauces */
+run('sauces', function(){
+  var host = $('sauceList'); if(!host) return;
+  var intro = $('saucesIntro'); if(intro && D.saucesIntro) intro.textContent = D.saucesIntro;
+
+  // Ranked hottest first — the heat number is the reason this page is a list
+  // and not a grid, so it should drive the order.
+  var list = (D.sauces||[]).slice().sort(function(a,b){
+    var pa = a.heat ? parseFloat(a.heat) : -1, pb = b.heat ? parseFloat(b.heat) : -1;
+    return pb - pa;
+  });
+
+  list.forEach(function(s){
+    var row = el('div','sauce');
+    var h = el('div', s.heat ? 'heat' : 'heat none');
+    if(s.heat){
+      h.appendChild(document.createTextNode(String(s.heat).split('/')[0]));
+      h.appendChild(el('small', null, 'HEAT'));
+    } else {
+      h.textContent = '—';
+    }
+    row.appendChild(h);
+
+    var mid = el('div');
+    mid.appendChild(el('h3','sauce-name', s.name));
+    if(s.description) mid.appendChild(el('p','sauce-desc', s.description));
+    if(s.allergenAdvice) mid.appendChild(el('p','sauce-alg', s.allergenAdvice));
+    row.appendChild(mid);
+
+    var buy = el('div','sauce-buy');
+    if(s.price) buy.appendChild(el('p','sauce-price', s.price));
+    if(s.size)  buy.appendChild(el('p','sauce-size', s.size));
+    if(s.buyUrl){
+      var a = el('a','btn ghost sm'); a.href = s.buyUrl;
+      a.target = '_blank'; a.rel = 'noopener noreferrer';
+      a.appendChild(el('span', null, 'Buy'));
+      a.appendChild(el('span','sr-only',' ' + s.name + ' on Birdhouse (opens in a new tab)'));
+      buy.appendChild(a);
+    }
+    row.appendChild(buy);
+    host.appendChild(row);
+  });
+
+  var d = $('saucesDisclaimer'); if(d && D.saucesDisclaimer) d.textContent = D.saucesDisclaimer;
+  var b = $('birdhouseLink');
+  if(b && D.birdhouseSocial && D.birdhouseSocial.confirmed && D.birdhouseSocial.url){
+    b.href = D.birdhouseSocial.url; b.hidden = false;
+  }
+});
+
+/* ------------------------------------------------------------- locations */
+run('locations', function(){
+  var host = $('locList'); if(!host) return;
+  (D.locations||[]).forEach(function(L,i){
+    var box = el('div','loc');
+    box.appendChild(el('p','loc-num', '0' + (i+1)));
+    var nm = el('h2','display loc-name neon', L.short);
+    box.appendChild(nm);
+
+    var rows = el('div','loc-rows');
+    function row(lab, val, href){
+      var r = el('div','loc-row');
+      r.appendChild(el('p','loc-lab', lab));
+      var v = el('p','loc-val');
+      if(href){ var a = el('a', null, val); a.href = href; a.target='_blank'; a.rel='noopener noreferrer'; v.appendChild(a); }
+      else v.textContent = val;
+      r.appendChild(v); rows.appendChild(r);
+    }
+    if(ok(L.address))      row('Address', L.address.value);
+    else if(ok(L.area))    row('Where',   L.area.value);
+    if(ok(L.hours))        row('Opening hours', L.hours.value);
+    if(ok(L.phone))        row('Phone', L.phone.value);
     var svc = [];
     if(ok(L.dineIn))     svc.push('Dine-in');
     if(ok(L.collection)) svc.push('Collection');
     if(ok(L.delivery))   svc.push('Delivery');
-    if(svc.length)       rows.push(['Services', svc.join(' \u00b7 ')]);
-    return rows;
+    if(svc.length)       row('Services', svc.join(' · '));
+    if(ok(L.mapsUrl))    row('Map', 'Open in Google Maps ↗', L.mapsUrl.value);
+    box.appendChild(rows);
+
+    if(ok(L.orderUrl)){
+      var a = el('a','btn'); a.href = L.orderUrl.value;
+      a.target = '_blank'; a.rel = 'noopener noreferrer';
+      a.appendChild(el('span', null, 'Order ' + L.short + ' ↗'));
+      box.appendChild(a);
+    }
+    host.appendChild(box);
+  });
+});
+
+/* ----------------------------------------------------------------- order */
+run('order', function(){
+  var host = $('orderList'); if(!host) return;
+  (D.locations||[]).forEach(function(L){
+    var c = el('div','order-card');
+    c.appendChild(el('h3', null, L.short));
+    var where = ok(L.address) ? L.address.value : (ok(L.area) ? L.area.value : '');
+    if(where) c.appendChild(el('p', null, where));
+    if(ok(L.orderUrl)){
+      var a = el('a','btn'); a.href = L.orderUrl.value;
+      a.target = '_blank'; a.rel = 'noopener noreferrer';
+      a.appendChild(el('span', null, 'Order ↗'));
+      c.appendChild(a);
+    } else {
+      // No confirmed link for this branch. A shared link would send people to
+      // the wrong shop, so route to the branch details instead.
+      var g = el('a','btn ghost'); g.href = '#locations'; g.setAttribute('data-go','locations');
+      g.appendChild(el('span', null, 'See ' + L.short));
+      c.appendChild(g);
+    }
+    host.appendChild(c);
+  });
+});
+
+/* ----------------------------------------------------------------- about */
+run('about', function(){
+  var h = $('aboutHl'), b = $('aboutBody');
+  if(h && D.about) h.textContent = D.about.headline;
+  if(b && D.about) b.textContent = D.about.body;
+  var ch = $('cateringHl'), cb = $('cateringBody');
+  if(ch && D.catering) ch.textContent = D.catering.headline;
+  if(cb && D.catering) cb.textContent = D.catering.body;
+});
+
+/* ---------------------------------------------------------------- social */
+run('social', function(){
+  var S = D.social; if(!S) return;
+  if(S.instagram && S.instagram.confirmed){
+    var h = $('igHandle'); if(h) h.textContent = S.instagram.handle;
+    var l = $('igLink');   if(l) l.href = S.instagram.url;
+  }
+  var grid = $('igGrid'); if(!grid) return;
+
+  // Photography is off unless it has been described. The deck's system does
+  // not need it, and an image nobody can caption cannot ship with honest alt
+  // text — so the grid simply does not render.
+  if(!S.photosEnabled){ grid.remove(); return; }
+
+  var base = 'https://res.cloudinary.com/' + (S.gridCloud || 'fodeavol')
+           + '/image/upload/' + (S.gridTransform || 'c_fill,g_auto,ar_1:1,f_auto,q_auto');
+  (S.grid||[]).filter(function(im){ return im && im.id; }).forEach(function(im){
+    var a = el('a'); a.href = S.instagram ? S.instagram.url : '#';
+    a.target = '_blank'; a.rel = 'noopener noreferrer';
+    var i = new Image();
+    i.src    = base + ',w_600/' + im.id;
+    i.srcset = base + ',w_320/' + im.id + ' 320w, ' + base + ',w_600/' + im.id + ' 600w';
+    i.sizes  = '(max-width:640px) 50vw, 240px';
+    i.alt = im.alt || '';
+    i.loading = 'lazy'; i.decoding = 'async';
+    i.onerror = function(){ if(a.parentNode) a.parentNode.removeChild(a); };
+    a.appendChild(i); grid.appendChild(a);
+  });
+  if(!grid.children.length) grid.remove();
+});
+
+/* ---------------------------------------------------------------- footer */
+run('footer', function(){
+  var y = $('footYear'); if(y) y.textContent = new Date().getFullYear();
+
+  var fl = $('footLocations');
+  if(fl) (D.locations||[]).forEach(function(L){
+    var d = el('div','foot-loc');
+    d.appendChild(el('b', null, L.short));
+    var where = ok(L.address) ? L.address.value : (ok(L.area) ? L.area.value : '');
+    if(where) d.appendChild(el('span', null, where));
+    fl.appendChild(d);
+  });
+
+  var fs = $('footSocial');
+  if(fs && D.social && D.social.instagram && D.social.instagram.confirmed){
+    var li = el('li'), a = el('a', null, 'Instagram');
+    a.href = D.social.instagram.url; a.target='_blank'; a.rel='noopener noreferrer';
+    li.appendChild(a); fs.appendChild(li);
+  }
+  if(fs && D.birdhouseSocial && D.birdhouseSocial.confirmed && D.birdhouseSocial.url){
+    var li2 = el('li'), a2 = el('a', null, 'Birdhouse');
+    a2.href = D.birdhouseSocial.url; a2.target='_blank'; a2.rel='noopener noreferrer';
+    li2.appendChild(a2); fs.appendChild(li2);
   }
 
-  run(function(){
-    var g = $('locGrid'); if(!g) return;
-    D.locations.forEach(function(L, idx){
-      var c = el('article','lc');
-      // Photo slot (will be populated by placement photos if available)
-      var photoBox = el('div','c-media');
-      c.appendChild(photoBox);
-      c.appendChild(el('h3','lc-name', L.short));
-      locLines(L).forEach(function(r){
-        var w = el('div','lc-row');
-        w.appendChild(el('p','lc-lab', r[0]));
-        w.appendChild(el('p','lc-val', r[1]));
-        c.appendChild(w);
-      });
-      if(ok(L.mapsUrl)){
-        var w = el('div','lc-row'), p = el('p','lc-val'),
-            a = el('a', null, 'Open in Google Maps \u2197');
-        a.href = L.mapsUrl.value; a.target = '_blank'; a.rel = 'noopener noreferrer';
-        p.appendChild(a); w.appendChild(p); c.appendChild(w);
-      }
-      g.appendChild(c);
-    });
-  });
-
-  /* -------------------------------------------------- order chooser */
-  run(function(){
-    var g = $('orderGrid'); if(!g) return;
-    D.locations.forEach(function(L){
-      var c = el('article','oc');
-      c.appendChild(el('h3','oc-name', L.short));
-      var where = ok(L.address) ? L.address.value : (ok(L.area) ? L.area.value : '');
-      if(where) c.appendChild(el('p','oc-addr', where));
-
-      if(ok(L.orderUrl)){
-        var a = el('a','btn-slab');
-        a.href = L.orderUrl.value; a.target = '_blank'; a.rel = 'noopener noreferrer';
-        var sp = el('span', null, 'Order ' + L.short + ' \u2197');
-        a.appendChild(sp);
-        a.appendChild(el('span','sr-only','(opens in a new tab)'));
-        c.appendChild(a);
-      } else {
-        // No confirmed link for this branch. A shared link would send people
-        // to the wrong shop, so we route to the branch details instead.
-        var b = el('a','btn-ghost','See ' + L.short);
-        b.href = '#locations';
-        b.setAttribute('data-go','locations');
-        c.appendChild(b);
-      }
-      g.appendChild(c);
-    });
-  });
-
-  /* ------------------------------------------------ reviews + social */
-  run(function(){
-    var real = (D.reviews || []).filter(function(r){
-      return r.text && r.name && r.platform && r.sourceUrl;
-    });
-    if(real.length){
-      var sec = $('reviewsSection'), g = $('reviewGrid');
-      real.forEach(function(r){
-        var c = el('article','rv-card');
-        c.appendChild(el('p','rv-text', '\u201c' + r.text + '\u201d'));
-        var meta = [r.name, r.platform, r.rating ? r.rating + '/5' : null, r.date]
-                     .filter(Boolean).join(' \u00b7 ');
-        c.appendChild(el('p','rv-meta', meta));
-        g.appendChild(c);
-      });
-      sec.hidden = false;
-    }
-
-    /* ---------------------------------------- placement photos (hero, categories, locations) */
-    var placements = D.social && D.social.placements;
-    if(placements){
-      // Helper to render a single placement photo
-      function renderPlacementPhoto(id, alt, container){
-        if(!id) return;
-        var base = 'https://res.cloudinary.com/' + (D.social.gridCloud || 'fodeavol')
-                 + '/image/upload/';
-        var img = new Image();
-        img.src = base + 'w_1200/' + id;
-        img.alt = alt || '';
-        img.loading = 'lazy'; img.decoding = 'async';
-        img.style.width = '100%'; img.style.height = '100%';
-        img.style.objectFit = 'cover'; img.style.display = 'block';
-        img.onerror = function(){ if(img.parentNode) img.parentNode.removeChild(img); };
-        container.appendChild(img);
-      }
-
-      // Hero photo (behind kinetic panel, but kin panel stays on top)
-      if(placements.hero && placements.hero.id){
-        var heroRight = document.querySelector('.hero-right');
-        if(heroRight){
-          var heroPhoto = document.createElement('img');
-          heroPhoto.className = 'hero-photo';
-          heroPhoto.src = 'https://res.cloudinary.com/' + (D.social.gridCloud || 'fodeavol')
-                        + '/image/upload/w_1400/' + placements.hero.id;
-          heroPhoto.alt = placements.hero.alt || '';
-          heroPhoto.loading = 'eager'; heroPhoto.decoding = 'async';
-          heroPhoto.onerror = function(){ if(heroPhoto.parentNode) heroPhoto.parentNode.removeChild(heroPhoto); };
-          // Insert after first child so kinetic panel stays on top
-          heroRight.insertBefore(heroPhoto, heroRight.querySelector('.kin').nextSibling);
-        }
-      }
-
-      // Category photos (burgers, birds, vegan) in craving sections
-      var cravings = document.querySelectorAll('.craving .c-media');
-      if(cravings.length > 0 && placements.burgers && placements.burgers.id){
-        var x3d = cravings[0].querySelector('.x3d');
-        if(x3d) x3d.style.display = 'none';
-        renderPlacementPhoto(placements.burgers.id, placements.burgers.alt, cravings[0]);
-      }
-      if(cravings.length > 1 && placements.birds && placements.birds.id){
-        var x3d = cravings[1].querySelector('.x3d');
-        if(x3d) x3d.style.display = 'none';
-        renderPlacementPhoto(placements.birds.id, placements.birds.alt, cravings[1]);
-      }
-      if(cravings.length > 2 && placements.vegan && placements.vegan.id){
-        var x3d = cravings[2].querySelector('.x3d');
-        if(x3d) x3d.style.display = 'none';
-        renderPlacementPhoto(placements.vegan.id, placements.vegan.alt, cravings[2]);
-      }
-
-      // Location photos (rendered dynamically after locations are built)
-      setTimeout(function(){
-        var locs = document.querySelectorAll('.lc .c-media');
-        if(locs.length > 0 && placements.location1 && placements.location1.id){
-          renderPlacementPhoto(placements.location1.id, placements.location1.alt, locs[0]);
-        }
-        if(locs.length > 1 && placements.location2 && placements.location2.id){
-          renderPlacementPhoto(placements.location2.id, placements.location2.alt, locs[1]);
-        }
-      }, 0);
-    }
-
-    var ig = D.social.instagram;
-    if(ig && ig.confirmed){
-      var h = $('igHandle'); if(h) h.textContent = ig.handle;
-      var l = $('igLink');   if(l) l.href = ig.url;
-    }
-
-    /* ---------------------------------------- instagram grid (social proof) */
-    var grid = $('igGrid');
-    if(grid && D.social.grid && D.social.grid.length){
-      var base = 'https://res.cloudinary.com/' + (D.social.gridCloud || 'fodeavol')
-               + '/image/upload/' + (D.social.gridTransform || 'c_fill,g_auto,ar_1:1,f_auto,q_auto');
-      D.social.grid.forEach(function(im){
-        if(!im.id) return;  // Skip empty photo slots
-        var i = new Image();
-        i.src    = base + ',w_600/' + im.id;
-        i.srcset = base + ',w_320/' + im.id + ' 320w, '
-                 + base + ',w_600/' + im.id + ' 600w';
-        i.sizes  = '(max-width:640px) 50vw, 240px';
-        i.alt = im.alt || '';
-        i.loading = 'lazy'; i.decoding = 'async';
-        i.onerror = function(){ if(i.parentNode) i.parentNode.removeChild(i); };
-        grid.appendChild(i);
-      });
-      if(grid.children.length > 0) grid.classList.add('on');
+  var lg = $('footLegal'), col = $('footLegalCol'), n = 0;
+  [['privacyPolicyUrl','Privacy Policy'],['cookiePolicyUrl','Cookie Policy'],
+   ['termsUrl','Terms & Conditions'],['allergenInfoUrl','Allergen Information']
+  ].forEach(function(p){
+    var f = D.legal ? D.legal[p[0]] : null;
+    if(lg && ok(f)){
+      var li = el('li'), a = el('a', null, p[1]);
+      a.href = f.value; li.appendChild(a); lg.appendChild(li); n++;
     }
   });
+  if(col && n) col.hidden = false;
 
-  /* -------------------------------------------------------- footer */
-  run(function(){
-    var y = $('footYear'); if(y) y.textContent = new Date().getFullYear();
+  var fc = $('footCompany');
+  if(fc && D.legal){
+    var bits = [];
+    if(ok(D.legal.companyName))        bits.push(D.legal.companyName.value);
+    if(ok(D.legal.registrationNumber)) bits.push('Reg. ' + D.legal.registrationNumber.value);
+    if(ok(D.legal.registeredAddress))  bits.push(D.legal.registeredAddress.value);
+    fc.textContent = bits.join(' · ');
+  }
+});
 
-    var fl = $('footLocations');
-    if(fl) D.locations.forEach(function(L){
-      var d = el('div','foot-loc');
-      d.appendChild(el('b', null, L.short));
-      var where = ok(L.address) ? L.address.value : (ok(L.area) ? L.area.value : '');
-      if(where) d.appendChild(el('span', null, where));
-      fl.appendChild(d);
-    });
-
-    var fs = $('footSocial');
-    if(fs && D.social.instagram.confirmed){
-      var li = el('li'), a = el('a', null, 'Instagram');
-      a.href = D.social.instagram.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
-      li.appendChild(a); fs.appendChild(li);
-    }
-    if(fs && D.birdhouseSocial && D.birdhouseSocial.confirmed && D.birdhouseSocial.url){
-      var li2 = el('li'), a2 = el('a', null, 'Birdhouse');
-      a2.href = D.birdhouseSocial.url; a2.target = '_blank'; a2.rel = 'noopener noreferrer';
-      li2.appendChild(a2); fs.appendChild(li2);
-    }
-
-    // Legal links appear only once real URLs exist.
-    var lg = $('footLegal'), col = $('footLegalCol'), n = 0;
-    [['privacyPolicyUrl','Privacy Policy'],['cookiePolicyUrl','Cookie Policy'],
-     ['termsUrl','Terms & Conditions'],['allergenInfoUrl','Allergen Information']
-    ].forEach(function(p){
-      var f = D.legal[p[0]];
-      if(lg && ok(f)){
-        var li = el('li'), a = el('a', null, p[1]);
-        a.href = f.value; li.appendChild(a); lg.appendChild(li); n++;
-      }
-    });
-    if(col && n) col.hidden = false;
-
-    var fc = $('footCompany');
-    if(fc){
-      var bits = [];
-      if(ok(D.legal.companyName))        bits.push(D.legal.companyName.value);
-      if(ok(D.legal.registrationNumber)) bits.push('Reg. ' + D.legal.registrationNumber.value);
-      if(ok(D.legal.registeredAddress))  bits.push(D.legal.registeredAddress.value);
-      fc.textContent = bits.join(' \u00b7 ');
-    }
+/* ----------------------------------------------------------------- forms
+   Netlify Forms accepts a urlencoded POST to any path on the site. Sending
+   it in the background keeps people here instead of on Netlify's own
+   thank-you screen. Until it is switched on, both forms say so plainly —
+   they never show a confirmation that did not happen. */
+function sendForm(form){
+  var data = new FormData(form), pairs = [];
+  data.forEach(function(v,k){ pairs.push(encodeURIComponent(k)+'='+encodeURIComponent(v)); });
+  return fetch('/', {
+    method:'POST',
+    headers:{'Content-Type':'application/x-www-form-urlencoded'},
+    body: pairs.join('&')
   });
+}
 
-  /* ------------------------------------------------ sticky order bar */
-  run(function(){
-    var bar = $('orderBar'); if(!bar) return;
-    bar.hidden = false;
-    document.body.classList.add('has-order-bar');
-    // Hide it on the order page itself — the choice is already on screen.
-    function sync(){
-      var onOrder = (location.hash || '') === '#order';
-      bar.style.display = onOrder ? 'none' : '';
+function wireForm(opts){
+  var form = $(opts.form); if(!form) return;
+  var err = $(opts.err), status = $(opts.status), btn = $(opts.submit);
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    err.textContent = ''; status.textContent = ''; status.classList.remove('bad');
+
+    var name = form.querySelector('[name=name]');
+    var mail = form.querySelector('[name=email]');
+    var msg  = form.querySelector('[name=message]');
+    var con  = form.querySelector('[name=consent]');
+
+    if(!name.value.trim())                    { err.textContent = 'Please add your name.'; name.focus(); return; }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(mail.value.trim()))
+                                              { err.textContent = 'Please check the email address.'; mail.focus(); return; }
+    if(!msg.value.trim())                     { err.textContent = 'Please add a message.'; msg.focus(); return; }
+    if(con && !con.checked)                   { err.textContent = 'Please tick the consent box.'; con.focus(); return; }
+
+    var live = D.forms && D.forms.netlify && D.forms.netlify.enabled;
+    if(!live){
+      var handle = (D.social && D.social.instagram && D.social.instagram.handle) || '@smashbird_galway';
+      status.classList.add('bad');
+      status.textContent = 'This form is not connected yet, so nothing was sent. '
+        + 'Message ' + handle + ' on Instagram and it will reach the team.';
+      return;
     }
-    addEventListener('hashchange', sync);
-    document.addEventListener('click', function(){ setTimeout(sync, 60); }, true);
-    sync();
+
+    btn.disabled = true;
+    status.textContent = 'Sending…';
+    sendForm(form).then(function(r){
+      if(!r.ok) throw new Error(r.status);
+      form.reset();
+      status.textContent = opts.done;
+    }).catch(function(){
+      status.classList.add('bad');
+      status.textContent = 'That did not send. Please try again, or message us on Instagram.';
+    }).then(function(){ btn.disabled = false; });
   });
+}
 
-  /* ------------------------------------------------- catering form */
-  run(function(){
-    var f = $('cateringForm'); if(!f) return;
-    var status = $('cateringStatus');
+run('forms', function(){
+  wireForm({form:'cateringForm', err:'cateringErr', status:'cateringStatus',
+            submit:'cateringSubmit', done:'Thanks — your enquiry is in. We will come back to you.'});
+  wireForm({form:'contactForm',  err:'contactErr',  status:'contactStatus',
+            submit:'contactSubmit', done:'Thanks — message received.'});
+});
 
-    function setErr(input, msgId, msg){
-      var e = $(msgId);
-      if(msg){ input.setAttribute('aria-invalid','true'); input.setAttribute('aria-describedby', msgId);
-               e.textContent = msg; e.hidden = false; }
-      else   { input.removeAttribute('aria-invalid'); e.hidden = true; e.textContent = ''; }
-      return !msg;
-    }
+/* ------------------------------------------------------------ order bar */
+run('orderbar', function(){
+  var bar = $('orderBar'); if(!bar) return;
+  document.body.classList.add('has-bar');
+});
 
-    f.addEventListener('submit', function(ev){
-      ev.preventDefault();
-      var name = $('cat-name'), email = $('cat-email'),
-          msg  = $('cat-msg'),  cons  = $('cat-consent');
-      var good = true, first = null;
-
-      if(!setErr(name,'err-cat-name', name.value.trim() ? '' : 'Please tell us your name.')){ good=false; first=first||name; }
-      var okMail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
-      if(!setErr(email,'err-cat-email', okMail ? '' : 'Please enter a valid email address.')){ good=false; first=first||email; }
-      if(!setErr(msg,'err-cat-msg', msg.value.trim() ? '' : 'Please tell us about your event.')){ good=false; first=first||msg; }
-
-      var ce = $('err-cat-consent');
-      if(!cons.checked){ ce.textContent = 'Please tick the box so we can reply.'; ce.hidden = false; good=false; first=first||cons; }
-      else { ce.hidden = true; }
-
-      if(!good){ if(first) first.focus(); return; }
-
-      // Honest state: no backend is connected yet (see HANDOVER.md).
-      if((D.forms && D.forms.netlify && D.forms.netlify.enabled) ||
-         (D.catering.formEndpoint && D.catering.formEndpoint.confirmed)){
-        status.textContent = 'Sending\u2026';
-        sendForm(f, function(){
-          f.reset();
-          status.textContent = 'Thanks \u2014 your enquiry is with us. '
-            + 'We\u2019ll come back to you by email.';
-        }, function(){
-          status.textContent = 'Something went wrong sending that. '
-            + 'Please try again, or DM us on Instagram: ' + D.social.instagram.handle + '.';
-        });
-      } else {
-        status.textContent = 'Enquiry not sent \u2014 our booking form isn\u2019t live yet. '
-          + 'In the meantime send your details by DM on Instagram: ' + D.social.instagram.handle + '.';
-      }
-    });
-  });
-
-})();
-</script>
-
-<script>
-/* ============================================================
-   CSS 3D — no library. Transforms and opacity only, paused when
-   off-screen, and static when the visitor asks for reduced motion.
-   ============================================================ */
-(function(){
-  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* -------------------------------------- extruded category words */
-  var blocks = document.querySelectorAll('[data-x3d]');
-  Array.prototype.forEach.call(blocks, function(host){
-    var craving = host.closest('.craving');
-    var src = craving && craving.querySelector('.c-word');
-    var word = src ? src.textContent.trim() : '';
-    if(!word) return;
-
-    var inner = document.createElement('div');
-    inner.className = 'x3d-in';
-    var DEPTH = 9;
-    for(var i = DEPTH; i >= 0; i--){
-      var l = document.createElement('span');
-      l.className = 'x3d-l' + (i === 0 ? ' face' : '');
-      l.textContent = word;
-      l.style.setProperty('--z', (-i * 4.5) + 'px');
-      l.style.setProperty('--c', i === 0 ? '#F2E8D5'
-        : 'rgba(251,32,149,' + (0.9 - i / DEPTH * 0.72).toFixed(2) + ')');
-      inner.appendChild(l);
-    }
-    host.appendChild(inner);
-
-    if(reduce) return;
-    // gentle parallax tied to scroll position, transform only
-    var seen = false;
-    new IntersectionObserver(function(es){ seen = es[0].isIntersecting; },
-      {threshold:0}).observe(host);
-    var queued = false;
-    function onScroll(){
-      if(!seen || queued) return;
-      queued = true;
-      requestAnimationFrame(function(){
-        queued = false;
-        var r = host.getBoundingClientRect();
-        var p = (r.top + r.height / 2 - innerHeight / 2) / innerHeight; // -1..1
-        inner.style.setProperty('--xry', (-24 + p * 26).toFixed(1) + 'deg');
-        inner.style.setProperty('--xrx', (14 - p * 12).toFixed(1) + 'deg');
-      });
-    }
-    addEventListener('scroll', onScroll, {passive:true});
-    onScroll();
-  });
+/* ------------------------------------------------------------------ boot */
+run('boot', function(){
+  var hash = (location.hash || '').replace('#','');
+  showPage(PAGES.indexOf(hash) !== -1 ? hash : 'home', false);
+  reveal(document);
+});
 })();
 </script>
 </body>

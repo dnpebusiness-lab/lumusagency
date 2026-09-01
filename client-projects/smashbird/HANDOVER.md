@@ -1,5 +1,47 @@
 # Smashbird — Developer Handover & Outstanding Items
 
+## 0. WHAT CHANGED IN THE ART-DIRECTION PASS
+
+`index.html` was rebuilt rather than patched. The reason, from the audit:
+
+- **Two complete design systems were layered on top of each other.** A v1
+  editorial system (full-bleed slabs, list rows, split panes) had been
+  superseded by a v2 card system, but none of v1 was deleted — roughly 190
+  lines of CSS were unreachable and 67 class names were defined and never used.
+  The distinctive half had been replaced by the generic half.
+- **`--muted` was used 19 times and never defined.** The entire secondary-text
+  tier rendered at primary weight, which flattened the hierarchy everywhere.
+- **Five components — menu, sauce, location, order and review cards — were the
+  same recipe**: `#0b0b0d`, a 1px white border, ~24px padding, dropped into an
+  `auto-fit minmax(N,1fr)` grid where only N varied, and N was arbitrary. Every
+  page below the hero was the same grid of grey boxes. That is the template tell.
+- **Live bugs:** the v1 `footer` rule still applied to the v2 markup; the dark
+  input theme was applied to the cream contact panel; the focus ring had been
+  downgraded from yellow (12:1) to pink (3.3:1); `sendForm` was called from a
+  scope it was not declared in and would have thrown the moment Netlify Forms
+  was switched on; and `placements.vegan` was rendering into the *Loaded* strip.
+- **The hero had five attention devices** competing in two viewports — a static
+  headline, a rotating panel cycling four *different* brand lines, an award
+  grid, a marquee, then four full-height strips.
+
+What replaced it: one token system (colour, type scale, 8px spacing, motion),
+four breakpoints instead of nine, one reveal system instead of two, one
+`prefers-reduced-motion` block instead of four, and a different composition per
+content type instead of five card grids. Colour values now come from the deck —
+the previous build used `#FF1493`, which is the CSS keyword `deeppink`, not
+Smash Pink `#FB2095`.
+
+The **menu is a Wrap Paper panel set as an editorial price list**, because deck
+slide 08 names black-on-paper 17.28:1 as "preferred for menus and long
+information". That one move both follows the brand doc and removes the grey-card
+problem. **Sauces are ranked by heat**, and the heat number is the only place
+Hot Sauce yellow appears at size — which is exactly the 7% the deck reserves it for.
+
+`content.js` was **not** rebuilt. It is the verified data layer and it survived
+intact; only the photography block and the logo paths changed.
+
+---
+
 Everything below is **required before the site can go live**. All content lives in
 `content.js`. Set the value, flip the matching `confirmed` flag to `true`, and the
 element appears. Nothing on the public site is invented — unconfirmed facts are hidden
@@ -32,20 +74,40 @@ carried over.
 
 ---
 
-## 2. BRAND ASSETS — blocking
+## 2. BRAND ASSETS — resolved
 
-**Logo.** The official artwork was not supplied. The mark in `index.html` is a
-**hand-drawn SVG approximation** created before this brief. It must be replaced with
-the supplied files. Do not redraw it again.
+**Logo — supplied and in use.** The three official lockups were taken from the
+Brand Identity & Art Direction deck (2026) and exported unmodified into `img/`.
+The earlier hand-drawn SVG approximation has been **deleted**.
 
-- Stacked → `brand.logo.stacked`
-- Horizontal → `brand.logo.horizontal`
-- Avatar → `brand.logo.avatar`
+| Lockup | File | Used for | Deck minimum |
+|---|---|---|---|
+| Horizontal | `img/logo-horizontal.png` | Site header | 160px — held even at 375px |
+| Stacked | `img/logo-stacked.png` | Footer, OG image | 96px — used at 168px |
+| Avatar | `img/logo-avatar.png` | Favicon, touch icon | 40px |
 
-**Fonts.** Nimbus Sans Narrow Bold (display) and Nimbus Sans Regular/Bold (body) are
-licensed and are **not** in the repository. No unlicensed font file has been
-downloaded. The stack currently falls back to metrically similar grotesques.
-Supply the licensed web-font files, or confirm a licensed web-font service.
+Slide 06 rules are enforced in the CSS: the mark is never stretched, cropped,
+recoloured, rotated, outlined, shadowed **or glowed**. The site's neon
+treatment is applied to type only and never touches the logo — this is
+verified in the QA pass.
+
+**The bird.** `img/bird.png` is one silhouette lifted from the deck's
+illustration sheet, isolated by connected-component so no neighbouring bird
+bleeds into the crop. It is painted through CSS `mask-image`, so it is always
+exactly one brand colour and the source file itself is never recoloured. Per
+slide 11 it appears **twice on the whole site** — once cropped off the hero's
+right edge, once in the footer. Never scattered, never small.
+
+**Fonts — self-hosted.** Nimbus Sans Narrow Bold / Nimbus Sans are licensed and
+were not supplied. No unlicensed font file has been downloaded. Barlow
+Condensed and Barlow (open licence) stand in as deliberate metric-adjacent
+substitutes and are served **from this domain**, not from Google — a request to
+`fonts.gstatic.com` sends the visitor's IP to a third party, which is a live
+GDPR question for an Irish business and one the cookie policy would then have
+to answer. Latin subset, five weights, 109KB total, in `fonts/`.
+
+Swapping in the licensed Nimbus files later is two lines: replace the
+`@font-face` sources and the `--font-d` / `--font-b` stacks.
 
 **Photography — how to add it.** Two routes, same naming convention. Which one
 is live is set by `photos.source` in `content.js`.
@@ -73,21 +135,30 @@ no redeploy. Better once someone other than a developer maintains the photos.
 Either way: set `photos.enabled = true`, and a product with no photo yet shows
 none — the image removes itself on error, so photos can arrive a few at a time.
 
-**Seven supplied photographs are live** in the homepage grid, served from
-Cloudinary and cropped square by `g_auto` (subject detection server-side).
-IDs: IMG_3369, IMG_3357, _MG_3427, IMG_3398, IMG_1556, IMG_1561, IMG_1562.
+### Photography is switched OFF, and that is the design
 
-⚠ **Two things still needed on these.**
+The deck is explicit on this point and it changed the build:
 
-1. **Which dish is which.** They were supplied as Cloudinary IDs only, and this
-   environment cannot fetch Cloudinary to look. Assigning them to menu products
-   would be guessing, so they sit in the grid instead, where order implies
-   nothing. One line each (`IMG_3369 -> The Melter`) moves them onto the cards.
-2. **Alt text.** Empty for the same reason — describing an image nobody has
-   described would be inventing it. This is the one accessibility gap left.
-   Fill `social.grid[].alt` in `content.js`.
+> *"No photo dependency. Recognition from logo, colour, type and rhythm."* (01)
+> *"When there is no strong image, design stronger."* (12)
+> *"Never fill a weak layout with a weak image."* (12)
+> *"NO PHOTO NEEDED."* (16)
 
-An optional hero photo goes in `photos.hero.id`.
+So the site is **complete as it stands**. There are no empty image boxes, no
+"photo coming soon" placeholders and no holes the layout is waiting to fill.
+
+Seven photographs were supplied — as Cloudinary IDs only (IMG_3369, IMG_3357,
+_MG_3427, IMG_3398, IMG_1556, IMG_1561, IMG_1562). Nobody has described what
+any of them shows, and this environment cannot fetch Cloudinary to look.
+
+⚠ **An earlier pass wrote alt text for these anyway** — "golden fried chicken
+with crispy coating and steam rising" and similar, for images nobody had seen.
+That was invented content and it has been removed. The IDs are kept, the
+descriptions are blank, and `social.photosEnabled` is `false`.
+
+**To turn them on:** one line per photo from someone who can see them
+(`IMG_3369 — close-up of the double smash`), then set `photosEnabled: true`.
+That is the whole job. Until then the site does not pretend.
 
 **Video — same convention.** Upload to `smashbird/video/` and set
 `video.hero.id` plus `video.enabled = true`. Cloudinary renders the poster frame
@@ -111,14 +182,21 @@ and it is a lot of mobile data for someone deciding what to eat.
 ⚠ Still worth saying: a food menu without product images converts worse. This
 makes adding them cheap — the remaining work is a photographer.
 
-**Motion.** Three pieces, all transform/opacity only:
-1. Hero panel — the approved brand lines cycle every 3.6s on a 3D flip.
-2. Category words (SMASHED / FRIED / LOADED / VEGAN JUNK) — extruded type that
-   tilts with scroll position.
-3. Menu and sauce cards — staggered fade-up, replayed when the category changes.
+**Motion.** Four pieces, all transform/opacity only, all 160–600ms:
 
-All three stop under `prefers-reduced-motion`; the cycling panel also pauses when
-the tab is hidden. 61fps on mobile in a headless container.
+1. **Neon ignition** — the hero's "CHICKEN." powers on once, 900ms after load,
+   then holds. It does not keep flickering: a sign that flickers forever reads
+   as broken, not as atmosphere.
+2. **Section reveal** — one system for the whole site. Fade up 20px, staggered
+   *within each group* (max 180ms), so a section you scroll to appears
+   promptly instead of inheriting the delay of everything above it.
+3. **Ticker** — the pink band. Two identical halves shifted by exactly 50%, so
+   the loop is seamless at any viewport width.
+4. **Bird parallax** — the hero silhouette drifts at 0.12× scroll,
+   rAF-throttled, and stops once it is off screen.
+
+All four stop dead under `prefers-reduced-motion` — one media block, not four.
+The neon still renders lit in that mode, it just does not animate into it.
 
 ---
 
@@ -270,9 +348,28 @@ project, so:
 
 - Formatter / linter / type-check / test suite / production build: **do not exist**
   and were not run — there is nothing to run them against.
-- Verification was done instead by rendering the page in headless Chromium at
-  375px, 390px, 768px, 1024px and 1440px, checking for horizontal overflow,
-  JavaScript errors, heading order and focus behaviour.
+- Verification was done instead in headless Chromium. What was actually checked,
+  and what it returned:
+
+| Check | Result |
+|---|---|
+| Horizontal overflow at 375 / 390 / 430 / 768 / 1024 / 1280 / 1440 / 1920, on all 8 pages | none |
+| JavaScript page errors | none |
+| Console errors and warnings (over HTTP) | none |
+| Failed network requests | none |
+| Exactly one `<h1>` per page | 8/8 |
+| Menu renders every category | 9 categories, 87 items |
+| Images without `alt` | 0 |
+| `<label>` without `for` | 0 |
+| Focus ring | yellow, 3px, 13.9:1 on black |
+| Touch targets under 44px | none |
+| Logo carries no shadow / filter / glow | confirmed |
+| `prefers-reduced-motion` | ticker stopped, neon un-animated but visible, all reveals shown |
+| Contrast — black on pink / black on paper / muted on black | 5.44 / 16.37 / 6.69 — all pass |
+
+Note the file:// protocol blocks `mask-image` and web fonts for CORS reasons.
+Open the site over HTTP (`python3 -m http.server`) or on Netlify — double-clicking
+`index.html` will show it without the bird and without the display face.
 
 If a build pipeline is wanted later, migrating to Astro (the agency default) would
 suit this site — but that is a rebuild decision, not a fix, and was out of scope

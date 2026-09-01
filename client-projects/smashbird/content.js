@@ -23,13 +23,26 @@ window.SMASHBIRD = {
   brand: {
     name: 'Smashbird',
     city: 'Galway',
-    // CLIENT_CONFIRMATION_REQUIRED — official logo files not supplied.
-    // The mark in index.html is a hand-drawn SVG approximation and MUST be
-    // replaced with the supplied artwork before launch.
+    /* OFFICIAL ARTWORK — supplied in the Brand Identity & Art Direction deck
+       (2026) and exported unmodified into img/. The earlier hand-drawn SVG
+       approximation has been deleted from index.html.
+
+       Deck rules, slides 05–06, enforced in the CSS:
+         - horizontal → website headers. Minimum width 160px.
+         - stacked    → covers and campaign frames. Minimum 96px.
+         - avatar     → profiles and favicons. Minimum 40px.
+         - Never stretch, crop, recolour, rotate, outline, shadow or GLOW it.
+           The neon treatment on this site is applied to type only, never to
+           the mark. Keep copy and busy design out of its clear space. */
     logo: {
-      stacked:    { src: null, confirmed: false },
-      horizontal: { src: null, confirmed: false },
-      avatar:     { src: null, confirmed: false }
+      horizontal: { src: 'img/logo-horizontal.png', w: 720, h: 203, minWidth: 160, confirmed: true },
+      stacked:    { src: 'img/logo-stacked.png',    w: 640, h: 640, minWidth:  96, confirmed: true },
+      avatar:     { src: 'img/logo-avatar.png',     w: 512, h: 512, minWidth:  40, confirmed: true },
+      // Single-colour silhouette lifted from the deck's illustration sheet.
+      // Used through CSS mask-image so it is painted in one brand colour and
+      // the file itself is never recoloured. Deck slide 11: one large mark,
+      // never a scatter of small ones.
+      bird:       { src: 'img/bird.png', w: 900, h: 820, confirmed: true }
     },
     colours: {
       pink:'#FB2095', black:'#000000', yellow:'#FFD400',
@@ -452,23 +465,38 @@ window.SMASHBIRD = {
        The site renders without photos — they integrate as they arrive.
        ================================================================ */
 
-    // Photo placement throughout the site (hero, categories, locations)
-    // Strategic assignment: each photo placed to drive engagement and conversion
+    /* PHOTO PLACEMENT — OFF BY DEFAULT, AND DELIBERATELY SO.
+
+       The brand system (Brand Identity & Art Direction deck, slides 1, 12, 16)
+       is explicitly photo-independent:
+         "No photo dependency. Recognition from logo, colour, type and rhythm."
+         "When there is no strong image, design stronger."
+         "Never fill a weak layout with a weak image."
+
+       So the site is built to be complete with NO photography. Photos are an
+       enhancement, not a dependency — switch them on when they earn their place.
+
+       ⚠ alt text is empty on purpose. These seven were supplied as Cloudinary
+       IDs only. Nobody has described what they show, and this environment
+       cannot fetch Cloudinary to look, so writing alt text would mean
+       inventing it. One line per photo from someone who can see them
+       ("IMG_3369 — close-up of the double smash") fills these in and lets
+       `enabled` below flip to true. */
+    photosEnabled: false,
+
     placements: {
-      hero: { id: 'IMG_3369', alt: 'Smashbird signature smashed burger with crispy edges and melted cheese' },
-      burgers: { id: 'IMG_3357', alt: 'Classic Smashbird double smash burger being prepared' },
-      birds: { id: '_MG_3427', alt: 'Golden fried chicken with crispy coating and steam rising' },
-      vegan: { id: 'IMG_3398', alt: 'Smashbird vegan burger loaded with fresh toppings' },
-      location1: { id: 'IMG_1556', alt: 'Cross Street location storefront in Galway city centre' },
-      location2: { id: 'IMG_1561', alt: 'Liosban location on the north side of Galway' }
+      hero:      { id: 'IMG_3369', alt: '' },
+      burgers:   { id: 'IMG_3357', alt: '' },
+      birds:     { id: '_MG_3427', alt: '' },
+      vegan:     { id: 'IMG_3398', alt: '' },
+      location1: { id: 'IMG_1556', alt: '' },
+      location2: { id: 'IMG_1561', alt: '' }
     },
 
-    // Social grid: lifestyle, brand, atmosphere, customer moments
-    // Mix of best shots for social proof and brand storytelling
     grid: [
-      { id: 'IMG_1562', alt: 'Behind-the-scenes Smashbird kitchen preparation' },
-      { id: 'IMG_3369', alt: 'Smashbird burger close-up — signature smashed patties' },
-      { id: '_MG_3427', alt: 'Crispy fried chicken detail shot' },
+      { id: 'IMG_1562', alt: '' },
+      { id: null, alt: '' },
+      { id: null, alt: '' },
       { id: null, alt: '' },
       { id: null, alt: '' },
       { id: null, alt: '' },
@@ -601,7 +629,8 @@ window.SMASHBIRD = {
     { id:10, area:'Birds — flavour-dependent items',  issue:'Tendies, Wings (medium/large) and Chick N Pop have allergens that vary by flavour and are not published per item. None shown.', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:11, area:'Burgers — Rasta Burger',           issue:'Allergens list Crustaceans and Fish via Caribbean Jerk; Birdhouse jerk data is inconsistent. Shown as published, flagged.', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:12, area:'Vegan Junk — Cabbage Fritter',     issue:'No allergens under Vegan Junk; the same item under Sides lists Cereals and Sulphites.', status:'CLIENT_CONFIRMATION_REQUIRED' },
-    { id:13, area:'Photography',                      issue:'All photography removed at client request; the site now runs on CSS 3D instead. Real food photography is still needed before launch — a menu without product images converts worse.', status:'CLIENT_CONFIRMATION_REQUIRED' },
+    { id:13, area:'Photography',                      issue:'Seven photographs supplied as Cloudinary IDs only (IMG_3369, IMG_3357, _MG_3427, IMG_3398, IMG_1556, IMG_1561, IMG_1562). Nobody has described what each one shows and this environment cannot fetch Cloudinary to look, so they cannot be assigned to a product or given alt text without inventing it. They are wired up and switched off (social.photosEnabled). The brand deck (slides 1, 12, 16) specifies a photo-independent system, so the site is complete without them. One line per photo turns them on.', status:'CLIENT_CONFIRMATION_REQUIRED' },
+    { id:16, area:'Display typeface',                  issue:'Nimbus Sans Narrow Bold is licensed and was not supplied. Barlow Condensed (Google Fonts, open licence) is used as a deliberate metric-adjacent substitute — narrow, high-contrast, same role — rather than the deck fallback Arial Narrow, which is weaker on screen. Swap in the licensed files when available.', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:14, area:'Opening hours',                    issue:'Only a live open/closed status is available. Regular weekly hours not derived.', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:15, area:'Alcohol',                           issue:'Wine and beer are on the menu. No delivery or age-verification claims made.', status:'CLIENT_CONFIRMATION_REQUIRED' }
   ]
