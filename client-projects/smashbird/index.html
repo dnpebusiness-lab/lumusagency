@@ -925,6 +925,13 @@ footer .logo-mark{width:96px}
   object-fit:cover;display:block}
 .hv-vid{opacity:0;transition:opacity .5s ease}
 .hv-vid.ready{opacity:1}
+
+/* photo grid under the Instagram link */
+.ig-grid{gap:3px}
+.ig-grid.on{padding-bottom:clamp(30px,5vw,56px)}
+.ig-grid img{background:#141416;transition:opacity .5s ease,transform .5s cubic-bezier(.16,.9,.24,1)}
+.ig-grid img:hover{transform:scale(1.03)}
+@media(max-width:640px){.ig-grid{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
@@ -1977,11 +1984,21 @@ safe('boot', function(){
     }
     var grid = $('igGrid');
     if(grid && D.social.grid && D.social.grid.length){
+      var base = 'https://res.cloudinary.com/' + (D.social.gridCloud || 'fodeavol')
+               + '/image/upload/' + (D.social.gridTransform || 'c_fill,g_auto,ar_1:1,f_auto,q_auto');
       D.social.grid.forEach(function(im){
         var i = new Image();
-        i.src = im.src; i.alt = im.alt || ''; i.loading = 'lazy'; i.decoding = 'async';
+        i.src    = base + ',w_600/' + im.id;
+        i.srcset = base + ',w_320/' + im.id + ' 320w, '
+                 + base + ',w_600/' + im.id + ' 600w';
+        i.sizes  = '(max-width:640px) 50vw, 240px';
+        i.alt = im.alt || '';
+        i.loading = 'lazy'; i.decoding = 'async';
+        // A photo that fails to load removes itself rather than leaving a gap.
+        i.onerror = function(){ if(i.parentNode) i.parentNode.removeChild(i); };
         grid.appendChild(i);
       });
+      grid.classList.add('on');
     }
   });
 

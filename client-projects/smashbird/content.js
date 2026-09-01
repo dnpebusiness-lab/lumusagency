@@ -425,7 +425,25 @@ window.SMASHBIRD = {
   reviews: [],
   social: {
     instagram:{ url:'https://www.instagram.com/smashbird_galway/', handle:'@smashbird_galway', confirmed:true },
-    grid: []
+
+    /* Supplied Smashbird photographs, served from Cloudinary. Cropped square by
+       g_auto, which finds the subject in each frame server-side.
+
+       ⚠ alt text is empty on purpose. These were supplied as Cloudinary IDs
+       only and nobody has described their contents, so writing alt text would
+       mean inventing it. Someone who can see them should fill `alt` in — it
+       takes a minute and it is the one accessibility gap left on the site. */
+    grid: [
+      { id:'IMG_3369',  alt:'' },
+      { id:'IMG_3357',  alt:'' },
+      { id:'_MG_3427',  alt:'' },
+      { id:'IMG_3398',  alt:'' },
+      { id:'IMG_1556',  alt:'' },
+      { id:'IMG_1561',  alt:'' },
+      { id:'IMG_1562',  alt:'' }
+    ],
+    gridCloud: 'fodeavol',
+    gridTransform: 'c_fill,g_auto,ar_1:1,f_auto,q_auto'
   },
 
   /* ------------------------------------------------------------- catering */

@@ -73,6 +73,20 @@ no redeploy. Better once someone other than a developer maintains the photos.
 Either way: set `photos.enabled = true`, and a product with no photo yet shows
 none — the image removes itself on error, so photos can arrive a few at a time.
 
+**Seven supplied photographs are live** in the homepage grid, served from
+Cloudinary and cropped square by `g_auto` (subject detection server-side).
+IDs: IMG_3369, IMG_3357, _MG_3427, IMG_3398, IMG_1556, IMG_1561, IMG_1562.
+
+⚠ **Two things still needed on these.**
+
+1. **Which dish is which.** They were supplied as Cloudinary IDs only, and this
+   environment cannot fetch Cloudinary to look. Assigning them to menu products
+   would be guessing, so they sit in the grid instead, where order implies
+   nothing. One line each (`IMG_3369 -> The Melter`) moves them onto the cards.
+2. **Alt text.** Empty for the same reason — describing an image nobody has
+   described would be inventing it. This is the one accessibility gap left.
+   Fill `social.grid[].alt` in `content.js`.
+
 An optional hero photo goes in `photos.hero.id`.
 
 **Video — same convention.** Upload to `smashbird/video/` and set
