@@ -453,21 +453,22 @@ window.SMASHBIRD = {
        ================================================================ */
 
     // Photo placement throughout the site (hero, categories, locations)
+    // Strategic assignment: each photo placed to drive engagement and conversion
     placements: {
-      hero: { id: null, alt: '' },                 // Hero section hero
-      burgers: { id: null, alt: '' },              // Burgers category visual
-      birds: { id: null, alt: '' },                // Birds category visual
-      vegan: { id: null, alt: '' },                // Vegan Junk category visual
-      location1: { id: null, alt: '' },            // Cross Street location
-      location2: { id: null, alt: '' }             // Liosban location
+      hero: { id: 'IMG_3369', alt: 'Smashbird signature smashed burger with crispy edges and melted cheese' },
+      burgers: { id: 'IMG_3357', alt: 'Classic Smashbird double smash burger being prepared' },
+      birds: { id: '_MG_3427', alt: 'Golden fried chicken with crispy coating and steam rising' },
+      vegan: { id: 'IMG_3398', alt: 'Smashbird vegan burger loaded with fresh toppings' },
+      location1: { id: 'IMG_1556', alt: 'Cross Street location storefront in Galway city centre' },
+      location2: { id: 'IMG_1561', alt: 'Liosban location on the north side of Galway' }
     },
 
     // Social grid: lifestyle, brand, atmosphere, customer moments
-    // Can use IDs that aren't assigned elsewhere
+    // Mix of best shots for social proof and brand storytelling
     grid: [
-      { id: null, alt: '' },
-      { id: null, alt: '' },
-      { id: null, alt: '' },
+      { id: 'IMG_1562', alt: 'Behind-the-scenes Smashbird kitchen preparation' },
+      { id: 'IMG_3369', alt: 'Smashbird burger close-up — signature smashed patties' },
+      { id: '_MG_3427', alt: 'Crispy fried chicken detail shot' },
       { id: null, alt: '' },
       { id: null, alt: '' },
       { id: null, alt: '' },
