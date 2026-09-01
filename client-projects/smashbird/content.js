@@ -460,6 +460,34 @@ window.SMASHBIRD = {
     hero: { id: null, alt: null }
   },
 
+  /* --------------------------------------------------------------- video
+     Same convention as photos, on the video side of Cloudinary. One upload
+     gives both the clip and its poster frame — Cloudinary renders the poster
+     from the video itself, so there is no second file to make.
+
+        upload  smashbird/video/hero
+        video   .../video/upload/<transform>/smashbird/video/hero.mp4
+        poster  .../video/upload/so_1/smashbird/video/hero.jpg   (frame at 1s)
+
+     RULES BAKED IN, not optional:
+       - always muted, always playsinline, always looped
+       - autoplay with sound is never used (browsers block it and the brief
+         forbids it)
+       - poster shows first; the clip only downloads once it can play
+       - prefers-reduced-motion or Save-Data gets the poster and no video
+
+     Keep it short (4-8s) and silent by design — it is wallpaper, not a film.
+     TO TURN ON: set enabled true once a clip is uploaded.
+     -------------------------------------------------------------------- */
+  video: {
+    enabled: false,
+    cloud:   'fodeavol',
+    folder:  'smashbird/video',
+    transform: 'c_fill,g_auto,ar_4:5,f_auto,q_auto',
+    posterAt: 1,          // seconds into the clip for the poster frame
+    hero: { id: null, alt: null }
+  },
+
   /* ---------------------------------------------------------------- forms
      Where enquiries go. Right now: nowhere — both forms validate and then say
      so honestly instead of pretending to send.

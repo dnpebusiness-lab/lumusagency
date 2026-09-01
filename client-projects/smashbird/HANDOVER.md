@@ -71,6 +71,25 @@ a broken icon, so photos can arrive a few at a time.
 
 An optional hero photo goes in `photos.hero.id`.
 
+**Video — same convention.** Upload to `smashbird/video/` and set
+`video.hero.id` plus `video.enabled = true`. Cloudinary renders the poster frame
+from the clip itself, so one upload covers both.
+
+Non-negotiable behaviour, built in rather than left to configuration:
+- always muted, looped and `playsinline` — autoplay with sound is never used
+- `preload="none"`; the poster carries the panel and the clip fades in only once
+  it can actually play, so the hero never sits empty on a slow connection
+- `prefers-reduced-motion` or Save-Data / 2G gets the poster and no video at all
+
+Keep clips **4–8 seconds and silent by design** — it is wallpaper, not a film.
+A hero video replaces the cycling brand lines; leave `video.hero.id` null to keep
+them.
+
+Note on cost: Cloudinary bills video transformations far more heavily than
+images. One hero loop is fine on the free tier; a video per menu card is not, and
+would be the wrong call anyway — twelve loops competing on one screen is noise,
+and it is a lot of mobile data for someone deciding what to eat.
+
 ⚠ Still worth saying: a food menu without product images converts worse. This
 makes adding them cheap — the remaining work is a photographer.
 

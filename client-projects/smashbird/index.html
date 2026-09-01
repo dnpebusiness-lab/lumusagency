@@ -918,6 +918,13 @@ footer .logo-mark{width:96px}
   .kin-l.out,.kin-l.in{opacity:0}
   .rise{opacity:1!important;transform:none!important;transition:none}
 }
+
+/* ---- hero video ---- */
+.hv{position:absolute;inset:0}
+.hv-poster,.hv-vid{position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;display:block}
+.hv-vid{opacity:0;transition:opacity .5s ease}
+.hv-vid.ready{opacity:1}
 </style>
 </head>
 <body>
@@ -1751,6 +1758,57 @@ safe('boot', function(){
     }
   });
 
+
+
+  /* ----------------------------------------------- hero video (optional) */
+  run(function(){
+    var V = D.video;
+    if(!V || !V.enabled || !V.hero || !V.hero.id) return;
+    var host = document.getElementById('kin');
+    if(!host) return;
+
+    var base = 'https://res.cloudinary.com/' + V.cloud + '/video/upload/';
+    var id   = V.folder + '/' + V.hero.id;
+    var poster = base + 'so_' + V.posterAt + ',' + V.transform + '/' + id + '.jpg';
+
+    var wrap = document.createElement('div');
+    wrap.className = 'hv';
+
+    var img = new Image();          // poster carries the panel on its own
+    img.className = 'hv-poster';
+    img.src = poster;
+    img.alt = V.hero.alt || '';
+    img.decoding = 'async';
+    wrap.appendChild(img);
+
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var conn   = navigator.connection || {};
+    var thrifty = conn.saveData === true || /2g/.test(conn.effectiveType || '');
+
+    if(!reduce && !thrifty){
+      var v = document.createElement('video');
+      v.className = 'hv-vid';
+      v.muted = true;               // set before autoplay, or Safari refuses
+      v.defaultMuted = true;
+      v.autoplay = true;
+      v.loop = true;
+      v.playsInline = true;
+      v.setAttribute('muted','');
+      v.setAttribute('playsinline','');
+      v.setAttribute('aria-hidden','true');
+      v.preload = 'none';
+      v.poster = poster;
+      v.src = base + V.transform + '/' + id + '.mp4';
+      // Only reveal the clip once it can actually play, so the panel never
+      // flashes empty on a slow connection.
+      v.addEventListener('canplay', function(){ v.classList.add('ready'); });
+      wrap.appendChild(v);
+      v.load();
+    }
+
+    host.textContent = '';
+    host.appendChild(wrap);
+  });
 
   /* ------------------------------------ kinetic brand lines (hero) */
   run(function(){
