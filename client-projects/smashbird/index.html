@@ -236,7 +236,9 @@ html:not(.js) #home{display:flex;flex-direction:column}
   content:'';position:absolute;inset:0;
   background:radial-gradient(ellipse 62% 48% at 52% 46%,rgba(255,20,147,.22),transparent 68%),
              radial-gradient(ellipse 40% 34% at 74% 74%,rgba(139,43,226,.18),transparent 70%);
+  z-index:0;
 }
+.hero-photo{position:absolute;inset:0;z-index:-1;opacity:.35;object-fit:cover;display:block;width:100%;height:100%}
 .hero-vert{
   position:absolute;right:0;top:0;bottom:0;width:36px;background:var(--pink);z-index:6;
   display:flex;align-items:center;justify-content:center;writing-mode:vertical-rl;
@@ -736,6 +738,7 @@ footer .logo-mark{width:96px}
 .loc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
   gap:16px;padding-bottom:clamp(30px,5vw,60px)}
 .lc{border:1px solid rgba(255,255,255,.16);background:#0b0b0d;padding:26px 24px}
+.lc .c-media{margin:-26px -24px 18px -24px;height:160px;overflow:hidden;border-radius:4px}
 .lc-name{font-family:var(--font-d);font-size:30px;line-height:1;color:var(--cream);margin:0 0 14px}
 .lc-row{margin:0 0 12px}
 .lc-lab{font-family:var(--font-b);font-size:9.5px;font-weight:700;letter-spacing:.16em;
@@ -1046,10 +1049,8 @@ document.documentElement.className += ' js';
       <div class="kin" id="kin" aria-hidden="true">
         <div class="kin-rail" id="kinRail"></div>
       </div>
-      </div>
       <div class="hero-vert">Galway · H91</div>
     </div>
-  </div>
   </div>
 
   <ul class="proof" id="proofStrip" aria-label="Awards and options"></ul>
@@ -1912,8 +1913,11 @@ safe('boot', function(){
 
   run(function(){
     var g = $('locGrid'); if(!g) return;
-    D.locations.forEach(function(L){
+    D.locations.forEach(function(L, idx){
       var c = el('article','lc');
+      // Photo slot (will be populated by placement photos if available)
+      var photoBox = el('div','c-media');
+      c.appendChild(photoBox);
       c.appendChild(el('h3','lc-name', L.short));
       locLines(L).forEach(function(r){
         var w = el('div','lc-row');
@@ -1977,16 +1981,76 @@ safe('boot', function(){
       sec.hidden = false;
     }
 
+    /* ---------------------------------------- placement photos (hero, categories, locations) */
+    var placements = D.social && D.social.placements;
+    if(placements){
+      // Helper to render a single placement photo
+      function renderPlacementPhoto(id, alt, container){
+        if(!id) return;
+        var base = 'https://res.cloudinary.com/' + (D.social.gridCloud || 'fodeavol')
+                 + '/image/upload/';
+        var img = new Image();
+        img.src = base + 'w_1200/' + id;
+        img.alt = alt || '';
+        img.loading = 'lazy'; img.decoding = 'async';
+        img.style.width = '100%'; img.style.height = '100%';
+        img.style.objectFit = 'cover'; img.style.display = 'block';
+        img.onerror = function(){ if(img.parentNode) img.parentNode.removeChild(img); };
+        container.appendChild(img);
+      }
+
+      // Hero photo (behind kinetic panel)
+      if(placements.hero && placements.hero.id){
+        var heroRight = document.querySelector('.hero-right');
+        if(heroRight){
+          var heroPhoto = document.createElement('img');
+          heroPhoto.className = 'hero-photo';
+          heroPhoto.src = 'https://res.cloudinary.com/' + (D.social.gridCloud || 'fodeavol')
+                        + '/image/upload/w_1400/' + placements.hero.id;
+          heroPhoto.alt = placements.hero.alt || '';
+          heroPhoto.loading = 'eager'; heroPhoto.decoding = 'async';
+          heroPhoto.onerror = function(){ if(heroPhoto.parentNode) heroPhoto.parentNode.removeChild(heroPhoto); };
+          heroRight.insertBefore(heroPhoto, heroRight.firstChild);
+        }
+      }
+
+      // Category photos (burgers, birds, vegan) in craving sections
+      var cravings = document.querySelectorAll('.craving .c-media');
+      if(cravings.length > 0 && placements.burgers && placements.burgers.id){
+        renderPlacementPhoto(placements.burgers.id, placements.burgers.alt, cravings[0]);
+      }
+      if(cravings.length > 1 && placements.birds && placements.birds.id){
+        renderPlacementPhoto(placements.birds.id, placements.birds.alt, cravings[1]);
+      }
+      if(cravings.length > 2 && placements.vegan && placements.vegan.id){
+        renderPlacementPhoto(placements.vegan.id, placements.vegan.alt, cravings[2]);
+      }
+
+      // Location photos (rendered dynamically after locations are built)
+      setTimeout(function(){
+        var locs = document.querySelectorAll('.lc .c-media');
+        if(locs.length > 0 && placements.location1 && placements.location1.id){
+          renderPlacementPhoto(placements.location1.id, placements.location1.alt, locs[0]);
+        }
+        if(locs.length > 1 && placements.location2 && placements.location2.id){
+          renderPlacementPhoto(placements.location2.id, placements.location2.alt, locs[1]);
+        }
+      }, 0);
+    }
+
     var ig = D.social.instagram;
     if(ig && ig.confirmed){
       var h = $('igHandle'); if(h) h.textContent = ig.handle;
       var l = $('igLink');   if(l) l.href = ig.url;
     }
+
+    /* ---------------------------------------- instagram grid (social proof) */
     var grid = $('igGrid');
     if(grid && D.social.grid && D.social.grid.length){
       var base = 'https://res.cloudinary.com/' + (D.social.gridCloud || 'fodeavol')
                + '/image/upload/' + (D.social.gridTransform || 'c_fill,g_auto,ar_1:1,f_auto,q_auto');
       D.social.grid.forEach(function(im){
+        if(!im.id) return;  // Skip empty photo slots
         var i = new Image();
         i.src    = base + ',w_600/' + im.id;
         i.srcset = base + ',w_320/' + im.id + ' 320w, '
@@ -1994,11 +2058,10 @@ safe('boot', function(){
         i.sizes  = '(max-width:640px) 50vw, 240px';
         i.alt = im.alt || '';
         i.loading = 'lazy'; i.decoding = 'async';
-        // A photo that fails to load removes itself rather than leaving a gap.
         i.onerror = function(){ if(i.parentNode) i.parentNode.removeChild(i); };
         grid.appendChild(i);
       });
-      grid.classList.add('on');
+      if(grid.children.length > 0) grid.classList.add('on');
     }
   });
 

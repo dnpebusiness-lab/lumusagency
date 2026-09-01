@@ -426,22 +426,54 @@ window.SMASHBIRD = {
   social: {
     instagram:{ url:'https://www.instagram.com/smashbird_galway/', handle:'@smashbird_galway', confirmed:true },
 
-    /* Supplied Smashbird photographs, served from Cloudinary. Cropped square by
-       g_auto, which finds the subject in each frame server-side.
+    /* ================================================================
+       STRATEGIC PHOTO PLACEMENT SYSTEM
 
-       ⚠ alt text is empty on purpose. These were supplied as Cloudinary IDs
-       only and nobody has described their contents, so writing alt text would
-       mean inventing it. Someone who can see them should fill `alt` in — it
-       takes a minute and it is the one accessibility gap left on the site. */
+       Each photo serves a conversion purpose at different points on the
+       journey. Assign your 7 supplied Cloudinary IDs to the slots below
+       based on what each photo shows.
+
+       PLACEMENT ROLES:
+       1. hero — Full-width hero at top of page: most dramatic
+                food/preparation shot for immediate impact
+       2. burgers — Category representative: best burger/smashed prep shot
+       3. birds — Category representative: fried chicken or wings shot
+       4. vegan — Category representative: vegan/veggie dish shot
+       5. location1 — Cross Street storefront or interior detail
+       6. location2 — Liosban storefront or interior detail
+       7. social — Lifestyle/brand/atmosphere/behind-the-scenes for grid
+                   (can use multiple IDs for variety)
+
+       Example assignment:
+       hero: { id: 'IMG_3369', alt: 'Smashbird smashed burger with melted cheese and pickles' },
+       burgers: { id: 'IMG_3357', alt: 'Close-up of Smashbird burger preparation' },
+
+       Leave id: null for any slot you don't have a photo for yet.
+       The site renders without photos — they integrate as they arrive.
+       ================================================================ */
+
+    // Photo placement throughout the site (hero, categories, locations)
+    placements: {
+      hero: { id: null, alt: '' },                 // Hero section hero
+      burgers: { id: null, alt: '' },              // Burgers category visual
+      birds: { id: null, alt: '' },                // Birds category visual
+      vegan: { id: null, alt: '' },                // Vegan Junk category visual
+      location1: { id: null, alt: '' },            // Cross Street location
+      location2: { id: null, alt: '' }             // Liosban location
+    },
+
+    // Social grid: lifestyle, brand, atmosphere, customer moments
+    // Can use IDs that aren't assigned elsewhere
     grid: [
-      { id:'IMG_3369',  alt:'' },
-      { id:'IMG_3357',  alt:'' },
-      { id:'_MG_3427',  alt:'' },
-      { id:'IMG_3398',  alt:'' },
-      { id:'IMG_1556',  alt:'' },
-      { id:'IMG_1561',  alt:'' },
-      { id:'IMG_1562',  alt:'' }
+      { id: null, alt: '' },
+      { id: null, alt: '' },
+      { id: null, alt: '' },
+      { id: null, alt: '' },
+      { id: null, alt: '' },
+      { id: null, alt: '' },
+      { id: null, alt: '' }
     ],
+
     gridCloud: 'fodeavol',
     gridTransform: 'c_fill,g_auto,ar_1:1,f_auto,q_auto'
   },
