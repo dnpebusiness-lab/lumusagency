@@ -471,6 +471,44 @@ html:not(.js) .page{display:block}
 }
 
 /* ==========================================================================
+   REVIEWS — full-bleed Smash Pink.
+   Black on pink is 5.44:1, the deck's default pairing (slide 08), and this
+   band is what gives the home page its second beat of colour: the run is
+   black hero → pink ticker → black strips → PINK → black footer.
+
+   Deliberately not three equal cards. The quotes are different lengths and
+   the shortest one is the best line, so the type scales to the line instead
+   of the grid — the short punchy quote gets set biggest.
+   ========================================================================== */
+.reviews{background:var(--pink);color:var(--black);padding:var(--s7) 0}
+.reviews .eyebrow{color:var(--black);margin-bottom:var(--s5)}
+.reviews .eyebrow::before{background:var(--black)}
+.review{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;
+  gap:var(--s2) var(--s5);align-items:end;
+  padding:var(--s4) 0;border-bottom:2px solid rgba(9,9,11,.2);
+}
+.review:first-child{border-top:2px solid rgba(9,9,11,.2)}
+.review q{
+  font-family:var(--font-d);font-weight:900;text-transform:uppercase;
+  font-size:clamp(24px,3.2vw,44px);line-height:.96;letter-spacing:-.02em;
+  text-wrap:balance;
+}
+.review.big q{font-size:clamp(30px,5vw,72px)}
+.review-by{
+  font-size:var(--fs-micro);font-weight:700;letter-spacing:.18em;
+  text-transform:uppercase;color:rgba(9,9,11,.66);white-space:nowrap;
+  padding-bottom:6px;
+}
+.review-by a{text-decoration:underline;text-underline-offset:3px}
+.review-by a:hover{color:var(--black)}
+@media(max-width:780px){
+  .reviews{padding:var(--s5) 0}
+  .review{grid-template-columns:1fr;gap:var(--s2);align-items:start}
+  .review-by{white-space:normal;padding-bottom:0}
+}
+
+/* ==========================================================================
    SECTION HEADS
    ========================================================================== */
 .head{padding:var(--s7) 0 var(--s5)}
@@ -835,6 +873,15 @@ html:not(.js) .page{display:block}
   </div>
 
   <div id="strips"></div>
+
+  <!-- Renders only when genuine reviews exist in content.js. Nothing here is
+       written by us — see the note above `reviews` in that file. -->
+  <section class="reviews" id="reviewsSection" aria-label="What people say" hidden>
+    <div class="wrap">
+      <p class="eyebrow">What people say</p>
+      <div id="reviewList"></div>
+    </div>
+  </section>
 
   <section class="ig" aria-label="Instagram">
     <div class="wrap">
@@ -1426,6 +1473,43 @@ run('about', function(){
   var ch = $('cateringHl'), cb = $('cateringBody');
   if(ch && D.catering) ch.textContent = D.catering.headline;
   if(cb && D.catering) cb.textContent = D.catering.body;
+});
+
+/* --------------------------------------------------------------- reviews */
+run('reviews', function(){
+  var host = $('reviewList'), sec = $('reviewsSection');
+  if(!host || !sec) return;
+
+  /* Text, name and platform are the substance of a review. A missing source
+     link is worth chasing but is not a reason to hide something the client
+     stands over — so it is not in this filter. */
+  var real = (D.reviews||[]).filter(function(r){
+    return r && r.text && r.name && r.platform && r.confirmed !== false;
+  });
+  if(!real.length) return;              // no reviews: the band stays hidden
+
+  real.forEach(function(r){
+    // The shortest quote is usually the sharpest, so it gets set biggest.
+    var row = el('div','review rv' + (r.text.length < 40 ? ' big' : ''));
+    row.appendChild(el('q', null, r.text));
+
+    var bits = [r.name, r.platform];
+    if(r.rating) bits.push(r.rating + '/5');
+    if(r.date)   bits.push(r.date);
+
+    var by = el('p','review-by');
+    if(r.sourceUrl){
+      var a = el('a', null, bits.join(' · '));
+      a.href = r.sourceUrl; a.target = '_blank'; a.rel = 'noopener noreferrer';
+      a.appendChild(el('span','sr-only', ' — read on ' + r.platform + ' (opens in a new tab)'));
+      by.appendChild(a);
+    } else {
+      by.textContent = bits.join(' · ');
+    }
+    row.appendChild(by);
+    host.appendChild(row);
+  });
+  sec.hidden = false;
 });
 
 /* ---------------------------------------------------------------- social */

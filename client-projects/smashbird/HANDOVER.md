@@ -267,14 +267,35 @@ was supplied and no Deliveroo prices were imported.
 
 ---
 
-## 7. REVIEWS — content required
+## 7. REVIEWS — three supplied and live
 
-The reviews section renders **only** when genuine reviews are supplied. The array is
-currently empty, so the section does not appear at all. No review has been written
-or paraphrased.
+Three genuine Tripadvisor reviews were supplied by the client on 1 September
+2026 and are live on the home page, quoted **exactly** as given. Nothing was
+tidied, shortened or re-punctuated, and no review has been written or
+paraphrased.
 
-Each entry requires: exact review text, customer name, platform, rating, date,
-source URL.
+They sit in a full-bleed Smash Pink band between the category strips and the
+Instagram block — social proof after the product statement, before the follow
+prompt. Black on pink is the deck's default pairing, and the band gives the
+home page its second beat of colour.
+
+The quotes are set at different sizes on purpose: the shortest one is the
+sharpest line, so it gets set biggest rather than being forced into an equal
+three-column grid.
+
+⚠ **Still worth chasing: the Tripadvisor permalink for each review.**
+`rating`, `date` and `sourceUrl` are all `null` because they were not supplied,
+and none of them has been inferred — a star rating nobody stated would be
+invented. Beyond accuracy there is a compliance reason: displayed testimonials
+that cannot be traced to their source are a consumer-protection risk under
+ASAI guidance and the EU Omnibus rules on published reviews. Paste a URL into
+`sourceUrl` and the attribution becomes a link automatically; add `rating` or
+`date` and they append to the credit line. No code change either way.
+
+**Not added to structured data.** `Review` / `aggregateRating` schema needs a
+rating value, which we do not have. Emitting review markup without it — or
+with a guessed number — is a search policy violation. Supply the ratings and
+the schema block can be extended alongside `openingHours` and `telephone`.
 
 Instagram is linked directly (`https://www.instagram.com/smashbird_galway/`). No
 fake feed is embedded. Supplying real images to `social.grid` turns on a curated

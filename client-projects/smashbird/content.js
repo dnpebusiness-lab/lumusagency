@@ -434,8 +434,32 @@ window.SMASHBIRD = {
 
   ordering:{ platforms:{ flipdish:{ confirmed:true }, deliveroo:{ confirmed:false } } },
 
-  /* -------------------------------------------------------------- reviews */
-  reviews: [],
+  /* -------------------------------------------------------------- reviews
+     Supplied by the client, 1 September 2026. Quoted exactly as given —
+     no wording has been tidied, shortened or punctuated differently.
+
+     `rating`, `date` and `sourceUrl` are null because they were not supplied.
+     Nothing is inferred: a star rating nobody stated would be invented, and a
+     made-up source URL is worse than none. The card renders without them.
+
+     ⚠ WORTH CHASING: the Tripadvisor permalink for each review. Displayed
+     testimonials that cannot be traced to their source are a consumer-
+     protection risk (ASAI / EU Omnibus rules on published reviews), and the
+     link also earns the reader's trust. Paste it into `sourceUrl` and the
+     attribution becomes a link on its own. */
+  reviews: [
+    { text:'The burgers are so tasty. The Parmesan fries are to die for.',
+      name:'Peter Mooney', platform:'Tripadvisor',
+      rating:null, date:null, sourceUrl:null, confirmed:true },
+
+    { text:'Best vegan burger. Full stop.',
+      name:'Joe Kel', platform:'Tripadvisor',
+      rating:null, date:null, sourceUrl:null, confirmed:true },
+
+    { text:'An amazing experience for foodie and burger lovers.',
+      name:'Nathan C', platform:'Tripadvisor',
+      rating:null, date:null, sourceUrl:null, confirmed:true }
+  ],
   social: {
     instagram:{ url:'https://www.instagram.com/smashbird_galway/', handle:'@smashbird_galway', confirmed:true },
 
