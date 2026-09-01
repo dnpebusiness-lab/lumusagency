@@ -1624,6 +1624,12 @@ safe('boot', function(){
     var P = D.photos;
     if(!P || !P.enabled) return null;
     var id = slugify(item.name);
+
+    // Local files: whatever sits in the deployed folder. No srcset, because
+    // there is only the one file — resize before deploying.
+    if(P.source === 'local'){
+      return { src: P.localFolder + '/' + id + P.localExt, srcset: null };
+    }
     return {
       src: cloudUrl(id, P.widths[P.widths.length - 1]),
       srcset: P.widths.map(function(w){ return cloudUrl(id, w) + ' ' + w + 'w'; }).join(', ')

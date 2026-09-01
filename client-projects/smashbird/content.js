@@ -450,6 +450,18 @@ window.SMASHBIRD = {
      -------------------------------------------------------------------- */
   photos: {
     enabled: false,
+
+    // WHERE THE FILES LIVE
+    //   'local'      -> img/<name>.jpg inside this folder, served by Netlify.
+    //                   Simplest: drop files in, deploy, done. You resize them
+    //                   once before deploying (roughly 1200px wide is plenty).
+    //   'cloudinary' -> uploaded to the account below; the server does the
+    //                   cropping, formats and sizes, and swapping a photo later
+    //                   needs no redeploy.
+    source: 'local',
+    localFolder: 'img',
+    localExt: '.jpg',
+
     cloud:   'fodeavol',
     folder:  'smashbird',
     // c_fill = crop to fill, g_auto = let Cloudinary find the subject,

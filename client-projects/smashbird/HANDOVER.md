@@ -47,27 +47,31 @@ licensed and are **not** in the repository. No unlicensed font file has been
 downloaded. The stack currently falls back to metrically similar grotesques.
 Supply the licensed web-font files, or confirm a licensed web-font service.
 
-**Photography — how to add it.** Photos resolve from Cloudinary **by naming
-convention**, so adding one is an upload, not a code change.
+**Photography — how to add it.** Two routes, same naming convention. Which one
+is live is set by `photos.source` in `content.js`.
 
-| Product | Upload as |
+**Route A — files in the site (`source: 'local'`, current setting).**
+Drop photos into `img/` named after the product, then deploy the folder.
+Nothing else. See `img/README.txt`.
+
+| Product | File |
 |---|---|
-| The Melter | `smashbird/the-melter` |
-| Jalapeño Hatch | `smashbird/jalapeno-hatch` |
-| Birdhouse Tendies & Fries | `smashbird/birdhouse-tendies-fries` |
-| Drty Secret VG | `smashbird/drty-secret-vg` |
+| The Melter | `img/the-melter.jpg` |
+| Jalapeño Hatch | `img/jalapeno-hatch.jpg` |
+| Birdhouse Tendies & Fries | `img/birdhouse-tendies-fries.jpg` |
 
-Rule: lower-case, accents stripped, `&` dropped, spaces to dashes.
+Resize to roughly 1200px on the long side first — the site never displays wider
+than about 700px. Note that a Netlify Drop deploy replaces the whole site, so
+`img/` has to be inside the folder every time.
 
-Upload any format at the largest size available. Cloudinary crops to 4:3, finds
-the subject itself (`g_auto`), converts to WebP/AVIF per browser and serves 400w
-or 700w by device. Nothing enters the repository, and replacing a photo later
-means re-uploading over the same public ID — no redeploy.
+**Route B — Cloudinary (`source: 'cloudinary'`).** Same names, uploaded to the
+`smashbird` folder on the account. The server crops to 4:3, finds the subject,
+converts format per browser and serves 400w/700w via srcset. Nothing in the
+repository, and replacing a photo means re-uploading over the same public ID with
+no redeploy. Better once someone other than a developer maintains the photos.
 
-Then set `photos.enabled = true` in `content.js`. One switch for all of them.
-
-A product with no photo yet shows no photo — the image is dropped on error, never
-a broken icon, so photos can arrive a few at a time.
+Either way: set `photos.enabled = true`, and a product with no photo yet shows
+none — the image removes itself on error, so photos can arrive a few at a time.
 
 An optional hero photo goes in `photos.hero.id`.
 
