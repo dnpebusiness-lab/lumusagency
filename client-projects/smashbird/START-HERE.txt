@@ -1,0 +1,34 @@
+SMASHBIRD — what is in this folder
+==================================
+
+DEPLOY (drag the whole folder onto Netlify Drop, or connect the repo)
+  index.html          the site
+  content.js          every fact, price, address and line of copy. Edit here.
+  img/                official logo lockups + the bird silhouette
+  fonts/              Barlow / Barlow Condensed, latin subset, self-hosted
+  netlify.toml        build config
+  _headers            security headers
+
+READ FIRST
+  HANDOVER.md         what is done, what is still needed, and why. Start here.
+  README.md           project notes
+
+LOOK WITHOUT A SERVER
+  OFFLINE-PREVIEW.html
+      One self-contained file — logo, bird, fonts and content all inlined.
+      Double-click it. Works with no server and no connection, and can be
+      emailed to anyone.
+      It is a SNAPSHOT, not the source. Change content.js and this file does
+      not update; regenerate it or ask for a fresh one.
+
+NOTE ON OPENING index.html DIRECTLY
+  Don't — double-clicking index.html shows the site without the bird and with
+  fallback type, because browsers block CSS masks and web fonts over file://.
+  Use OFFLINE-PREVIEW.html to look, or serve the folder:
+      python3 -m http.server 8000
+
+STILL NEEDED BEFORE LAUNCH
+  opening hours · phone numbers · Google Maps URLs · legal details
+  (company name, registration number, registered address) · Tripadvisor
+  permalinks for the three reviews · descriptions for the seven photos if
+  they are to be switched on. All listed in HANDOVER.md.
