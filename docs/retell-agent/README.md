@@ -7,7 +7,12 @@
 > a mano se l'applicazione non riesce a raggiungere il fornitore. Sono **generati**
 > dal codice: non modificarli a mano.
 
-**The application configures the agent.** Settings → Voice agent → *Sync* sends the
+**The application configures the agent.** Settings → Voice agent → pick a voice, then
+*Sync*. The voice list is read live from the vendor, so no identifier is ever copied by
+hand; the seed's `demo-voice-placeholder` is treated as "not chosen" and refuses to sync
+rather than being sent to the vendor as if it were a voice.
+
+*Sync* sends the
 whole configuration — prompt, opening line, voice, language, timezone, webhook and all
 three tools — from `agent_configurations` to the vendor, and records the agent id it gets
 back. Nothing needs to be typed into the vendor's dashboard.

@@ -87,11 +87,27 @@ export interface VoiceCallEvent {
   readonly recordingUrlDiscarded: boolean
 }
 
+/** One voice a caller could hear, described without any vendor field names. */
+export interface VoiceOption {
+  readonly id: string
+  readonly name: string
+  readonly gender: 'male' | 'female'
+  readonly accent: string | null
+  readonly previewUrl: string | null
+}
+
 export interface VoiceProvider {
   readonly id: VoiceProviderId
 
   /** Push our approved configuration to the vendor. */
   syncAgent(config: VoiceAgentConfig): Promise<Result<VoiceAgentRef>>
+
+  /**
+   * The voices this account may use. Read-only, and needed so choosing a voice
+   * is a list in our own interface rather than an identifier copied by hand out
+   * of the vendor's dashboard into a SQL statement.
+   */
+  listVoices(): Promise<Result<readonly VoiceOption[]>>
 
   /**
    * Verify a webhook against the RAW request body and return the normalised

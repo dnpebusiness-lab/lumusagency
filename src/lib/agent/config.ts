@@ -30,6 +30,18 @@ export interface AgentConfigurationRow {
   locations: { name: string; timezone: string } | { name: string; timezone: string }[] | null
 }
 
+/**
+ * What the seed writes so that a demonstration database is complete without
+ * naming a voice that only exists in one vendor account. It is not a voice:
+ * synchronising it would be rejected by the vendor with an error nobody can
+ * act on, so it is treated here as "not chosen yet".
+ */
+export const PLACEHOLDER_VOICE_ID = 'demo-voice-placeholder'
+
+export function hasRealVoice(voiceId: string | null): boolean {
+  return voiceId !== null && voiceId !== '' && voiceId !== PLACEHOLDER_VOICE_ID
+}
+
 function firstOf<T>(value: T | T[] | null): T | null {
   if (value === null) return null
   return Array.isArray(value) ? (value[0] ?? null) : value
@@ -53,10 +65,10 @@ export function toVoiceAgentConfig(row: AgentConfigurationRow): Result<VoiceAgen
     )
   }
 
-  if (!row.voice_id) {
+  if (!hasRealVoice(row.voice_id)) {
     return err(
       'invalid_input',
-      'No voice has been chosen for this restaurant yet, so there is nothing to synchronise.',
+      'No voice has been chosen for this restaurant yet. Pick one just above, then synchronise.',
       { retryable: false },
     )
   }

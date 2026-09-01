@@ -260,6 +260,44 @@ export async function inviteMember(_prev: ActionState, formData: FormData): Prom
 }
 
 /**
+ * Choose the voice a caller hears.
+ *
+ * Small on its own, and the reason it exists is not: without it the only way
+ * to set a voice is a SQL statement pasted into a database console, and the
+ * value it needs is an identifier that only exists inside the vendor's
+ * dashboard. That is two places to make a typo before a single call is made.
+ */
+export async function updateAgentVoice(
+  _prev: ActionState,
+  formData: FormData,
+): Promise<ActionState> {
+  const context = await requireSession()
+  const organisationId = String(formData.get('organisationId') ?? '')
+  const locationId = String(formData.get('locationId') ?? '')
+  const voiceId = String(formData.get('voiceId') ?? '').trim()
+
+  try {
+    assertPermission(context, organisationId, 'agent:configure')
+  } catch {
+    return { error: 'You do not have permission to configure the agent.' }
+  }
+
+  if (!voiceId) return { error: 'Choose a voice first.' }
+
+  const supabase = await createServerSupabaseClient()
+  const { error } = await supabase
+    .from('agent_configurations')
+    .update({ voice_id: voiceId })
+    .eq('location_id', locationId)
+    .eq('organisation_id', organisationId)
+
+  if (error) return { error: 'We could not save that voice.' }
+
+  revalidatePath('/settings')
+  return { message: 'Voice saved. Synchronise to send it to the phone line.' }
+}
+
+/**
  * Push this restaurant's configuration to the voice vendor.
  *
  * This exists because the alternative — typing twenty fields into the vendor's

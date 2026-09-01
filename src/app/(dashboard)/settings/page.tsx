@@ -8,6 +8,9 @@ import { Card, CardDescription, CardTitle } from '@/components/ui/card'
 import { AddLocationForm } from '@/components/dashboard/add-location-form'
 import { MemberList } from '@/components/dashboard/member-list'
 import { SyncAgentForm } from '@/components/dashboard/sync-agent-form'
+import { VoicePicker } from '@/components/dashboard/voice-picker'
+import { listAvailableVoices } from '@/lib/agent/voices'
+import { hasRealVoice } from '@/lib/agent/config'
 import type { OrgRole } from '@/lib/db/enums'
 import { one } from '@/lib/db/embed'
 
@@ -39,6 +42,10 @@ interface MemberRow {
   status: string
   user_id: string
   profiles: ProfileEmbed | ProfileEmbed[] | null
+}
+
+function canConfigureAgentFor(role: OrgRole): boolean {
+  return can(role, 'agent:configure')
 }
 
 export default async function SettingsPage() {
@@ -73,6 +80,12 @@ export default async function SettingsPage() {
         .select('location_id, is_active, voice_id, retell_agent_id, synced_at')
         .eq('organisation_id', membership.organisationId),
     ])
+
+  // Read-only vendor call, and a failure here must not take the page with it:
+  // the reason is shown next to the picker instead.
+  const voiceList = canConfigureAgentFor(membership.role)
+    ? await listAvailableVoices()
+    : ({ ok: false, reason: 'Your role cannot change the agent configuration.' } as const)
 
   const canManageMembers = can(membership.role, 'members:manage')
   const canCreateLocation = can(membership.role, 'locations:create')
@@ -198,7 +211,9 @@ export default async function SettingsPage() {
                     </div>
                     <div>
                       <dt className="text-ink-500 dark:text-ink-400 text-xs">Voice</dt>
-                      <dd className="mt-0.5 text-sm">{agent?.voice_id ?? 'Not chosen'}</dd>
+                      <dd className="mt-0.5 text-sm">
+                        {hasRealVoice(agent?.voice_id ?? null) ? agent?.voice_id : 'Not chosen yet'}
+                      </dd>
                     </div>
                     <div>
                       <dt className="text-ink-500 dark:text-ink-400 text-xs">Last synchronised</dt>
@@ -214,18 +229,30 @@ export default async function SettingsPage() {
                     <CardDescription className="mt-4">
                       This restaurant has no agent settings yet, so there is nothing to send.
                     </CardDescription>
-                  ) : canConfigureAgent ? (
-                    <div className="mt-4">
+                  ) : !canConfigureAgent ? (
+                    <CardDescription className="mt-4">
+                      Your role cannot change the agent’s configuration.
+                    </CardDescription>
+                  ) : (
+                    <div className="mt-4 space-y-4">
+                      {voiceList.ok ? (
+                        <VoicePicker
+                          organisationId={membership.organisationId}
+                          locationId={location.id}
+                          voices={voiceList.voices}
+                          currentVoiceId={hasRealVoice(agent.voice_id) ? agent.voice_id : null}
+                        />
+                      ) : (
+                        <CardDescription>
+                          The list of voices could not be read from the provider: {voiceList.reason}
+                        </CardDescription>
+                      )}
                       <SyncAgentForm
                         organisationId={membership.organisationId}
                         locationId={location.id}
                         locationName={location.name}
                       />
                     </div>
-                  ) : (
-                    <CardDescription className="mt-4">
-                      Your role cannot change the agent’s configuration.
-                    </CardDescription>
                   )}
                 </Card>
               )

@@ -5,7 +5,13 @@ import Retell from 'retell-sdk'
 import { attempt, err, ok, type Result } from '@/lib/result'
 import { assertInternalEvaluation } from '@/lib/security/gate'
 import { logSafe } from '@/lib/security/redact'
-import type { VoiceAgentConfig, VoiceAgentRef, VoiceCallEvent, VoiceProvider } from '../types'
+import type {
+  VoiceAgentConfig,
+  VoiceAgentRef,
+  VoiceCallEvent,
+  VoiceOption,
+  VoiceProvider,
+} from '../types'
 import { buildRetellAgentPayload, buildRetellLlmPayload } from './definition'
 import { mapRetellEvent } from './mapper'
 
@@ -143,6 +149,26 @@ export class RetellVoiceProvider implements VoiceProvider {
         syncedAt: new Date().toISOString(),
         created: existing === null,
       }
+    }, 'unavailable')
+  }
+
+  async listVoices(): Promise<Result<readonly VoiceOption[]>> {
+    const gate = assertInternalEvaluation()
+    if (!gate.ok) return gate
+
+    const client = new Retell({ apiKey: this.credentials.apiKey })
+
+    return attempt(async () => {
+      const voices = await client.voice.list()
+      return voices
+        .map((voice) => ({
+          id: voice.voice_id,
+          name: voice.voice_name,
+          gender: voice.gender,
+          accent: voice.accent ?? null,
+          previewUrl: voice.preview_audio_url ?? null,
+        }))
+        .sort((a, b) => a.name.localeCompare(b.name))
     }, 'unavailable')
   }
 

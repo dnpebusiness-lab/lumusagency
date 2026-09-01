@@ -1,6 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { INTERNAL_EVALUATION } from '@/lib/security/gate'
-import { toVoiceAgentConfig, type AgentConfigurationRow } from '@/lib/agent/config'
+import {
+  hasRealVoice,
+  PLACEHOLDER_VOICE_ID,
+  toVoiceAgentConfig,
+  type AgentConfigurationRow,
+} from '@/lib/agent/config'
 import type { VoiceAgentConfig } from '@/lib/providers/voice/types'
 
 /**
@@ -12,6 +17,7 @@ import type { VoiceAgentConfig } from '@/lib/providers/voice/types'
  * The vendor is mocked because the point is the payload, not the network.
  */
 
+const voiceList = vi.fn()
 const llmCreate = vi.fn()
 const llmUpdate = vi.fn()
 const agentCreate = vi.fn()
@@ -22,6 +28,7 @@ vi.mock('retell-sdk', () => {
   class MockRetell {
     llm = { create: llmCreate, update: llmUpdate }
     agent = { create: agentCreate, update: agentUpdate, retrieve: agentRetrieve }
+    voice = { list: voiceList }
   }
   return { default: MockRetell, verify: vi.fn() }
 })
@@ -190,6 +197,43 @@ describe('syncAgent', () => {
   })
 })
 
+describe('listVoices', () => {
+  it('describes voices in our own vocabulary, sorted by name', async () => {
+    voiceList.mockResolvedValue([
+      { voice_id: 'v2', voice_name: 'Nina', gender: 'female', accent: 'Irish' },
+      {
+        voice_id: 'v1',
+        voice_name: 'Cimo',
+        gender: 'male',
+        accent: 'American',
+        preview_audio_url: 'https://audio.test/cimo.mp3',
+      },
+    ])
+
+    const result = await provider().listVoices()
+
+    expect(result.ok).toBe(true)
+    if (!result.ok) return
+    expect(result.data.map((v) => v.name)).toEqual(['Cimo', 'Nina'])
+    expect(result.data[0]).toEqual({
+      id: 'v1',
+      name: 'Cimo',
+      gender: 'male',
+      accent: 'American',
+      previewUrl: 'https://audio.test/cimo.mp3',
+    })
+    expect(result.data[1]?.previewUrl).toBeNull()
+  })
+
+  it('stays shut when the activation gate is not open', async () => {
+    process.env.ASTRA_VOICE_ACTIVATION_MODE = ''
+    const result = await provider().listVoices()
+
+    expect(result.ok).toBe(false)
+    expect(voiceList).not.toHaveBeenCalled()
+  })
+})
+
 const ROW: AgentConfigurationRow = {
   location_id: CONFIG.locationId,
   organisation_id: CONFIG.organisationId,
@@ -233,6 +277,18 @@ describe('reading the configuration out of the database', () => {
     expect(result.ok).toBe(false)
     if (result.ok) return
     expect(result.error.message).toMatch(/voice/i)
+  })
+
+  it('treats the seed placeholder as no voice at all', () => {
+    // It reads like a value and the vendor rejects it. Refusing here means the
+    // person sees "pick a voice", not a vendor error code they cannot act on.
+    expect(hasRealVoice(PLACEHOLDER_VOICE_ID)).toBe(false)
+    expect(hasRealVoice('retell-Cimo')).toBe(true)
+
+    const result = toVoiceAgentConfig({ ...ROW, voice_id: PLACEHOLDER_VOICE_ID })
+    expect(result.ok).toBe(false)
+    if (result.ok) return
+    expect(result.error.message).toMatch(/no voice has been chosen/i)
   })
 
   it('refuses a restaurant with recording switched on', () => {

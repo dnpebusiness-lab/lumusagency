@@ -61,7 +61,9 @@ select exists (select 1 from information_schema.columns
 4. Leave `RETELL_WEBHOOK_SECRET` **empty**. Verified against `retell-sdk@5.64.0`: Retell signs
    webhooks with the API key itself, and the code falls back to it.
 5. **Do not build the agent by hand.** The application does it. Deploy first (Steps 4 and 5), then
-   sign in and go to **Settings → Voice agent → Sync**. That one press writes the prompt, the
+   sign in and go to **Settings → Voice agent**. Pick a voice from the list — it is read live
+   from Retell, and the seed ships a placeholder that is not a real voice — then press **Sync**.
+   That one press writes the prompt, the
    opening disclosure, the voice, the languages, the timezone, the webhook URL and all three tool
    functions — including the `x-astra-tool-secret` header and the ten-second timeouts — and stores
    the agent id it gets back in `agent_configurations.retell_agent_id`.
