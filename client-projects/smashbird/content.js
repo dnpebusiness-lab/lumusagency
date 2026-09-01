@@ -429,6 +429,37 @@ window.SMASHBIRD = {
   },
 
   /* ------------------------------------------------------------- catering */
+  /* --------------------------------------------------------------- photos
+     CONVENTION OVER CONFIGURATION.
+     Upload to Cloudinary using the product name as the public ID, lower-case
+     with dashes, inside the folder below. The card picks it up on its own —
+     no code change, no redeploy of this file needed for each photo.
+
+        The Melter                -> smashbird/the-melter
+        Jalapeño Hatch            -> smashbird/jalapeno-hatch
+        Birdhouse Tendies & Fries -> smashbird/birdhouse-tendies-fries
+        Drty Secret VG            -> smashbird/drty-secret-vg
+
+     Any format is fine on upload (JPG, PNG, HEIC). Cloudinary crops to 4:3,
+     picks the focal point automatically, converts to WebP/AVIF per browser and
+     serves the right width per device. Upload the biggest version you have.
+
+     A product with no photo yet simply shows no photo — never a broken icon.
+
+     TO TURN ON: set enabled to true after the first uploads.
+     -------------------------------------------------------------------- */
+  photos: {
+    enabled: false,
+    cloud:   'fodeavol',
+    folder:  'smashbird',
+    // c_fill = crop to fill, g_auto = let Cloudinary find the subject,
+    // f_auto/q_auto = best format and compression for the requesting browser.
+    transform: 'c_fill,g_auto,ar_4:3,f_auto,q_auto',
+    widths: [400, 700],
+    // Optional hero photo — same folder, this public ID. Leave null for none.
+    hero: { id: null, alt: null }
+  },
+
   /* ---------------------------------------------------------------- forms
      Where enquiries go. Right now: nowhere — both forms validate and then say
      so honestly instead of pretending to send.

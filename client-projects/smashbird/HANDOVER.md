@@ -47,13 +47,32 @@ licensed and are **not** in the repository. No unlicensed font file has been
 downloaded. The stack currently falls back to metrically similar grotesques.
 Supply the licensed web-font files, or confirm a licensed web-font service.
 
-**Photography — none.** All photographs were removed at client request, and so
-was the 3D burger. No image files, no `img/` folder.
+**Photography — how to add it.** Photos resolve from Cloudinary **by naming
+convention**, so adding one is an upload, not a code change.
 
-⚠ **This carries a commercial cost.** A food menu without product images converts
-worse — people order with their eyes. Real photography of the food, staff and
-preparation is still recommended before launch, at minimum on the menu cards (the
-card component already supports a per-item image and turns it on automatically).
+| Product | Upload as |
+|---|---|
+| The Melter | `smashbird/the-melter` |
+| Jalapeño Hatch | `smashbird/jalapeno-hatch` |
+| Birdhouse Tendies & Fries | `smashbird/birdhouse-tendies-fries` |
+| Drty Secret VG | `smashbird/drty-secret-vg` |
+
+Rule: lower-case, accents stripped, `&` dropped, spaces to dashes.
+
+Upload any format at the largest size available. Cloudinary crops to 4:3, finds
+the subject itself (`g_auto`), converts to WebP/AVIF per browser and serves 400w
+or 700w by device. Nothing enters the repository, and replacing a photo later
+means re-uploading over the same public ID — no redeploy.
+
+Then set `photos.enabled = true` in `content.js`. One switch for all of them.
+
+A product with no photo yet shows no photo — the image is dropped on error, never
+a broken icon, so photos can arrive a few at a time.
+
+An optional hero photo goes in `photos.hero.id`.
+
+⚠ Still worth saying: a food menu without product images converts worse. This
+makes adding them cheap — the remaining work is a photographer.
 
 **Motion.** Three pieces, all transform/opacity only:
 1. Hero panel — the approved brand lines cycle every 3.6s on a 3D flip.

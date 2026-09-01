@@ -1600,6 +1600,30 @@ safe('boot', function(){
   }
   function run(fn){ try{ fn(); }catch(e){ if(window.console) console.warn(e); } }
 
+  /* Product name -> Cloudinary public ID, so uploading a correctly named file
+     is the whole job. Accents are stripped so "Jalapeño Hatch" resolves. */
+  function slugify(name){
+    return name.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+               .toLowerCase().replace(/&/g, ' ')
+               .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  }
+  function cloudUrl(id, w){
+    var P = D.photos;
+    return 'https://res.cloudinary.com/' + P.cloud + '/image/upload/'
+         + P.transform + ',w_' + w + '/' + P.folder + '/' + id;
+  }
+  function photoFor(item){
+    if(item.image) return { src:item.image, srcset:null };       // explicit wins
+    var P = D.photos;
+    if(!P || !P.enabled) return null;
+    var id = slugify(item.name);
+    return {
+      src: cloudUrl(id, P.widths[P.widths.length - 1]),
+      srcset: P.widths.map(function(w){ return cloudUrl(id, w) + ' ' + w + 'w'; }).join(', ')
+    };
+  }
+
+
   /* Netlify Forms accepts a urlencoded POST to any path on the site. Sending it
      in the background keeps people on the page instead of bouncing them to
      Netlify's own thank-you screen. */
@@ -1659,12 +1683,17 @@ safe('boot', function(){
         .forEach(function(m){
           var c = el('article','mi');
 
-          // Photograph, when one has been supplied for this item.
-          if(m.image){
+          // Photograph, resolved by naming convention (see content.js photos).
+          var ph = photoFor(m);
+          if(ph){
             var im = new Image();
-            im.className = 'mi-shot'; im.src = m.image;
+            im.className = 'mi-shot';
+            im.src = ph.src;
+            if(ph.srcset){ im.srcset = ph.srcset; im.sizes = '(max-width:900px) 90vw, 300px'; }
             im.alt = m.imageAlt || m.name;
             im.loading = 'lazy'; im.decoding = 'async';
+            // Not uploaded yet? Drop the image rather than show a broken icon.
+            im.onerror = function(){ if(im.parentNode) im.parentNode.removeChild(im); };
             c.appendChild(im);
           }
 
