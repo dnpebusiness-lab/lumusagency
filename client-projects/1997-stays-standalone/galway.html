@@ -1,0 +1,2569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1997 Stays Galway | B&B on Newcastle Road</title>
+  <meta name="description" content="1997 Stays is a B&B on Newcastle Road, Galway. Comfortable rooms above Mocha Beans Café, directly opposite University of Galway. Easy contactless check-in. Book direct." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://hotels.cloudbeds.com" />
+  <link rel="preload" as="image" href="/.netlify/images?url=/images/DSCF1908-Migliorato-NR.jpg&w=1800&q=85&fm=webp" fetchpriority="high" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================
+       RESET & BASE
+    ============================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --off-white: #F5F3EF;
+      --near-black: #0D0D0D;
+      --stone: #C8BFB0;
+      --stone-light: #E8E3DC;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Inter', system-ui, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--off-white);
+      color: var(--near-black);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ============================================
+       SCROLL PROGRESS BAR
+    ============================================ */
+    #scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      width: 0;
+      background: var(--near-black);
+      z-index: 200;
+      transition: width 0.1s linear;
+    }
+
+    /* ============================================
+       NAV
+    ============================================ */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 2.5rem;
+      transition: background 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .nav.scrolled {
+      background: rgba(245, 243, 239, 0.95);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 1px 0 var(--stone-light);
+    }
+
+    .nav-wordmark {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      color: #fff;
+      transition: color 0.3s ease;
+      line-height: 1.3;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.45);
+    }
+
+    .nav.scrolled .nav-wordmark {
+      color: var(--near-black);
+      text-shadow: none;
+    }
+
+    .nav-wordmark span {
+      display: block;
+      font-size: 0.7rem;
+      font-family: var(--font-sans);
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      opacity: 0.7;
+      margin-top: 0.1rem;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+    }
+
+    .nav-change-location {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.75);
+      transition: color 0.3s ease, opacity 0.3s ease;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+
+    .nav.scrolled .nav-change-location {
+      color: var(--near-black);
+      opacity: 0.45;
+      text-shadow: none;
+    }
+
+    .nav-change-location:hover {
+      opacity: 1 !important;
+    }
+
+    .nav-phone {
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.03em;
+      color: rgba(255,255,255,0.85);
+      transition: color 0.3s ease;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+
+    .nav.scrolled .nav-phone {
+      color: var(--near-black);
+      opacity: 0.65;
+      text-shadow: none;
+    }
+
+    .nav-book-link {
+      font-family: var(--font-sans);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.5);
+      padding: 0.5rem 1.1rem;
+      transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+
+    .nav.scrolled .nav-book-link {
+      color: var(--near-black);
+      border-color: var(--stone);
+      text-shadow: none;
+    }
+
+    .nav-book-link:hover {
+      background: var(--near-black);
+      color: #fff;
+      border-color: var(--near-black);
+      text-shadow: none;
+    }
+
+    .nav.scrolled .nav-book-link:hover {
+      background: var(--near-black);
+      color: #fff;
+      border-color: var(--near-black);
+    }
+
+    /* ============================================
+       HERO
+    ============================================ */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 2.5rem 5rem;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-color: #1a1a1a;
+      background-image: url('/.netlify/images?url=/images/DSCF1908-Migliorato-NR.jpg&w=1800&q=85&fm=webp');
+      background-size: cover;
+      background-position: center 50%;
+      filter: brightness(0.55);
+      animation: kenburns 20s ease-out forwards;
+      transform-origin: center center;
+    }
+
+    @keyframes kenburns {
+      from { transform: scale(1.0); }
+      to   { transform: scale(1.06); }
+    }
+
+    .hero-content-wrap {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .hero-text {
+      flex: 1;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 1rem;
+    }
+
+    .hero-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(3.2rem, 6vw, 7rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: #fff;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.25rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero-line {
+      display: block;
+    }
+
+    .hero-sub {
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      font-weight: 300;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .hero-tag {
+      font-family: var(--font-sans);
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      color: rgba(255,255,255,0.82);
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 0.3rem 0.8rem;
+      background: rgba(0,0,0,0.2);
+    }
+
+    /* Hero reveal animations */
+    .hero-reveal {
+      animation: heroReveal 0.7s ease both;
+    }
+
+    .hero-eyebrow.hero-reveal {
+      animation-delay: 0.1s;
+    }
+
+    .hero-line.hero-reveal:nth-child(1) {
+      animation-delay: 0.2s;
+    }
+
+    .hero-line.hero-reveal:nth-child(2) {
+      animation-delay: 0.32s;
+    }
+
+    .hero-sub.hero-reveal {
+      animation-delay: 0.5s;
+    }
+
+    .hero-tags.hero-reveal {
+      animation-delay: 0.62s;
+    }
+
+    @keyframes heroReveal {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Hero booking card */
+    .hero-booking-card {
+      position: relative;
+      width: 300px;
+      flex-shrink: 0;
+      background: rgba(245,243,239,0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 1.75rem;
+    }
+
+    .hero-card-label {
+      font-family: var(--font-sans);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--near-black);
+      opacity: 0.55;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-form-group label {
+      font-family: var(--font-sans);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--near-black);
+      opacity: 0.5;
+    }
+
+    .hero-form-group input,
+    .hero-form-group select {
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      color: var(--near-black);
+      background: transparent;
+      border: 1px solid var(--stone);
+      padding: 0.55rem 0.75rem;
+      appearance: none;
+      -webkit-appearance: none;
+      border-radius: 0;
+      width: 100%;
+      transition: border-color 0.25s ease;
+      outline: none;
+    }
+
+    .hero-form-group input:focus,
+    .hero-form-group select:focus {
+      border-color: var(--near-black);
+      box-shadow: 0 0 0 2px rgba(13,13,13,0.12);
+    }
+
+    .hero-form-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%230D0D0D' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      padding-right: 2rem;
+    }
+
+    .hero-form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+    }
+
+    .btn-book-hero {
+      width: 100%;
+      font-family: var(--font-sans);
+      font-size: 0.76rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--near-black);
+      border: none;
+      padding: 0.85rem 1rem;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.25s ease;
+    }
+
+    .btn-book-hero:hover {
+      background: #222;
+    }
+
+    .hero-card-note {
+      font-family: var(--font-sans);
+      font-size: 0.68rem;
+      color: var(--near-black);
+      opacity: 0.45;
+      letter-spacing: 0.03em;
+      margin-top: 0.6rem;
+      text-align: center;
+    }
+
+    /* ============================================
+       TRUST TICKER
+    ============================================ */
+    .ticker-section {
+      border-top: 1px solid var(--stone-light);
+      border-bottom: 1px solid var(--stone-light);
+      padding: 0.85rem 0;
+      overflow: hidden;
+      background: var(--off-white);
+    }
+
+    .ticker-wrapper {
+      overflow: hidden;
+    }
+
+    .ticker-track {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      width: max-content;
+      animation: tickerScroll 40s linear infinite;
+    }
+
+    .ticker-track:hover {
+      animation-play-state: paused;
+    }
+
+    .ticker-item {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--near-black);
+      opacity: 0.7;
+      white-space: nowrap;
+    }
+
+    .ticker-sep {
+      color: var(--stone);
+      flex-shrink: 0;
+    }
+
+    @keyframes tickerScroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ============================================
+       STATS STRIP (dark bg)
+    ============================================ */
+    .stats-strip {
+      background: var(--near-black);
+      padding: 4rem 2.5rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 4vw, 3.5rem);
+      font-weight: 300;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-number span {
+      font-size: 0.55em;
+      opacity: 0.7;
+    }
+
+    .stat-label {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 0.04em;
+    }
+
+    /* ============================================
+       OPENING BLOCK
+    ============================================ */
+    .opening {
+      padding: 9rem 2.5rem 5rem;
+      max-width: 860px;
+    }
+
+    .opening-text {
+      font-family: var(--font-serif);
+      font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+      font-weight: 400;
+      line-height: 1.65;
+      color: var(--near-black);
+    }
+
+    /* ============================================
+       WHY STAY
+    ============================================ */
+    .why-section {
+      padding: 2rem 2.5rem 6rem;
+      border-top: 1px solid var(--stone-light);
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+    }
+
+    .why-left {
+      position: sticky;
+      top: 120px;
+      align-self: start;
+    }
+
+    .why-eyebrow {
+      font-family: var(--font-sans);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--stone);
+      margin-bottom: 1.25rem;
+    }
+
+    .why-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(1.9rem, 3vw, 2.8rem);
+      font-weight: 300;
+      line-height: 1.2;
+      color: var(--near-black);
+      margin-bottom: 1.5rem;
+    }
+
+    .why-body {
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: var(--near-black);
+      opacity: 0.65;
+      max-width: 380px;
+    }
+
+    .why-right {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .why-card {
+      padding: 1.5rem;
+      border: 1px solid var(--stone-light);
+      margin-bottom: 1rem;
+      transition: background 0.2s ease;
+    }
+
+    .why-card:hover {
+      background: rgba(200,191,176,0.08);
+    }
+
+    .why-card-title {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--near-black);
+      margin-bottom: 0.4rem;
+    }
+
+    .why-card-body {
+      font-family: var(--font-sans);
+      font-size: 0.84rem;
+      line-height: 1.65;
+      color: var(--near-black);
+      opacity: 0.7;
+    }
+
+    /* ============================================
+       THE ROOMS
+    ============================================ */
+    .rooms-section {
+      padding: 2rem 2.5rem 6rem;
+      border-top: 1px solid var(--stone-light);
+    }
+
+    .rooms-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      margin-bottom: 3.5rem;
+    }
+
+    .room-featured {
+      display: grid;
+      grid-template-columns: 60% 1fr;
+      gap: 0;
+      margin-bottom: 0;
+      border: 1px solid var(--stone-light);
+    }
+
+    .room-featured-img {
+      overflow: hidden;
+      aspect-ratio: 4/3;
+    }
+
+    .room-featured-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.9s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.4s ease;
+      will-change: transform;
+    }
+
+    .room-featured:hover .room-featured-img img {
+      transform: scale(1.04);
+      filter: brightness(1.06);
+    }
+
+    .room-featured-info {
+      padding: 2.5rem 2.5rem 2.5rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--off-white);
+    }
+
+    .room-name {
+      font-family: var(--font-serif);
+      font-size: 1.9rem;
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--near-black);
+      margin-bottom: 0.5rem;
+    }
+
+    .room-bed-type {
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--near-black);
+      opacity: 0.4;
+      margin-bottom: 1rem;
+    }
+
+    .room-price {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--near-black);
+      opacity: 0.55;
+      margin-bottom: 1rem;
+    }
+
+    .room-desc {
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: var(--near-black);
+      opacity: 0.75;
+      margin-bottom: 0.5rem;
+      flex: 1;
+    }
+
+    .room-features {
+      list-style: none;
+      margin: 0.75rem 0 1.25rem;
+    }
+
+    .room-features li {
+      font-family: var(--font-sans);
+      font-size: 0.78rem;
+      color: var(--near-black);
+      opacity: 0.6;
+      padding: 0.2rem 0;
+    }
+
+    .room-features li::before {
+      content: "·";
+      margin-right: 0.5rem;
+      color: var(--stone);
+    }
+
+    .room-note {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--near-black);
+      opacity: 0.6;
+      margin-bottom: 2rem;
+      line-height: 1.4;
+    }
+
+    .room-link {
+      display: inline-block;
+      font-family: var(--font-sans);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--near-black);
+      border-bottom: 1px solid var(--stone);
+      padding-bottom: 0.2rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s ease;
+    }
+
+    .room-link::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: -100%;
+      width: 100%;
+      height: 1px;
+      background: var(--near-black);
+      transition: left 0.3s ease;
+    }
+
+    .room-link:hover::after {
+      left: 0;
+    }
+
+    .rooms-row-two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-left: 1px solid var(--stone-light);
+      border-right: 1px solid var(--stone-light);
+      border-bottom: 1px solid var(--stone-light);
+    }
+
+    .room-card {
+      border-right: 1px solid var(--stone-light);
+    }
+
+    .room-card:last-child {
+      border-right: none;
+    }
+
+    .room-card-img {
+      overflow: hidden;
+      aspect-ratio: 4/3;
+    }
+
+    .room-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.9s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.4s ease;
+      will-change: transform;
+    }
+
+    .room-card:hover .room-card-img img {
+      transform: scale(1.06);
+      filter: brightness(1.06);
+    }
+
+    .room-card-info {
+      padding: 1.75rem 2rem 2rem;
+    }
+
+    .room-single-row {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      border-left: 1px solid var(--stone-light);
+      border-right: 1px solid var(--stone-light);
+      border-bottom: 1px solid var(--stone-light);
+      align-items: center;
+    }
+
+    .room-single-img {
+      overflow: hidden;
+    }
+
+    .room-single-img img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      transition: filter 0.4s ease;
+    }
+
+    .room-single-img img:hover {
+      filter: brightness(1.08);
+    }
+
+    .room-single-info {
+      padding: 1.75rem 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .room-single-info .room-name {
+      font-size: 1.5rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .room-single-meta {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    /* ============================================
+       AMENITIES
+    ============================================ */
+    .amenities-section {
+      padding: 5rem 2.5rem;
+      border-top: 1px solid var(--stone-light);
+      background: var(--off-white);
+    }
+
+    .amenities-inner {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .amenities-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(1.9rem, 3vw, 2.6rem);
+      font-weight: 300;
+      color: var(--near-black);
+      margin-bottom: 2.5rem;
+    }
+
+    .amenities-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+
+    .amenity-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--stone-light);
+      margin: -1px 0 0 -1px;
+      font-family: var(--font-sans);
+      font-size: 0.84rem;
+      color: var(--near-black);
+    }
+
+    .amenity-item svg {
+      flex-shrink: 0;
+      color: var(--near-black);
+      opacity: 0.6;
+    }
+
+    /* ============================================
+       CAFÉ (dark bg)
+    ============================================ */
+    .cafe-section {
+      background: var(--near-black);
+      display: grid;
+      grid-template-columns: 1fr 60%;
+      min-height: 520px;
+    }
+
+    .cafe-text-side {
+      padding: 5rem 4rem 5rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .cafe-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(1.9rem, 3.2vw, 2.8rem);
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      color: #fff;
+    }
+
+    .cafe-body {
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.72);
+      margin-bottom: 2.5rem;
+      max-width: 420px;
+    }
+
+    .cafe-badge {
+      display: inline-block;
+      border: 1px solid rgba(200,191,176,0.4);
+      color: var(--stone);
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.6rem 1.2rem;
+    }
+
+    .cafe-image-side {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .cafe-image-side img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ============================================
+       LOCATION
+    ============================================ */
+    .location-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid var(--stone-light);
+    }
+
+    .location-text {
+      padding: 5rem 4rem 5rem 2.5rem;
+      border-right: 1px solid var(--stone-light);
+    }
+
+    .location-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+      font-weight: 400;
+      color: var(--near-black);
+      margin-bottom: 2.5rem;
+    }
+
+    .location-list {
+      list-style: none;
+      margin-bottom: 2.5rem;
+    }
+
+    .location-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--stone-light);
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+    }
+
+    .location-list li:first-child {
+      border-top: 1px solid var(--stone-light);
+    }
+
+    .location-list .place-name {
+      font-weight: 400;
+      color: var(--near-black);
+    }
+
+    .location-list .place-dist {
+      font-size: 0.78rem;
+      color: var(--near-black);
+      opacity: 0.5;
+      font-weight: 300;
+      white-space: nowrap;
+      margin-left: 1rem;
+    }
+
+    .location-address {
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      line-height: 1.6;
+      color: var(--near-black);
+      opacity: 0.55;
+      padding: 1.25rem;
+      border: 1px solid var(--stone-light);
+      margin-top: 0.5rem;
+    }
+
+    .location-map {
+      overflow: hidden;
+    }
+
+    .location-map iframe {
+      width: 100%;
+      height: 100%;
+      min-height: 480px;
+      border: none;
+      display: block;
+      filter: grayscale(0.35);
+    }
+
+    /* ============================================
+       REVIEWS (dark bg)
+    ============================================ */
+    .reviews-section {
+      background: var(--near-black);
+      padding: 6rem 2.5rem;
+    }
+
+    .reviews-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300;
+      color: #fff;
+      margin-bottom: 3rem;
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .review-card {
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 2rem;
+    }
+
+    .review-quote {
+      font-family: var(--font-serif);
+      font-size: 3rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.2);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .review-stars {
+      color: var(--stone);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+
+    .review-text {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      font-style: italic;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.82);
+      margin-bottom: 1.5rem;
+    }
+
+    .review-author {
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      color: #fff;
+      font-weight: 500;
+    }
+
+    .review-meta {
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.45);
+      margin-top: 0.2rem;
+    }
+
+    .reviews-badges {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .review-badge {
+      border: 1px solid rgba(200,191,176,0.35);
+      padding: 0.6rem 1.25rem;
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      color: var(--stone);
+      letter-spacing: 0.08em;
+    }
+
+    /* ============================================
+       FAQ
+    ============================================ */
+    .faq-section {
+      padding: 6rem 2.5rem;
+      border-top: 1px solid var(--stone-light);
+      background: var(--off-white);
+    }
+
+    .faq-inner {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .faq-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 300;
+      color: var(--near-black);
+      margin-bottom: 3rem;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--stone-light);
+    }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 1.25rem 0;
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--near-black);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-question::after {
+      content: '+';
+      font-size: 1.2rem;
+      color: var(--stone);
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+      margin-left: 1rem;
+    }
+
+    .faq-question[aria-expanded="true"]::after {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .faq-answer.open {
+      max-height: 300px;
+    }
+
+    .faq-answer-inner {
+      padding: 0 0 1.25rem;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      line-height: 1.75;
+      color: var(--near-black);
+      opacity: 0.7;
+    }
+
+    /* ============================================
+       BOOKING
+    ============================================ */
+    .booking-section {
+      padding: 6rem 2.5rem;
+      border-top: 1px solid var(--stone-light);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+      background: var(--off-white);
+    }
+
+    .booking-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      color: var(--near-black);
+      margin-bottom: 0.5rem;
+    }
+
+    .booking-sub {
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      color: var(--near-black);
+      opacity: 0.55;
+      margin-bottom: 2rem;
+      line-height: 1.5;
+    }
+
+    .booking-contact {
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--stone-light);
+    }
+
+    .booking-contact p {
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      line-height: 1.9;
+      color: var(--near-black);
+      opacity: 0.65;
+    }
+
+    .booking-contact a {
+      color: var(--near-black);
+      opacity: 1;
+      border-bottom: 1px solid var(--stone);
+    }
+
+    .booking-contact a:hover {
+      opacity: 0.7;
+    }
+
+    .booking-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-group label {
+      font-family: var(--font-sans);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--near-black);
+      opacity: 0.55;
+    }
+
+    .form-group input,
+    .form-group select {
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      color: var(--near-black);
+      background: transparent;
+      border: 1px solid var(--stone);
+      padding: 0.7rem 0.9rem;
+      appearance: none;
+      -webkit-appearance: none;
+      border-radius: 0;
+      width: 100%;
+      transition: border-color 0.25s ease;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--near-black);
+      outline: 2px solid transparent;
+      box-shadow: 0 0 0 2px rgba(13,13,13,0.15);
+    }
+
+    .form-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230D0D0D' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.9rem center;
+      padding-right: 2.5rem;
+    }
+
+    .btn-book {
+      position: relative;
+      font-family: var(--font-sans);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--near-black);
+      border: none;
+      padding: 1rem 2rem;
+      cursor: pointer;
+      overflow: hidden;
+      transition: color 0.3s ease;
+      margin-top: 0.5rem;
+    }
+
+    .btn-book::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: #333;
+      transform: translateX(-101%);
+      transition: transform 0.3s ease;
+      z-index: 0;
+    }
+
+    .btn-book:hover::after {
+      transform: translateX(0);
+    }
+
+    .btn-book span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .form-note {
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      color: var(--near-black);
+      opacity: 0.45;
+      letter-spacing: 0.04em;
+      margin-top: 0.25rem;
+    }
+
+    /* ============================================
+       CTA (dark bg)
+    ============================================ */
+    .cta-section {
+      background: var(--near-black);
+      padding: 7rem 2.5rem;
+      text-align: center;
+    }
+
+    .cta-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(2.2rem, 4vw, 3.8rem);
+      font-weight: 300;
+      color: #fff;
+      margin-bottom: 1rem;
+      line-height: 1.15;
+    }
+
+    .cta-sub {
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 3rem;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .cta-btn-primary {
+      background: #fff;
+      color: var(--near-black);
+      padding: 0.9rem 2rem;
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      display: inline-block;
+      transition: background 0.25s ease;
+    }
+
+    .cta-btn-primary:hover {
+      background: var(--stone-light);
+    }
+
+    .cta-btn-secondary {
+      border: 1px solid rgba(255,255,255,0.4);
+      color: #fff;
+      padding: 0.9rem 2rem;
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      display: inline-block;
+      transition: border-color 0.25s ease;
+    }
+
+    .cta-btn-secondary:hover {
+      border-color: rgba(255,255,255,0.8);
+    }
+
+    /* ============================================
+       FOOTER (off-white bg — near-black text)
+    ============================================ */
+    .footer {
+      border-top: 1px solid var(--stone-light);
+      padding: 2rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      background: var(--off-white);
+    }
+
+    .footer-copy {
+      font-family: var(--font-sans);
+      font-size: 0.78rem;
+      color: var(--near-black);
+      opacity: 0.45;
+      line-height: 1.6;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-links a {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      color: var(--near-black);
+      opacity: 0.4;
+      transition: opacity 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      opacity: 0.8;
+    }
+
+    /* ============================================
+       MOBILE STICKY BOOK BUTTON (dark bg)
+    ============================================ */
+    .sticky-book {
+      display: none;
+      position: fixed;
+      bottom: 1.25rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(120%);
+      z-index: 90;
+      background: var(--near-black);
+      color: #fff;
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.9rem 2.2rem;
+      white-space: nowrap;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      box-shadow: 0 4px 20px rgba(13,13,13,0.2);
+    }
+
+    .sticky-book.visible {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ============================================
+       FADE-UP (scroll animation)
+    ============================================ */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(36px) rotateX(5deg);
+      transform-origin: top center;
+      transition: opacity 0.75s ease, transform 0.85s cubic-bezier(0.16,1,0.3,1);
+      will-change: transform, opacity;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0) rotateX(0);
+    }
+
+    /* ============================================
+       RESPONSIVE
+    ============================================ */
+    @media (max-width: 900px) {
+      .nav {
+        padding: 1rem 1.5rem;
+      }
+
+      .nav-phone {
+        display: none;
+      }
+
+      .hero {
+        padding: 0 1.5rem 4rem;
+      }
+
+      .hero-booking-card {
+        display: none;
+      }
+
+      .opening {
+        padding: 7rem 1.5rem 3.5rem;
+      }
+
+      .why-section {
+        padding: 2rem 1.5rem 4rem;
+      }
+
+      .why-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .why-left {
+        position: static;
+      }
+
+      .rooms-section {
+        padding: 2rem 1.5rem 4rem;
+      }
+
+      .room-featured {
+        grid-template-columns: 1fr;
+      }
+
+      .room-featured-img {
+        aspect-ratio: 16/9;
+      }
+
+      .room-featured-info {
+        padding: 2rem;
+      }
+
+      .rooms-row-two {
+        grid-template-columns: 1fr;
+      }
+
+      .room-card {
+        border-right: none;
+        border-bottom: 1px solid var(--stone-light);
+      }
+
+      .room-single-row {
+        grid-template-columns: 1fr;
+      }
+
+      .room-single-img img {
+        height: 220px;
+        width: 100%;
+      }
+
+      .room-single-info {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem;
+        align-items: flex-start;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem 3rem;
+      }
+
+      .stats-strip {
+        padding: 3rem 1.5rem;
+      }
+
+      .cafe-section {
+        grid-template-columns: 1fr;
+      }
+
+      .cafe-image-side {
+        order: -1;
+        height: 280px;
+      }
+
+      .cafe-text-side {
+        padding: 3rem 1.5rem;
+      }
+
+      .amenities-section {
+        padding: 3.5rem 1.5rem;
+      }
+
+      .amenities-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .location-section {
+        grid-template-columns: 1fr;
+      }
+
+      .location-text {
+        padding: 3.5rem 1.5rem;
+        border-right: none;
+        border-bottom: 1px solid var(--stone-light);
+      }
+
+      .location-map iframe {
+        min-height: 320px;
+      }
+
+      .reviews-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .reviews-section {
+        padding: 4rem 1.5rem;
+      }
+
+      .faq-section {
+        padding: 4rem 1.5rem;
+      }
+
+      .booking-section {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        padding: 4rem 1.5rem;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .cta-section {
+        padding: 5rem 1.5rem;
+      }
+
+      .footer {
+        padding: 1.5rem;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .sticky-book {
+        display: block;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero-heading {
+        font-size: clamp(2.6rem, 10vw, 3.5rem);
+      }
+
+      .nav-wordmark {
+        font-size: 0.9rem;
+      }
+
+      .nav-change-location {
+        display: none;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .amenities-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .reviews-badges {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+    }
+
+    /* ============================================
+       REDUCED MOTION
+    ============================================ */
+    @media (prefers-reduced-motion: reduce) {
+      .hero-reveal {
+        animation: none;
+        opacity: 1;
+      }
+
+      .hero-bg {
+        animation: none;
+      }
+
+      .ticker-track {
+        animation: none;
+      }
+
+      .fade-up {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      html {
+        scroll-behavior: auto;
+      }
+    }
+
+    /* ============================================
+       BOOKING WIDGET SECTION
+    ============================================ */
+    .booking-widget-section {
+      padding: 5rem 2.5rem;
+      border-bottom: 1px solid var(--stone-light);
+      background: var(--off-white);
+    }
+
+    .booking-widget-inner {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .booking-widget-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300;
+      color: var(--near-black);
+      margin-bottom: 0.5rem;
+    }
+
+    .booking-widget-sub {
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      color: var(--near-black);
+      opacity: 0.55;
+      margin-bottom: 2.5rem;
+    }
+
+    .booking-fallback {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--stone-light);
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      color: var(--near-black);
+      opacity: 0.7;
+    }
+
+    .booking-fallback p { margin-bottom: 1rem; }
+
+    .btn-book-direct {
+      display: inline-block;
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--near-black);
+      padding: 0.85rem 2rem;
+      transition: background 0.25s ease;
+      cursor: pointer;
+    }
+
+    .btn-book-direct:hover { background: #333; }
+
+    /* ============================================
+       CONTACT SECTION
+    ============================================ */
+    .contact-section {
+      padding: 6rem 2.5rem;
+      border-top: 1px solid var(--stone-light);
+      background: var(--off-white);
+    }
+
+    .contact-inner {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .contact-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300;
+      color: var(--near-black);
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-sub {
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      color: var(--near-black);
+      opacity: 0.55;
+      margin-bottom: 2rem;
+    }
+
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .contact-details a {
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      color: var(--near-black);
+      opacity: 0.75;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .contact-details a:hover { opacity: 1; }
+
+    /* ── 3D ROOM CARD HOVER DEPTH ── */
+    .room-featured {
+      transform-style: preserve-3d;
+    }
+    .room-card {
+      perspective: 900px;
+    }
+    .room-single-row {
+      perspective: 900px;
+    }
+    .room-single-img img {
+      transition: transform 0.9s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.4s ease;
+      will-change: transform;
+    }
+    .room-single-row:hover .room-single-img img {
+      transform: scale(1.04);
+    }
+
+    /* ── IMAGE FADE-IN ON LOAD ── */
+    .room-featured-img img,
+    .room-card-img img,
+    .room-single-img img,
+    .cafe-image-side img {
+      opacity: 0;
+      transition: opacity 0.55s ease, transform 0.9s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.4s ease;
+    }
+    .img-loaded {
+      opacity: 1 !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SCROLL PROGRESS -->
+  <div id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <header role="banner">
+    <nav class="nav" id="main-nav" aria-label="Main navigation">
+      <div class="nav-wordmark">
+        1997 Stays
+        <span>Newcastle Road · Galway</span>
+      </div>
+      <div class="nav-right">
+        <a class="nav-change-location" href="index.html" aria-label="All 1997 Stays locations">← All locations</a>
+        <a class="nav-phone" href="#contact" aria-label="Contact us">Contact Us</a>
+        <a class="nav-book-link" href="#booking">Book a Room</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" aria-label="Hero — 1997 Stays Galway">
+    <div class="hero-bg" role="img" aria-label="View of the guesthouse on Newcastle Road, Galway"></div>
+    <div class="hero-content-wrap">
+      <div class="hero-text">
+        <p class="hero-eyebrow hero-reveal">Newcastle Road, Galway</p>
+        <h1 class="hero-heading">
+          <span class="hero-line hero-reveal">Your B&amp;B</span>
+          <span class="hero-line hero-reveal">in Galway.</span>
+        </h1>
+        <p class="hero-sub hero-reveal">25 Lower Newcastle Road · Galway</p>
+        <div class="hero-tags hero-reveal">
+          <span class="hero-tag">Comfortable rooms</span>
+          <span class="hero-tag">University of Galway opposite</span>
+          <span class="hero-tag">Easy contactless check-in</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKING WIDGET -->
+  <section class="booking-widget-section" id="booking" aria-label="Book your stay at 1997 Stays Galway">
+    <div class="booking-widget-inner">
+      <h2 class="booking-widget-heading">Book Your Stay</h2>
+      <p class="booking-widget-sub">Check availability and reserve your room directly.</p>
+      <div class="booking-widget-embed">
+        <script src="https://mochabeansgroup.cloudbeds.com/widget/load/Sa32sZ/vert" async></script>
+      </div>
+      <div class="booking-fallback">
+        <p>If the widget above does not load, book directly on our reservations page.</p>
+        <a class="btn-book-direct" href="https://hotels.cloudbeds.com/en/reservation/Sa32sZ">Book Direct</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST TICKER -->
+  <div class="ticker-section" aria-hidden="true">
+    <div class="ticker-wrapper">
+      <div class="ticker-track">
+        <span class="ticker-item">4.4 / 5 Google rating</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">638+ verified reviews</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">10% off at Mocha Beans</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">1 min walk to University of Galway</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">2 min walk to Galway University Hospital</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">Contactless self check-in</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">Direct booking, no added fees</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">4.4 / 5 Google rating</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">638+ verified reviews</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">10% off at Mocha Beans</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">1 min walk to University of Galway</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">2 min walk to Galway University Hospital</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">Contactless self check-in</span>
+        <span class="ticker-sep">·</span>
+        <span class="ticker-item">Direct booking, no added fees</span>
+        <span class="ticker-sep">·</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS STRIP (dark) -->
+  <section class="stats-strip" aria-label="Property highlights">
+    <div class="stats-grid">
+      <div class="stat-item fade-up">
+        <div class="stat-number" data-target="4.4" data-static="true">4.4 <span>/5</span></div>
+        <div class="stat-label">Google rating</div>
+      </div>
+      <div class="stat-item fade-up">
+        <div class="stat-number" data-target="638" data-suffix="+">0+</div>
+        <div class="stat-label">verified reviews</div>
+      </div>
+      <div class="stat-item fade-up">
+        <div class="stat-number" data-target="10" data-suffix="%">0%</div>
+        <div class="stat-label">café discount</div>
+      </div>
+      <div class="stat-item fade-up">
+        <div class="stat-number" data-static="true">1 <span>min</span></div>
+        <div class="stat-label">to University of Galway</div>
+      </div>
+      <div class="stat-item fade-up">
+        <div class="stat-number" data-static="true">24 <span>hr</span></div>
+        <div class="stat-label">property access</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPENING BLOCK -->
+  <section aria-label="About 1997 Stays Galway">
+    <div class="opening fade-up">
+      <p class="opening-text">A guesthouse on Newcastle Road, Galway. The University of Galway is directly across the road. Galway University Hospital is two minutes away. The city centre is a short walk. Simple contactless check-in, fast WiFi and Mocha Beans café on the ground floor.</p>
+    </div>
+  </section>
+
+  <!-- THE ROOMS -->
+  <section class="rooms-section" id="rooms" aria-label="Our rooms">
+    <h2 class="rooms-heading fade-up">The Rooms</h2>
+
+    <!-- Room 1: Poster Room — featured -->
+    <div class="room-featured fade-up" role="article" aria-label="Poster Room Kingsize">
+      <div class="room-featured-img">
+        <img
+          src="/.netlify/images?url=/images/DSCF1887.jpg&w=1600&q=82&fm=webp"
+          alt="Poster Room Kingsize at 1997 Stays Galway, a king size four-poster bed"
+          loading="eager"
+        />
+      </div>
+      <div class="room-featured-info">
+        <div>
+          <h3 class="room-name">Poster Room Kingsize</h3>
+          <p class="room-bed-type">King bed</p>
+          <p class="room-price">From €139 / night</p>
+          <p class="room-desc">King size four-poster bed, high ceiling and good space. The largest room in the property. Works well for couples or for anyone who wants a little more room.</p>
+          <ul class="room-features" aria-label="Room features">
+            <li>King four-poster bed</li>
+            <li>En-suite bathroom</li>
+            <li>Most spacious room in the property</li>
+          </ul>
+          <p class="room-note">"The kind of room you notice when you walk in."</p>
+        </div>
+        <a
+          class="room-link"
+          href="https://hotels.cloudbeds.com/en/reservation/Sa32sZ"
+          aria-label="Book the Poster Room Kingsize on Cloudbeds"
+        >Book this room →</a>
+      </div>
+    </div>
+
+    <!-- Row 2: Queen Room + The Triple -->
+    <div class="rooms-row-two">
+      <!-- Queen Room -->
+      <div class="room-card fade-up" role="article" aria-label="Deluxe Queen Double">
+        <div class="room-card-img">
+          <img
+            src="/.netlify/images?url=/images/DSCF1867.jpg&w=900&q=80&fm=webp"
+            alt="Deluxe Queen Double room at 1997 Stays Galway"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="room-card-info">
+          <h3 class="room-name">Deluxe Queen Double</h3>
+          <p class="room-bed-type">Queen bed</p>
+          <p class="room-price">From €119 / night</p>
+          <p class="room-desc">Queen bed, good natural light and a quiet position in the building. Works well for couples and solo stays.</p>
+          <ul class="room-features" aria-label="Room features">
+            <li>En-suite bathroom</li>
+            <li>Natural light</li>
+            <li>Quiet room</li>
+          </ul>
+          <a
+            class="room-link"
+            href="https://hotels.cloudbeds.com/en/reservation/Sa32sZ"
+            aria-label="Book the Deluxe Queen Double on Cloudbeds"
+          >Book this room →</a>
+        </div>
+      </div>
+
+      <!-- Triple Room -->
+      <div class="room-card fade-up" role="article" aria-label="Triple Room">
+        <div class="room-card-img">
+          <img
+            src="/.netlify/images?url=/images/DSCF1853.jpg&w=900&q=80&fm=webp"
+            alt="Triple Room at 1997 Stays Galway, double bed with single bunk above"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="room-card-info">
+          <h3 class="room-name">Triple Room</h3>
+          <p class="room-bed-type">Double + single bunk</p>
+          <p class="room-price">From €99 / night</p>
+          <p class="room-desc">Double bed with a single bunk above. Set up for three, comfortable for two. Good value for families and small groups.</p>
+          <ul class="room-features" aria-label="Room features">
+            <li>Private bathroom across the hall</li>
+            <li>Sleeps up to 3</li>
+            <li>Good value for families and groups</li>
+          </ul>
+          <a
+            class="room-link"
+            href="https://hotels.cloudbeds.com/en/reservation/Sa32sZ"
+            aria-label="Book the Triple Room on Cloudbeds"
+          >Book this room →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 3: Cosy Single -->
+    <div class="room-single-row fade-up" role="article" aria-label="Cosy Single">
+      <div class="room-single-img">
+        <img
+          src="/.netlify/images?url=/images/DSCF1873.jpg&w=900&q=80&fm=webp"
+          alt="Cosy Single room at 1997 Stays Galway"
+          loading="lazy"
+        />
+      </div>
+      <div class="room-single-info">
+        <div class="room-single-meta">
+          <h3 class="room-name">Cosy Single</h3>
+          <p class="room-bed-type">Single bed</p>
+          <p class="room-price">From €79 / night</p>
+          <p class="room-desc" style="margin-bottom:0.5rem;">A compact, well-organised room with everything you need. Desk, fast WiFi and an en-suite shower room. Popular with researchers, doctors visiting the hospital and anyone who needs a practical base in Galway.</p>
+          <ul class="room-features" aria-label="Room features">
+            <li>En-suite shower</li>
+            <li>Work desk</li>
+            <li>Fast WiFi</li>
+          </ul>
+        </div>
+        <a
+          class="room-link"
+          href="https://hotels.cloudbeds.com/en/reservation/Sa32sZ"
+          aria-label="Book the Cosy Single on Cloudbeds"
+          style="white-space:nowrap;"
+        >Book this room →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- AMENITIES -->
+  <section class="amenities-section" aria-label="Property amenities">
+    <div class="amenities-inner">
+      <h2 class="amenities-heading fade-up">What's included</h2>
+      <div class="amenities-grid">
+        <div class="amenity-item fade-up">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="2,8 6,12 14,4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Fast WiFi</span>
+        </div>
+        <div class="amenity-item fade-up">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="2,8 6,12 14,4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Contactless check-in</span>
+        </div>
+        <div class="amenity-item fade-up">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="2,8 6,12 14,4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>10% off at Mocha Beans café</span>
+        </div>
+        <div class="amenity-item fade-up">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="2,8 6,12 14,4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Smoke-free guesthouse</span>
+        </div>
+        <div class="amenity-item fade-up">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="2,8 6,12 14,4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Opposite University of Galway</span>
+        </div>
+        <div class="amenity-item fade-up">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="2,8 6,12 14,4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Near University Hospital Galway</span>
+        </div>
+        <div class="amenity-item fade-up">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="2,8 6,12 14,4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Direct booking — no fees</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE CAFÉ (dark) -->
+  <section class="cafe-section" aria-label="Mocha Beans Café downstairs">
+    <div class="cafe-text-side">
+      <h2 class="cafe-heading">Café<br>downstairs.</h2>
+      <p class="cafe-body">Mocha Beans café is on the ground floor of the building. It is one of the better-known coffee spots in Galway and a convenient extra for guests staying at 1997 Stays. As a guest, you receive 10% off anything on the menu. Show your booking confirmation at the counter. No voucher code needed.</p>
+      <div class="cafe-badge" role="note" aria-label="10% off as a guest benefit, no code needed">10% off &nbsp;·&nbsp; guest benefit &nbsp;·&nbsp; no code needed</div>
+    </div>
+    <div class="cafe-image-side">
+      <img
+        src="/.netlify/images?url=/images/DSCF7190%20(3).jpg&w=1400&q=82&fm=webp"
+        alt="Inside Mocha Beans Café — the coffee shop below 1997 Stays on Newcastle Road, Galway"
+        loading="lazy"
+      />
+    </div>
+  </section>
+
+  <!-- LOCATION -->
+  <section class="location-section" id="location" aria-label="Location and nearby places">
+    <div class="location-text fade-up">
+      <h2 class="location-heading">Where we are</h2>
+      <ul class="location-list" aria-label="Nearby landmarks and distances">
+        <li>
+          <span class="place-name">University of Galway</span>
+          <span class="place-dist">1 min walk, literally across the road</span>
+        </li>
+        <li>
+          <span class="place-name">Galway University Hospital</span>
+          <span class="place-dist">2 min walk</span>
+        </li>
+        <li>
+          <span class="place-name">Galway Cathedral</span>
+          <span class="place-dist">5 min walk</span>
+        </li>
+        <li>
+          <span class="place-name">Eyre Square</span>
+          <span class="place-dist">10 min walk</span>
+        </li>
+        <li>
+          <span class="place-name">Spanish Arch</span>
+          <span class="place-dist">12 min walk</span>
+        </li>
+        <li>
+          <span class="place-name">City centre / Shop Street</span>
+          <span class="place-dist">10–12 min walk</span>
+        </li>
+        <li>
+          <span class="place-name">Salthill seafront</span>
+          <span class="place-dist">25 min walk or 5 min taxi</span>
+        </li>
+      </ul>
+      <address class="location-address" aria-label="Our address">
+        25 Lower Newcastle Road, Galway, H91 X466<br>
+        Above Mocha Beans Café
+      </address>
+    </div>
+    <div class="location-map">
+      <iframe
+        src="https://maps.google.com/maps?q=25+Lower+Newcastle+Road+Galway+H91+X466+Ireland&t=&z=15&ie=UTF8&iwloc=&output=embed"
+        title="Google Map showing 25 Lower Newcastle Road, Galway"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        aria-label="Map of 1997 Stays Galway location"
+      ></iframe>
+    </div>
+  </section>
+
+  <!-- REVIEWS (dark) -->
+  <!-- REVIEWS: Replace with real verified guest reviews before publishing -->
+  <section class="reviews-section" aria-label="Guest reviews">
+    <h2 class="reviews-heading fade-up">What guests say</h2>
+    <div class="reviews-grid">
+      <div class="review-card fade-up" role="article" aria-label="Review by Sarah M.">
+        <div class="review-quote">"</div>
+        <p class="review-stars">★★★★★</p>
+        <p class="review-text">Great location for anyone visiting the university. Literally across the road. Clean rooms, easy self check-in with the PIN code, and the coffee downstairs is genuinely excellent.</p>
+        <p class="review-author">Sarah M.</p>
+        <p class="review-meta">Google · March 2026</p>
+      </div>
+      <div class="review-card fade-up" role="article" aria-label="Review by James T.">
+        <div class="review-quote">"</div>
+        <p class="review-stars">★★★★★</p>
+        <p class="review-text">Stayed for a work trip to the hospital. Five minutes by foot. Room was quiet, well-kept and comfortable. The café discount is a nice touch — used it every morning.</p>
+        <p class="review-author">James T.</p>
+        <p class="review-meta">Booking.com · February 2026</p>
+      </div>
+      <div class="review-card fade-up" role="article" aria-label="Review by A. O'Brien">
+        <div class="review-quote">"</div>
+        <p class="review-stars">★★★★★</p>
+        <p class="review-text">Really well-situated B&amp;B in a good part of Galway. The Mocha Beans coffee is excellent and the 10% discount made breakfast very reasonable. Would book again.</p>
+        <p class="review-author">A. O'Brien</p>
+        <p class="review-meta">Google · April 2026</p>
+      </div>
+    </div>
+    <div class="reviews-badges">
+      <span class="review-badge">4.4 / 5 · Google Reviews</span>
+      <span class="review-badge">638+ · Booking.com</span>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section" id="faq" aria-label="Frequently asked questions">
+    <div class="faq-inner">
+      <h2 class="faq-heading fade-up">Questions</h2>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" aria-controls="faq-1">
+          How does check-in work?
+        </button>
+        <div class="faq-answer" id="faq-1" role="region">
+          <div class="faq-answer-inner">We send a PIN code to your email before arrival. You enter it at the door — no front desk, no waiting. Access is available 24 hours a day. If you have any issues, there's a number to call.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" aria-controls="faq-2">
+          Is there parking nearby?
+        </button>
+        <div class="faq-answer" id="faq-2" role="region">
+          <div class="faq-answer-inner">There is street parking on Newcastle Road and the surrounding streets. Paid car parks are available close to the city centre. We'd recommend checking current parking arrangements on arrival as availability varies.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" aria-controls="faq-3">
+          How far is the guesthouse from the hospital?
+        </button>
+        <div class="faq-answer" id="faq-3" role="region">
+          <div class="faq-answer-inner">Galway University Hospital is approximately a 2-minute walk from the front door. This makes 1997 Stays one of the most convenient places to stay for anyone visiting patients or working at the hospital.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" aria-controls="faq-4">
+          How do I get the café discount?
+        </button>
+        <div class="faq-answer" id="faq-4" role="region">
+          <div class="faq-answer-inner">Show your booking confirmation at the Mocha Beans counter. The 10% discount applies to everything on the menu — coffee, food, pastries. No voucher code needed. Works for the duration of your stay.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" aria-controls="faq-5">
+          What time is check-in and check-out?
+        </button>
+        <div class="faq-answer" id="faq-5" role="region">
+          <div class="faq-answer-inner">Check-in is from 3pm. Check-out is by 11am. Because check-in is contactless, you're not tied to someone being at the desk — the PIN works as soon as your check-in time arrives.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" aria-controls="faq-6">
+          Is there WiFi in the rooms?
+        </button>
+        <div class="faq-answer" id="faq-6" role="region">
+          <div class="faq-answer-inner">Yes. Fast broadband is available throughout the property. The WiFi details are in the welcome information you'll receive before arrival. It works reliably for remote work, video calls and general use.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" aria-controls="faq-7">
+          Are the rooms en-suite?
+        </button>
+        <div class="faq-answer" id="faq-7" role="region">
+          <div class="faq-answer-inner">Three of the four rooms have private en-suite bathrooms. The Triple Room has a private bathroom directly across the hallway — it's not shared with other guests. Details are listed on each room page.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" aria-controls="faq-8">
+          Can I book directly instead of using a booking site?
+        </button>
+        <div class="faq-answer" id="faq-8" role="region">
+          <div class="faq-answer-inner">Yes, and we would encourage it. Booking direct means no commission is taken by a third party, so you get the best available rate and we receive the full amount. Use the form on this page or call us directly.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" aria-controls="faq-9">
+          Is the guesthouse suitable for longer stays?
+        </button>
+        <div class="faq-answer" id="faq-9" role="region">
+          <div class="faq-answer-inner">Many of our guests stay for a week or more — medical placements, university visits, research trips. The location works well for it. Get in touch directly if you're planning a longer stay and we can discuss availability.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" aria-controls="faq-10">
+          What's the cancellation policy?
+        </button>
+        <div class="faq-answer" id="faq-10" role="region">
+          <div class="faq-answer-inner">Cancellation terms are shown during the booking process. Generally we ask for 48 hours notice for a full refund. If you book through our Cloudbeds page, the specific policy will be confirmed at the time of booking.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact" aria-label="Contact 1997 Stays Galway">
+    <div class="contact-inner fade-up">
+      <h2 class="contact-heading">Get in touch.</h2>
+      <p class="contact-sub">Questions about your stay, group bookings or anything else — reach us directly.</p>
+      <div class="contact-details">
+        <a href="tel:+353868593757">+353 86 859 3757</a>
+        <a href="mailto:1997stays@cityhostings.com">1997stays@cityhostings.com</a>
+        <span style="font-family:var(--font-sans);font-size:0.9rem;opacity:0.6;">25 Lower Newcastle Road, Galway, H91 X466</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA (dark) -->
+  <section class="cta-section" aria-label="Book now call to action">
+    <h2 class="cta-heading">Stay in Galway.<br>Easy check-in.</h2>
+    <p class="cta-sub">Four comfortable rooms on Newcastle Road. University of Galway across the road. Best rate when you book direct.</p>
+    <div class="cta-buttons">
+      <a class="cta-btn-primary" href="#booking">Check Availability →</a>
+      <a class="cta-btn-secondary" href="#rooms">View Rooms →</a>
+    </div>
+  </section>
+
+  <!-- FOOTER (off-white bg — near-black text) -->
+  <footer class="footer" role="contentinfo">
+    <p class="footer-copy">
+      1997 Stays Galway &nbsp;·&nbsp; 25 Lower Newcastle Road, Galway, H91 X466 &nbsp;·&nbsp; &copy; 2026
+    </p>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="index.html">All locations</a>
+      <a href="#booking">Book Direct</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </footer>
+
+  <!-- MOBILE STICKY BOOK BUTTON (dark bg) -->
+  <a class="sticky-book" href="#booking" id="sticky-book-btn" aria-label="Open booking">Book a Room</a>
+
+  <!-- SCRIPTS -->
+  <script>
+    // ============================================================
+    // 1. SCROLL PROGRESS BAR
+    // ============================================================
+    (function () {
+      var bar = document.getElementById('scroll-progress');
+      if (!bar) return;
+      function updateProgress() {
+        var doc = document.documentElement;
+        var scrollTop = window.scrollY || window.pageYOffset;
+        var scrollHeight = doc.scrollHeight - doc.clientHeight;
+        var pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+        bar.style.width = pct + '%';
+      }
+      window.addEventListener('scroll', updateProgress, { passive: true });
+      updateProgress();
+    }());
+
+    // ============================================================
+    // 2. NAV SCROLL CLASS
+    // ============================================================
+    (function () {
+      var nav = document.getElementById('main-nav');
+      if (!nav) return;
+      function onScroll() {
+        if ((window.scrollY || window.pageYOffset) > 80) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    }());
+
+    // ============================================================
+    // 3. MOBILE STICKY BOOK BUTTON
+    // ============================================================
+    (function () {
+      var stickyBtn = document.getElementById('sticky-book-btn');
+      var hero = document.querySelector('.hero');
+      if (!stickyBtn || !hero) return;
+      function onScroll() {
+        stickyBtn.classList.toggle('visible', hero.getBoundingClientRect().bottom < 0);
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+    }());
+
+    // ============================================================
+    // 4. STATS COUNTER (IntersectionObserver, fires once)
+    // ============================================================
+    (function () {
+      var statsSection = document.querySelector('.stats-strip');
+      if (!statsSection) return;
+
+      var hasRun = false;
+
+      function easeOutCubic(t) {
+        return 1 - Math.pow(1 - t, 3);
+      }
+
+      function animateCounter(el, target, suffix, duration) {
+        var start = null;
+        var startVal = 0;
+        var isFloat = target % 1 !== 0;
+
+        function step(timestamp) {
+          if (!start) start = timestamp;
+          var elapsed = timestamp - start;
+          var progress = Math.min(elapsed / duration, 1);
+          var eased = easeOutCubic(progress);
+          var current = startVal + (target - startVal) * eased;
+          var display = isFloat ? current.toFixed(1) : Math.floor(current);
+          el.textContent = display + (suffix || '');
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          } else {
+            el.textContent = (isFloat ? target.toFixed(1) : target) + (suffix || '');
+          }
+        }
+        requestAnimationFrame(step);
+      }
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting && !hasRun) {
+            hasRun = true;
+            observer.disconnect();
+            var counters = statsSection.querySelectorAll('[data-target]');
+            counters.forEach(function (el) {
+              if (el.hasAttribute('data-static')) return;
+              var target = parseFloat(el.getAttribute('data-target'));
+              var suffix = el.getAttribute('data-suffix') || '';
+              animateCounter(el, target, suffix, 1800);
+            });
+          }
+        });
+      }, { threshold: 0.3 });
+
+      observer.observe(statsSection);
+    }());
+
+    // ============================================================
+    // 5. SECTION FADE-UPS
+    // ============================================================
+    (function () {
+      var fadeEls = document.querySelectorAll('.fade-up');
+      if (!fadeEls.length) return;
+
+      // Respect reduced-motion preference
+      var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced) {
+        fadeEls.forEach(function (el) {
+          el.classList.add('visible');
+        });
+        return;
+      }
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      fadeEls.forEach(function (el) {
+        observer.observe(el);
+      });
+    }());
+
+    // ============================================================
+    // 6. FAQ ACCORDION
+    // ============================================================
+    (function () {
+      document.querySelectorAll('.faq-question').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var expanded = this.getAttribute('aria-expanded') === 'true';
+          document.querySelectorAll('.faq-question').forEach(function (b) {
+            b.setAttribute('aria-expanded', 'false');
+            var ans = b.nextElementSibling;
+            if (ans) ans.classList.remove('open');
+          });
+          if (!expanded) {
+            this.setAttribute('aria-expanded', 'true');
+            var answerEl = this.nextElementSibling;
+            if (answerEl) answerEl.classList.add('open');
+          }
+        });
+      });
+    }());
+
+    // ============================================================
+    // 7. HERO PARALLAX (respects prefers-reduced-motion)
+    // ============================================================
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var heroBg = document.querySelector('.hero-bg');
+      if (!heroBg) return;
+      var ticking = false;
+      function parallax() {
+        if (!ticking) {
+          requestAnimationFrame(function () {
+            var scrolled = window.pageYOffset;
+            var limit = window.innerHeight * 1.2;
+            if (scrolled < limit) {
+              heroBg.style.transform = 'scale(1.06) translateY(' + (scrolled * 0.22) + 'px)';
+            }
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }
+      window.addEventListener('scroll', parallax, { passive: true });
+    }());
+
+    // ============================================================
+    // 8. ROOM CARD 3D TILT (desktop only)
+    // ============================================================
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (!window.matchMedia('(hover: hover)').matches) return;
+
+      document.querySelectorAll('.room-card, .room-featured').forEach(function (card) {
+        card.addEventListener('mousemove', function (e) {
+          var rect = card.getBoundingClientRect();
+          var x = ((e.clientX - rect.left) / rect.width  - 0.5) * 5;
+          var y = ((e.clientY - rect.top)  / rect.height - 0.5) * -4;
+          card.style.transform   = 'perspective(900px) rotateX(' + y + 'deg) rotateY(' + x + 'deg)';
+          card.style.transition  = 'transform 0.08s linear, box-shadow 0.2s ease';
+          card.style.boxShadow   = '0 16px 48px rgba(0,0,0,0.12)';
+        });
+        card.addEventListener('mouseleave', function () {
+          card.style.transform  = 'perspective(900px) rotateX(0) rotateY(0)';
+          card.style.transition = 'transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.4s ease';
+          card.style.boxShadow  = '';
+        });
+      });
+    }());
+
+    // Fade images in cleanly once loaded
+    document.querySelectorAll('.room-featured-img img, .room-card-img img, .room-single-img img, .cafe-image-side img').forEach(function (img) {
+      function mark() { img.classList.add('img-loaded'); }
+      if (img.complete && img.naturalWidth > 0) { mark(); } else { img.addEventListener('load', mark); }
+    });
+
+  </script>
+
+</body>
+</html>

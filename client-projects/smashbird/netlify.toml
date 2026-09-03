@@ -1,0 +1,4 @@
+# Static single-page proposal — nothing to build, just publish the folder.
+[build]
+  publish = "."
+  command = ""

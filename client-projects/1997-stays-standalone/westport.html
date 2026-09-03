@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1997 Stays Westport — Guesthouse at the Octagon, Co. Mayo</title>
+  <meta name="description" content="A comfortable guesthouse at Westport Octagon, above Mocha Beans Café. Walk to the harbour, Westport House and Clew Bay. Book direct — best rate guaranteed." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://mochabeansgroup.cloudbeds.com" />
+  <link rel="preload" as="image" href="/.netlify/images?url=/images/DSCF2319.jpg&w=1800&q=85&fm=webp" fetchpriority="high" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================
+       RESET & BASE
+    ============================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --off-white: #F5F3EF;
+      --near-black: #0D0D0D;
+      --stone: #C8BFB0;
+      --stone-light: #E8E3DC;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Inter', system-ui, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--off-white);
+      color: var(--near-black);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ============================================
+       NAV
+    ============================================ */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 2.5rem;
+      transition: background 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .nav.scrolled {
+      background: rgba(245, 243, 239, 0.95);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 1px 0 var(--stone-light);
+    }
+
+    .nav-wordmark {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      color: #fff;
+      transition: color 0.3s ease;
+      line-height: 1.3;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.45);
+    }
+
+    .nav.scrolled .nav-wordmark {
+      color: var(--near-black);
+      text-shadow: none;
+    }
+
+    .nav-wordmark span {
+      display: block;
+      font-size: 0.7rem;
+      font-family: var(--font-sans);
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      opacity: 0.7;
+      margin-top: 0.1rem;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+    }
+
+    .nav-change-location {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.75);
+      transition: color 0.3s ease, opacity 0.3s ease;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+
+    .nav.scrolled .nav-change-location {
+      color: var(--near-black);
+      opacity: 0.45;
+      text-shadow: none;
+    }
+
+    .nav-change-location:hover {
+      opacity: 1 !important;
+    }
+
+    .nav-phone {
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.03em;
+      color: rgba(255,255,255,0.85);
+      transition: color 0.3s ease;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+
+    .nav.scrolled .nav-phone {
+      color: var(--near-black);
+      opacity: 0.65;
+      text-shadow: none;
+    }
+
+    .nav-book-link {
+      font-family: var(--font-sans);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.5);
+      padding: 0.5rem 1.1rem;
+      transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+
+    .nav.scrolled .nav-book-link {
+      color: var(--near-black);
+      border-color: var(--stone);
+      text-shadow: none;
+    }
+
+    .nav-book-link:hover {
+      background: var(--near-black);
+      color: #fff;
+      border-color: var(--near-black);
+      text-shadow: none;
+    }
+
+    .nav.scrolled .nav-book-link:hover {
+      background: var(--near-black);
+      color: #fff;
+      border-color: var(--near-black);
+    }
+
+    /* ============================================
+       HERO
+    ============================================ */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 2.5rem 5rem;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      /* TODO: Replace westport-hero.jpg with actual Westport hero image */
+      background-color: #1a1a1a;
+      background-image: url('/.netlify/images?url=/images/DSCF2319.jpg&w=1800&q=85&fm=webp');
+      background-size: cover;
+      background-position: center 45%;
+      filter: brightness(0.55);
+      animation: kenburns 20s ease-out forwards;
+      transform-origin: center center;
+    }
+
+    @keyframes kenburns {
+      from { transform: scale(1.0); }
+      to   { transform: scale(1.06); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(3.2rem, 6vw, 7rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: #fff;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-sub {
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      font-weight: 300;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      right: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      color: rgba(255,255,255,0.5);
+      font-family: var(--font-sans);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+
+    .hero-scroll-arrow {
+      width: 1px;
+      height: 40px;
+      background: rgba(255,255,255,0.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-scroll-arrow::after {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255,255,255,0.8);
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollLine {
+      0%   { top: -100%; }
+      100% { top: 100%; }
+    }
+
+    /* ============================================
+       OPENING BLOCK
+    ============================================ */
+    .opening {
+      padding: 9rem 2.5rem 5rem;
+      max-width: 860px;
+      animation: fadeInUp 0.9s ease 0.2s both;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .opening { animation: none; opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .opening-text {
+      font-family: var(--font-serif);
+      font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+      font-weight: 400;
+      line-height: 1.65;
+      color: var(--near-black);
+    }
+
+    /* ============================================
+       THE ROOMS
+    ============================================ */
+    .rooms-section {
+      padding: 2rem 2.5rem 6rem;
+      border-top: 1px solid var(--stone-light);
+    }
+
+    .rooms-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      margin-bottom: 3.5rem;
+    }
+
+    .room-featured {
+      display: grid;
+      grid-template-columns: 60% 1fr;
+      gap: 0;
+      margin-bottom: 0;
+      border: 1px solid var(--stone-light);
+    }
+
+    .room-featured-img {
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      background: var(--stone-light);
+    }
+
+    .room-featured-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.9s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.4s ease;
+      will-change: transform;
+    }
+
+    .room-featured:hover .room-featured-img img {
+      transform: scale(1.04);
+      filter: brightness(1.06);
+    }
+
+    .room-featured-info {
+      padding: 2.5rem 2.5rem 2.5rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--off-white);
+    }
+
+    .room-name {
+      font-family: var(--font-serif);
+      font-size: 1.9rem;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+
+    .room-price {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--near-black);
+      opacity: 0.55;
+      margin-bottom: 1.5rem;
+    }
+
+    .room-desc {
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: var(--near-black);
+      opacity: 0.75;
+      margin-bottom: 0.75rem;
+      flex: 1;
+    }
+
+    .room-note {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--near-black);
+      opacity: 0.6;
+      margin-bottom: 2rem;
+      line-height: 1.4;
+    }
+
+    .room-link {
+      display: inline-block;
+      font-family: var(--font-sans);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--near-black);
+      border-bottom: 1px solid var(--stone);
+      padding-bottom: 0.2rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s ease;
+    }
+
+    .room-link::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: -100%;
+      width: 100%;
+      height: 1px;
+      background: var(--near-black);
+      transition: left 0.3s ease;
+    }
+
+    .room-link:hover::after {
+      left: 0;
+    }
+
+    .rooms-row-two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-left: 1px solid var(--stone-light);
+      border-right: 1px solid var(--stone-light);
+      border-bottom: 1px solid var(--stone-light);
+    }
+
+    .room-card {
+      border-right: 1px solid var(--stone-light);
+    }
+
+    .room-card:last-child {
+      border-right: none;
+    }
+
+    .room-card-img {
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      background: var(--stone-light);
+    }
+
+    .room-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.9s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.4s ease;
+      will-change: transform;
+    }
+
+    .room-card:hover .room-card-img img {
+      transform: scale(1.06);
+      filter: brightness(1.06);
+    }
+
+    .room-card-info {
+      padding: 1.75rem 2rem 2rem;
+    }
+
+    .room-single-row {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      border-left: 1px solid var(--stone-light);
+      border-right: 1px solid var(--stone-light);
+      border-bottom: 1px solid var(--stone-light);
+      align-items: center;
+    }
+
+    .room-single-img {
+      overflow: hidden;
+      background: var(--stone-light);
+    }
+
+    .room-single-img img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      transition: filter 0.4s ease;
+    }
+
+    .room-single-img img:hover {
+      filter: brightness(1.08);
+    }
+
+    .room-single-info {
+      padding: 1.75rem 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .room-single-info .room-name {
+      font-size: 1.5rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .room-single-meta {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    /* ============================================
+       THE CAFÉ
+    ============================================ */
+    .cafe-section {
+      background: var(--near-black);
+      color: #fff;
+      display: grid;
+      grid-template-columns: 1fr 60%;
+      min-height: 520px;
+    }
+
+    .cafe-text-side {
+      padding: 5rem 4rem 5rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .cafe-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(1.9rem, 3.2vw, 2.8rem);
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      color: #fff;
+    }
+
+    .cafe-body {
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.72);
+      margin-bottom: 2.5rem;
+      max-width: 420px;
+    }
+
+    .cafe-badge {
+      display: inline-block;
+      border: 1px solid rgba(200, 191, 176, 0.4);
+      color: var(--stone);
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.6rem 1.2rem;
+    }
+
+    .cafe-image-side {
+      overflow: hidden;
+      background: #2a2a2a;
+      position: relative;
+    }
+
+    .cafe-image-side img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+    }
+
+    /* ============================================
+       LOCATION
+    ============================================ */
+    .location-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid var(--stone-light);
+    }
+
+    .location-text {
+      padding: 5rem 4rem 5rem 2.5rem;
+      border-right: 1px solid var(--stone-light);
+    }
+
+    .location-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+      font-weight: 400;
+      margin-bottom: 2.5rem;
+    }
+
+    .location-list {
+      list-style: none;
+      margin-bottom: 2.5rem;
+    }
+
+    .location-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--stone-light);
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+    }
+
+    .location-list li:first-child {
+      border-top: 1px solid var(--stone-light);
+    }
+
+    .location-list .place-name {
+      font-weight: 400;
+      color: var(--near-black);
+    }
+
+    .location-list .place-dist {
+      font-size: 0.78rem;
+      color: var(--near-black);
+      opacity: 0.5;
+      font-weight: 300;
+      white-space: nowrap;
+      margin-left: 1rem;
+    }
+
+    .location-address {
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      line-height: 1.6;
+      color: var(--near-black);
+      opacity: 0.55;
+      padding: 1.25rem;
+      border: 1px solid var(--stone-light);
+      margin-top: 0.5rem;
+    }
+
+    .location-arrival {
+      font-family: var(--font-sans);
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: var(--near-black);
+      opacity: 0.65;
+      margin-top: 1.25rem;
+      padding-left: 0.1rem;
+    }
+
+    .location-map {
+      overflow: hidden;
+    }
+
+    .location-map iframe {
+      width: 100%;
+      height: 100%;
+      min-height: 480px;
+      border: none;
+      display: block;
+      filter: grayscale(0.35);
+    }
+
+    /* ============================================
+       BOOKING
+    ============================================ */
+    .booking-section {
+      padding: 6rem 2.5rem;
+      border-top: 1px solid var(--stone-light);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .booking-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.5rem;
+    }
+
+    .booking-sub {
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      color: var(--near-black);
+      opacity: 0.55;
+      margin-bottom: 2rem;
+      line-height: 1.5;
+    }
+
+    .booking-contact {
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--stone-light);
+    }
+
+    .booking-contact p {
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      line-height: 1.9;
+      color: var(--near-black);
+      opacity: 0.65;
+    }
+
+    .booking-contact a {
+      color: var(--near-black);
+      opacity: 1;
+      border-bottom: 1px solid var(--stone);
+    }
+
+    .booking-contact a:hover {
+      opacity: 0.7;
+    }
+
+    .booking-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-group label {
+      font-family: var(--font-sans);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--near-black);
+      opacity: 0.55;
+    }
+
+    .form-group input,
+    .form-group select {
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      color: var(--near-black);
+      background: transparent;
+      border: 1px solid var(--stone);
+      padding: 0.7rem 0.9rem;
+      appearance: none;
+      -webkit-appearance: none;
+      border-radius: 0;
+      width: 100%;
+      transition: border-color 0.25s ease;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--near-black);
+      outline: 2px solid transparent;
+      box-shadow: 0 0 0 2px rgba(13, 13, 13, 0.15);
+    }
+
+    .form-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230D0D0D' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.9rem center;
+      padding-right: 2.5rem;
+    }
+
+    .btn-book {
+      position: relative;
+      font-family: var(--font-sans);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--near-black);
+      border: none;
+      padding: 1rem 2rem;
+      cursor: pointer;
+      overflow: hidden;
+      transition: color 0.3s ease;
+      margin-top: 0.5rem;
+    }
+
+    .btn-book::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: #333;
+      transform: translateX(-101%);
+      transition: transform 0.3s ease;
+      z-index: 0;
+    }
+
+    .btn-book:hover::after {
+      transform: translateX(0);
+    }
+
+    .btn-book span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .form-note {
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      color: var(--near-black);
+      opacity: 0.45;
+      letter-spacing: 0.04em;
+      margin-top: 0.25rem;
+    }
+
+    /* ============================================
+       FOOTER
+    ============================================ */
+    .footer {
+      border-top: 1px solid var(--stone-light);
+      padding: 2rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-copy {
+      font-family: var(--font-sans);
+      font-size: 0.78rem;
+      color: var(--near-black);
+      opacity: 0.45;
+      line-height: 1.6;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-links a {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      color: var(--near-black);
+      opacity: 0.4;
+      transition: opacity 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      opacity: 0.8;
+    }
+
+    /* ============================================
+       MOBILE STICKY BOOK BUTTON
+    ============================================ */
+    .sticky-book {
+      display: none;
+      position: fixed;
+      bottom: 1.25rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(120%);
+      z-index: 90;
+      background: var(--near-black);
+      color: #fff;
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.9rem 2.2rem;
+      white-space: nowrap;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      box-shadow: 0 4px 20px rgba(13, 13, 13, 0.2);
+    }
+
+    .sticky-book.visible {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ============================================
+       RESPONSIVE
+    ============================================ */
+    @media (max-width: 900px) {
+      .nav {
+        padding: 1rem 1.5rem;
+      }
+
+      .nav-phone {
+        display: none;
+      }
+
+      .hero {
+        padding: 0 1.5rem 4rem;
+      }
+
+      .opening {
+        padding: 7rem 1.5rem 3.5rem;
+      }
+
+      .rooms-section {
+        padding: 2rem 1.5rem 4rem;
+      }
+
+      .room-featured {
+        grid-template-columns: 1fr;
+      }
+
+      .room-featured-img {
+        aspect-ratio: 16/9;
+      }
+
+      .room-featured-info {
+        padding: 2rem;
+      }
+
+      .rooms-row-two {
+        grid-template-columns: 1fr;
+      }
+
+      .room-card {
+        border-right: none;
+        border-bottom: 1px solid var(--stone-light);
+      }
+
+      .room-single-row {
+        grid-template-columns: 1fr;
+      }
+
+      .room-single-img img {
+        height: 220px;
+        width: 100%;
+      }
+
+      .room-single-info {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem;
+        align-items: flex-start;
+      }
+
+      .cafe-section {
+        grid-template-columns: 1fr;
+      }
+
+      .cafe-image-side {
+        order: -1;
+        height: 280px;
+      }
+
+      .cafe-text-side {
+        padding: 3rem 1.5rem;
+      }
+
+      .location-section {
+        grid-template-columns: 1fr;
+      }
+
+      .location-text {
+        padding: 3.5rem 1.5rem;
+        border-right: none;
+        border-bottom: 1px solid var(--stone-light);
+      }
+
+      .location-map iframe {
+        min-height: 320px;
+      }
+
+      .booking-section {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        padding: 4rem 1.5rem;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .footer {
+        padding: 1.5rem;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .sticky-book {
+        display: block;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero-heading {
+        font-size: clamp(2.6rem, 10vw, 3.5rem);
+      }
+
+      .nav-wordmark {
+        font-size: 0.9rem;
+      }
+
+      .nav-change-location {
+        display: none;
+      }
+    }
+
+    /* ============================================
+       REDUCED MOTION
+    ============================================ */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .hero-bg {
+        animation: none;
+      }
+
+      .hero-scroll-arrow::after {
+        animation: none;
+      }
+
+      .opening {
+        animation: none;
+        opacity: 1;
+      }
+
+      html {
+        scroll-behavior: auto;
+      }
+    }
+
+    /* ============================================
+       BOOKING WIDGET SECTION
+    ============================================ */
+    .booking-widget-section {
+      padding: 5rem 2.5rem;
+      border-bottom: 1px solid var(--stone-light);
+      background: var(--off-white);
+    }
+
+    .booking-widget-inner {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .booking-widget-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300;
+      color: var(--near-black);
+      margin-bottom: 0.5rem;
+    }
+
+    .booking-widget-sub {
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      color: var(--near-black);
+      opacity: 0.55;
+      margin-bottom: 2.5rem;
+    }
+
+    .booking-fallback {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--stone-light);
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      color: var(--near-black);
+      opacity: 0.7;
+    }
+
+    .booking-fallback p { margin-bottom: 1rem; }
+
+    .btn-book-direct {
+      display: inline-block;
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--near-black);
+      padding: 0.85rem 2rem;
+      transition: background 0.25s ease;
+      cursor: pointer;
+    }
+
+    .btn-book-direct:hover { background: #333; }
+
+    /* ============================================
+       WHY STAY SECTION (Benefits)
+    ============================================ */
+    .why-section {
+      padding: 6rem 2.5rem;
+      border-bottom: 1px solid var(--stone-light);
+      background: var(--off-white);
+    }
+
+    .why-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    @media (max-width: 768px) {
+      .why-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+
+    .why-eyebrow {
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--near-black);
+      opacity: 0.45;
+      margin-bottom: 1rem;
+    }
+
+    .why-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300;
+      color: var(--near-black);
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+
+    .why-body {
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: var(--near-black);
+      opacity: 0.7;
+    }
+
+    .why-right {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 480px) {
+      .why-right { grid-template-columns: 1fr; }
+    }
+
+    .why-card {
+      padding: 1.5rem;
+      border: 1px solid var(--stone-light);
+      background: #fff;
+    }
+
+    .why-card-title {
+      font-family: var(--font-sans);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--near-black);
+      margin-bottom: 0.5rem;
+    }
+
+    .why-card-body {
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      line-height: 1.6;
+      color: var(--near-black);
+      opacity: 0.6;
+    }
+
+    /* ============================================
+       CONTACT SECTION
+    ============================================ */
+    .contact-section {
+      padding: 6rem 2.5rem;
+      border-top: 1px solid var(--stone-light);
+      background: var(--off-white);
+    }
+
+    .contact-inner {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .contact-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300;
+      color: var(--near-black);
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-sub {
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      color: var(--near-black);
+      opacity: 0.55;
+      margin-bottom: 2rem;
+    }
+
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .contact-details a {
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      color: var(--near-black);
+      opacity: 0.75;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .contact-details a:hover { opacity: 1; }
+
+    /* ── 3D IMAGE DEPTH ── */
+    .room-single-img img {
+      transition: transform 0.9s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.4s ease;
+      will-change: transform;
+    }
+    .room-single-row:hover .room-single-img img {
+      transform: scale(1.04);
+    }
+
+    /* ── IMAGE FADE-IN ON LOAD ── */
+    .room-featured-img img,
+    .room-card-img img,
+    .room-single-img img,
+    .cafe-image-side img {
+      opacity: 0;
+      transition: opacity 0.55s ease, transform 0.9s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.4s ease;
+    }
+    .img-loaded {
+      opacity: 1 !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header role="banner">
+    <nav class="nav" id="main-nav" aria-label="Main navigation">
+      <div class="nav-wordmark">
+        1997 Stays
+        <span>Westport, Co. Mayo</span>
+      </div>
+      <div class="nav-right">
+        <a class="nav-change-location" href="index.html" aria-label="All 1997 Stays locations">← All locations</a>
+        <!-- TODO: Add Westport phone number once confirmed -->
+        <a class="nav-book-link" href="#booking">Book a Room</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" aria-label="Hero — 1997 Stays Westport">
+    <div class="hero-bg" role="img" aria-label="1997 Stays Westport — guesthouse at the Octagon"></div>
+    <div class="hero-content">
+      <h1 class="hero-heading">Your guesthouse<br>in Westport.</h1>
+      <p class="hero-sub">Westport Octagon &nbsp;·&nbsp; Co. Mayo</p>
+    </div>
+    <div class="hero-scroll" aria-hidden="true">
+      <div class="hero-scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- BOOKING WIDGET -->
+  <section class="booking-widget-section" id="booking" aria-label="Book your stay at 1997 Stays Westport">
+    <div class="booking-widget-inner">
+      <h2 class="booking-widget-heading">Book Your Stay</h2>
+      <p class="booking-widget-sub">Check availability and reserve your room directly.</p>
+      <div class="booking-widget-embed">
+        <script src="https://mochabeansgroup.cloudbeds.com/widget/load/1jTOWB/vert" async></script>
+      </div>
+      <div class="booking-fallback">
+        <p>If the widget above does not load, book directly on our reservations page.</p>
+        <a class="btn-book-direct" href="https://mochabeansgroup.cloudbeds.com/en/reservas/1jTOWB?referral_id=197466&association_direct=1&currency=eur">Book Direct</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY STAY -->
+  <section class="why-section" aria-label="Why stay at 1997 Stays Westport">
+    <div class="why-grid">
+      <div class="why-left">
+        <p class="why-eyebrow">Why stay here</p>
+        <h2 class="why-heading">A comfortable guesthouse<br>at Westport Octagon.</h2>
+        <p class="why-body">At the Octagon, right in the centre of Westport. The harbour, Westport House and Clew Bay are all within walking distance. Easy contactless check-in, with a PIN code sent before arrival. Croagh Patrick is a 15-minute drive.</p>
+      </div>
+      <div class="why-right">
+        <div class="why-card">
+          <p class="why-card-title">Westport Octagon</p>
+          <p class="why-card-body">Right at the Octagon — walk to the harbour, Westport House and Clew Bay in under 15 minutes.</p>
+        </div>
+        <div class="why-card">
+          <p class="why-card-title">Quiet neighbourhood</p>
+          <p class="why-card-body">The Octagon is central but calm. The guesthouse sits above Mocha Beans Café on a quiet stretch of the square.</p>
+        </div>
+        <div class="why-card">
+          <p class="why-card-title">Easy contactless check-in</p>
+          <p class="why-card-body">A PIN code is sent before arrival. No front desk, no waiting. Let yourself in and out at any time.</p>
+        </div>
+        <div class="why-card">
+          <p class="why-card-title">Best rate direct</p>
+          <p class="why-card-body">Book direct for the best available rate — no booking fees, no middlemen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE ROOMS -->
+  <section class="rooms-section" id="rooms" aria-label="Our rooms">
+    <h2 class="rooms-heading">The Rooms</h2>
+
+    <!-- Room 1: featured room -->
+    <!-- TODO: Replace with actual room name and description for Westport -->
+    <div class="room-featured" role="article" aria-label="The Double Room">
+      <div class="room-featured-img">
+        <!-- TODO: Replace images/westport-room-double.jpg with actual room photo -->
+        <img
+          src="/.netlify/images?url=/images/DSCF2302.jpg&w=1600&q=82&fm=webp"
+          alt="The Double Room — bright comfortable room, Westport"
+          loading="eager"
+        />
+      </div>
+      <div class="room-featured-info">
+        <div>
+          <!-- TODO: Verify room name -->
+          <h3 class="room-name">The Double Room</h3>
+          <!-- TODO: Add actual price from Cloudbeds -->
+          <p class="room-price">Book direct for best rate</p>
+          <p class="room-desc">Double bed, en-suite bathroom. Comfortable for couples or solo stays. Quiet and easy.</p>
+          <p class="room-note">"Simple, well-kept and central."</p>
+        </div>
+        <a
+          class="room-link"
+          href="https://mochabeansgroup.cloudbeds.com/en/reservas/1jTOWB?referral_id=197466&association_direct=1&currency=eur"
+          aria-label="Book this room in Westport on Cloudbeds"
+        >Book this room →</a>
+      </div>
+    </div>
+
+    <!-- Row 2: two rooms -->
+    <div class="rooms-row-two">
+      <!-- Room 2 -->
+      <!-- TODO: Replace with actual room name for Westport -->
+      <div class="room-card" role="article" aria-label="The Twin Room">
+        <div class="room-card-img">
+          <!-- TODO: Replace images/westport-room-twin.jpg with actual photo -->
+          <img
+            src="/.netlify/images?url=/images/DSCF2308.jpg&w=900&q=80&fm=webp"
+            alt="The Twin Room — warm bedroom, Westport"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="room-card-info">
+          <!-- TODO: Verify room name -->
+          <h3 class="room-name">The Twin Room</h3>
+          <p class="room-price">Book direct for best rate</p>
+          <p class="room-desc">Two beds, private bathroom. Good for two friends or a parent and older child. Easy layout.</p>
+          <p class="room-note">"Practical and comfortable."</p>
+          <a
+            class="room-link"
+            href="https://mochabeansgroup.cloudbeds.com/en/reservas/1jTOWB?referral_id=197466&association_direct=1&currency=eur"
+            aria-label="Book The Twin Room in Westport on Cloudbeds"
+          >Book this room →</a>
+        </div>
+      </div>
+
+      <!-- Room 3 -->
+      <!-- TODO: Replace with actual room name for Westport -->
+      <div class="room-card" role="article" aria-label="The Family Room">
+        <div class="room-card-img">
+          <!-- TODO: Replace images/westport-room-family.jpg with actual photo -->
+          <img
+            src="/.netlify/images?url=/images/DSCF2380.jpg&w=900&q=80&fm=webp"
+            alt="The Family Room — double and bunk, Westport"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="room-card-info">
+          <!-- TODO: Verify room name -->
+          <h3 class="room-name">The Family Room</h3>
+          <p class="room-price">Book direct for best rate</p>
+          <p class="room-desc">Set up for families or small groups. Double and single beds, private bathroom. Works well for a weekend away.</p>
+          <p class="room-note">"Good option for a family trip to Mayo."</p>
+          <a
+            class="room-link"
+            href="https://mochabeansgroup.cloudbeds.com/en/reservas/1jTOWB?referral_id=197466&association_direct=1&currency=eur"
+            aria-label="Book The Family Room in Westport on Cloudbeds"
+          >Book this room →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 3: single-style row -->
+    <!-- TODO: Add or remove this row based on actual Westport room inventory -->
+    <div class="room-single-row" role="article" aria-label="The Single Room">
+      <div class="room-single-img">
+        <!-- TODO: Replace images/westport-room-single.jpg with actual photo -->
+        <img
+          src="/.netlify/images?url=/images/DSCF2409.jpg&w=900&q=80&fm=webp"
+          alt="The Single Room — Westport"
+          loading="lazy"
+        />
+      </div>
+      <div class="room-single-info">
+        <div class="room-single-meta">
+          <!-- TODO: Verify room name -->
+          <h3 class="room-name">The Single Room</h3>
+          <p class="room-price">Book direct for best rate</p>
+          <p class="room-desc" style="margin-bottom: 0.5rem;">Small, neat and sorted. Desk, good wifi, en-suite shower room. Works well for a solo traveller with somewhere to be.</p>
+        </div>
+        <a
+          class="room-link"
+          href="https://mochabeansgroup.cloudbeds.com/en/reservas/1jTOWB?referral_id=197466&association_direct=1&currency=eur"
+          aria-label="Book The Single Room in Westport on Cloudbeds"
+          style="white-space: nowrap;"
+        >Book this room →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE CAFÉ -->
+  <section class="cafe-section" aria-label="Mocha Beans Café Westport">
+    <div class="cafe-text-side">
+      <h2 class="cafe-heading">Café<br>downstairs.</h2>
+      <p class="cafe-body">Mocha Beans café is on the ground floor. They roast their own beans and have been part of Westport for years. Every guest gets 10% off the menu — show your booking confirmation at the till.</p>
+      <div class="cafe-badge" role="note" aria-label="10% off the café menu every day, no voucher required">10% off &nbsp;·&nbsp; every day &nbsp;·&nbsp; no voucher required</div>
+    </div>
+    <div class="cafe-image-side">
+      <img
+        src="/.netlify/images?url=/images/DSCF7605%20(1).jpg&w=1400&q=82&fm=webp"
+        alt="Mocha Beans Café at the Octagon, Westport"
+        loading="lazy"
+      />
+    </div>
+  </section>
+
+  <!-- LOCATION -->
+  <section class="location-section" id="location" aria-label="Location and nearby places">
+    <div class="location-text">
+      <h2 class="location-heading">Where we are</h2>
+      <ul class="location-list" aria-label="Nearby landmarks and distances">
+        <li>
+          <span class="place-name">Westport Octagon</span>
+          <span class="place-dist">On the square</span>
+        </li>
+        <li>
+          <span class="place-name">Westport Quay / harbour</span>
+          <span class="place-dist">10 min walk</span>
+        </li>
+        <li>
+          <span class="place-name">Westport House</span>
+          <span class="place-dist">10 min walk</span>
+        </li>
+        <li>
+          <span class="place-name">Clew Bay</span>
+          <span class="place-dist">15 min walk</span>
+        </li>
+        <li>
+          <span class="place-name">Croagh Patrick (base)</span>
+          <span class="place-dist">15 min drive</span>
+        </li>
+      </ul>
+      <address class="location-address" aria-label="Our address">
+        Guesthouse in Westport Octagon<br>
+        Above Mocha Beans Café<br>
+        Co. Mayo, Ireland
+      </address>
+      <p class="location-arrival">Look for Mocha Beans Café at the Octagon. The guesthouse entrance is directly above the café. A PIN code will be sent to your email before check-in.</p>
+    </div>
+    <div class="location-map">
+      <!-- TODO: Replace with precise Google Maps embed once Westport address is confirmed -->
+      <iframe
+        src="https://maps.google.com/maps?q=The+Octagon+Westport+Co+Mayo+Ireland&t=&z=16&ie=UTF8&iwloc=&output=embed"
+        title="Google Map showing Westport Octagon, Co. Mayo"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        aria-label="Map of 1997 Stays Westport at the Octagon"
+      ></iframe>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact" aria-label="Contact 1997 Stays Westport">
+    <div class="contact-inner">
+      <h2 class="contact-heading">Get in touch.</h2>
+      <p class="contact-sub">Questions about your stay, group bookings or anything else — reach us directly.</p>
+      <div class="contact-details">
+        <a href="mailto:1997stays@cityhostings.com">1997stays@cityhostings.com</a>
+        <span style="font-family:var(--font-sans);font-size:0.9rem;opacity:0.6;">Westport Octagon, Co. Mayo</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+    <p class="footer-copy">
+      1997 Stays Westport &nbsp;·&nbsp; Westport, Co. Mayo &nbsp;·&nbsp; &copy; 2026
+    </p>
+    <nav class="footer-links" aria-label="Footer links">
+      <a href="index.html">All locations</a>
+      <a href="#booking">Book Direct</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </footer>
+
+  <!-- Mobile sticky book button -->
+  <a class="sticky-book" href="#booking" id="sticky-book-btn" aria-label="Open booking">Book a Room</a>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Nav: frosted after 80px scroll
+    (function () {
+      var nav = document.getElementById('main-nav');
+
+      function onScroll() {
+        if ((window.scrollY || window.pageYOffset) > 80) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    }());
+
+    // Mobile sticky book button: appears after hero
+    (function () {
+      var stickyBtn = document.getElementById('sticky-book-btn');
+      var hero = document.querySelector('.hero');
+
+      if (!stickyBtn || !hero) return;
+
+      function onScroll() {
+        stickyBtn.classList.toggle('visible', hero.getBoundingClientRect().bottom < 0);
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+    }());
+
+
+    // ── HERO PARALLAX ──────────────────────────────────────
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var heroBg = document.querySelector('.hero-bg');
+      if (!heroBg) return;
+      var ticking = false;
+      window.addEventListener('scroll', function () {
+        if (!ticking) {
+          requestAnimationFrame(function () {
+            var s = window.pageYOffset;
+            if (s < window.innerHeight * 1.2) {
+              heroBg.style.transform = 'scale(1.06) translateY(' + (s * 0.22) + 'px)';
+            }
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true });
+    }());
+
+    // ── ROOM CARD 3D TILT (desktop only) ───────────────────
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (!window.matchMedia('(hover: hover)').matches) return;
+      document.querySelectorAll('.room-card, .room-featured').forEach(function (card) {
+        card.addEventListener('mousemove', function (e) {
+          var rect = card.getBoundingClientRect();
+          var x = ((e.clientX - rect.left) / rect.width  - 0.5) * 5;
+          var y = ((e.clientY - rect.top)  / rect.height - 0.5) * -4;
+          card.style.transform  = 'perspective(900px) rotateX(' + y + 'deg) rotateY(' + x + 'deg)';
+          card.style.transition = 'transform 0.08s linear, box-shadow 0.2s ease';
+          card.style.boxShadow  = '0 16px 48px rgba(0,0,0,0.12)';
+        });
+        card.addEventListener('mouseleave', function () {
+          card.style.transform  = 'perspective(900px) rotateX(0) rotateY(0)';
+          card.style.transition = 'transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.4s ease';
+          card.style.boxShadow  = '';
+        });
+      });
+    }());
+
+    // Fade images in cleanly once loaded
+    document.querySelectorAll('.room-featured-img img, .room-card-img img, .room-single-img img, .cafe-image-side img').forEach(function (img) {
+      function mark() { img.classList.add('img-loaded'); }
+      if (img.complete && img.naturalWidth > 0) { mark(); } else { img.addEventListener('load', mark); }
+    });
+
+  </script>
+
+</body>
+</html>

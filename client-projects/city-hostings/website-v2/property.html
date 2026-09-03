@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en-IE">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Property | City Hosting</title>
+  <!-- Title and meta description populated by JS from config -->
+  <meta name="robots" content="index, follow">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header" role="banner">
+    <div class="hdr-inner">
+      <a href="index.html" class="site-logo" aria-label="City Hosting home page">
+        <span class="site-logo__mark" aria-hidden="true"><span class="lm-c">C</span><span class="lm-h">H</span></span>
+        <span class="site-logo__text">
+          <span class="site-logo__city">City</span>
+          <span class="site-logo__hosting">Hosting</span>
+        </span>
+      </a>
+      <nav class="nav-primary" aria-label="Primary navigation">
+        <ul role="list">
+          <li><a href="property-management.html">For owners</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="book-direct.html">Properties</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="hdr-actions">
+        <a href="book-direct.html" class="btn btn--warm btn--sm">Book direct</a>
+        <button class="nav-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="nav-drawer">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+            <line x1="3" y1="7" x2="19" y2="7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="3" y1="15" x2="19" y2="15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="nav-overlay" aria-hidden="true"></div>
+  <nav class="nav-drawer" id="nav-drawer" aria-label="Mobile navigation">
+    <div class="nav-drawer__header">
+      <span class="site-logo__text"><span class="site-logo__city">City</span><span class="site-logo__hosting">Hosting</span></span>
+      <button class="nav-toggle nav-toggle--close" aria-label="Close navigation menu" aria-expanded="true" aria-controls="nav-drawer">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+          <line x1="4" y1="4" x2="18" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="18" y1="4" x2="4" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <ul role="list">
+      <li><a href="property-management.html">For property owners</a></li>
+      <li><a href="services.html">Our services</a></li>
+      <li><a href="book-direct.html">Browse properties</a></li>
+      <li><a href="about.html">About City Hosting</a></li>
+      <li><a href="contact.html">Get in touch</a></li>
+    </ul>
+    <div class="nav-drawer__footer">
+      <a href="mailto:info@cityhostings.com" class="btn btn--outline">info@cityhostings.com</a>
+      <a href="tel:+353831723722" class="btn btn--warm">083 172 3722</a>
+    </div>
+  </nav>
+
+  <main id="main-content" data-property-detail>
+
+    <!-- Photo gallery -->
+    <section class="prop-detail-gallery" aria-label="Property photos">
+      <div class="prop-detail-gallery__main">
+        <div class="photo-slot photo-slot--gallery-main">
+          <img src="images/galway-hero.png" alt="Property managed by City Hosting" loading="eager" width="1200" height="800">
+        </div>
+      </div>
+      <div class="prop-detail-gallery__thumbs" aria-label="Additional photos" role="list">
+        <!-- Thumbnails populated by JS -->
+      </div>
+    </section>
+
+    <!-- Property detail layout -->
+    <div class="prop-detail-layout wrap section-pad">
+
+      <!-- Left: property info -->
+      <article class="prop-detail-info" aria-labelledby="prop-name">
+        <nav class="prop-detail-breadcrumb" aria-label="Breadcrumb">
+          <a href="book-direct.html">All properties</a>
+          <span aria-hidden="true">/</span>
+          <span data-prop-name aria-current="page">Property</span>
+        </nav>
+
+        <h1 class="prop-detail-name" data-prop-name id="prop-name">Property name</h1>
+
+        <div class="prop-detail-meta" aria-label="Property details">
+          <!-- Populated by JS from config -->
+        </div>
+
+        <div class="prop-detail-description">
+          <!-- Populated by JS from config -->
+          <p>Full property description coming soon. Contact us for details about this property.</p>
+        </div>
+
+        <div class="prop-detail-features" aria-label="Property features">
+          <h2 class="prop-detail-features__heading">What's included</h2>
+          <ul class="prop-detail-features__list" role="list">
+            <!-- Populated by JS from config.properties[n].features -->
+          </ul>
+        </div>
+
+        <div class="prop-detail-managed">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <circle cx="10" cy="10" r="8" stroke="var(--warm)" stroke-width="1.25"/>
+            <path d="M7 10l2 2 4-4" stroke="var(--warm)" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Managed by City Hosting: direct contact, consistent standards.</span>
+        </div>
+      </article>
+
+      <!-- Right: booking widget placeholder -->
+      <aside class="prop-detail-booking" aria-label="Book this property">
+        <div class="prop-detail-booking__card">
+          <p class="prop-detail-booking__label">Book this property</p>
+          <p class="prop-detail-booking__note">Select your dates to check availability and rates directly with City Hosting, with no platform fees.</p>
+
+          <!--
+            IMPORTANT: Cloudbeds booking widget goes here.
+            Widget ID MUST match the specific property.
+            - Galway properties: use widget ID Sa32sZ
+            - Westport properties: use widget ID 1jTOWB
+            NEVER mix widget IDs between properties.
+            Only add widget when property is confirmed live.
+
+            Example Cloudbeds embed (replace {WIDGET_ID} with correct ID):
+            <script src="https://hotels.cloudbeds.com/widget/load/{WIDGET_ID}"></script>
+          -->
+          <div class="prop-detail-booking__widget-placeholder" data-label="Cloudbeds booking widget: insert correct widget ID for this property. See config.js.">
+            <a href="contact.html" class="btn btn--warm btn--full" data-prop-book>Check availability</a>
+          </div>
+
+          <div class="prop-detail-booking__direct">
+            <p>Questions about this property?</p>
+            <a href="tel:+353831723722">+353 83 172 3722</a>
+            <span>or</span>
+            <a href="mailto:info@cityhostings.com">info@cityhostings.com</a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+
+    <!-- Back to properties -->
+    <section class="prop-detail-back section-pad-sm" aria-label="Navigation">
+      <div class="wrap">
+        <a href="book-direct.html" class="prop-detail-back__link">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M13 8H3M7 12l-4-4 4-4" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          All properties
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="wrap footer-body">
+      <div class="footer-brand">
+        <a href="index.html" class="site-logo footer-logo" aria-label="City Hosting home page">
+          <span class="site-logo__mark" aria-hidden="true"><span class="lm-c">C</span><span class="lm-h">H</span></span>
+          <span class="site-logo__text"><span class="site-logo__city">City</span><span class="site-logo__hosting">Hosting</span></span>
+        </a>
+        <p class="footer-tagline">Professional holiday let management across Galway and the West of Ireland.</p>
+        <address class="footer-address not-italic">Unit 4, Tuam Road<br>Galway, H91 AR24<br>Ireland</address>
+      </div>
+      <nav class="footer-nav" aria-label="For owners"><h3 class="footer-nav__heading">For owners</h3><ul role="list"><li><a href="property-management.html">Property management</a></li><li><a href="services.html">Our services</a></li><li><a href="property-management.html#enquiry">Enquire now</a></li></ul></nav>
+      <nav class="footer-nav" aria-label="For guests"><h3 class="footer-nav__heading">For guests</h3><ul role="list"><li><a href="book-direct.html">Browse properties</a></li><li><a href="contact.html">Guest contact</a></li></ul></nav>
+      <div class="footer-contact">
+        <h3 class="footer-nav__heading">Get in touch</h3>
+        <a href="tel:+353831723722" class="footer-contact__phone">+353 83 172 3722</a>
+        <span class="footer-contact__note">Phone &amp; WhatsApp</span>
+        <a href="mailto:info@cityhostings.com" class="footer-contact__email">info@cityhostings.com</a>
+      </div>
+    </div>
+    <div class="footer-base wrap">
+      <p class="footer-legal">&copy; <span id="footer-year">2025</span> City Hosting. All rights reserved.</p>
+      <nav class="footer-legal-nav" aria-label="Legal"><a href="privacy.html">Privacy policy</a><a href="terms.html">Terms</a></nav>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+  <script>document.getElementById('footer-year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
