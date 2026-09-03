@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1930.71 2834.54">
+  <!-- Generator: Adobe Illustrator 30.6.0, SVG Export Plug-In . SVG Version: 2.1.4 Build 109)  -->
+  <defs>
+    <style>
+      .st0, .st1, .st2, .st3, .st4, .st5, .st6, .st7 {
+        fill: #231f20;
+      }
+
+      .st1 {
+        letter-spacing: -.02em;
+      }
+
+      .st1, .st2, .st3, .st4, .st5, .st8, .st6, .st7 {
+        isolation: isolate;
+      }
+
+      .st1, .st2, .st3, .st4, .st5, .st6, .st7 {
+        font-family: ArialMT, Arial;
+        font-size: 80.4px;
+      }
+
+      .st2 {
+        letter-spacing: -.02em;
+      }
+
+      .st3 {
+        letter-spacing: -.03em;
+      }
+
+      .st4 {
+        letter-spacing: -.08em;
+      }
+
+      .st9 {
+        fill: #8fa7b3;
+      }
+
+      .st6 {
+        letter-spacing: .02em;
+      }
+
+      .st7 {
+        letter-spacing: .04em;
+      }
+
+      .st10 {
+        fill: #f7ca11;
+      }
+
+      .st11 {
+        fill: #7e836c;
+      }
+
+      .st12 {
+        fill: #f5f1e8;
+      }
+    </style>
+  </defs>
+  <g id="titles">
+    <g class="st8">
+      <text class="st2" transform="translate(95.46 69)"><tspan x="0" y="0">S</tspan></text>
+      <text class="st1" transform="translate(143.3 69)"><tspan x="0" y="0">w</tspan></text>
+      <text class="st5" transform="translate(203.84 69)"><tspan x="0" y="0">at</tspan></text>
+      <text class="st5" transform="translate(271.78 69)"><tspan x="0" y="0">c</tspan></text>
+      <text class="st5" transform="translate(312.86 69)"><tspan x="0" y="0">h</tspan></text>
+    </g>
+    <g class="st8">
+      <text class="st5" transform="translate(653.37 69)"><tspan x="0" y="0">H</tspan></text>
+      <text class="st7" transform="translate(712.62 69)"><tspan x="0" y="0">E</tspan></text>
+      <text class="st5" transform="translate(764.48 69)"><tspan x="0" y="0">X</tspan></text>
+    </g>
+    <g class="st8">
+      <text class="st5" transform="translate(1190.1575 68.9976)"><tspan x="0" y="0">R</tspan></text>
+      <text class="st5" transform="translate(1242.2574 68.9976)"><tspan x="0" y="0">G</tspan></text>
+      <text class="st5" transform="translate(1301.5074 68.9976)"><tspan x="0" y="0">B</tspan></text>
+    </g>
+    <g class="st8">
+      <text class="st5" transform="translate(1637.2328 68.9976)"><tspan x="0" y="0">C</tspan></text>
+      <text class="st5" transform="translate(1692.6328 68.9976)"><tspan x="0" y="0">M</tspan></text>
+      <text class="st5" transform="translate(1762.9828 68.9976)"><tspan x="0" y="0">Y</tspan></text>
+      <text class="st5" transform="translate(1810.0928 68.9976)"><tspan x="0" y="0">K</tspan></text>
+    </g>
+  </g>
+  <g id="yellow">
+    <circle class="st10" cx="227.16" cy="359.52" r="227.16"/>
+    <g class="st8">
+      <text class="st5" transform="translate(582.9 338.26)"><tspan x="0" y="0">#F7</tspan></text>
+      <text class="st5" transform="translate(703.26 338.26)"><tspan x="0" y="0">C</tspan></text>
+      <text class="st5" transform="translate(750.21 338.26)"><tspan x="0" y="0">A11</tspan></text>
+    </g>
+    <g>
+      <g class="st8">
+        <text class="st5" transform="translate(1171.7068 348.4673)"><tspan x="0" y="0">R: 247</tspan></text>
+        <text class="st5" transform="translate(1167.3668 444.9471)"><tspan x="0" y="0">G: 202</tspan></text>
+        <text class="st5" transform="translate(1192.1667 541.4271)"><tspan x="0" y="0">B: 17</tspan></text>
+      </g>
+      <g class="st8">
+        <text class="st5" transform="translate(1687.6815 348.4673)"><tspan x="0" y="0">C: 4%</tspan></text>
+        <text class="st5" transform="translate(1658.0515 444.9471)"><tspan x="0" y="0">M: 18%</tspan></text>
+        <text class="st3" transform="translate(1669.9515 541.4271)"><tspan x="0" y="0">Y</tspan></text>
+        <text class="st5" transform="translate(1710.8015 541.4271)"><tspan x="0" y="0">: 99%</tspan></text>
+        <text class="st6" transform="translate(1688.3215 637.9072)"><tspan x="0" y="0">K</tspan></text>
+        <text class="st5" transform="translate(1733.6715 637.9072)"><tspan x="0" y="0">: 0%</tspan></text>
+      </g>
+    </g>
+  </g>
+  <g id="black">
+    <circle class="st0" cx="227.16" cy="905.17" r="227.16"/>
+    <g class="st8">
+      <text class="st5" transform="translate(589.74 883.91)"><tspan x="0" y="0">#231F20</tspan></text>
+    </g>
+    <g>
+      <g class="st8">
+        <text class="st5" transform="translate(1182.0181 894.1201)"><tspan x="0" y="0">R: 35</tspan></text>
+        <text class="st5" transform="translate(1177.6781 990.6001)"><tspan x="0" y="0">G: 31</tspan></text>
+        <text class="st5" transform="translate(1181.858 1087.0801)"><tspan x="0" y="0">B: 32</tspan></text>
+      </g>
+      <g class="st8">
+        <text class="st5" transform="translate(1656.7482 894.1201)"><tspan x="0" y="0">C: 70%</tspan></text>
+        <text class="st5" transform="translate(1647.7482 990.6001)"><tspan x="0" y="0">M: 67%</tspan></text>
+        <text class="st3" transform="translate(1659.6382 1087.0801)"><tspan x="0" y="0">Y</tspan></text>
+        <text class="st5" transform="translate(1700.4882 1087.0801)"><tspan x="0" y="0">: 64%</tspan></text>
+        <text class="st6" transform="translate(1657.3882 1183.5601)"><tspan x="0" y="0">K</tspan></text>
+        <text class="st5" transform="translate(1702.7382 1183.5601)"><tspan x="0" y="0">: 74%</tspan></text>
+      </g>
+    </g>
+  </g>
+  <g id="light_blue">
+    <circle class="st9" cx="227.16" cy="1450.83" r="227.16"/>
+    <g class="st8">
+      <text class="st5" transform="translate(623.8338 1424.1436)"><tspan x="0" y="0">#8</tspan></text>
+      <text class="st4" transform="translate(705.0338 1424.1436)"><tspan x="0" y="0">F</tspan></text>
+      <text class="st5" transform="translate(737.9238 1424.1436)"><tspan x="0" y="0">A7B3</tspan></text>
+    </g>
+    <g>
+      <g class="st8">
+        <text class="st5" transform="translate(1171.7068 1434.3557)"><tspan x="0" y="0">R: 143</tspan></text>
+        <text class="st5" transform="translate(1167.3668 1530.8357)"><tspan x="0" y="0">G: 167</tspan></text>
+        <text class="st5" transform="translate(1171.5468 1627.3157)"><tspan x="0" y="0">B: 179</tspan></text>
+      </g>
+      <g class="st8">
+        <text class="st5" transform="translate(1667.0594 1434.3557)"><tspan x="0" y="0">C: 47%</tspan></text>
+        <text class="st5" transform="translate(1658.0594 1530.8357)"><tspan x="0" y="0">M: 26%</tspan></text>
+        <text class="st3" transform="translate(1669.9495 1627.3157)"><tspan x="0" y="0">Y</tspan></text>
+        <text class="st5" transform="translate(1710.7994 1627.3157)"><tspan x="0" y="0">: 24%</tspan></text>
+        <text class="st6" transform="translate(1688.3295 1723.7957)"><tspan x="0" y="0">K</tspan></text>
+        <text class="st5" transform="translate(1733.6694 1723.7957)"><tspan x="0" y="0">: 0%</tspan></text>
+      </g>
+    </g>
+  </g>
+  <g id="green">
+    <circle class="st11" cx="227.16" cy="1991.06" r="227.16"/>
+    <g class="st8">
+      <text class="st5" transform="translate(644.9609 1963.1331)"><tspan x="0" y="0">#7E836C</tspan></text>
+    </g>
+    <g>
+      <g class="st8">
+        <text class="st5" transform="translate(1171.7072 1973.3442)"><tspan x="0" y="0">R: 126</tspan></text>
+        <text class="st5" transform="translate(1167.3672 2069.8242)"><tspan x="0" y="0">G: 131</tspan></text>
+        <text class="st5" transform="translate(1171.5471 2166.3042)"><tspan x="0" y="0">B: 108</tspan></text>
+      </g>
+      <g class="st8">
+        <text class="st5" transform="translate(1667.0598 1973.3442)"><tspan x="0" y="0">C: 51%</tspan></text>
+        <text class="st5" transform="translate(1658.0598 2069.8242)"><tspan x="0" y="0">M: 38%</tspan></text>
+        <text class="st3" transform="translate(1669.9498 2166.3042)"><tspan x="0" y="0">Y</tspan></text>
+        <text class="st5" transform="translate(1710.7998 2166.3042)"><tspan x="0" y="0">: 59%</tspan></text>
+        <text class="st6" transform="translate(1667.6998 2262.7842)"><tspan x="0" y="0">K</tspan></text>
+        <text class="st5" transform="translate(1713.0498 2262.7842)"><tspan x="0" y="0">: 11%</tspan></text>
+      </g>
+    </g>
+  </g>
+  <g id="cream">
+    <circle class="st12" cx="227.16" cy="2530.05" r="227.16"/>
+    <g class="st8">
+      <text class="st5" transform="translate(619.2574 2508.7852)"><tspan x="0" y="0">#F5F1E8</tspan></text>
+    </g>
+    <g class="st8">
+      <text class="st5" transform="translate(1171.7069 2518.9966)"><tspan x="0" y="0">R: 245</tspan></text>
+      <text class="st5" transform="translate(1167.3669 2615.4766)"><tspan x="0" y="0">G: 241</tspan></text>
+      <text class="st5" transform="translate(1171.5469 2711.9566)"><tspan x="0" y="0">B: 232</tspan></text>
+    </g>
+    <g class="st8">
+      <text class="st5" transform="translate(1687.6816 2518.9966)"><tspan x="0" y="0">C: 3%</tspan></text>
+      <text class="st5" transform="translate(1678.6816 2615.4766)"><tspan x="0" y="0">M: 3%</tspan></text>
+      <text class="st3" transform="translate(1690.5717 2711.9566)"><tspan x="0" y="0">Y</tspan></text>
+      <text class="st5" transform="translate(1731.4216 2711.9566)"><tspan x="0" y="0">: 7%</tspan></text>
+      <text class="st6" transform="translate(1688.3217 2808.4366)"><tspan x="0" y="0">K</tspan></text>
+      <text class="st5" transform="translate(1733.6716 2808.4366)"><tspan x="0" y="0">: 0%</tspan></text>
+    </g>
+  </g>
+</svg>
