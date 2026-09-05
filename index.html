@@ -1,0 +1,906 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lumus Agency</title>
+  <meta name="description" content="A luxury marketing agency that transforms brands into icons. We light the way.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ── TOKENS ── */
+    :root {
+      --bg:         #F0EBE0;
+      --surface:    #E6DECE;
+      --ink:        #0A0906;
+      --ink-2:      #4A4540;
+      --ink-3:      #8A8278;
+      --gold:       #C8920A;
+      --gold-dim:   rgba(200,146,10,0.13);
+      --gold-line:  rgba(200,146,10,0.22);
+      --border:     rgba(10,9,6,0.10);
+      --fd: 'Cormorant Garamond', Georgia, serif;
+      --fb: 'Inter', system-ui, sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg:        #0A0906;
+        --surface:   #141210;
+        --ink:       #F0EBE0;
+        --ink-2:     #ADA59B;
+        --ink-3:     #6A6460;
+        --gold-dim:  rgba(200,146,10,0.11);
+        --gold-line: rgba(200,146,10,0.20);
+        --border:    rgba(240,235,224,0.07);
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg:        #0A0906;
+      --surface:   #141210;
+      --ink:       #F0EBE0;
+      --ink-2:     #ADA59B;
+      --ink-3:     #6A6460;
+      --gold-dim:  rgba(200,146,10,0.11);
+      --gold-line: rgba(200,146,10,0.20);
+      --border:    rgba(240,235,224,0.07);
+    }
+
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--fb);
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+      cursor: none;
+    }
+    ::-webkit-scrollbar { width: 2px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); }
+    a { cursor: none; }
+
+    /* ── CURSOR ── */
+    #cur-dot {
+      position: fixed; width: 6px; height: 6px;
+      background: var(--gold); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%,-50%);
+    }
+    #cur-ring {
+      position: fixed; width: 30px; height: 30px;
+      border: 1px solid var(--gold-line); border-radius: 50%;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%,-50%);
+      transition: width .3s, height .3s, border-color .3s;
+    }
+    #cur-ring.big { width: 50px; height: 50px; border-color: var(--gold); }
+
+    /* ── NAV ── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 30px 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: padding .4s, background .4s, border-color .4s;
+      border-bottom: 1px solid transparent;
+    }
+    .nav.scrolled {
+      padding: 16px 64px;
+      background: rgba(10,9,6,.90);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border-bottom-color: var(--gold-line);
+    }
+    .nav-logo {
+      font-family: var(--fd); font-size: 23px; font-weight: 700;
+      letter-spacing: -.5px; color: var(--ink); text-decoration: none;
+      line-height: 1; display: flex; align-items: flex-end;
+    }
+    .nav.scrolled .nav-logo { color: #F0EBE0; }
+    .nav.scrolled .nav-link { color: #ADA59B; }
+    .nav.scrolled .nav-link:hover { color: var(--gold); }
+    .nav.scrolled .nav-cta { color: var(--gold); border-color: var(--gold-line); }
+    .nav.scrolled .nav-cta:hover { background: var(--gold); color: #0A0906; }
+    .nav-logo-dot { color: var(--gold); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-link {
+      font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--ink-2); text-decoration: none;
+      transition: color .25s;
+    }
+    .nav-link:hover { color: var(--gold); }
+    .nav-cta {
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--gold); text-decoration: none;
+      border: 1px solid var(--gold-line); padding: 9px 20px;
+      transition: background .25s, color .25s;
+    }
+    .nav-cta:hover { background: var(--gold); color: #0A0906; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; height: 90vh; min-height: 560px;
+      background: #0A0906;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      overflow: hidden; text-align: center;
+    }
+    #hero-canvas {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+    }
+    .hero-glow {
+      position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 52% 42% at 50% 58%, rgba(200,146,10,.07) 0%, transparent 68%);
+    }
+    .hero-inner { position: relative; z-index: 2; padding: 0 40px; }
+
+    .hero-label {
+      font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 34px;
+      opacity: 0; animation: fadeUp .8s cubic-bezier(.16,1,.3,1) .15s forwards;
+    }
+    .hero-wordmark {
+      font-family: var(--fd);
+      font-size: clamp(90px, 15.5vw, 208px);
+      font-weight: 700; letter-spacing: -4px; line-height: .88;
+      color: #F0EBE0;
+      opacity: 0; animation: fadeUp 1s cubic-bezier(.16,1,.3,1) .35s forwards;
+    }
+    .hero-dot {
+      color: var(--gold);
+      display: inline-block;
+      animation: dotPulse 4s ease-in-out infinite;
+    }
+    .hero-tagline {
+      font-size: 10.5px; letter-spacing: 7px; text-transform: uppercase;
+      color: rgba(240,235,224,.4); margin-top: 20px; margin-bottom: 46px;
+      opacity: 0; animation: fadeUp .8s cubic-bezier(.16,1,.3,1) .65s forwards;
+    }
+    .hero-actions {
+      display: flex; gap: 14px; justify-content: center; align-items: center;
+      opacity: 0; animation: fadeUp .8s cubic-bezier(.16,1,.3,1) .9s forwards;
+    }
+    .btn-gold {
+      font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+      background: var(--gold); color: #0A0906; padding: 14px 32px;
+      text-decoration: none; font-weight: 400;
+      transition: opacity .25s, transform .25s; display: inline-block;
+    }
+    .btn-gold:hover { opacity: .84; transform: translateY(-1px); }
+    .btn-ghost-light {
+      font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+      background: transparent; color: rgba(240,235,224,.6);
+      border: 1px solid rgba(240,235,224,.16); padding: 14px 32px;
+      text-decoration: none; font-weight: 400;
+      transition: color .25s, border-color .25s; display: inline-block;
+    }
+    .btn-ghost-light:hover { color: var(--gold); border-color: var(--gold-line); }
+
+    .scroll-cue {
+      position: absolute; bottom: 34px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0;
+      opacity: 0; animation: fadeUp .8s cubic-bezier(.16,1,.3,1) 1.25s forwards;
+    }
+    .scroll-line {
+      width: 1px; height: 52px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      transform-origin: top;
+      animation: scrollDrop 2.2s ease-in-out infinite;
+    }
+
+    /* ── TICKER ── */
+    .ticker {
+      background: var(--gold); padding: 13px 0;
+      overflow: hidden; white-space: nowrap; user-select: none;
+    }
+    .ticker-track {
+      display: inline-flex;
+      animation: tickerMove 32s linear infinite;
+    }
+    .ticker-item {
+      font-family: var(--fd); font-size: 14px; font-weight: 600;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: #0A0906; padding: 0 26px;
+    }
+    .ticker-sep { color: rgba(10,9,6,.32); padding: 0 4px; }
+
+    /* ── SHARED ── */
+    .section { padding: 100px 64px; }
+    .wrap { max-width: 1180px; margin: 0 auto; }
+    .eyebrow {
+      font-size: 9.5px; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 18px; display: block;
+    }
+    .display-heading {
+      font-family: var(--fd);
+      font-size: clamp(38px, 4.8vw, 66px);
+      font-weight: 400; line-height: 1.06; text-wrap: balance;
+    }
+    .display-heading em { font-style: italic; color: var(--gold); }
+    .hr-gold { border: none; border-top: 1px solid var(--gold-line); }
+
+    /* ── PHILOSOPHY ── */
+    .philosophy { background: var(--surface); }
+    .philosophy-grid {
+      display: grid; grid-template-columns: 1fr 1.15fr; gap: 80px; align-items: start;
+    }
+    .philosophy-stmt {
+      font-family: var(--fd);
+      font-size: clamp(34px, 4.4vw, 60px);
+      font-weight: 300; line-height: 1.12; text-wrap: balance;
+    }
+    .philosophy-stmt em { font-style: italic; color: var(--gold); }
+    .philosophy-body {
+      font-size: 15px; line-height: 1.88; color: var(--ink-2);
+      max-width: 50ch; margin-bottom: 44px;
+    }
+    .stats {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    }
+    .stat {
+      padding: 22px 0; border-top: 1px solid var(--border);
+    }
+    .stat:nth-child(odd) { padding-right: 28px; border-right: 1px solid var(--border); }
+    .stat:nth-child(even) { padding-left: 28px; }
+    .stat-n {
+      font-family: var(--fd); font-size: 46px; font-weight: 600;
+      line-height: 1; margin-bottom: 3px; font-variant-numeric: tabular-nums;
+    }
+    .stat-n .suf { color: var(--gold); }
+    .stat-l {
+      font-size: 9.5px; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--ink-3);
+    }
+
+    /* ── SERVICES ── */
+    .services { background: var(--bg); }
+    .svc-layout {
+      display: grid; grid-template-columns: 1fr 1.3fr; gap: 80px; align-items: start;
+    }
+    .svc-sticky { position: sticky; top: 112px; }
+    .svc-desc {
+      font-size: 15px; line-height: 1.82; color: var(--ink-2);
+      margin-top: 22px; max-width: 40ch;
+    }
+    .svc-link {
+      display: inline-block; margin-top: 34px;
+      font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--gold); text-decoration: none;
+      border-bottom: 1px solid var(--gold-line); padding-bottom: 3px;
+      transition: border-color .25s;
+    }
+    .svc-link:hover { border-color: var(--gold); }
+
+    .svc-list { width: 100%; }
+    .svc-item {
+      padding: 30px 0; border-bottom: 1px solid var(--border);
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 16px; align-items: start; cursor: default;
+      transition: border-color .3s;
+    }
+    .svc-item:first-child { border-top: 1px solid var(--border); }
+    .svc-item:hover { border-bottom-color: var(--gold-line); }
+    .svc-name {
+      font-family: var(--fd); font-size: 25px; font-weight: 500;
+      margin-bottom: 7px; transition: color .25s;
+    }
+    .svc-item:hover .svc-name { color: var(--gold); }
+    .svc-blurb {
+      font-size: 13.5px; line-height: 1.72; color: var(--ink-3); max-width: 48ch;
+    }
+    .svc-arr {
+      font-size: 17px; color: var(--gold); margin-top: 3px;
+      opacity: 0; transform: translateX(-8px);
+      transition: opacity .25s, transform .25s;
+      flex-shrink: 0;
+    }
+    .svc-item:hover .svc-arr { opacity: 1; transform: translateX(0); }
+
+    /* ── WORK ── */
+    .work { background: var(--surface); }
+    .work-hd {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 48px;
+    }
+    .work-all {
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--ink-3); text-decoration: none;
+      border-bottom: 1px solid var(--border); padding-bottom: 3px;
+      transition: color .25s, border-color .25s;
+    }
+    .work-all:hover { color: var(--gold); border-color: var(--gold-line); }
+    .work-grid {
+      display: grid;
+      grid-template-columns: 1.42fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 14px;
+    }
+    .wcard { position: relative; overflow: hidden; background: var(--bg); }
+    .wcard-main { grid-row: 1 / 3; }
+
+    /* visual containers */
+    .wvis {
+      position: relative; overflow: hidden; width: 100%;
+    }
+    .wcard-main .wvis { aspect-ratio: 3/4; }
+    .wcard-sm  .wvis { aspect-ratio: 16/9; }
+
+    .wvis-inner {
+      position: absolute; inset: 0;
+      transition: transform .7s cubic-bezier(.25,.46,.45,.94);
+    }
+    .wcard:hover .wvis-inner { transform: scale(1.04); }
+
+    /* Abstract art for each card */
+    .vis-aurum { background: #0D0A04; }
+    .vis-aurum::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 75% 55% at 32% 72%, rgba(200,146,10,.24) 0%, transparent 60%),
+        radial-gradient(ellipse 45% 35% at 78% 22%, rgba(200,146,10,.10) 0%, transparent 52%);
+    }
+    .vis-aurum::after {
+      content: '';
+      position: absolute;
+      width: 160px; height: 160px;
+      border: 1px solid rgba(200,146,10,.18); border-radius: 50%;
+      top: 50%; left: 50%; transform: translate(-50%,-50%);
+      box-shadow:
+        0 0 0 36px rgba(200,146,10,.05),
+        0 0 0 72px rgba(200,146,10,.03);
+    }
+
+    .vis-verdana { background: #050E07; }
+    .vis-verdana::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 65% 75% at 58% 38%, rgba(35,75,42,.65) 0%, transparent 58%),
+        linear-gradient(155deg, transparent 45%, rgba(46,140,60,.06) 100%);
+    }
+    .vis-verdana::after {
+      content: '';
+      position: absolute;
+      width: 52%; height: 52%;
+      border: 1px solid rgba(46,140,60,.14);
+      top: 50%; left: 50%; transform: translate(-50%,-50%) rotate(45deg);
+    }
+
+    .vis-nexus { background: #050614; }
+    .vis-nexus::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 85% 50% at 50% 55%, rgba(52,65,155,.38) 0%, transparent 62%),
+        linear-gradient(195deg, rgba(75,95,200,.10) 0%, transparent 52%);
+    }
+    .vis-nexus::after {
+      content: '';
+      position: absolute;
+      width: 100%; height: 1px;
+      background: rgba(75,95,200,.22);
+      top: 42%; left: 0;
+      box-shadow: 0 28px 0 rgba(75,95,200,.12), 0 56px 0 rgba(75,95,200,.06);
+      transform: rotate(-14deg) scaleX(1.4);
+      transform-origin: center;
+    }
+
+    .winfo {
+      padding: 20px 24px;
+      background: var(--bg);
+      border-top: 2px solid transparent;
+      transition: border-color .3s;
+    }
+    .wcard:hover .winfo { border-top-color: var(--gold); }
+    .wcat {
+      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 5px;
+    }
+    .wtitle {
+      font-family: var(--fd); font-size: 21px; font-weight: 500; line-height: 1.2;
+    }
+
+    /* ── TESTIMONIAL ── */
+    .testimonial {
+      background: #0A0906; padding: 96px 64px; text-align: center;
+    }
+    .tquote {
+      font-family: var(--fd);
+      font-size: clamp(24px, 3.2vw, 44px);
+      font-weight: 300; font-style: italic;
+      line-height: 1.48; color: #F0EBE0;
+      max-width: 780px; margin: 0 auto 32px; text-wrap: balance;
+    }
+    .tquote strong { font-style: normal; font-weight: 600; color: var(--gold); }
+    .trule { width: 28px; height: 1px; background: var(--gold); margin: 0 auto 18px; }
+    .tattr {
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      color: rgba(240,235,224,.38);
+    }
+
+    /* ── CTA ── */
+    .cta { background: var(--gold); padding: 96px 64px; }
+    .cta-inner {
+      max-width: 1180px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 60px;
+    }
+    .cta-eyebrow {
+      font-size: 9.5px; letter-spacing: 4px; text-transform: uppercase;
+      color: rgba(10,9,6,.45); margin-bottom: 14px; display: block;
+    }
+    .cta-heading {
+      font-family: var(--fd);
+      font-size: clamp(42px, 6vw, 82px);
+      font-weight: 700; letter-spacing: -2px; line-height: .93; color: #0A0906;
+    }
+    .cta-heading .fade { opacity: .28; }
+    .btn-dark {
+      font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+      background: #0A0906; color: var(--gold);
+      padding: 16px 36px; text-decoration: none; font-weight: 400;
+      flex-shrink: 0; white-space: nowrap;
+      transition: opacity .25s; display: inline-block;
+    }
+    .btn-dark:hover { opacity: .78; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0A0906;
+      border-top: 1px solid var(--gold-line);
+      padding: 52px 64px;
+    }
+    .foot-inner {
+      max-width: 1180px; margin: 0 auto;
+      display: grid; grid-template-columns: auto 1fr auto; gap: 80px; align-items: center;
+    }
+    .foot-logo {
+      font-family: var(--fd); font-size: 24px; font-weight: 700;
+      letter-spacing: -.5px; color: #F0EBE0; text-decoration: none;
+    }
+    .foot-logo-dot { color: var(--gold); }
+    .foot-links {
+      display: flex; justify-content: center; gap: 30px; list-style: none;
+    }
+    .foot-links a {
+      font-size: 9.5px; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(240,235,224,.28); text-decoration: none; transition: color .25s;
+    }
+    .foot-links a:hover { color: var(--gold); }
+    .foot-contact { text-align: right; }
+    .foot-email {
+      font-family: var(--fd); font-size: 17px; color: var(--gold);
+      text-decoration: none; display: block; margin-bottom: 4px;
+      transition: opacity .25s;
+    }
+    .foot-email:hover { opacity: .72; }
+    .foot-loc {
+      font-size: 9.5px; letter-spacing: 1.5px; color: rgba(240,235,224,.26);
+    }
+    .foot-bottom {
+      max-width: 1180px; margin: 34px auto 0;
+      padding-top: 22px; border-top: 1px solid rgba(240,235,224,.06);
+      display: flex; justify-content: space-between;
+    }
+    .foot-copy { font-size: 9.5px; color: rgba(240,235,224,.22); letter-spacing: .5px; }
+
+    /* ── REVEAL ── */
+    .reveal {
+      opacity: 0; transform: translateY(26px);
+      transition: opacity .75s cubic-bezier(.16,1,.3,1), transform .75s cubic-bezier(.16,1,.3,1);
+    }
+    .reveal.in { opacity: 1; transform: none; }
+    .d1 { transition-delay: .10s; }
+    .d2 { transition-delay: .20s; }
+    .d3 { transition-delay: .30s; }
+    .d4 { transition-delay: .40s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      * { animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+    }
+
+    /* ── KEYFRAMES ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: none; }
+    }
+    @keyframes dotPulse {
+      0%,100% { opacity: 1; }
+      50%      { opacity: .45; }
+    }
+    @keyframes tickerMove {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @keyframes scrollDrop {
+      0%   { opacity: 0; transform: scaleY(0); }
+      25%  { opacity: 1; transform: scaleY(1); }
+      75%  { opacity: 1; transform: scaleY(1); }
+      100% { opacity: 0; transform: scaleY(1); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      .nav { padding: 20px 24px; }
+      .nav.scrolled { padding: 14px 24px; }
+      .nav-links, .nav-cta { display: none; }
+      .section { padding: 72px 24px; }
+      .testimonial, .cta { padding: 72px 24px; }
+      footer { padding: 48px 24px; }
+      .philosophy-grid { grid-template-columns: 1fr; gap: 44px; }
+      .svc-layout { grid-template-columns: 1fr; gap: 44px; }
+      .svc-sticky { position: static; }
+      .work-grid { grid-template-columns: 1fr; }
+      .wcard-main { grid-row: auto; }
+      .wcard-main .wvis { aspect-ratio: 3/2; }
+      .cta-inner { flex-direction: column; align-items: flex-start; gap: 36px; }
+      .foot-inner { grid-template-columns: 1fr; gap: 28px; }
+      .foot-contact { text-align: left; }
+      .foot-links { justify-content: flex-start; flex-wrap: wrap; gap: 18px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="cur-dot" aria-hidden="true"></div>
+<div id="cur-ring" aria-hidden="true"></div>
+
+<!-- ── NAVIGATION ── -->
+<nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+  <a href="#" class="nav-logo">LUMUS<span class="nav-logo-dot">•</span></a>
+  <ul class="nav-links" role="list">
+    <li><a href="#work" class="nav-link">Work</a></li>
+    <li><a href="#services" class="nav-link">Services</a></li>
+    <li><a href="#philosophy" class="nav-link">Philosophy</a></li>
+    <li><a href="#contact" class="nav-link">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Start a Project</a>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" aria-label="Hero">
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <p class="hero-label">Milan — Est. 2018</p>
+    <h1 class="hero-wordmark">LUMUS<span class="hero-dot">•</span></h1>
+    <p class="hero-tagline">We Light The Way</p>
+    <div class="hero-actions">
+      <a href="#work" class="btn-gold">Explore Our Work</a>
+      <a href="#philosophy" class="btn-ghost-light">Our Philosophy</a>
+    </div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true">
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ── TICKER ── -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ticker-item">Brand Strategy</span><span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">Digital Marketing</span><span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">Creative Direction</span><span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">Content & Storytelling</span><span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">SEO & Performance</span><span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">Social Media</span><span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">Brand Strategy</span><span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">Digital Marketing</span><span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">Creative Direction</span><span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">Content & Storytelling</span><span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">SEO & Performance</span><span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">Social Media</span><span class="ticker-item ticker-sep">◆</span>
+  </div>
+</div>
+
+<hr class="hr-gold">
+
+<!-- ── PHILOSOPHY ── -->
+<section class="section philosophy" id="philosophy">
+  <div class="wrap">
+    <div class="philosophy-grid">
+      <div class="reveal">
+        <span class="eyebrow">Our Philosophy</span>
+        <p class="philosophy-stmt">We don't follow trends.<br><em>We illuminate them.</em></p>
+      </div>
+      <div class="reveal d2">
+        <p class="philosophy-body">At Lumus, every brand carries an inner light — a story that deserves to be seen. We find that light, amplify it with precision and artistry, and project it where it matters. Our work isn't measured in impressions. It's measured in transformation.</p>
+        <div class="stats">
+          <div class="stat reveal d1">
+            <div class="stat-n"><span class="counter" data-target="120">0</span><span class="suf">+</span></div>
+            <div class="stat-l">Brands Illuminated</div>
+          </div>
+          <div class="stat reveal d2">
+            <div class="stat-n"><span class="counter" data-target="8">0</span><span class="suf">+</span></div>
+            <div class="stat-l">Years Active</div>
+          </div>
+          <div class="stat reveal d3">
+            <div class="stat-n"><span class="counter" data-target="340">0</span><span class="suf">+</span></div>
+            <div class="stat-l">Campaigns Launched</div>
+          </div>
+          <div class="stat reveal d4">
+            <div class="stat-n"><span class="counter" data-target="98">0</span><span class="suf">%</span></div>
+            <div class="stat-l">Client Retention</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="hr-gold">
+
+<!-- ── SERVICES ── -->
+<section class="section services" id="services">
+  <div class="wrap">
+    <div class="svc-layout">
+      <div class="svc-sticky reveal">
+        <span class="eyebrow">What We Do</span>
+        <h2 class="display-heading">Built for brands that refuse to blend in</h2>
+        <p class="svc-desc">We work with a selective portfolio of clients — brands ready to invest in their own light, and bold enough to let us find it.</p>
+        <a href="#contact" class="svc-link">Work with us →</a>
+      </div>
+      <div class="svc-list">
+        <div class="svc-item reveal">
+          <div>
+            <div class="svc-name">Brand Strategy & Identity</div>
+            <div class="svc-blurb">Positioning, naming, visual systems, and the narrative architecture that holds a brand together across every touchpoint — from first impression to lifelong loyalty.</div>
+          </div>
+          <span class="svc-arr" aria-hidden="true">→</span>
+        </div>
+        <div class="svc-item reveal d1">
+          <div>
+            <div class="svc-name">Digital Marketing & Growth</div>
+            <div class="svc-blurb">Performance campaigns across paid and organic channels. We engineer desire, not just traffic — every euro spent accountable to a measurable outcome.</div>
+          </div>
+          <span class="svc-arr" aria-hidden="true">→</span>
+        </div>
+        <div class="svc-item reveal d2">
+          <div>
+            <div class="svc-name">Creative Direction</div>
+            <div class="svc-blurb">Art direction, campaign concepting, and visual storytelling that turns your brand into a cultural moment people can't ignore — and won't forget.</div>
+          </div>
+          <span class="svc-arr" aria-hidden="true">→</span>
+        </div>
+        <div class="svc-item reveal d3">
+          <div>
+            <div class="svc-name">Content & Storytelling</div>
+            <div class="svc-blurb">Editorial, video, and cinematic content crafted for platforms where attention is scarce. We don't interrupt the feed. We define it.</div>
+          </div>
+          <span class="svc-arr" aria-hidden="true">→</span>
+        </div>
+        <div class="svc-item reveal d4">
+          <div>
+            <div class="svc-name">SEO & Performance Analytics</div>
+            <div class="svc-blurb">Visibility where it counts, underpinned by rigorous measurement and continuous optimisation — strategy and data in one hand.</div>
+          </div>
+          <span class="svc-arr" aria-hidden="true">→</span>
+        </div>
+        <div class="svc-item reveal">
+          <div>
+            <div class="svc-name">Social Media Management</div>
+            <div class="svc-blurb">Community, editorial calendar, and influencer strategy woven together. We build audiences that convert and stay, not just follow.</div>
+          </div>
+          <span class="svc-arr" aria-hidden="true">→</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="hr-gold">
+
+<!-- ── WORK ── -->
+<section class="section work" id="work">
+  <div class="wrap">
+    <div class="work-hd reveal">
+      <div>
+        <span class="eyebrow">Selected Work</span>
+        <h2 class="display-heading">Case Studies</h2>
+      </div>
+      <a href="#" class="work-all">All projects →</a>
+    </div>
+    <div class="work-grid">
+      <div class="wcard wcard-main reveal">
+        <div class="wvis">
+          <div class="wvis-inner vis-aurum"></div>
+        </div>
+        <div class="winfo">
+          <div class="wcat">Brand Identity · 2024</div>
+          <div class="wtitle">Aurum Watchmakers — Heritage Reborn</div>
+        </div>
+      </div>
+      <div class="wcard wcard-sm reveal d1">
+        <div class="wvis">
+          <div class="wvis-inner vis-verdana"></div>
+        </div>
+        <div class="winfo">
+          <div class="wcat">Campaign · 2024</div>
+          <div class="wtitle">Verdana — Slow Fashion, Loud Statement</div>
+        </div>
+      </div>
+      <div class="wcard wcard-sm reveal d2">
+        <div class="wvis">
+          <div class="wvis-inner vis-nexus"></div>
+        </div>
+        <div class="winfo">
+          <div class="wcat">Growth Strategy · 2023</div>
+          <div class="wtitle">Nexus — From Seed to Series B</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIAL ── -->
+<section class="testimonial">
+  <p class="tquote reveal">
+    "Lumus didn't give us a rebrand. They gave us back our <strong>conviction</strong> — and the world noticed."
+  </p>
+  <div class="trule reveal d1"></div>
+  <p class="tattr reveal d2">Alessandro Ferrara · CEO, Aurum Watchmakers</p>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta" id="contact">
+  <div class="cta-inner">
+    <div class="reveal">
+      <span class="cta-eyebrow">Ready to begin?</span>
+      <h2 class="cta-heading">Let's illuminate<br>your brand<span class="fade">.</span></h2>
+    </div>
+    <a href="mailto:hello@lumus.agency" class="btn-dark reveal d2">Start a Conversation</a>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="foot-inner">
+    <a href="#" class="foot-logo">LUMUS<span class="foot-logo-dot">•</span></a>
+    <ul class="foot-links" role="list">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#philosophy">Philosophy</a></li>
+      <li><a href="#">Careers</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="foot-contact">
+      <a href="mailto:hello@lumus.agency" class="foot-email">hello@lumus.agency</a>
+      <span class="foot-loc">Milan · London · New York</span>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span class="foot-copy">© 2025 Lumus Agency. All rights reserved.</span>
+    <span class="foot-copy">We Light The Way</span>
+  </div>
+</footer>
+
+<script>
+/* ── Cursor ── */
+const dot  = document.getElementById('cur-dot');
+const ring = document.getElementById('cur-ring');
+let mx = -200, my = -200, rx = -200, ry = -200;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  dot.style.left = mx + 'px';
+  dot.style.top  = my + 'px';
+});
+
+const hoverable = 'a, button, .svc-item, .wcard';
+document.querySelectorAll(hoverable).forEach(el => {
+  el.addEventListener('mouseenter', () => ring.classList.add('big'));
+  el.addEventListener('mouseleave', () => ring.classList.remove('big'));
+});
+
+(function animRing() {
+  rx += (mx - rx) * 0.11;
+  ry += (my - ry) * 0.11;
+  ring.style.left = rx + 'px';
+  ring.style.top  = ry + 'px';
+  requestAnimationFrame(animRing);
+})();
+
+/* ── Nav scroll ── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () =>
+  nav.classList.toggle('scrolled', window.scrollY > 48), { passive: true });
+
+/* ── Hero canvas particles ── */
+const canvas = document.getElementById('hero-canvas');
+const ctx    = canvas.getContext('2d');
+let W, H;
+
+function resizeCanvas() {
+  W = canvas.width  = canvas.offsetWidth;
+  H = canvas.height = canvas.offsetHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+class Mote {
+  constructor(scattered) {
+    this.x = Math.random() * (W || 800);
+    this.y = scattered ? Math.random() * (H || 600) : (H || 600) + 4;
+    this.r  = Math.random() * 1.6 + 0.3;
+    this.vy = -(Math.random() * 0.4 + 0.12);
+    this.vx = (Math.random() - 0.5) * 0.16;
+    this.a  = Math.random() * 0.55 + 0.08;
+    this.life = 0;
+    this.max  = Math.random() * 260 + 100;
+  }
+  reset() {
+    this.x = Math.random() * W;
+    this.y = H + 4;
+    this.r  = Math.random() * 1.6 + 0.3;
+    this.vy = -(Math.random() * 0.4 + 0.12);
+    this.vx = (Math.random() - 0.5) * 0.16;
+    this.a  = Math.random() * 0.55 + 0.08;
+    this.life = 0;
+    this.max  = Math.random() * 260 + 100;
+  }
+  tick() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.life++;
+    if (this.life >= this.max || this.y < -4) this.reset();
+  }
+  draw() {
+    const t = this.life / this.max;
+    const a = this.a * Math.sin(t * Math.PI);
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(200,146,10,${a.toFixed(3)})`;
+    ctx.fill();
+  }
+}
+
+const motes = Array.from({ length: 65 }, (_, i) => new Mote(i < 50));
+
+(function loop() {
+  ctx.clearRect(0, 0, W, H);
+  motes.forEach(m => { m.tick(); m.draw(); });
+  requestAnimationFrame(loop);
+})();
+
+/* ── Scroll reveal ── */
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+      revealObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.10 });
+
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+/* ── Counter animation ── */
+function runCounter(el, target) {
+  let n = 0, steps = 55;
+  const step = target / steps;
+  const tick = () => {
+    n = Math.min(n + step, target);
+    el.textContent = Math.floor(n);
+    if (n < target) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+
+const ctrObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      runCounter(e.target, parseInt(e.target.dataset.target, 10));
+      ctrObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.counter').forEach(el => ctrObs.observe(el));
+</script>
+</body>
+</html>
