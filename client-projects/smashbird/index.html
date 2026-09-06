@@ -1121,6 +1121,15 @@ html:not(.js) .page{display:block}
 }
 .award-issuer{font-size:var(--fs-util);color:var(--muted-2)}
 
+/* Real photo of the plaques on the wall — evidence alongside the text
+   cards, not a replacement for them (the cards stay readable/indexable). */
+.award-photo{margin-top:var(--s6);max-width:520px}
+.award-photo img{width:100%;height:auto;border:1px solid var(--line-hot)}
+.award-photo figcaption{
+  margin-top:var(--s2);font-size:var(--fs-micro);letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted-2);
+}
+
 /* Generic bordered callout — same weight as .award, used wherever a page
    needs to surface one extra fact without a full new section. */
 .info-card{border:1px solid var(--line-hot);padding:var(--s4);max-width:520px;margin-bottom:var(--s6)}
@@ -1830,6 +1839,10 @@ html:not(.js) .page{display:block}
     </header>
     <div class="awards" id="awardsList"></div>
     <p class="menu-note" id="awardsNote"></p>
+    <figure class="award-photo" id="awardsPhotoWrap" hidden>
+      <img id="awardsPhoto" loading="lazy" decoding="async" alt="">
+      <figcaption>On the wall at Cross Street</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -2839,6 +2852,12 @@ run('awards', function(){
     host.appendChild(card);
   });
   var note = $('awardsNote'); if(note && D.awardsNote) note.textContent = D.awardsNote;
+
+  var pw = $('awardsPhotoWrap'), ph = $('awardsPhoto');
+  if(pw && ph && D.awardsPhoto && D.awardsPhoto.src){
+    ph.src = D.awardsPhoto.src; ph.alt = D.awardsPhoto.alt || '';
+    pw.hidden = false;
+  }
 });
 
 /* ---------------------------------------------------- home: locations band */

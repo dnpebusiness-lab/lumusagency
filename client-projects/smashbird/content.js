@@ -139,28 +139,33 @@ window.SMASHBIRD = {
 
   /* --------------------------------------------------------------- awards
      Scalable on purpose — an Awards & Recognition section should not need a
-     rebuild every time a new one comes in. Only ONE is confirmed today (it
-     is the same fact already carried in the JSON-LD `award` field above).
-     No award logo files exist anywhere in this repository, so the section
-     renders as a text badge, never a guessed or recreated logo. See
-     contentIssues #17 before adding any further award to this array. */
+     rebuild every time a new one comes in.
+
+     Five of these are read directly off a photo of the actual plaques on
+     the wall (supplied 2026-09-06, see img/wall-awards-neon.jpg) — issuer,
+     category and year transcribed from the physical award, not guessed.
+     No award logo ARTWORK file exists in this repository, so cards render
+     as text; the wall photo itself is used separately as real evidence
+     rather than a substitute for a vector logo. See contentIssues #17. */
   awards: [
-    // Fully verified: named award, named body, named year.
     { name:'Best Burger & American', issuer:'Deliveroo Restaurant Awards', year:'2025',
       logo:{ src:null, confirmed:false }, confirmed:true },
 
-    /* Named by the client 2026-09-06. The AWARD is confirmed; the awarding
-       body and year for each were not supplied, so `issuer` and `year` stay
-       null and the card renders the award alone rather than pairing it with
-       a guessed organisation or date. Fill either in and it appears — no
-       code change needed. See contentIssues #17. */
+    // Read off the physical plaque on the wall.
+    { name:'Chicken Burger of the Year', issuer:'Irish TakeAway Awards — Connacht', year:null,
+      logo:{ src:null, confirmed:false }, confirmed:true },
+    { name:'Social Media Award', issuer:'Irish TakeAway Awards — Connacht', year:null,
+      logo:{ src:null, confirmed:false }, confirmed:true },
+    { name:'Best in Ireland', issuer:"McKenna's Guides", year:'2026',
+      logo:{ src:null, confirmed:false }, confirmed:true },
+    { name:'Best in Ireland', issuer:"McKenna's Guides", year:'2025',
+      logo:{ src:null, confirmed:false }, confirmed:true },
+
+    /* Named by the client 2026-09-06 but not visible on the wall photo —
+       may be the same win as the Deliveroo award above under a different
+       name, or a separate one. Left as its own entry rather than merged,
+       since merging on a guess risks hiding a real, distinct award. */
     { name:'Best Burgers & American in Ireland', issuer:null, year:null,
-      logo:{ src:null, confirmed:false }, confirmed:true },
-    { name:'Best Chicken Burger', issuer:null, year:null,
-      logo:{ src:null, confirmed:false }, confirmed:true },
-    { name:'Best Social Media', issuer:null, year:null,
-      logo:{ src:null, confirmed:false }, confirmed:true },
-    { name:'Best in Ireland', issuer:'Just Eat', year:null,
       logo:{ src:null, confirmed:false }, confirmed:true },
     { name:'Blas na hÉireann winner', issuer:'Blas na hÉireann', year:null,
       logo:{ src:null, confirmed:false }, confirmed:true },
@@ -169,6 +174,10 @@ window.SMASHBIRD = {
   ],
   awardsNote:'More awards to be added. Award logos are used only where the official ' +
              'artwork has been supplied — none are recreated.',
+  // Real photo of the actual plaques on the wall — used as evidence
+  // alongside the text cards above, not instead of them.
+  awardsPhoto:{ src:'img/wall-awards-neon.jpg',
+    alt:'The Smashbird wall with neon burger and neon lips signs either side of the neon "I licked it so it\'s mine" sign, and four award plaques displayed underneath: Irish TakeAway Awards for Chicken Burger of the Year and Social Media Award (Connacht), and two McKenna\'s Guides Best in Ireland awards for 2025 and 2026' },
 
   /* -------------------------------------------------------- current offers
      Three offers named directly by the client brief (2026-09-06). Their
@@ -674,14 +683,12 @@ window.SMASHBIRD = {
        inventing it. One line per photo from someone who can see them
        ("IMG_3369 — close-up of the double smash") fills these in and lets
        `enabled` below flip to true. */
-    // One real photo confirmed and captioned 2026-09-06 (uploaded straight
-    // into this repository as img/street-hero.jpg, converted from the
-    // client's original .CR3). The seven Cloudinary IDs below are real
-    // uploads too, but nobody has described what each one shows and this
-    // environment cannot fetch Cloudinary's CDN to look — see contentIssues
-    // #13. Turned on because the grid now has at least one honestly
-    // captioned photo; the `id`-only entries stay filtered out by the
-    // render code until each gets a real one-line description.
+    // Six real photos confirmed and captioned (2026-09-06 and earlier),
+    // uploaded straight into this repository. The seven Cloudinary IDs
+    // below are real uploads too, but nobody has described what each one
+    // shows and this environment cannot fetch Cloudinary's CDN to look —
+    // see contentIssues #13. The `id`-only entries stay filtered out by
+    // the render code until each gets a real one-line description.
     photosEnabled: true,
 
     placements: {
@@ -696,6 +703,14 @@ window.SMASHBIRD = {
     grid: [
       { src: 'img/street-hero.jpg',
         alt: 'A hand holding a Smashbird fried chicken burger in a metal tray lined with branded pink paper, on a Galway street decorated with international flag bunting' },
+      { src: 'img/table-burgers-tenders-1.jpg',
+        alt: 'A dark chilli smash burger with jalapeño in the foreground, a crispy fried chicken burger behind it, and chicken tenders with chilli and sauce on the side, all in metal trays on branded pink paper, with a Smashbird-branded cup of wooden picks on the table' },
+      { src: 'img/chicken-burger-closeup-1.jpg',
+        alt: 'Close-up of a crispy fried chicken burger with melted cheese, pickles, slaw and an orange sauce, on a sesame seed bun' },
+      { src: 'img/chicken-burger-closeup-2.jpg',
+        alt: 'Another close-up angle of the crispy fried chicken burger with cheese, pickles and orange sauce' },
+      { src: 'img/table-burgers-tenders-2.jpg',
+        alt: 'The same table of burgers and chicken tenders in metal trays on branded pink paper, from a slightly different angle' },
       { id: 'IMG_1562', alt: '' },
       { id: null, alt: '' },
       { id: null, alt: '' },
@@ -945,13 +960,13 @@ window.SMASHBIRD = {
     { id:16, area:'Display typeface',                  issue:'Nimbus Sans Narrow Bold is licensed and was not supplied. Barlow Condensed (Google Fonts, open licence) is used as a deliberate metric-adjacent substitute — narrow, high-contrast, same role — rather than the deck fallback Arial Narrow, which is weaker on screen. Swap in the licensed files when available.', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:14, area:'Opening hours',                    issue:'Only a live open/closed status is available. Regular weekly hours not derived.', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:15, area:'Alcohol',                           issue:'Wine and beer are on the menu. No delivery or age-verification claims made.', status:'CLIENT_CONFIRMATION_REQUIRED' },
-    { id:17, area:'Awards & Recognition',              issue:'Seven awards are now listed. Only the Deliveroo Restaurant Awards 2025 win has a confirmed awarding body AND year; for the other six the award name came from the client but the organisation and/or year did not, so those fields are null and the card shows the award alone. No award logo artwork exists in the repository and none has been recreated. NEEDED: awarding body + year for each, and official logo files.', status:'CLIENT_CONFIRMATION_REQUIRED' },
+    { id:17, area:'Awards & Recognition',              issue:'RESOLVED IN PART. A photo of the physical wall plaques (2026-09-06, img/wall-awards-neon.jpg) confirmed issuer, category and year for four more awards: Irish TakeAway Awards — Chicken Burger of the Year (Connacht), Irish TakeAway Awards — Social Media Award (Connacht), and McKenna\'s Guides — Best in Ireland for both 2025 and 2026. Transcribed from the plaque text directly, not guessed. STILL NEEDED: "Best Burgers & American in Ireland" (may or may not be the same win as the Deliveroo award — kept as a separate unconfirmed entry rather than merged on a guess), and confirmation for Blas na hÉireann / Great Taste. No award logo artwork exists in the repository and none has been recreated.', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:18, area:'Current Offers — Student Mondays / Wing Wednesdays / Kids Eat Free Sundays', issue:'Named in the client brief; exact terms (discount amount, times, ID/age requirements, dine-in vs collection) were not supplied. Offer names are shown; terms are not.', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:19, area:'Gluten-free — the two exception sauces', issue:'RESOLVED IN PART. The client confirmed 2026-09-06 that practically the entire menu can be made gluten free, with two sauces as the exception, and that claim is now used across the site. STILL NEEDED: which two sauces. Until then the copy says "two of our sauces" without naming them. Also still needed: per-item GF verification, so individual menu items can carry the GF tag (the renderer is wired and waiting for glutenFree:true).', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:20, area:'Google review link',                issue:'No Google Maps Place ID or review link supplied. The "Leave us a Google review" CTA is built but stays hidden until social.googleReviewUrl is confirmed.', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:21, area:'TikTok',                            issue:'No TikTok account handle or link found anywhere in the source material. Not linked or guessed.', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:22, area:'Birdhouse On Wheels',                issue:'Named directly in the 2026-09-06 brief as the mobile catering unit. No capacity, service area, minimum spend, lead time or pricing was supplied, so the catering page names it and invites an enquiry rather than stating specifics nobody confirmed.', status:'CLIENT_CONFIRMATION_REQUIRED' },
-    { id:23, area:'Neon graphic assets',                issue:'The brief asks for neon lips and a neon burger as branded graphics. No such artwork exists in this repository. Drawing an approximation would put an invented graphic into the brand identity, so neither was created. The two neon TEXT signs ("Feed me fries / burgers & tell me im pretty") were supplied as copy and are implemented as type. NEEDED: the lips and burger artwork as SVG or transparent PNG.', status:'CLIENT_CONFIRMATION_REQUIRED' },
+    { id:23, area:'Neon graphic assets',                issue:'RESOLVED IN PART. A photo supplied 2026-09-06 (img/wall-awards-neon.jpg) confirms real physical neon burger and neon lips signs exist in-store, either side of the "I licked it so it\'s mine" sign — used as a real photo rather than left undocumented. STILL NEEDED: isolated vector/PNG artwork of the lips and burger signs for use as standalone graphic elements elsewhere on the site (hero, offers, etc.) — drawing an approximation from the photo would invent brand artwork, so none has been created. The two neon TEXT signs ("Feed me fries / burgers & tell me im pretty") were supplied as copy and are implemented as type.', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:24, area:'Birdhouse history / Our Story',      issue:'The client said factual Birdhouse information would follow on a flyer. It has not arrived. The Our Story section therefore states only what is confirmed — family-run, Galway, two locations, the sauce connection — and no founding date, founder name, milestone or company history appears anywhere on the site.', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:25, area:'Gift voucher provider',              issue:'No voucher provider or purchase link supplied. The page is built with a real Buy CTA that activates the moment giftVouchers.buyUrl is confirmed; until then it honestly says vouchers are not on sale online yet. No fake checkout was built.', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:26, area:'Job vacancies',                      issue:'No live roles supplied. The careers page is built around an openRoles array (title, location, type, summary, applyUrl) and currently shows the "send us a CV anyway" state. Add a role object and the listing renders.', status:'CLIENT_CONFIRMATION_REQUIRED' },
