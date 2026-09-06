@@ -267,16 +267,27 @@ body::after{
    lights correctly, it just steps rather than eases. */
 @property --neon{ syntax:'<number>'; initial-value:1; inherits:false }
 
+/* A thick 900-weight glyph filled with the flat brand pink and a 1px white
+   shadow reads as solid pink text with blur around it — the shadow can't
+   compete with the fill, so there is no visible "hot" core, and the whole
+   thing looks flat rather than lit. Real neon in the reference photo works
+   because the tube is thin: the bright core IS most of what you see.
+
+   Since these glyphs are solid, not hollow, the fix is to make the fill
+   itself the hot colour (pink-hi — a lit tube reads lighter than the gas
+   colour you'd see with the power off) and let the shadow layers build
+   outward from there, rather than asking a 1px shadow to punch through a
+   solid pink letterform. */
 .neon-sign{
   --neon:1;
-  color:var(--pink);
+  color:var(--pink-hi);
   text-shadow:
-    0 0 calc(1px   * var(--neon)) rgba(255,255,255,.62),  /* tube core      */
-    0 0 calc(7px   * var(--neon)) rgba(255,138,205,.72),  /* hot near field */
-    0 0 calc(17px  * var(--neon)) rgba(251,32,149,.60),   /* the gas itself */
-    0 0 calc(38px  * var(--neon)) rgba(251,32,149,.32),   /* bloom          */
-    0 0 calc(76px  * var(--neon)) rgba(146,52,214,.30),   /* violet scatter */
-    0 0 calc(124px * var(--neon)) rgba(120,40,190,.17);   /* far ambience   */
+    0 0 calc(3px   * var(--neon)) rgba(255,255,255,.9),   /* tube core      */
+    0 0 calc(11px  * var(--neon)) rgba(255,157,214,.85),  /* hot near field */
+    0 0 calc(24px  * var(--neon)) rgba(251,32,149,.65),   /* the gas itself */
+    0 0 calc(48px  * var(--neon)) rgba(251,32,149,.38),   /* bloom          */
+    0 0 calc(92px  * var(--neon)) rgba(146,52,214,.32),   /* violet scatter */
+    0 0 calc(150px * var(--neon)) rgba(120,40,190,.18);   /* far ambience   */
   transition:filter var(--t) var(--ease);
 }
 /* Hover rides on `filter`, not text-shadow, so it never fights the breathing
@@ -317,7 +328,9 @@ body::after{
    stays readable instead of washing out. */
 .menu-panel .neon-sign,.reviews .neon-sign{
   color:var(--pink-deep);
-  text-shadow:0 0 calc(5px * var(--neon)) rgba(179,0,95,.26);
+  text-shadow:
+    0 0 calc(2px * var(--neon)) rgba(255,255,255,.4),
+    0 0 calc(8px * var(--neon)) rgba(179,0,95,.32);
 }
 
 /* Neon tube rule — a divider that reads as lit glass, used sparingly. */
@@ -374,9 +387,10 @@ body::after{
 }
 .mark-neon::after{            /* the tube itself: a ring, not a filter */
   content:'';position:absolute;inset:-6%;border-radius:50%;
-  border:2px solid var(--pink);
-  box-shadow:0 0 6px rgba(251,32,149,.75),0 0 20px rgba(251,32,149,.45),
-             0 0 52px rgba(146,52,214,.28),inset 0 0 12px rgba(251,32,149,.35);
+  border:2px solid var(--pink-hi);
+  box-shadow:0 0 3px rgba(255,255,255,.8),0 0 10px rgba(251,32,149,.85),
+             0 0 26px rgba(251,32,149,.55),0 0 64px rgba(146,52,214,.34),
+             inset 0 0 16px rgba(251,32,149,.4);
 }
 .mark-neon img{position:relative;width:100%;height:auto;border-radius:50%}
 @media (prefers-reduced-motion:no-preference){
@@ -470,7 +484,7 @@ body::after{
 .nav.scrolled{border-bottom-width:4px}
 /* The mark sits in its own clear space and carries no effects of any kind. */
 .nav-logo{display:block;flex:0 0 auto;line-height:0}
-.nav-logo img{width:168px;height:auto}
+.nav-logo img{width:52px;height:52px}
 .nav-links{display:flex;align-items:center;gap:var(--s4)}
 .nav-links a{
   position:relative;font-family:var(--font-d);font-size:17px;font-weight:700;
@@ -1386,11 +1400,8 @@ html:not(.js) .page{display:block}
    SMALL SCREENS
    ========================================================================== */
 @media(max-width:640px){
-  /* Nav height is set by the logo, not the other way round: the horizontal
-     lockup is 160×45 at its deck minimum and slide 06 asks for clear space
-     around it, so 68px leaves ~11px top and bottom. */
   :root{--bar:26px;--nav-h:68px;--fs-body:16px}
-  .nav-logo img{width:160px}
+  .nav-logo img{width:44px;height:44px}
   .pbar{font-size:9px}
   .pbar b{max-width:60%}
   .head{padding:var(--s5) 0 var(--s4)}
@@ -1423,8 +1434,9 @@ html:not(.js) .page{display:block}
 </div>
 
 <nav class="nav" id="nav">
+  <!-- Round mark, not the wordmark lockup — per the client, 2026-09-06. -->
   <a class="nav-logo" href="#home" data-go="home" aria-label="Smashbird — home">
-    <img src="img/logo-horizontal.png" width="720" height="203" alt="Smashbird">
+    <img src="img/logo-avatar.png" width="1024" height="1024" alt="Smashbird">
   </a>
   <!-- Five primary slots, chosen by what actually converts: the food, the
        deal, the branch, the enquiry. Everything else lives under More so
