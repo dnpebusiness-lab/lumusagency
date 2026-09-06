@@ -114,6 +114,39 @@ window.SMASHBIRD = {
     { text:'BIRDHOUSE SAUCES',             confirmed:true }
   ],
 
+  /* --------------------------------------------------------------- awards
+     Scalable on purpose — an Awards & Recognition section should not need a
+     rebuild every time a new one comes in. Only ONE is confirmed today (it
+     is the same fact already carried in the JSON-LD `award` field above).
+     No award logo files exist anywhere in this repository, so the section
+     renders as a text badge, never a guessed or recreated logo. See
+     contentIssues #17 before adding any further award to this array. */
+  awards: [
+    { name:'Best Burger & American', issuer:'Deliveroo Restaurant Awards', year:'2025',
+      logo:{ src:null, confirmed:false }, confirmed:true }
+  ],
+
+  /* -------------------------------------------------------- current offers
+     Three offers named directly by the client brief (2026-09-06). Their
+     existence is confirmed; their exact terms were not supplied, so no
+     percentage, price or age/ID requirement is invented here — `terms`
+     stays unconfirmed and the card falls back to directing people in-store.
+     See contentIssues #18. */
+  currentOffers: [
+    { id:'student-mondays', day:'Monday', name:'Student Mondays',
+      blurb:'A standing Monday offer for students.',
+      terms:{ value:null, confirmed:false }, confirmed:true },
+    { id:'wing-wednesdays', day:'Wednesday', name:'Wing Wednesdays',
+      blurb:'A standing Wednesday offer built around the wings.',
+      terms:{ value:null, confirmed:false }, confirmed:true },
+    { id:'kids-sundays', day:'Sunday', name:'Kids Eat Free Sundays',
+      blurb:'A standing Sunday offer for families.',
+      terms:{ value:null, confirmed:false }, confirmed:true }
+  ],
+  offersNote:'Terms, times and any ID or age requirements have not been ' +
+             'confirmed yet for this page — ask in-store or check Instagram ' +
+             'before you go.',
+
   /* ------------------------------------------------------------------ menu
      Categories reflect exactly what the official ordering site shows.
      There is deliberately no "Meal Deals" and no "Loaded" category.
@@ -373,6 +406,26 @@ window.SMASHBIRD = {
   // is claimed. Per-item allergens above come from the official menu.
   allergenNote: { text:null, confirmed:false },
 
+  /* -------------------------------------------------------- gluten free
+     `headline` restates the one GF fact already confirmed above (`proof`,
+     "VEGAN & GLUTEN-FREE OPTIONS") — nothing new is claimed by adding this
+     section. No menu item is marked glutenFree:true anywhere in `menu`
+     above, because none has been confirmed item-by-item, so this section
+     deliberately stays a policy-level statement and a hand-off to staff
+     rather than a filterable list. `policyText` and `exceptions` are the
+     two specifics still missing — see contentIssues #19. The moment either
+     is confirmed, fill it in here; nothing else needs to change. */
+  glutenFree: {
+    headline:'GLUTEN-FREE OPTIONS AVAILABLE',
+    // Exact client wording not supplied — kept unconfirmed rather than
+    // paraphrased into a claim nobody signed off on.
+    policyText:{ value:null, confirmed:false },
+    // Which two Birdhouse/dip items are the stated exception to the GF
+    // options — not supplied. Nothing is guessed at item level.
+    exceptions:{ value:null, confirmed:false },
+    fallbackNote:'Tell our team when you order and they will talk you through what can be adapted.'
+  },
+
   /* ------------------------------------------------- Birdhouse bottles
      Retail products on Birdhouse.ie. Descriptions are marketing copy and are
      NOT complete legal ingredient lists — see contentIssues.
@@ -490,6 +543,13 @@ window.SMASHBIRD = {
   ],
   social: {
     instagram:{ url:'https://www.instagram.com/smashbird_galway/', handle:'@smashbird_galway', confirmed:true },
+    // No TikTok account has been supplied or found. Left out entirely rather
+    // than linked to a guessed handle.
+    tiktok:{ url:null, handle:null, confirmed:false },
+    // A direct "leave a review" link needs the Google Maps Place ID, which
+    // has not been supplied. See contentIssues #20 — the CTA stays hidden
+    // until this is filled in, exactly like every other unconfirmed link.
+    googleReviewUrl:{ value:null, confirmed:false },
 
     /* ================================================================
        STRATEGIC PHOTO PLACEMENT SYSTEM
@@ -653,6 +713,50 @@ window.SMASHBIRD = {
   contact:{ email:{ value:null, confirmed:false }, phone:{ value:null, confirmed:false },
             formEndpoint:{ value:null, confirmed:false } },
 
+  /* --------------------------------------------------------- gift vouchers
+     No voucher product, price or backend exists to point to, so this is
+     built honestly as a "coming soon, ask us directly" page — a real
+     Instagram link, not a fabricated checkout. */
+  giftVouchers:{
+    headline:'GIFT VOUCHERS',
+    body:'Vouchers aren’t sold online yet. If you want to give someone the Smashbird experience, message us on Instagram or ask in-store and we’ll sort you out.',
+    available:false
+  },
+
+  /* ------------------------------------------------------------ jobs page
+     No open roles have been supplied. Built as a direct, honest hand-off
+     rather than invented listings. */
+  jobs:{
+    headline:'WORK AT SMASHBIRD',
+    body:'We’re not advertising specific roles right now. If you want to work with us, drop into Cross Street or Liosbán with your CV, or send it over on Instagram.',
+    openRoles: []
+  },
+
+  /* ------------------------------------------------------------------ faq
+     Every entry below is answerable from data already confirmed elsewhere
+     in this file — nothing here states a fact that isn't backed by a field
+     above. Topics with no confirmed answer (table bookings, exact opening
+     hours, delivery via Deliveroo) are left out of this list entirely
+     rather than shown with a vague non-answer. */
+  faq: [
+    { q:'Do you have vegan options?',
+      a:'Yes — the Vegan Junk menu has burgers, a hot dog and sides, all built with the same flavour and sauce as the rest of the menu.' },
+    { q:'Do you have gluten-free options?',
+      a:'Yes, gluten-free options are available. Tell our team when you order and they’ll talk you through what can be adapted.' },
+    { q:'Where are you?',
+      a:'Two spots in Galway: Cross Street Lower in the city centre, and Liosbán Industrial Estate off the Tuam Road.' },
+    { q:'Can I order online?',
+      a:'Yes — order for collection from either location through our website.' },
+    { q:'Can I buy the sauces?',
+      a:'Yes — the full range of Birdhouse sauces used in Smashbird food is sold in bottles, in-store and on birdhouse.ie.' },
+    { q:'Do you cater for parties and events?',
+      a:'Yes — birthdays, work parties, weddings and private events. Use the catering enquiry form and tell us what you need.' },
+    { q:'Do you sell gift vouchers?',
+      a:'Not online yet. Message us on Instagram or ask in-store and we’ll arrange one.' },
+    { q:'Are you hiring?',
+      a:'We’re not advertising specific roles right now. Drop your CV in-store or send it on Instagram.' }
+  ],
+
   /* ---------------------------------------------------------------- legal */
   legal:{
     companyName:{ value:null, confirmed:false },
@@ -684,6 +788,11 @@ window.SMASHBIRD = {
     { id:13, area:'Photography',                      issue:'Seven photographs supplied as Cloudinary IDs only (IMG_3369, IMG_3357, _MG_3427, IMG_3398, IMG_1556, IMG_1561, IMG_1562). Nobody has described what each one shows and this environment cannot fetch Cloudinary to look, so they cannot be assigned to a product or given alt text without inventing it. They are wired up and switched off (social.photosEnabled). The brand deck (slides 1, 12, 16) specifies a photo-independent system, so the site is complete without them. One line per photo turns them on.', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:16, area:'Display typeface',                  issue:'Nimbus Sans Narrow Bold is licensed and was not supplied. Barlow Condensed (Google Fonts, open licence) is used as a deliberate metric-adjacent substitute — narrow, high-contrast, same role — rather than the deck fallback Arial Narrow, which is weaker on screen. Swap in the licensed files when available.', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:14, area:'Opening hours',                    issue:'Only a live open/closed status is available. Regular weekly hours not derived.', status:'CLIENT_CONFIRMATION_REQUIRED' },
-    { id:15, area:'Alcohol',                           issue:'Wine and beer are on the menu. No delivery or age-verification claims made.', status:'CLIENT_CONFIRMATION_REQUIRED' }
+    { id:15, area:'Alcohol',                           issue:'Wine and beer are on the menu. No delivery or age-verification claims made.', status:'CLIENT_CONFIRMATION_REQUIRED' },
+    { id:17, area:'Awards & Recognition section',      issue:'The 2026-09-06 brief referred to a wider set of awards/categories. Only the Deliveroo Restaurant Awards 2025 win is confirmed and has any data. No award logo files exist in the repository. The section is built to scale, but nothing beyond the one confirmed award is shown.', status:'CLIENT_CONFIRMATION_REQUIRED' },
+    { id:18, area:'Current Offers — Student Mondays / Wing Wednesdays / Kids Eat Free Sundays', issue:'Named in the client brief; exact terms (discount amount, times, ID/age requirements, dine-in vs collection) were not supplied. Offer names are shown; terms are not.', status:'CLIENT_CONFIRMATION_REQUIRED' },
+    { id:19, area:'Gluten-free policy wording',        issue:'The brief asked for major GF messaging. The only confirmed fact is the existing proof-strip claim ("Vegan & gluten-free options"). Exact policy wording and the stated two-sauce exception were not supplied, so the new GF section restates the confirmed fact and defers detail to staff rather than inventing either.', status:'CLIENT_CONFIRMATION_REQUIRED' },
+    { id:20, area:'Google review link',                issue:'No Google Maps Place ID or review link supplied. The "Leave us a Google review" CTA is built but stays hidden until social.googleReviewUrl is confirmed.', status:'CLIENT_CONFIRMATION_REQUIRED' },
+    { id:21, area:'TikTok',                            issue:'No TikTok account handle or link found anywhere in the source material. Not linked or guessed.', status:'CLIENT_CONFIRMATION_REQUIRED' }
   ]
 };

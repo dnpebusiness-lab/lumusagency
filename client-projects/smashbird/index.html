@@ -34,6 +34,32 @@
   "award": "Best Burger & American — Deliveroo Restaurant Awards 2025"
 }
 </script>
+<!-- Mirrors content.js `faq` exactly. If that array changes, update this
+     block to match — search engines read this tag, not the rendered page. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Do you have vegan options?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes — the Vegan Junk menu has burgers, a hot dog and sides, all built with the same flavour and sauce as the rest of the menu." } },
+    { "@type": "Question", "name": "Do you have gluten-free options?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes, gluten-free options are available. Tell our team when you order and they'll talk you through what can be adapted." } },
+    { "@type": "Question", "name": "Where are you?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Two spots in Galway: Cross Street Lower in the city centre, and Liosbán Industrial Estate off the Tuam Road." } },
+    { "@type": "Question", "name": "Can I order online?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes — order for collection from either location through our website." } },
+    { "@type": "Question", "name": "Can I buy the sauces?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes — the full range of Birdhouse sauces used in Smashbird food is sold in bottles, in-store and on birdhouse.ie." } },
+    { "@type": "Question", "name": "Do you cater for parties and events?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes — birthdays, work parties, weddings and private events. Use the catering enquiry form and tell us what you need." } },
+    { "@type": "Question", "name": "Do you sell gift vouchers?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Not online yet. Message us on Instagram or ask in-store and we'll arrange one." } },
+    { "@type": "Question", "name": "Are you hiring?",
+      "acceptedAnswer": { "@type": "Answer", "text": "We're not advertising specific roles right now. Drop your CV in-store or send it on Instagram." } }
+  ]
+}
+</script>
 <!-- Fonts are served from this domain, not from Google.
      Three reasons, in order of weight: a request to fonts.gstatic.com sends
      the visitor's IP to a third party, which is a live GDPR question for an
@@ -138,6 +164,14 @@ body{
   display:flex;flex-direction:column;min-height:100vh;
 }
 img{display:block;max-width:100%}
+/* Without !important, any element carrying an explicit `display` (every
+   `.btn`, for instance) overrides the UA default for [hidden] rather than
+   being overridden by it — the browser's built-in [hidden]{display:none}
+   rule loses ties on specificity to author CSS. That silently showed
+   #birdhouseLink (an unconfirmed, hidden-by-default `.btn`) pointing at a
+   dead href="#". This rule makes `hidden` win unconditionally, as the
+   attribute is meant to. */
+[hidden]{display:none!important}
 a{color:inherit;text-decoration:none}
 button{cursor:pointer;border:none;background:none;font:inherit;color:inherit}
 ul{list-style:none}
@@ -595,6 +629,8 @@ html:not(.js) .page{display:block}
 .reviews{background:var(--pink);color:var(--black);padding:var(--s7) 0}
 .reviews .eyebrow{color:var(--black);margin-bottom:var(--s5)}
 .reviews .eyebrow::before{background:var(--black)}
+.reviews .btn.ghost{--btn-fg:var(--black);--btn-wipe:var(--black);border-color:rgba(9,9,11,.35)}
+.reviews .btn.ghost:hover{color:var(--pink);border-color:var(--black)}
 .review{
   display:grid;grid-template-columns:minmax(0,1fr) auto;
   gap:var(--s2) var(--s5);align-items:end;
@@ -645,6 +681,10 @@ html:not(.js) .page{display:block}
   scrollbar-width:none;-webkit-overflow-scrolling:touch;
   padding-bottom:var(--s2);margin-bottom:var(--s5);
   border-bottom:2px solid var(--on-paper);
+  /* Sticks just under the fixed top nav so the category you're scrolling
+     through stays reachable — the menu is the longest page on the site. */
+  position:sticky;top:var(--top);z-index:20;background:var(--paper);
+  padding-top:var(--s2);
 }
 .cats::-webkit-scrollbar{display:none}
 .cat{
@@ -811,6 +851,96 @@ html:not(.js) .page{display:block}
 .ig-grid a:hover img{opacity:.82}
 
 /* ==========================================================================
+   GLUTEN-FREE TAG
+   Same shape as the existing .tag/.tag.v pair, one more variant. Pink, not
+   yellow or red — the token comment on --yellow/--red above reserves those
+   for heat/price/urgency, and a dietary fact is neither.
+   ========================================================================== */
+.tag.gf{background:var(--pink);color:var(--black);border-color:var(--pink)}
+
+/* ==========================================================================
+   HOME BANDS — offers teaser + gluten-free callout. Same rhythm as `.sign`
+   (full-bleed, bordered top and bottom) so they read as part of the same
+   system rather than a bolted-on component.
+   ========================================================================== */
+.band{
+  padding:var(--s6) 0;border-top:1px solid var(--line);
+}
+.band-head{
+  display:flex;flex-wrap:wrap;gap:var(--s3);align-items:flex-end;
+  justify-content:space-between;margin-bottom:var(--s5);
+}
+.band-head h2{font-size:var(--fs-d2);color:var(--paper)}
+.offer-row{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:0;border-top:1px solid var(--line);
+}
+.offer-chip{
+  padding:var(--s4) var(--s4) var(--s4) 0;border-bottom:1px solid var(--line);
+}
+@media(min-width:700px){
+  .offer-chip{border-right:1px solid var(--line);padding-right:var(--s4)}
+  .offer-chip:last-child{border-right:0}
+}
+.offer-chip b{
+  display:block;font-family:var(--font-d);font-size:var(--fs-d3);font-weight:900;
+  text-transform:uppercase;line-height:1.05;color:var(--paper);margin-bottom:var(--s1);
+}
+.offer-chip b em{font-style:normal;color:var(--pink)}
+.offer-chip p{font-size:var(--fs-sm);color:var(--muted);line-height:1.6}
+.gf-band{display:grid;gap:var(--s3);grid-template-columns:1fr;max-width:70ch}
+.gf-band h2{font-size:var(--fs-d2);color:var(--paper);margin-bottom:var(--s2)}
+.gf-band p{font-size:var(--fs-body);color:var(--muted);line-height:1.7}
+
+/* ==========================================================================
+   AWARDS — a text badge, never a logo image (none exist for this brand yet).
+   The border and eyebrow-style number are what read as "award", not an icon.
+   ========================================================================== */
+.awards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:var(--s3);margin-top:var(--s5)}
+.award{
+  border:1px solid var(--line-hot);padding:var(--s4);
+  display:flex;flex-direction:column;gap:var(--s1);
+}
+.award-year{
+  font-family:var(--font-d);font-size:var(--fs-micro);font-weight:700;
+  letter-spacing:.2em;color:var(--pink);
+}
+.award-name{
+  font-family:var(--font-d);font-size:20px;font-weight:900;
+  text-transform:uppercase;color:var(--paper);line-height:1.15;
+}
+.award-issuer{font-size:var(--fs-util);color:var(--muted-2)}
+
+/* ==========================================================================
+   FAQ — a plain accordion. No third-party widget, no icon font: the plus
+   rotates to a cross with the same two-pseudo-element trick as .nav-burger.
+   ========================================================================== */
+.faq-list{border-top:1px solid var(--line);max-width:860px}
+.faq-item{border-bottom:1px solid var(--line)}
+.faq-q{
+  width:100%;display:flex;align-items:center;justify-content:space-between;
+  gap:var(--s3);padding:var(--s4) 0;text-align:left;
+  font-family:var(--font-d);font-size:var(--fs-d3);font-weight:900;
+  text-transform:uppercase;color:var(--paper);
+}
+.faq-icon{
+  position:relative;flex:0 0 auto;width:22px;height:22px;
+}
+.faq-icon::before,.faq-icon::after{
+  content:'';position:absolute;top:50%;left:50%;background:var(--pink);
+  transform:translate(-50%,-50%);transition:transform var(--t) var(--ease);
+}
+.faq-icon::before{width:22px;height:2px}
+.faq-icon::after{width:2px;height:22px}
+.faq-item[data-open="true"] .faq-icon::after{transform:translate(-50%,-50%) rotate(90deg);opacity:0}
+.faq-a{
+  overflow:hidden;max-height:0;transition:max-height var(--t-slow) var(--ease);
+}
+.faq-item[data-open="true"] .faq-a{max-height:400px}
+.faq-a p{padding:0 0 var(--s4);max-width:70ch;font-size:var(--fs-body);color:var(--muted);line-height:1.7}
+
+/* ==========================================================================
    FORMS
    ========================================================================== */
 .form{display:grid;gap:var(--s3);max-width:720px}
@@ -953,10 +1083,12 @@ html:not(.js) .page{display:block}
   </a>
   <ul class="nav-links" id="navLinks">
     <li><a href="#menu" data-go="menu">Menu</a></li>
+    <li><a href="#offers" data-go="offers">Offers</a></li>
     <li><a href="#sauces" data-go="sauces">Sauces</a></li>
     <li><a href="#locations" data-go="locations">Locations</a></li>
     <li><a href="#about" data-go="about">About</a></li>
     <li><a href="#catering" data-go="catering">Catering</a></li>
+    <li><a href="#faq" data-go="faq">FAQ</a></li>
     <li><a href="#contact" data-go="contact">Contact</a></li>
     <li class="only-mobile"><a href="#order" data-go="order">Order Now</a></li>
   </ul>
@@ -989,6 +1121,29 @@ html:not(.js) .page{display:block}
 
   <div id="strips"></div>
 
+  <!-- Renders only if content.js has confirmed offers. -->
+  <section class="band" id="offersBand" aria-label="Current offers" hidden>
+    <div class="wrap">
+      <div class="band-head">
+        <div>
+          <p class="eyebrow">On right now</p>
+          <h2 class="display">Current offers.</h2>
+        </div>
+        <a class="btn ghost sm" href="#offers" data-go="offers"><span>All offers &rarr;</span></a>
+      </div>
+      <div class="offer-row" id="offerRow"></div>
+    </div>
+  </section>
+
+  <!-- Restates the confirmed proof-strip fact only — see content.js glutenFree. -->
+  <section class="band gf-home" id="gfBand" aria-label="Gluten-free options" hidden>
+    <div class="wrap gf-band">
+      <p class="eyebrow">Dietary</p>
+      <h2 class="display" id="gfHeadline"></h2>
+      <p id="gfNote"></p>
+    </div>
+  </section>
+
   <!-- The wall at Cross Street. Copy lives in content.js under `wallSign`. -->
   <section class="sign" id="wallSign" aria-label="On the wall at Cross Street" hidden>
     <p class="sign-line neon-sign" id="signLine"></p>
@@ -1002,6 +1157,7 @@ html:not(.js) .page{display:block}
       <p class="eyebrow">What people say</p>
       <h2 class="display" style="font-size:var(--fs-d2);margin-bottom:var(--s5)">Galway&rsquo;s got opinions.</h2>
       <div id="reviewList"></div>
+      <a class="btn ghost sm" id="googleReviewLink" href="#" hidden target="_blank" rel="noopener noreferrer" style="margin-top:var(--s4)"><span>Leave us a Google review &nearr;</span></a>
     </div>
   </section>
 
@@ -1038,6 +1194,18 @@ html:not(.js) .page{display:block}
         <a href="#sauces" class="btn ghost" data-go="sauces"><span>The Sauces</span></a>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ==================================================================== OFFERS -->
+<section id="offers" class="page" aria-label="Current offers">
+  <div class="wrap">
+    <header class="head">
+      <p class="eyebrow">On right now</p>
+      <h1 class="display">Current<br>offers.</h1>
+      <p class="lede" id="offersNote"></p>
+    </header>
+    <div class="offer-row" id="offersFull"></div>
   </div>
 </section>
 
@@ -1085,6 +1253,14 @@ html:not(.js) .page{display:block}
       <div class="fact rv"><b>Vegan<br><em>&amp; GF</em></b><p>Options that belong in the same conversation, not in a footnote.</p></div>
     </div>
     <p class="about-close rv">Smashbird does not do subtle. The food is built to be immediate, textural and worth talking about. The sauce range is deeper than it needs to be. The menu keeps changing. The attitude does not.</p>
+
+    <!-- Renders only confirmed awards — see content.js `awards`. Built to
+         scale without a rebuild; today that is one. -->
+    <section aria-label="Awards and recognition" id="awardsSection" hidden style="margin-top:var(--s7)">
+      <p class="eyebrow">Recognition</p>
+      <h2 class="display" style="font-size:var(--fs-d2);margin-top:var(--s3)">Awards.</h2>
+      <div class="awards" id="awardsList"></div>
+    </section>
   </div>
 </section>
 
@@ -1127,6 +1303,43 @@ html:not(.js) .page{display:block}
       <button type="submit" class="btn" id="cateringSubmit"><span>Send enquiry <em class="arw" style="font-style:normal">&rarr;</em></span></button>
       <p class="f-status" id="cateringStatus" role="status" aria-live="polite"></p>
     </form>
+  </div>
+</section>
+
+<!-- ============================================================ GIFT VOUCHERS -->
+<section id="vouchers" class="page" aria-label="Gift vouchers">
+  <div class="wrap">
+    <header class="head">
+      <p class="eyebrow">Give it away</p>
+      <h1 class="display" id="vouchersHl"></h1>
+      <p class="lede" id="vouchersBody"></p>
+    </header>
+    <a class="btn ghost" id="vouchersLink" href="https://www.instagram.com/smashbird_galway/" target="_blank" rel="noopener noreferrer"><span>Message us on Instagram &nearr;</span></a>
+  </div>
+</section>
+
+<!-- =============================================================== JOBS/CAREERS -->
+<section id="jobs" class="page" aria-label="Careers">
+  <div class="wrap">
+    <header class="head">
+      <p class="eyebrow">Careers</p>
+      <h1 class="display" id="jobsHl"></h1>
+      <p class="lede" id="jobsBody"></p>
+    </header>
+    <div id="jobsList"></div>
+    <a class="btn ghost" href="https://www.instagram.com/smashbird_galway/" target="_blank" rel="noopener noreferrer"><span>Message us on Instagram &nearr;</span></a>
+  </div>
+</section>
+
+<!-- ====================================================================== FAQ -->
+<section id="faq" class="page" aria-label="Frequently asked questions">
+  <div class="wrap">
+    <header class="head">
+      <p class="eyebrow">Questions</p>
+      <h1 class="display">Before you<br>order.</h1>
+      <p class="lede">Anything not answered here — ask on the <a href="#contact" data-go="contact" style="text-decoration:underline">contact page</a>.</p>
+    </header>
+    <div class="faq-list" id="faqList"></div>
   </div>
 </section>
 
@@ -1194,9 +1407,13 @@ html:not(.js) .page{display:block}
         <h3>Browse</h3>
         <ul>
           <li><a href="#menu" data-go="menu">Menu</a></li>
+          <li><a href="#offers" data-go="offers">Offers</a></li>
           <li><a href="#sauces" data-go="sauces">Sauces</a></li>
           <li><a href="#locations" data-go="locations">Locations</a></li>
           <li><a href="#catering" data-go="catering">Catering</a></li>
+          <li><a href="#vouchers" data-go="vouchers">Gift Vouchers</a></li>
+          <li><a href="#jobs" data-go="jobs">Careers</a></li>
+          <li><a href="#faq" data-go="faq">FAQ</a></li>
         </ul>
       </div>
       <div class="foot-col">
@@ -1260,7 +1477,7 @@ function reveal(root){
 /* --------------------------------------------------------------- routing
    pushState + popstate, so Back genuinely goes back. Modified clicks are
    left alone so links still open in a new tab. */
-var PAGES = ['home','menu','sauces','locations','about','catering','order','contact'];
+var PAGES = ['home','menu','offers','sauces','locations','about','catering','vouchers','jobs','faq','order','contact'];
 
 function showPage(id, push){
   if(PAGES.indexOf(id) === -1) id = 'home';
@@ -1482,6 +1699,9 @@ run('menu', function(){
       var meta = el('div','item-meta');
       if(m.vegan)            meta.appendChild(el('span','tag v','Vegan'));
       else if(m.vegetarian)  meta.appendChild(el('span','tag','Veg'));
+      // No item currently has glutenFree confirmed true — nothing renders
+      // yet, but the tag is wired up for the day one is.
+      if(m.glutenFree === true) meta.appendChild(el('span','tag gf','GF'));
       if(m.allergens && m.allergens.length)
         meta.appendChild(el('span','item-alg','Allergens: ' + m.allergens.join(', ')));
       if(meta.childNodes.length) row.appendChild(meta);
@@ -1636,6 +1856,101 @@ run('about', function(){
   if(cb && D.catering) cb.textContent = D.catering.body;
 });
 
+/* --------------------------------------------------------------- offers
+   Home teaser (first 3, but there are only 3 today) and the full page share
+   the same card markup. Only offers with confirmed:true render at all;
+   terms render only if confirmed, else the honest in-store fallback. */
+function offerCard(o){
+  var c = el('div','offer-chip');
+  var b = el('b'); b.appendChild(document.createTextNode(o.name));
+  c.appendChild(b);
+  var p = el('p', null, ok(o.terms) ? o.terms.value : o.blurb);
+  c.appendChild(p);
+  return c;
+}
+run('offers', function(){
+  var list = (D.currentOffers||[]).filter(function(o){ return o.confirmed; });
+  if(!list.length) return;
+
+  var full = $('offersFull');
+  if(full) list.forEach(function(o){ full.appendChild(offerCard(o)); });
+  var note = $('offersNote'); if(note && D.offersNote) note.textContent = D.offersNote;
+
+  var band = $('offersBand'), row = $('offerRow');
+  if(band && row){
+    list.forEach(function(o){ row.appendChild(offerCard(o)); });
+    band.hidden = false;
+  }
+});
+
+/* ------------------------------------------------------------ gluten free
+   Renders only the fact already confirmed in `proof` above — see the note
+   in content.js above `glutenFree`. */
+run('glutenfree', function(){
+  var band = $('gfBand'); if(!band) return;
+  var proofHasGF = (D.proof||[]).some(function(p){
+    return p.confirmed && /gluten/i.test(p.text);
+  });
+  if(!proofHasGF || !D.glutenFree) return;
+  var h = $('gfHeadline'); if(h) h.textContent = D.glutenFree.headline;
+  var n = $('gfNote');
+  if(n) n.textContent = ok(D.glutenFree.policyText) ? D.glutenFree.policyText.value : D.glutenFree.fallbackNote;
+  band.hidden = false;
+});
+
+/* --------------------------------------------------------------- awards */
+run('awards', function(){
+  var sec = $('awardsSection'), host = $('awardsList'); if(!sec || !host) return;
+  var list = (D.awards||[]).filter(function(a){ return a.confirmed; });
+  if(!list.length) return;
+  list.forEach(function(a){
+    var card = el('div','award');
+    card.appendChild(el('p','award-year', a.year));
+    card.appendChild(el('p','award-name', a.name));
+    card.appendChild(el('p','award-issuer', a.issuer));
+    host.appendChild(card);
+  });
+  sec.hidden = false;
+});
+
+/* ------------------------------------------------------ vouchers & jobs */
+run('vouchers', function(){
+  var h = $('vouchersHl'), b = $('vouchersBody'), l = $('vouchersLink');
+  if(h && D.giftVouchers) h.textContent = D.giftVouchers.headline;
+  if(b && D.giftVouchers) b.textContent = D.giftVouchers.body;
+  if(l && D.social && D.social.instagram && D.social.instagram.confirmed) l.href = D.social.instagram.url;
+});
+run('jobs', function(){
+  var h = $('jobsHl'), b = $('jobsBody'), list = $('jobsList');
+  if(h && D.jobs) h.textContent = D.jobs.headline;
+  if(b && D.jobs) b.textContent = D.jobs.body;
+  if(list && D.jobs && D.jobs.openRoles && D.jobs.openRoles.length){
+    D.jobs.openRoles.forEach(function(r){ list.appendChild(el('p', null, r)); });
+  }
+});
+
+/* ------------------------------------------------------------------ faq */
+run('faq', function(){
+  var host = $('faqList'); if(!host) return;
+  (D.faq||[]).forEach(function(f, i){
+    var item = el('div','faq-item'); item.setAttribute('data-open', i === 0 ? 'true' : 'false');
+    var qId = 'faq-q-' + i, aId = 'faq-a-' + i;
+    var q = el('button','faq-q'); q.type = 'button'; q.id = qId;
+    q.setAttribute('aria-expanded', i === 0 ? 'true' : 'false');
+    q.setAttribute('aria-controls', aId);
+    q.appendChild(el('span', null, f.q));
+    q.appendChild(el('span','faq-icon'));
+    var a = el('div','faq-a'); a.id = aId; a.setAttribute('role','region'); a.setAttribute('aria-labelledby', qId);
+    a.appendChild(el('p', null, f.a));
+    q.addEventListener('click', function(){
+      var open = item.getAttribute('data-open') === 'true';
+      item.setAttribute('data-open', open ? 'false' : 'true');
+      q.setAttribute('aria-expanded', open ? 'false' : 'true');
+    });
+    item.appendChild(q); item.appendChild(a); host.appendChild(item);
+  });
+});
+
 /* --------------------------------------------------------------- reviews */
 run('reviews', function(){
   var host = $('reviewList'), sec = $('reviewsSection');
@@ -1670,6 +1985,10 @@ run('reviews', function(){
     row.appendChild(by);
     host.appendChild(row);
   });
+  var g = $('googleReviewLink');
+  if(g && D.social && D.social.googleReviewUrl && D.social.googleReviewUrl.confirmed && D.social.googleReviewUrl.value){
+    g.href = D.social.googleReviewUrl.value; g.hidden = false;
+  }
   sec.hidden = false;
 });
 
@@ -1722,6 +2041,12 @@ run('footer', function(){
     var li = el('li'), a = el('a', null, 'Instagram');
     a.href = D.social.instagram.url; a.target='_blank'; a.rel='noopener noreferrer';
     li.appendChild(a); fs.appendChild(li);
+  }
+  // No confirmed TikTok account — see contentIssues #21. Not linked or guessed.
+  if(fs && D.social && D.social.tiktok && D.social.tiktok.confirmed && D.social.tiktok.url){
+    var lit = el('li'), at = el('a', null, 'TikTok');
+    at.href = D.social.tiktok.url; at.target='_blank'; at.rel='noopener noreferrer';
+    lit.appendChild(at); fs.appendChild(lit);
   }
   if(fs && D.birdhouseSocial && D.birdhouseSocial.confirmed && D.birdhouseSocial.url){
     var li2 = el('li'), a2 = el('a', null, 'Birdhouse');
