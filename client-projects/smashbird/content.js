@@ -594,7 +594,15 @@ window.SMASHBIRD = {
        inventing it. One line per photo from someone who can see them
        ("IMG_3369 — close-up of the double smash") fills these in and lets
        `enabled` below flip to true. */
-    photosEnabled: false,
+    // One real photo confirmed and captioned 2026-09-06 (uploaded straight
+    // into this repository as img/street-hero.jpg, converted from the
+    // client's original .CR3). The seven Cloudinary IDs below are real
+    // uploads too, but nobody has described what each one shows and this
+    // environment cannot fetch Cloudinary's CDN to look — see contentIssues
+    // #13. Turned on because the grid now has at least one honestly
+    // captioned photo; the `id`-only entries stay filtered out by the
+    // render code until each gets a real one-line description.
+    photosEnabled: true,
 
     placements: {
       hero:      { id: 'IMG_3369', alt: '' },
@@ -606,8 +614,9 @@ window.SMASHBIRD = {
     },
 
     grid: [
+      { src: 'img/street-hero.jpg',
+        alt: 'A hand holding a Smashbird fried chicken burger in a metal tray lined with branded pink paper, on a Galway street decorated with international flag bunting' },
       { id: 'IMG_1562', alt: '' },
-      { id: null, alt: '' },
       { id: null, alt: '' },
       { id: null, alt: '' },
       { id: null, alt: '' },
@@ -785,7 +794,7 @@ window.SMASHBIRD = {
     { id:10, area:'Birds — flavour-dependent items',  issue:'Tendies, Wings (medium/large) and Chick N Pop have allergens that vary by flavour and are not published per item. None shown.', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:11, area:'Burgers — Rasta Burger',           issue:'Allergens list Crustaceans and Fish via Caribbean Jerk; Birdhouse jerk data is inconsistent. Shown as published, flagged.', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:12, area:'Vegan Junk — Cabbage Fritter',     issue:'No allergens under Vegan Junk; the same item under Sides lists Cereals and Sulphites.', status:'CLIENT_CONFIRMATION_REQUIRED' },
-    { id:13, area:'Photography',                      issue:'Seven photographs supplied as Cloudinary IDs only (IMG_3369, IMG_3357, _MG_3427, IMG_3398, IMG_1556, IMG_1561, IMG_1562). Nobody has described what each one shows and this environment cannot fetch Cloudinary to look, so they cannot be assigned to a product or given alt text without inventing it. They are wired up and switched off (social.photosEnabled). The brand deck (slides 1, 12, 16) specifies a photo-independent system, so the site is complete without them. One line per photo turns them on.', status:'CLIENT_CONFIRMATION_REQUIRED' },
+    { id:13, area:'Photography',                      issue:'Eleven photographs exist in the connected Cloudinary account (IMG_3369, IMG_3357, _MG_3436, _MG_3427, IMG_3398, IMG_1556, IMG_1561, IMG_1562, IMG_5888, IMG_5852, IMG_5840), plus one supplied directly into this repository as a .CR3 (now converted and live as img/street-hero.jpg, described honestly and switched on in social.grid). This working environment has no network access to Cloudinary’s CDN, so the other eleven cannot be viewed here to write honest alt text or assign them to a product/placement without inventing it. They remain wired up and filtered out (id-only entries with no matching description) until each gets a real one-line description — easiest done by uploading the files directly into this repository’s img/ folder instead, the way the .CR3 arrived. The brand deck (slides 1, 12, 16) specifies a photo-independent system, so the site is complete without them.', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:16, area:'Display typeface',                  issue:'Nimbus Sans Narrow Bold is licensed and was not supplied. Barlow Condensed (Google Fonts, open licence) is used as a deliberate metric-adjacent substitute — narrow, high-contrast, same role — rather than the deck fallback Arial Narrow, which is weaker on screen. Swap in the licensed files when available.', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:14, area:'Opening hours',                    issue:'Only a live open/closed status is available. Regular weekly hours not derived.', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:15, area:'Alcohol',                           issue:'Wine and beer are on the menu. No delivery or age-verification claims made.', status:'CLIENT_CONFIRMATION_REQUIRED' },

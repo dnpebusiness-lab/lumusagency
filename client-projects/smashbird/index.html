@@ -2008,14 +2008,22 @@ run('social', function(){
 
   var base = 'https://res.cloudinary.com/' + (S.gridCloud || 'fodeavol')
            + '/image/upload/' + (S.gridTransform || 'c_fill,g_auto,ar_1:1,f_auto,q_auto');
-  (S.grid||[]).filter(function(im){ return im && im.id; }).forEach(function(im){
+  // An entry is either a Cloudinary `id` or a locally hosted `src` (a file
+  // committed straight into this repo's img/ folder) — same convention as
+  // the per-product `photos` block. Either way it needs a real one-line
+  // `alt`, which is the actual gate on rendering, not which storage it uses.
+  (S.grid||[]).filter(function(im){ return im && (im.id || im.src) && im.alt; }).forEach(function(im){
     var a = el('a'); a.href = S.instagram ? S.instagram.url : '#';
     a.target = '_blank'; a.rel = 'noopener noreferrer';
     var i = new Image();
-    i.src    = base + ',w_600/' + im.id;
-    i.srcset = base + ',w_320/' + im.id + ' 320w, ' + base + ',w_600/' + im.id + ' 600w';
-    i.sizes  = '(max-width:640px) 50vw, 240px';
-    i.alt = im.alt || '';
+    if(im.src){
+      i.src = im.src;
+    } else {
+      i.src    = base + ',w_600/' + im.id;
+      i.srcset = base + ',w_320/' + im.id + ' 320w, ' + base + ',w_600/' + im.id + ' 600w';
+      i.sizes  = '(max-width:640px) 50vw, 240px';
+    }
+    i.alt = im.alt;
     i.loading = 'lazy'; i.decoding = 'async';
     i.onerror = function(){ if(a.parentNode) a.parentNode.removeChild(a); };
     a.appendChild(i); grid.appendChild(a);
