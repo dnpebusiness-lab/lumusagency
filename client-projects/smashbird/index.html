@@ -1019,6 +1019,17 @@ html:not(.js) .page{display:block}
 /* Until there are enough photos to make a grid, one good photo is shown at
    a size it can actually carry rather than as a lonely thumbnail. */
 .ig-grid--single{grid-template-columns:minmax(0,420px)}
+/* Below ~480px the page is too narrow for even one 180px tile plus a
+   second, so auto-fill collapsed to one column — five photos stacked
+   full-width, a long scroll that reads as a feed, not a grid. Three fixed
+   columns keeps it looking like Instagram at the width people actually
+   see it on. Re-asserted here (not just relying on rule order) so a
+   single confirmed photo still gets the wide single-column treatment
+   above, not squeezed into a third of a mobile screen. */
+@media(max-width:480px){
+  .ig-grid{grid-template-columns:repeat(3,1fr)}
+  .ig-grid--single{grid-template-columns:minmax(0,1fr)}
+}
 .ig-grid img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--ink);
   transition:opacity var(--t) var(--ease)}
 .ig-grid a:hover img{opacity:.82}
