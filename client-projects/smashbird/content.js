@@ -37,7 +37,11 @@ window.SMASHBIRD = {
     logo: {
       horizontal: { src: 'img/logo-horizontal.png', w: 720, h: 203, minWidth: 160, confirmed: true },
       stacked:    { src: 'img/logo-stacked.png',    w: 640, h: 640, minWidth:  96, confirmed: true },
-      avatar:     { src: 'img/logo-avatar.png',     w: 512, h: 512, minWidth:  40, confirmed: true },
+      // Replaced 2026-09-06 with the master file the client sent directly
+      // (black circle, transparent corners, true alpha — not the earlier
+      // flattened grey-circle export) at 1024x1024, down from a 2668x2668
+      // source.
+      avatar:     { src: 'img/logo-avatar.png',     w: 1024, h: 1024, minWidth:  40, confirmed: true },
       // Single-colour silhouette lifted from the deck's illustration sheet.
       // Used through CSS mask-image so it is painted in one brand colour and
       // the file itself is never recoloured. Deck slide 11: one large mark,
