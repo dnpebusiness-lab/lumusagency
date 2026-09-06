@@ -110,6 +110,25 @@ window.SMASHBIRD = {
     confirmed: true
   },
 
+  /* ------------------------------------------------------------ neon signs
+     Real Smashbird signage lines, supplied by the client 2026-09-06. Each
+     one gets its own moment on a different page — they are never stacked
+     together, because a room with four neon signs on one wall is a sign
+     shop, not a restaurant.
+
+     Deliberately kept as TYPE. The brand deck (slides 05–06) forbids adding
+     glow to the logo mark itself, so where the round logo appears as a neon
+     moment it is the space AROUND the mark that is lit, never the mark.
+
+     Neon lips and a neon burger were also requested as graphic assets. No
+     such artwork exists in this repository and drawing an approximation
+     would put an invented graphic into the brand — so they are not here.
+     Supply the artwork and it drops into the same system. See #23. */
+  neonSigns: {
+    fries:   { line1:'Feed me fries',   line2:'& tell me im pretty', confirmed:true },
+    burgers: { line1:'Feed me burgers', line2:'& tell me im pretty', confirmed:true }
+  },
+
   /* ----------------------------------------------------------- proof strip */
   proof: [
     { text:'WINNER — BEST BURGER & AMERICAN, DELIVEROO RESTAURANT AWARDS 2025', confirmed:true },
@@ -126,9 +145,30 @@ window.SMASHBIRD = {
      renders as a text badge, never a guessed or recreated logo. See
      contentIssues #17 before adding any further award to this array. */
   awards: [
+    // Fully verified: named award, named body, named year.
     { name:'Best Burger & American', issuer:'Deliveroo Restaurant Awards', year:'2025',
+      logo:{ src:null, confirmed:false }, confirmed:true },
+
+    /* Named by the client 2026-09-06. The AWARD is confirmed; the awarding
+       body and year for each were not supplied, so `issuer` and `year` stay
+       null and the card renders the award alone rather than pairing it with
+       a guessed organisation or date. Fill either in and it appears — no
+       code change needed. See contentIssues #17. */
+    { name:'Best Burgers & American in Ireland', issuer:null, year:null,
+      logo:{ src:null, confirmed:false }, confirmed:true },
+    { name:'Best Chicken Burger', issuer:null, year:null,
+      logo:{ src:null, confirmed:false }, confirmed:true },
+    { name:'Best Social Media', issuer:null, year:null,
+      logo:{ src:null, confirmed:false }, confirmed:true },
+    { name:'Best in Ireland', issuer:'Just Eat', year:null,
+      logo:{ src:null, confirmed:false }, confirmed:true },
+    { name:'Blas na hÉireann winner', issuer:'Blas na hÉireann', year:null,
+      logo:{ src:null, confirmed:false }, confirmed:true },
+    { name:'Great Taste winner', issuer:'Great Taste', year:null,
       logo:{ src:null, confirmed:false }, confirmed:true }
   ],
+  awardsNote:'More awards to be added. Award logos are used only where the official ' +
+             'artwork has been supplied — none are recreated.',
 
   /* -------------------------------------------------------- current offers
      Three offers named directly by the client brief (2026-09-06). Their
@@ -411,23 +451,30 @@ window.SMASHBIRD = {
   allergenNote: { text:null, confirmed:false },
 
   /* -------------------------------------------------------- gluten free
-     `headline` restates the one GF fact already confirmed above (`proof`,
-     "VEGAN & GLUTEN-FREE OPTIONS") — nothing new is claimed by adding this
-     section. No menu item is marked glutenFree:true anywhere in `menu`
-     above, because none has been confirmed item-by-item, so this section
-     deliberately stays a policy-level statement and a hand-off to staff
-     rather than a filterable list. `policyText` and `exceptions` are the
-     two specifics still missing — see contentIssues #19. The moment either
-     is confirmed, fill it in here; nothing else needs to change. */
+     THE COMMERCIAL HEADLINE, not a footnote.
+
+     Confirmed by the client 2026-09-06: practically the whole menu can be
+     made gluten free, with two sauces as the exception. That is stated
+     here in the client's own terms and nowhere stronger — "can be made
+     gluten free" is a kitchen capability, not a coeliac safety guarantee,
+     and the copy never crosses into medical assurance.
+
+     Still open (contentIssues #19): WHICH two sauces. Until that lands,
+     `exceptions.value` stays null and the site says "two of our sauces"
+     without naming them, which is true and useful. No individual menu item
+     carries glutenFree:true either — per-item verification hasn't happened,
+     and the GF tag in the menu renderer is wired and waiting for it. */
   glutenFree: {
-    headline:'GLUTEN-FREE OPTIONS AVAILABLE',
-    // Exact client wording not supplied — kept unconfirmed rather than
-    // paraphrased into a claim nobody signed off on.
-    policyText:{ value:null, confirmed:false },
-    // Which two Birdhouse/dip items are the stated exception to the GF
-    // options — not supplied. Nothing is guessed at item level.
+    eyebrow:'Gluten free',
+    headline:'ALMOST OUR ENTIRE MENU CAN BE MADE GLUTEN FREE.',
+    body:'Burgers, fried chicken, sides, the lot. Two of our sauces are the only things ' +
+         'that cannot be adapted. Tell the team when you order and they will take it from there.',
+    // The exact two sauces — not supplied, so not named. See contentIssues #19.
     exceptions:{ value:null, confirmed:false },
-    fallbackNote:'Tell our team when you order and they will talk you through what can be adapted.'
+    // Shown wherever the claim appears. Responsible, not a guarantee.
+    caution:'We prepare gluten-free orders on request. We are not a gluten-free kitchen, so if ' +
+            'you are coeliac or severely allergic, speak to us directly before ordering.',
+    confirmed:true
   },
 
   /* ------------------------------------------------- Birdhouse bottles
@@ -487,30 +534,55 @@ window.SMASHBIRD = {
               enquiries:['shop@birdhouse.ie','info@birdhouse.ie'], publish:false },
 
   /* ------------------------------------------------------------ locations */
+  /* ----------------------------------------------------------- locations
+     ONE SHAPE, TWO BRANCHES, N PAGES.
+
+     Every location page on the site is rendered from this array by a single
+     component — nothing about a branch is hard-coded in the markup. Adding a
+     third location means adding a third object here and nothing else.
+
+     Each field is `{value, confirmed}` and an unconfirmed field simply does
+     not render: no "Opening hours: TBC" rows, no empty map embeds, no
+     invented phone numbers. Rows appear as the client fills them in.
+
+     Still missing across both branches (contentIssues #14, #27): weekly
+     opening hours, phone numbers, Google Maps links and review links,
+     delivery availability, dine-in confirmation, parking notes, photography. */
   locations: [
     {
       id:'cross-street', name:'Smashbird – Cross Street', short:'Cross Street',
-      address:   { value:'3 Cross Street Lower, Galway, H91 T995', confirmed:true },
-      mapsUrl:   { value:null, confirmed:false },
-      hours:     { value:null, confirmed:false },   // live open/closed status is not weekly hours
-      phone:     { value:null, confirmed:false },
-      dineIn:    { value:null, confirmed:false },
-      collection:{ value:'Collection', confirmed:true },
-      delivery:  { value:null, confirmed:false },
-      orderUrl:  { value:'https://www.smashbirdgalway.ie/order#/restaurant/36246/collection/76036', confirmed:true },
-      image:     { src:null, alt:null, confirmed:false }
+      // Used for the page's own <title>/meta and its H1 — see the SEO block.
+      blurb:      { value:'City centre, off Quay Street.', confirmed:true },
+      address:    { value:'3 Cross Street Lower, Galway, H91 T995', confirmed:true },
+      eircode:    { value:'H91 T995', confirmed:true },
+      mapsUrl:    { value:null, confirmed:false },
+      directions: { value:null, confirmed:false },
+      parking:    { value:null, confirmed:false },
+      hours:      { value:null, confirmed:false },   // live open/closed status is not weekly hours
+      phone:      { value:null, confirmed:false },
+      dineIn:     { value:null, confirmed:false },
+      collection: { value:'Collection', confirmed:true },
+      delivery:   { value:null, confirmed:false },
+      orderUrl:   { value:'https://www.smashbirdgalway.ie/order#/restaurant/36246/collection/76036', confirmed:true },
+      googleReviewUrl:{ value:null, confirmed:false },
+      image:      { src:null, alt:null, confirmed:false }
     },
     {
       id:'liosban', name:'Smashbird Liosbán', short:'Liosbán',
-      address:   { value:'Unit 8, Liosban Industrial Estate, 1 Kilkerrian Park, Tuam Rd, Galway, H91 D8VP', confirmed:true },
-      mapsUrl:   { value:null, confirmed:false },
-      hours:     { value:null, confirmed:false },
-      phone:     { value:null, confirmed:false },
-      dineIn:    { value:null, confirmed:false },
-      collection:{ value:'Collection', confirmed:true },
-      delivery:  { value:null, confirmed:false },
-      orderUrl:  { value:'https://www.smashbirdgalway.ie/order#/restaurant/36246/collection/76715', confirmed:true },
-      image:     { src:null, alt:null, confirmed:false }
+      blurb:      { value:'North side, off the Tuam Road.', confirmed:true },
+      address:    { value:'Unit 8, Liosban Industrial Estate, 1 Kilkerrian Park, Tuam Rd, Galway, H91 D8VP', confirmed:true },
+      eircode:    { value:'H91 D8VP', confirmed:true },
+      mapsUrl:    { value:null, confirmed:false },
+      directions: { value:null, confirmed:false },
+      parking:    { value:null, confirmed:false },
+      hours:      { value:null, confirmed:false },
+      phone:      { value:null, confirmed:false },
+      dineIn:     { value:null, confirmed:false },
+      collection: { value:'Collection', confirmed:true },
+      delivery:   { value:null, confirmed:false },
+      orderUrl:   { value:'https://www.smashbirdgalway.ie/order#/restaurant/36246/collection/76715', confirmed:true },
+      googleReviewUrl:{ value:null, confirmed:false },
+      image:      { src:null, alt:null, confirmed:false }
     }
     // Dominick Street closed 31 December 2025 — deliberately absent. The old
     // address still shown on Birdhouse.ie must never be copied in here.
@@ -547,9 +619,13 @@ window.SMASHBIRD = {
   ],
   social: {
     instagram:{ url:'https://www.instagram.com/smashbird_galway/', handle:'@smashbird_galway', confirmed:true },
-    // No TikTok account has been supplied or found. Left out entirely rather
-    // than linked to a guessed handle.
-    tiktok:{ url:null, handle:null, confirmed:false },
+    /* The brief lists "@smashbird_galway" as the account and names TikTok as
+       a priority channel, which reads as the same handle on both platforms —
+       but that is an inference, not something anyone stated, and a dead
+       social link on a live site is a real error. So the likely URL is
+       pre-filled and left switched OFF: flip `confirmed` to true once
+       someone has actually opened it. See contentIssues #21. */
+    tiktok:{ url:'https://www.tiktok.com/@smashbird_galway', handle:'@smashbird_galway', confirmed:false },
     // A direct "leave a review" link needs the Google Maps Place ID, which
     // has not been supplied. See contentIssues #20 — the CTA stays hidden
     // until this is filled in, exactly like every other unconfirmed link.
@@ -725,18 +801,45 @@ window.SMASHBIRD = {
      nobody has confirmed. */
   emailSignup:{
     eyebrow:'Birthday Club',
-    headline:'GET OFFERS FIRST.',
-    body:'Sign up and we will let you know about new offers, drops and your birthday first — no spam, unsubscribe any time.'
+    headline:'JOIN THE BIRTHDAY CLUB.',
+    body:'Give us your birthday and we will send you a little something when it comes around.',
+    // No discount percentage or specific perk is stated: none was supplied,
+    // and a promise the kitchen has not agreed to is worse than no promise.
+    consentLabel:'Yes, email me about offers and my birthday. I can unsubscribe any time.',
+    smallprint:'We only use this to send you offers and your birthday treat. Never shared, never sold.'
   },
 
+  /* -------------------------------------------------------------- catering
+     Headline and support line are the client's own words (2026-09-06).
+     Event types are the ones they listed — not a padded list. No pricing,
+     minimum spend, travel radius or capacity is stated anywhere, because
+     none was supplied. See contentIssues #22. */
   catering:{
-    headline:'BRING SMASHBIRD TO THE PARTY.',
-    body:'Birthdays, work parties, weddings or private events — bring the Smashbird and Birdhouse flavour to your crowd.',
+    eyebrow:'Birdhouse On Wheels',
+    headline:'BRING BIRDHOUSE TO YOUR EVENT.',
+    body:'Get in touch and we will put together a package for your event.',
+    events:['Weddings','Private parties','Birthdays','Corporate events','Festivals','University events','Group bookings'],
     formEndpoint:{ value:null, confirmed:false },
-    // Named directly in the client brief (2026-09-06). No capacity, service
-    // area or pricing was supplied, so the callout says only that it exists
-    // and invites an enquiry — see contentIssues #22.
-    wheels:{ name:'Birdhouse On Wheels', body:'Our mobile catering unit. Tell us about your event below and ask if it is available.' }
+    wheels:{ name:'Birdhouse On Wheels', body:'The mobile unit that brings the whole thing to you.' }
+  },
+
+  /* ------------------------------------------------------------ our story
+     Only what has actually been confirmed: family-run, Galway, two spots,
+     the Birdhouse sauce connection, and the food itself. No founding date,
+     no founder names, no origin story — none of that has been supplied, and
+     the flyer the client mentioned has not arrived yet (contentIssues #24).
+     Everything below is either already stated elsewhere in this file or was
+     confirmed directly by the client. */
+  story:{
+    eyebrow:'Our story',
+    headline:'FAMILY RUN. GALWAY BUILT.',
+    body:'Smashbird is a family-run business in Galway with two spots: Cross Street in the ' +
+         'city centre and Liosbán on the Tuam Road. The sauces come from Birdhouse, which is ' +
+         'where the range on the menu and the bottles on the shelf come from. That connection ' +
+         'is the reason the sauce list is longer than it has any need to be.',
+    // Awaiting the Birdhouse flyer before anything is added about history,
+    // founders or dates.
+    moreToCome:{ value:null, confirmed:false }
   },
   contact:{ email:{ value:null, confirmed:false }, phone:{ value:null, confirmed:false },
             formEndpoint:{ value:null, confirmed:false } },
@@ -745,18 +848,35 @@ window.SMASHBIRD = {
      No voucher product, price or backend exists to point to, so this is
      built honestly as a "coming soon, ask us directly" page — a real
      Instagram link, not a fabricated checkout. */
+  /* -------------------------------------------------------- gift vouchers
+     `buyUrl` is the switch. Give it a real voucher provider link and the
+     page turns into a proper Buy CTA; leave it null and the page tells the
+     truth instead — ask in-store or message us. No fake checkout is built
+     either way. See contentIssues #25. */
   giftVouchers:{
-    headline:'GIFT VOUCHERS',
-    body:'Vouchers aren’t sold online yet. If you want to give someone the Smashbird experience, message us on Instagram or ask in-store and we’ll sort you out.',
+    eyebrow:'Gift vouchers',
+    headline:'GIVE SOMEONE THE GOOD STUFF.',
+    body:'A Smashbird voucher is a safe bet for anyone who takes their food seriously.',
+    buyUrl:{ value:null, confirmed:false },
+    fallback:'Vouchers are not on sale online yet. Ask in-store at Cross Street or Liosbán, or message us on Instagram and we will sort it.',
     available:false
   },
 
   /* ------------------------------------------------------------ jobs page
      No open roles have been supplied. Built as a direct, honest hand-off
      rather than invented listings. */
+  /* ------------------------------------------------------------ jobs
+     `openRoles` is empty because no live vacancy has been supplied. Add
+     entries in the shape below and the page switches from "no roles right
+     now, send a CV anyway" to a real listing — no code change needed:
+       { title:'Grill chef', location:'Cross Street', type:'Full time',
+         summary:'…', applyUrl:'…' }
+     See contentIssues #26. */
   jobs:{
-    headline:'WORK AT SMASHBIRD',
-    body:'We’re not advertising specific roles right now. If you want to work with us, drop into Cross Street or Liosbán with your CV, or send it over on Instagram.',
+    eyebrow:'Careers',
+    headline:'JOIN THE FLOCK.',
+    body:'Fast kitchen, loud room, high standards. If that sounds like your kind of shift, we want to hear from you.',
+    noRolesNote:'Nothing advertised right now — but we keep CVs on file and the flock grows fast. Drop into Cross Street or Liosbán, or send it over on Instagram.',
     openRoles: []
   },
 
@@ -770,7 +890,11 @@ window.SMASHBIRD = {
     { q:'Do you have vegan options?',
       a:'Yes — the Vegan Junk menu has burgers, a hot dog and sides, all built with the same flavour and sauce as the rest of the menu.' },
     { q:'Do you have gluten-free options?',
-      a:'Yes, gluten-free options are available. Tell our team when you order and they’ll talk you through what can be adapted.' },
+      a:'Almost the whole menu can be made gluten free — burgers, fried chicken, sides. Two of our sauces are the only exception. Tell the team when you order.' },
+    { q:'Can you cater for allergies?',
+      a:'Yes. Every dish on the menu lists its declared allergens, and the team can talk you through anything that isn’t clear. For a serious allergy, speak to us directly before you order rather than relying on the website.' },
+    { q:'Are you a gluten-free kitchen?',
+      a:'No. We prepare gluten-free orders on request in a kitchen that also handles gluten, so if you are coeliac please tell us and speak to the team first.' },
     { q:'Where are you?',
       a:'Two spots in Galway: Cross Street Lower in the city centre, and Liosbán Industrial Estate off the Tuam Road.' },
     { q:'Can I order online?',
@@ -778,7 +902,11 @@ window.SMASHBIRD = {
     { q:'Can I buy the sauces?',
       a:'Yes — the full range of Birdhouse sauces used in Smashbird food is sold in bottles, in-store and on birdhouse.ie.' },
     { q:'Do you cater for parties and events?',
-      a:'Yes — birthdays, work parties, weddings and private events. Use the catering enquiry form and tell us what you need.' },
+      a:'Yes — weddings, birthdays, corporate events, festivals and group bookings, through Birdhouse On Wheels. Send an enquiry with your date and numbers and we will put a package together.' },
+    { q:'What is Birdhouse On Wheels?',
+      a:'The mobile unit that brings Smashbird to your event instead of you coming to us. Same food, your venue.' },
+    { q:'What is the connection with Birdhouse?',
+      a:'The sauces. Every Birdhouse sauce on the Smashbird menu comes from the same range you can buy by the bottle, in-store and on birdhouse.ie.' },
     { q:'Do you sell gift vouchers?',
       a:'Not online yet. Message us on Instagram or ask in-store and we’ll arrange one.' },
     { q:'Are you hiring?',
@@ -817,11 +945,16 @@ window.SMASHBIRD = {
     { id:16, area:'Display typeface',                  issue:'Nimbus Sans Narrow Bold is licensed and was not supplied. Barlow Condensed (Google Fonts, open licence) is used as a deliberate metric-adjacent substitute — narrow, high-contrast, same role — rather than the deck fallback Arial Narrow, which is weaker on screen. Swap in the licensed files when available.', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:14, area:'Opening hours',                    issue:'Only a live open/closed status is available. Regular weekly hours not derived.', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:15, area:'Alcohol',                           issue:'Wine and beer are on the menu. No delivery or age-verification claims made.', status:'CLIENT_CONFIRMATION_REQUIRED' },
-    { id:17, area:'Awards & Recognition section',      issue:'The 2026-09-06 brief referred to a wider set of awards/categories. Only the Deliveroo Restaurant Awards 2025 win is confirmed and has any data. No award logo files exist in the repository. The section is built to scale, but nothing beyond the one confirmed award is shown.', status:'CLIENT_CONFIRMATION_REQUIRED' },
+    { id:17, area:'Awards & Recognition',              issue:'Seven awards are now listed. Only the Deliveroo Restaurant Awards 2025 win has a confirmed awarding body AND year; for the other six the award name came from the client but the organisation and/or year did not, so those fields are null and the card shows the award alone. No award logo artwork exists in the repository and none has been recreated. NEEDED: awarding body + year for each, and official logo files.', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:18, area:'Current Offers — Student Mondays / Wing Wednesdays / Kids Eat Free Sundays', issue:'Named in the client brief; exact terms (discount amount, times, ID/age requirements, dine-in vs collection) were not supplied. Offer names are shown; terms are not.', status:'CLIENT_CONFIRMATION_REQUIRED' },
-    { id:19, area:'Gluten-free policy wording',        issue:'The brief asked for major GF messaging. The only confirmed fact is the existing proof-strip claim ("Vegan & gluten-free options"). Exact policy wording and the stated two-sauce exception were not supplied, so the new GF section restates the confirmed fact and defers detail to staff rather than inventing either.', status:'CLIENT_CONFIRMATION_REQUIRED' },
+    { id:19, area:'Gluten-free — the two exception sauces', issue:'RESOLVED IN PART. The client confirmed 2026-09-06 that practically the entire menu can be made gluten free, with two sauces as the exception, and that claim is now used across the site. STILL NEEDED: which two sauces. Until then the copy says "two of our sauces" without naming them. Also still needed: per-item GF verification, so individual menu items can carry the GF tag (the renderer is wired and waiting for glutenFree:true).', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:20, area:'Google review link',                issue:'No Google Maps Place ID or review link supplied. The "Leave us a Google review" CTA is built but stays hidden until social.googleReviewUrl is confirmed.', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:21, area:'TikTok',                            issue:'No TikTok account handle or link found anywhere in the source material. Not linked or guessed.', status:'CLIENT_CONFIRMATION_REQUIRED' },
-    { id:22, area:'Birdhouse On Wheels',                issue:'Named directly in the 2026-09-06 brief as the mobile catering unit. No capacity, service area, minimum spend or pricing was supplied, so the catering page names it and invites an enquiry rather than stating specifics nobody confirmed.', status:'CLIENT_CONFIRMATION_REQUIRED' }
+    { id:22, area:'Birdhouse On Wheels',                issue:'Named directly in the 2026-09-06 brief as the mobile catering unit. No capacity, service area, minimum spend, lead time or pricing was supplied, so the catering page names it and invites an enquiry rather than stating specifics nobody confirmed.', status:'CLIENT_CONFIRMATION_REQUIRED' },
+    { id:23, area:'Neon graphic assets',                issue:'The brief asks for neon lips and a neon burger as branded graphics. No such artwork exists in this repository. Drawing an approximation would put an invented graphic into the brand identity, so neither was created. The two neon TEXT signs ("Feed me fries / burgers & tell me im pretty") were supplied as copy and are implemented as type. NEEDED: the lips and burger artwork as SVG or transparent PNG.', status:'CLIENT_CONFIRMATION_REQUIRED' },
+    { id:24, area:'Birdhouse history / Our Story',      issue:'The client said factual Birdhouse information would follow on a flyer. It has not arrived. The Our Story section therefore states only what is confirmed — family-run, Galway, two locations, the sauce connection — and no founding date, founder name, milestone or company history appears anywhere on the site.', status:'CLIENT_CONFIRMATION_REQUIRED' },
+    { id:25, area:'Gift voucher provider',              issue:'No voucher provider or purchase link supplied. The page is built with a real Buy CTA that activates the moment giftVouchers.buyUrl is confirmed; until then it honestly says vouchers are not on sale online yet. No fake checkout was built.', status:'CLIENT_CONFIRMATION_REQUIRED' },
+    { id:26, area:'Job vacancies',                      issue:'No live roles supplied. The careers page is built around an openRoles array (title, location, type, summary, applyUrl) and currently shows the "send us a CV anyway" state. Add a role object and the listing renders.', status:'CLIENT_CONFIRMATION_REQUIRED' },
+    { id:27, area:'Location detail fields',             issue:'Location pages are built for opening hours, phone, Google Maps link, Google review link, directions, parking, delivery availability, dine-in and photography. Only address, Eircode, collection and the Flipdish order link are confirmed for each branch, so only those rows render. Everything else appears automatically once filled in.', status:'CLIENT_CONFIRMATION_REQUIRED' }
   ]
 };
