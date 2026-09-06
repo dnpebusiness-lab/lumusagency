@@ -711,13 +711,28 @@ window.SMASHBIRD = {
      are configured there. No API key, no environment variable.
      -------------------------------------------------------------------- */
   forms: {
-    netlify: { enabled: false, formNames: ['catering', 'contact'] }
+    netlify: { enabled: false, formNames: ['catering', 'contact', 'signup'] }
+  },
+
+  /* ------------------------------------------------------- email signup
+     "Birthday Club" was named in the brief; no discount amount or exact
+     mechanic was supplied, so the copy promises only what's true today —
+     that signing up gets you offers first — rather than a specific perk
+     nobody has confirmed. */
+  emailSignup:{
+    eyebrow:'Birthday Club',
+    headline:'GET OFFERS FIRST.',
+    body:'Sign up and we will let you know about new offers, drops and your birthday first — no spam, unsubscribe any time.'
   },
 
   catering:{
     headline:'BRING SMASHBIRD TO THE PARTY.',
     body:'Birthdays, work parties, weddings or private events — bring the Smashbird and Birdhouse flavour to your crowd.',
-    formEndpoint:{ value:null, confirmed:false }
+    formEndpoint:{ value:null, confirmed:false },
+    // Named directly in the client brief (2026-09-06). No capacity, service
+    // area or pricing was supplied, so the callout says only that it exists
+    // and invites an enquiry — see contentIssues #22.
+    wheels:{ name:'Birdhouse On Wheels', body:'Our mobile catering unit. Tell us about your event below and ask if it is available.' }
   },
   contact:{ email:{ value:null, confirmed:false }, phone:{ value:null, confirmed:false },
             formEndpoint:{ value:null, confirmed:false } },
@@ -802,6 +817,7 @@ window.SMASHBIRD = {
     { id:18, area:'Current Offers — Student Mondays / Wing Wednesdays / Kids Eat Free Sundays', issue:'Named in the client brief; exact terms (discount amount, times, ID/age requirements, dine-in vs collection) were not supplied. Offer names are shown; terms are not.', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:19, area:'Gluten-free policy wording',        issue:'The brief asked for major GF messaging. The only confirmed fact is the existing proof-strip claim ("Vegan & gluten-free options"). Exact policy wording and the stated two-sauce exception were not supplied, so the new GF section restates the confirmed fact and defers detail to staff rather than inventing either.', status:'CLIENT_CONFIRMATION_REQUIRED' },
     { id:20, area:'Google review link',                issue:'No Google Maps Place ID or review link supplied. The "Leave us a Google review" CTA is built but stays hidden until social.googleReviewUrl is confirmed.', status:'CLIENT_CONFIRMATION_REQUIRED' },
-    { id:21, area:'TikTok',                            issue:'No TikTok account handle or link found anywhere in the source material. Not linked or guessed.', status:'CLIENT_CONFIRMATION_REQUIRED' }
+    { id:21, area:'TikTok',                            issue:'No TikTok account handle or link found anywhere in the source material. Not linked or guessed.', status:'CLIENT_CONFIRMATION_REQUIRED' },
+    { id:22, area:'Birdhouse On Wheels',                issue:'Named directly in the 2026-09-06 brief as the mobile catering unit. No capacity, service area, minimum spend or pricing was supplied, so the catering page names it and invites an enquiry rather than stating specifics nobody confirmed.', status:'CLIENT_CONFIRMATION_REQUIRED' }
   ]
 };

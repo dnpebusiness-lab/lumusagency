@@ -34,6 +34,27 @@
   "award": "Best Burger & American — Deliveroo Restaurant Awards 2025"
 }
 </script>
+<!-- Second confirmed location. Two Restaurant entities rather than one with
+     a `department`, since each has its own confirmed order link and this
+     keeps each address independently correct if one branch's details
+     change. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "name": "Smashbird Liosbán",
+  "image": "img/logo-stacked.png",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Unit 8, Liosban Industrial Estate, 1 Kilkerrian Park, Tuam Rd",
+    "addressLocality": "Galway",
+    "postalCode": "H91 D8VP",
+    "addressCountry": "IE"
+  },
+  "sameAs": ["https://www.instagram.com/smashbird_galway/"],
+  "award": "Best Burger & American — Deliveroo Restaurant Awards 2025"
+}
+</script>
 <!-- Mirrors content.js `faq` exactly. If that array changes, update this
      block to match — search engines read this tag, not the rendered page. -->
 <script type="application/ld+json">
@@ -676,6 +697,15 @@ html:not(.js) .page{display:block}
 .menu-panel .eyebrow{color:var(--pink-deep)}
 .menu-panel .eyebrow::before{background:var(--pink-deep)}
 
+.diet-filter{display:flex;gap:var(--s1);margin-bottom:var(--s2);flex-wrap:wrap}
+.diet-chip{
+  font-family:var(--font-b);font-size:12px;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;padding:6px var(--s2);border:1px solid rgba(9,9,11,.3);
+  color:var(--on-paper-muted);transition:color var(--t) var(--ease),background var(--t) var(--ease);
+}
+.diet-chip:hover{color:var(--on-paper)}
+.diet-chip[aria-pressed="true"]{background:var(--on-paper);color:var(--paper);border-color:var(--on-paper)}
+
 .cats{
   display:flex;gap:var(--s1);overflow-x:auto;overscroll-behavior-x:contain;
   scrollbar-width:none;-webkit-overflow-scrolling:touch;
@@ -912,6 +942,15 @@ html:not(.js) .page{display:block}
 }
 .award-issuer{font-size:var(--fs-util);color:var(--muted-2)}
 
+/* Generic bordered callout — same weight as .award, used wherever a page
+   needs to surface one extra fact without a full new section. */
+.info-card{border:1px solid var(--line-hot);padding:var(--s4);max-width:520px;margin-bottom:var(--s6)}
+.info-card-name{
+  font-family:var(--font-d);font-size:20px;font-weight:900;
+  text-transform:uppercase;color:var(--paper);margin-bottom:var(--s1);
+}
+.info-card-body{font-size:var(--fs-sm);color:var(--muted);line-height:1.6}
+
 /* ==========================================================================
    FAQ — a plain accordion. No third-party widget, no icon font: the plus
    rotates to a cross with the same two-pseudo-element trick as .nav-burger.
@@ -939,6 +978,27 @@ html:not(.js) .page{display:block}
 }
 .faq-item[data-open="true"] .faq-a{max-height:400px}
 .faq-a p{padding:0 0 var(--s4);max-width:70ch;font-size:var(--fs-body);color:var(--muted);line-height:1.7}
+
+/* ==========================================================================
+   ALLERGEN INFORMATION — one page, every declared allergen in one place.
+   Same price-list rhythm as the menu, minus the prices.
+   ========================================================================== */
+.alg-cat{border-top:1px solid var(--line);padding:var(--s5) 0}
+.alg-cat-name{
+  font-family:var(--font-d);font-size:var(--fs-d3);font-weight:900;
+  text-transform:uppercase;color:var(--pink);margin-bottom:var(--s3);
+}
+.alg-rows{display:grid;gap:0}
+.alg-row{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);
+  gap:var(--s3);padding:var(--s2) 0;border-bottom:1px solid var(--line);
+}
+.alg-item{font-weight:600;color:var(--paper)}
+.alg-info{font-size:var(--fs-sm);color:var(--muted)}
+.alg-info.muted{color:var(--muted-2);font-style:italic}
+@media(max-width:640px){
+  .alg-row{grid-template-columns:1fr}
+}
 
 /* ==========================================================================
    FORMS
@@ -1011,6 +1071,20 @@ html:not(.js) .page{display:block}
   transition:color var(--t) var(--ease);
 }
 .foot-col li a:hover{color:var(--paper)}
+.foot-signup p{font-size:var(--fs-sm);color:var(--muted);margin-bottom:var(--s2);max-width:32ch}
+.signup-form{display:flex;gap:0;max-width:280px;border:1px solid var(--line);margin-bottom:var(--s2)}
+.signup-form input{
+  flex:1 1 auto;min-width:0;background:transparent;color:var(--paper);border:0;
+  padding:var(--s2);font-family:var(--font-b);font-size:16px;
+}
+.signup-form input:focus{outline:none}
+.signup-form input:focus-visible{outline:2px solid var(--yellow);outline-offset:-2px}
+.signup-form button{
+  flex:0 0 auto;width:44px;background:var(--pink);color:var(--black);
+  font-size:18px;transition:background var(--t) var(--ease);
+}
+.signup-form button:hover{background:var(--pink-hi)}
+.signup-consent{font-size:11px;color:var(--muted-2);max-width:30ch;line-height:1.5}
 .foot-loc{margin-bottom:var(--s2)}
 .foot-loc b{display:block;font-size:var(--fs-sm);color:var(--paper);font-weight:600}
 .foot-loc span{display:block;font-size:var(--fs-micro);color:var(--muted-2);line-height:1.5}
@@ -1184,6 +1258,7 @@ html:not(.js) .page{display:block}
         <h1 class="display">Pick your<br>craving.</h1>
         <p class="lede">Smashed burgers, buttermilk fried chicken, vegan junk and loaded sides.</p>
       </header>
+      <div class="diet-filter" id="dietFilter" aria-label="Filter by diet"></div>
       <div class="cats" id="catNav" role="tablist" aria-label="Menu categories"></div>
       <p class="cat-note" id="catNote" hidden></p>
       <div class="items" id="menuList" role="tabpanel" aria-live="polite"></div>
@@ -1192,6 +1267,7 @@ html:not(.js) .page{display:block}
       <div class="menu-cta">
         <a href="#order" class="btn" data-go="order"><span>Order Now <em class="arw" style="font-style:normal">&rarr;</em></span></a>
         <a href="#sauces" class="btn ghost" data-go="sauces"><span>The Sauces</span></a>
+        <a href="#allergens" class="btn ghost" data-go="allergens"><span>Allergen Info</span></a>
       </div>
     </div>
   </div>
@@ -1272,6 +1348,10 @@ html:not(.js) .page{display:block}
       <h1 class="display" id="cateringHl"></h1>
       <p class="lede" id="cateringBody"></p>
     </header>
+    <div class="info-card" id="wheelsCard" hidden>
+      <p class="info-card-name" id="wheelsName"></p>
+      <p class="info-card-body" id="wheelsBody"></p>
+    </div>
     <form class="form" id="cateringForm" name="catering" method="POST"
           data-netlify="true" netlify-honeypot="bot-field" novalidate>
       <input type="hidden" name="form-name" value="catering">
@@ -1285,7 +1365,7 @@ html:not(.js) .page{display:block}
         <div class="f-field"><label for="c-type">Event type</label>
           <select id="c-type" name="eventType">
             <option value="">Select</option><option>Birthday</option><option>Work party</option>
-            <option>Wedding</option><option>Private event</option><option>Other</option>
+            <option>Wedding</option><option>Private event</option><option>Mobile catering (Birdhouse On Wheels)</option><option>Other</option>
           </select>
         </div>
       </div>
@@ -1340,6 +1420,18 @@ html:not(.js) .page{display:block}
       <p class="lede">Anything not answered here — ask on the <a href="#contact" data-go="contact" style="text-decoration:underline">contact page</a>.</p>
     </header>
     <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+
+<!-- ============================================================ ALLERGEN INFO -->
+<section id="allergens" class="page" aria-label="Allergen information">
+  <div class="wrap">
+    <header class="head">
+      <p class="eyebrow">Dietary</p>
+      <h1 class="display">Allergen<br>information.</h1>
+      <p class="lede">Every allergen declared against a menu item, in one place. Ask our team in-store if you don't see what you need here.</p>
+    </header>
+    <div id="allergensList"></div>
   </div>
 </section>
 
@@ -1414,11 +1506,26 @@ html:not(.js) .page{display:block}
           <li><a href="#vouchers" data-go="vouchers">Gift Vouchers</a></li>
           <li><a href="#jobs" data-go="jobs">Careers</a></li>
           <li><a href="#faq" data-go="faq">FAQ</a></li>
+          <li><a href="#allergens" data-go="allergens">Allergen Info</a></li>
         </ul>
       </div>
       <div class="foot-col">
         <h3>Follow</h3>
         <ul id="footSocial"></ul>
+      </div>
+      <div class="foot-col foot-signup">
+        <h3 id="signupEyebrow">Birthday Club</h3>
+        <p id="signupBody"></p>
+        <form class="signup-form" id="signupForm" name="signup" method="POST"
+              data-netlify="true" netlify-honeypot="bot-field" novalidate>
+          <input type="hidden" name="form-name" value="signup">
+          <p class="hp"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+          <label for="s-email" class="sr-only">Email</label>
+          <input id="s-email" name="email" type="email" autocomplete="email" placeholder="Your email" required>
+          <button type="submit" id="signupSubmit" aria-label="Sign up"><span aria-hidden="true">&rarr;</span></button>
+        </form>
+        <p class="signup-consent">By signing up you agree to receive emails from Smashbird. Unsubscribe any time.</p>
+        <p class="f-status" id="signupStatus" role="status" aria-live="polite"></p>
       </div>
       <div class="foot-col" id="footLegalCol" hidden>
         <h3>Legal</h3>
@@ -1477,9 +1584,19 @@ function reveal(root){
 /* --------------------------------------------------------------- routing
    pushState + popstate, so Back genuinely goes back. Modified clicks are
    left alone so links still open in a new tab. */
-var PAGES = ['home','menu','offers','sauces','locations','about','catering','vouchers','jobs','faq','order','contact'];
+var PAGES = ['home','menu','offers','sauces','locations','about','catering','vouchers','jobs','faq','allergens','order','contact'];
 
 function showPage(id, push){
+  // A hash that isn't a top-level page but matches an element inside one
+  // (e.g. #loc-cross-street) opens that page and scrolls to the element,
+  // rather than falling back to home — a deep link into a single-page
+  // section, short of a real separate page for it.
+  var anchor = null;
+  if(PAGES.indexOf(id) === -1){
+    var target = document.getElementById(id);
+    var pageAncestor = target ? target.closest('.page') : null;
+    if(pageAncestor){ anchor = target; id = pageAncestor.id; }
+  }
   if(PAGES.indexOf(id) === -1) id = 'home';
   PAGES.forEach(function(p){
     var s = $(p); if(s) s.classList.toggle('active', p === id);
@@ -1493,10 +1610,14 @@ function showPage(id, push){
   if(links) links.classList.remove('open');
   if(burger) burger.setAttribute('aria-expanded','false');
   document.body.style.overflow = '';
-  window.scrollTo(0,0);
+  if(anchor){
+    requestAnimationFrame(function(){ anchor.scrollIntoView({behavior: REDUCED ? 'auto' : 'smooth', block:'start'}); });
+  } else {
+    window.scrollTo(0,0);
+  }
   var sec = $(id); if(sec) reveal(sec);
   var bar = $('orderBar'); if(bar) bar.style.display = (id === 'order') ? 'none' : '';
-  if(push) history.pushState({page:id}, '', '#'+id);
+  if(push) history.pushState({page:id}, '', '#'+(anchor ? anchor.id : id));
 }
 
 run('routing', function(){
@@ -1648,10 +1769,11 @@ run('strips', function(){
 
 /* ------------------------------------------------------------------ menu */
 run('menu', function(){
-  var nav = $('catNav'), list = $('menuList');
+  var nav = $('catNav'), list = $('menuList'), diet = 'all', currentCat = null;
   if(!nav || !list) return;
 
   function render(catId){
+    currentCat = catId;
     list.innerHTML = '';
     var cat = (D.menuCategories||[]).filter(function(c){ return c.id === catId; })[0];
 
@@ -1662,8 +1784,14 @@ run('menu', function(){
     }
 
     // Drips are a dip list with one shared price, not priced products.
+    // Their V/VG label is the only diet signal they carry, so the filter
+    // reads that instead of the vegan/vegetarian booleans main items use.
     if(catId === 'drips' && D.dips){
-      (D.dips.list||[]).forEach(function(d){
+      (D.dips.list||[]).filter(function(d){
+        if(diet === 'vegan') return d.label === 'VG';
+        if(diet === 'veg')   return d.label === 'VG' || d.label === 'V';
+        return true;
+      }).forEach(function(d){
         var row = el('div','item');
         var nm  = el('p','item-name', d.name);
         row.appendChild(nm);
@@ -1675,11 +1803,15 @@ run('menu', function(){
         if(meta.childNodes.length) row.appendChild(meta);
         list.appendChild(row);
       });
+      if(!list.children.length) list.appendChild(el('p','menu-note', 'Nothing in this category matches that filter.'));
       return;
     }
 
     (D.menu||[]).filter(function(m){
-      return m.category === catId && m.available !== false && m.confirmed !== false;
+      if(m.category !== catId || m.available === false || m.confirmed === false) return false;
+      if(diet === 'vegan') return !!m.vegan;
+      if(diet === 'veg')   return !!m.vegan || !!m.vegetarian;
+      return true;
     }).forEach(function(m){
       var row = el('div','item');
       row.appendChild(el('p','item-name', m.name));
@@ -1723,6 +1855,21 @@ run('menu', function(){
     nav.appendChild(b);
   });
 
+  var dietHost = $('dietFilter');
+  if(dietHost){
+    [['all','All'],['veg','Vegetarian'],['vegan','Vegan']].forEach(function(pair){
+      var b = el('button','diet-chip', pair[1]);
+      b.type = 'button'; b.setAttribute('aria-pressed', pair[0] === 'all' ? 'true' : 'false');
+      b.addEventListener('click', function(){
+        diet = pair[0];
+        Array.prototype.forEach.call(dietHost.children, function(x){ x.setAttribute('aria-pressed','false'); });
+        b.setAttribute('aria-pressed','true');
+        render(currentCat);
+      });
+      dietHost.appendChild(b);
+    });
+  }
+
   if(D.menuCategories && D.menuCategories.length) render(D.menuCategories[0].id);
 
   var an = $('allergenNote');
@@ -1730,6 +1877,47 @@ run('menu', function(){
     an.textContent = D.allergenNote.text; an.hidden = false;
   }
   var mn = $('menuNote'); if(mn && D.menuNote) mn.textContent = D.menuNote;
+});
+
+/* ------------------------------------------------------- allergen info page
+   Every declared allergen, grouped by category, pulled from the same menu
+   and dip data the menu page itself uses — nothing new is stated here. */
+run('allergens', function(){
+  var host = $('allergensList'); if(!host) return;
+
+  function algRow(name, text, isMuted){
+    var row = el('div','alg-row');
+    row.appendChild(el('p','alg-item', name));
+    row.appendChild(el('p', 'alg-info' + (isMuted ? ' muted' : ''), text));
+    return row;
+  }
+
+  (D.menuCategories||[]).forEach(function(c){
+    if(c.id === 'drips'){
+      if(!D.dips || !D.dips.list || !D.dips.list.length) return;
+      var block = el('div','alg-cat');
+      block.appendChild(el('h2','alg-cat-name', c.name));
+      var rows = el('div','alg-rows');
+      D.dips.list.forEach(function(d){
+        rows.appendChild(d.allergens && d.allergens.length
+          ? algRow(d.name, d.allergens.join(', '))
+          : algRow(d.name, 'None declared.', true));
+      });
+      block.appendChild(rows); host.appendChild(block);
+      return;
+    }
+    var items = (D.menu||[]).filter(function(m){ return m.category === c.id && m.confirmed !== false; });
+    if(!items.length) return;
+    var block = el('div','alg-cat');
+    block.appendChild(el('h2','alg-cat-name', c.name));
+    var rows = el('div','alg-rows');
+    items.forEach(function(m){
+      if(m.allergensUnavailable) rows.appendChild(algRow(m.name, 'Not published per item — ask in-store.', true));
+      else if(m.allergens && m.allergens.length) rows.appendChild(algRow(m.name, m.allergens.join(', ')));
+      else rows.appendChild(algRow(m.name, 'None declared.', true));
+    });
+    block.appendChild(rows); host.appendChild(block);
+  });
 });
 
 /* ---------------------------------------------------------------- sauces */
@@ -1787,6 +1975,7 @@ run('locations', function(){
   var host = $('locList'); if(!host) return;
   (D.locations||[]).forEach(function(L,i){
     var box = el('div','loc');
+    box.id = 'loc-' + L.id;
     box.appendChild(el('p','loc-num', '0' + (i+1)));
     var nm = el('h2','display loc-name neon', L.short);
     box.appendChild(nm);
@@ -1854,6 +2043,12 @@ run('about', function(){
   var ch = $('cateringHl'), cb = $('cateringBody');
   if(ch && D.catering) ch.textContent = D.catering.headline;
   if(cb && D.catering) cb.textContent = D.catering.body;
+  var wc = $('wheelsCard'), wn = $('wheelsName'), wb = $('wheelsBody');
+  if(wc && D.catering && D.catering.wheels){
+    wn.textContent = D.catering.wheels.name;
+    wb.textContent = D.catering.wheels.body;
+    wc.hidden = false;
+  }
 });
 
 /* --------------------------------------------------------------- offers
@@ -2146,6 +2341,41 @@ run('forms', function(){
             submit:'contactSubmit', done:'Thanks — message received.'});
 });
 
+/* -------------------------------------------------------------- signup
+   Lighter than wireForm — one field, no name/message/consent-checkbox
+   fields to look for, so it gets its own small handler rather than being
+   forced through the shared one. */
+run('signup', function(){
+  var eb = $('signupEyebrow'), b = $('signupBody');
+  if(eb && D.emailSignup) eb.textContent = D.emailSignup.eyebrow;
+  if(b && D.emailSignup) b.textContent = D.emailSignup.body;
+
+  var form = $('signupForm'); if(!form) return;
+  var status = $('signupStatus'), btn = $('signupSubmit');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    status.classList.remove('bad'); status.textContent = '';
+    var mail = form.querySelector('[name=email]');
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(mail.value.trim())){
+      status.classList.add('bad'); status.textContent = 'Please check the email address.'; mail.focus(); return;
+    }
+    var live = D.forms && D.forms.netlify && D.forms.netlify.enabled;
+    if(!live){
+      var handle = (D.social && D.social.instagram && D.social.instagram.handle) || '@smashbird_galway';
+      status.classList.add('bad');
+      status.textContent = 'Not connected yet — message ' + handle + ' on Instagram instead.';
+      return;
+    }
+    btn.disabled = true; status.textContent = 'Sending…';
+    sendForm(form).then(function(r){
+      if(!r.ok) throw new Error(r.status);
+      form.reset(); status.textContent = "Thanks — you're on the list.";
+    }).catch(function(){
+      status.classList.add('bad'); status.textContent = 'That did not send. Please try again.';
+    }).then(function(){ btn.disabled = false; });
+  });
+});
+
 /* ------------------------------------------------------------ order bar */
 run('orderbar', function(){
   var bar = $('orderBar'); if(!bar) return;
@@ -2155,7 +2385,7 @@ run('orderbar', function(){
 /* ------------------------------------------------------------------ boot */
 run('boot', function(){
   var hash = (location.hash || '').replace('#','');
-  showPage(PAGES.indexOf(hash) !== -1 ? hash : 'home', false);
+  showPage(hash || 'home', false);
   reveal(document);
 });
 })();
