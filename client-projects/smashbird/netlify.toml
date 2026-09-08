@@ -1,4 +1,4 @@
-# Static single-page proposal — nothing to build, just publish the folder.
+# Static single-page site — nothing to build, just publish the folder.
 [build]
   publish = "."
   command = ""

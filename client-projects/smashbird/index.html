@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Smashbird Galway — Burgers. Chicken.</title>
 <meta name="description" content="Smashed burgers, fried chicken, vegan junk and loaded sides in Galway. Winner of Best Burger &amp; American, Deliveroo Restaurant Awards 2025. Cross Street and Liosb&aacute;n.">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <meta property="og:type" content="restaurant">
 <meta property="og:site_name" content="Smashbird">
 <meta property="og:title" content="Smashbird Galway — Burgers. Chicken.">
@@ -169,8 +169,7 @@
   --ease:cubic-bezier(.22,1,.36,1);
 
   --nav-h:72px;
-  --bar:30px;
-  --top:calc(var(--bar) + var(--nav-h));
+  --top:var(--nav-h);
 }
 
 /* ==========================================================================
@@ -449,23 +448,10 @@ body::after{
 .js .rv.in{opacity:1;transform:none}
 
 /* ==========================================================================
-   PROPOSAL BAR — this is a concept and says so
-   ========================================================================== */
-.pbar{
-  position:fixed;top:0;left:0;right:0;height:var(--bar);z-index:300;
-  background:var(--paper);color:var(--black);
-  display:flex;align-items:center;justify-content:space-between;gap:var(--s2);
-  padding:0 var(--gutter);
-  font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
-}
-.pbar b{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.pbar em{font-style:normal;color:var(--pink-deep);white-space:nowrap}
-
-/* ==========================================================================
    NAV — deck slide 06: horizontal lockup, minimum 160px, clear space kept
    ========================================================================== */
 .nav{
-  position:fixed;top:var(--bar);left:0;right:0;height:var(--nav-h);z-index:200;
+  position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:200;
   border-bottom:2px solid var(--pink);
   display:flex;align-items:center;justify-content:space-between;
   gap:var(--s4);padding:0 var(--gutter);
@@ -1420,10 +1406,8 @@ html:not(.js) .page{display:block}
    SMALL SCREENS
    ========================================================================== */
 @media(max-width:640px){
-  :root{--bar:26px;--nav-h:68px;--fs-body:16px}
+  :root{--nav-h:68px;--fs-body:16px}
   .nav-logo img{width:44px;height:44px}
-  .pbar{font-size:9px}
-  .pbar b{max-width:60%}
   .head{padding:var(--s5) 0 var(--s4)}
   .foot-cta{flex-direction:column;align-items:flex-start;gap:var(--s3)}
 }
@@ -1447,11 +1431,6 @@ html:not(.js) .page{display:block}
 <body>
 
 <script>document.documentElement.className+=' js';</script>
-
-<div class="pbar">
-  <b>Website concept &middot; Smashbird Galway</b>
-  <em>Proposal by Lumus</em>
-</div>
 
 <nav class="nav" id="nav">
   <!-- Round mark, not the wordmark lockup — per the client, 2026-09-06. -->
@@ -2026,7 +2005,7 @@ html:not(.js) .page{display:block}
     </div>
     <div class="foot-base">
       <p id="footCompany"></p>
-      <p>&copy; <span id="footYear"></span> Smashbird. Website concept by Lumus.</p>
+      <p>&copy; <span id="footYear"></span> Smashbird. Website by Lumus.</p>
     </div>
   </div>
 </footer>
@@ -2082,9 +2061,8 @@ function reveal(root){
    where they read naturally (Galway, burgers, fried chicken, gluten free);
    nothing here is written for a crawler at the expense of a customer.
 
-   NOTE: the site is still <meta name="robots" content="noindex, nofollow">
-   because it is a proposal, not a live site. Everything below is correct
-   and waiting — removing that one tag at launch is the whole job. */
+   Live since 2026-09-06: robots is index,follow and the site deploys
+   straight from this repository via Netlify. */
 var SITE = 'https://www.smashbirdgalway.ie/';
 var SEO = {
   home:      ['Smashbird | Burgers & Fried Chicken, Galway',

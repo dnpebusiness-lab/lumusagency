@@ -1,27 +1,26 @@
-# Smashbird Galway — website concept
+# Smashbird Galway — website
 
-Prepared by Lumus Agency. **Not a live site.**
+Built by Lumus Agency. Live, deploying from this repository via Netlify.
 
-`index.html` is fully self-contained: photography, styles and scripts are all
-inlined, so it renders from any host or straight off disk with no build step.
+`index.html` reads `content.js` for all copy, menu, pricing and location
+data, and loads images from `img/`. To preview locally it needs a real
+server (hash-based routing and `content.js` won't resolve over `file://`):
 
-## Publishing it
+```
+python3 -m http.server
+```
 
-**Netlify Drop** — drag `index.html` onto https://app.netlify.com/drop.
-Fastest route; gives a URL in seconds.
+## Deploying
 
-**Netlify from Git** — point a site at this repo with publish directory
-`client-projects/smashbird`. A site named `smashbird-proposal-lumus` already
-exists on the Lumus account and is waiting for its first deploy.
+The connected Netlify site publishes automatically on every push to this
+repo's branch, publish directory `client-projects/smashbird`. No build step
+— `netlify.toml` just points it at the folder as-is.
 
-`_headers` keeps the proposal out of search engines while it is under review.
+## Still outstanding
 
-## Before this becomes a real site
-
-- Menu prices — every item currently reads `€ —`
-- Opening hours for both locations
-- Full street address for Liosban
-- Contact email
-- Flipdish / Deliveroo order links
-- Photography: the current images were lifted from the brand PDF and Instagram
-  at roughly 760px wide. Fine for a proposal, not for launch.
+Every fact on the site is gated on `confirmed:true` in `content.js` — an
+unconfirmed field simply doesn't render, rather than showing a guess or a
+placeholder. The full list of what's still missing (opening hours, phone
+numbers, the two gluten-free exception sauces, award logos, and more) is
+tracked in `content.js`'s `contentIssues` array, not duplicated here — that
+way it can't go stale against the actual data.
