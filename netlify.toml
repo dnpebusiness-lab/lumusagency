@@ -1,9 +1,9 @@
-[build]
-  publish = "client-projects/1997-stays-standalone"
-  functions = "netlify/functions"
-
-[build.environment]
-  NODE_VERSION = "18"
+# [build]
+#   publish = "client-projects/1997-stays-standalone"
+#   functions = "netlify/functions"
+#
+# [build.environment]
+#   NODE_VERSION = "18"
 
 [[headers]]
   for = "/*"
