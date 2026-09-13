@@ -1,0 +1,422 @@
+<!-- Collection Header -->
+<div class="collection-header">
+  <div class="collection-header__content">
+    <h1 class="collection-header__title">{{ collection.title }}</h1>
+    {% if collection.description %}
+      <div class="collection-header__description">{{ collection.description }}</div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Collection Controls -->
+<div class="collection-controls">
+  <div class="collection-controls__left">
+    <span class="product-count">
+      Showing <strong>{{ collection.products.size }}</strong> products
+    </span>
+  </div>
+
+  <div class="collection-controls__right">
+    <!-- Sort -->
+    <select id="sort-select" class="sort-select">
+      <option value="featured" selected>Sort by: Featured</option>
+      <option value="best-selling">Best Selling</option>
+      <option value="newest">Newest</option>
+      <option value="price-low-high">Price: Low to High</option>
+      <option value="price-high-low">Price: High to Low</option>
+    </select>
+
+    <!-- Filter Toggle (mobile) -->
+    <button class="filter-toggle" id="filter-toggle" aria-label="Toggle filters">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+        <line x1="4" y1="6" x2="20" y2="6"></line>
+        <line x1="4" y1="12" x2="20" y2="12"></line>
+        <line x1="4" y1="18" x2="20" y2="18"></line>
+      </svg>
+      Filters
+    </button>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="collection-content">
+  <!-- Filters Sidebar (desktop) / Drawer (mobile) -->
+  <aside class="collection-filters" id="filters-panel">
+    <h3 class="filters-title">Filters</h3>
+
+    <!-- Size Filter -->
+    <div class="filter-group">
+      <h4 class="filter-group__title">Size</h4>
+      <div class="filter-options">
+        <label class="filter-option">
+          <input type="checkbox" name="size" value="newborn">
+          <span>Newborn</span>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox" name="size" value="0-3m">
+          <span>0–3 months</span>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox" name="size" value="3-6m">
+          <span>3–6 months</span>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox" name="size" value="6-12m">
+          <span>6–12 months</span>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox" name="size" value="1-2y">
+          <span>1–2 years</span>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox" name="size" value="2-3y">
+          <span>2–3 years</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Age Filter -->
+    <div class="filter-group">
+      <h4 class="filter-group__title">Age Group</h4>
+      <div class="filter-options">
+        <label class="filter-option">
+          <input type="checkbox" name="age" value="baby">
+          <span>Baby (0–12m)</span>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox" name="age" value="toddler">
+          <span>Toddler (1–3y)</span>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox" name="age" value="kids">
+          <span>Kids (3–8y)</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Gender Filter -->
+    <div class="filter-group">
+      <h4 class="filter-group__title">Gender</h4>
+      <div class="filter-options">
+        <label class="filter-option">
+          <input type="checkbox" name="gender" value="girls">
+          <span>Girls</span>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox" name="gender" value="boys">
+          <span>Boys</span>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox" name="gender" value="unisex">
+          <span>Unisex</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Brand Filter -->
+    <div class="filter-group">
+      <h4 class="filter-group__title">Brand</h4>
+      <div class="filter-options">
+        <label class="filter-option">
+          <input type="checkbox" name="brand" value="miranda">
+          <span>Miranda</span>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox" name="brand" value="sonata">
+          <span>Sonata Spanishwear</span>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox" name="brand" value="babyfer">
+          <span>Babyfer</span>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox" name="brand" value="gant">
+          <span>Gant</span>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox" name="brand" value="rahigo">
+          <span>Rahigo</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Price Filter -->
+    <div class="filter-group">
+      <h4 class="filter-group__title">Price</h4>
+      <div class="price-range">
+        <input type="range" min="0" max="500" value="500" id="price-range">
+        <div class="price-display">
+          <span>€0</span>
+          <span id="price-value">€500</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reset Filters -->
+    <button class="button button--secondary" style="width: 100%; margin-top: var(--space-lg);">
+      Reset Filters
+    </button>
+  </aside>
+
+  <!-- Products Grid -->
+  <div class="collection-products">
+    <div class="product-grid">
+      {% for product in collection.products %}
+        {% include 'product-card', product: product %}
+      {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if paginate.pages > 1 %}
+      <div class="pagination">
+        {% if paginate.previous %}
+          <a href="{{ paginate.previous.url }}" class="pagination__link pagination__link--prev">
+            ← Previous
+          </a>
+        {% endif %}
+
+        <div class="pagination__pages">
+          {% for i in (1..paginate.pages) %}
+            {% if i == paginate.current_page %}
+              <span class="pagination__page pagination__page--current">{{ i }}</span>
+            {% else %}
+              <a href="{{ collection.url }}?page={{ i }}" class="pagination__page">{{ i }}</a>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        {% if paginate.next %}
+          <a href="{{ paginate.next.url }}" class="pagination__link pagination__link--next">
+            Next →
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <!-- Load More Button (alternative to pagination) -->
+    <div class="load-more-container" style="text-align: center; margin-top: var(--space-2xl);">
+      <button class="button button--secondary">
+        Load More
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .collection-header {
+    padding: var(--space-2xl) var(--space-md);
+    background-color: var(--color-bg-secondary);
+    text-align: center;
+  }
+
+  .collection-header__title {
+    font-size: 48px;
+    margin-bottom: var(--space-md);
+  }
+
+  .collection-header__description {
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+    font-size: var(--font-size-body);
+  }
+
+  .collection-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-lg) var(--space-md);
+    max-width: 1280px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--color-border);
+    flex-wrap: wrap;
+    gap: var(--space-md);
+  }
+
+  .product-count {
+    font-size: var(--font-size-small);
+    color: var(--color-text-secondary);
+  }
+
+  .collection-controls__right {
+    display: flex;
+    gap: var(--space-md);
+    align-items: center;
+  }
+
+  .sort-select {
+    padding: var(--space-sm);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-body);
+    font-family: inherit;
+    cursor: pointer;
+  }
+
+  .filter-toggle {
+    display: none;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: none;
+    cursor: pointer;
+    font-size: var(--font-size-body);
+    color: var(--color-text-primary);
+  }
+
+  .collection-content {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: var(--space-2xl);
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .collection-filters {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .filters-title {
+    font-size: var(--font-size-body);
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: var(--space-md);
+  }
+
+  .filter-group {
+    padding-bottom: var(--space-lg);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .filter-group__title {
+    font-size: var(--font-size-small);
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: var(--space-md);
+    color: var(--color-text-primary);
+  }
+
+  .filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .filter-option {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    cursor: pointer;
+    font-size: var(--font-size-small);
+  }
+
+  .filter-option input {
+    cursor: pointer;
+  }
+
+  .price-range {
+    padding-top: var(--space-md);
+  }
+
+  .price-range input {
+    width: 100%;
+  }
+
+  .price-display {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--space-sm);
+    font-size: var(--font-size-small);
+    font-weight: 600;
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-md);
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-2xl);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .pagination__link {
+    padding: var(--space-sm) var(--space-md);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-primary);
+    transition: all var(--transition-fast);
+  }
+
+  .pagination__link:hover {
+    border-color: var(--color-accent-coral);
+    color: var(--color-accent-coral);
+  }
+
+  .pagination__pages {
+    display: flex;
+    gap: var(--space-sm);
+  }
+
+  .pagination__page {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .pagination__page:hover {
+    border-color: var(--color-accent-coral);
+  }
+
+  .pagination__page--current {
+    background-color: var(--color-accent-coral);
+    color: white;
+    border-color: var(--color-accent-coral);
+    cursor: default;
+  }
+
+  @media (max-width: 768px) {
+    .collection-content {
+      grid-template-columns: 1fr;
+    }
+
+    .collection-filters {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: var(--z-modal);
+      background: white;
+      padding: var(--space-lg);
+      overflow-y: auto;
+    }
+
+    .collection-filters.active {
+      display: flex;
+    }
+
+    .filter-toggle {
+      display: flex;
+    }
+
+    .collection-controls {
+      justify-content: flex-end;
+    }
+
+    .product-count {
+      order: -1;
+      flex: 1;
+    }
+  }
+</style>
