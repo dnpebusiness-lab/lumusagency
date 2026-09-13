@@ -1,0 +1,189 @@
+{% stylesheet %}
+  .search-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: var(--z-modal);
+    animation: fadeIn var(--transition-fast);
+  }
+
+  .search-overlay.active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 100px;
+  }
+
+  .search-overlay__container {
+    width: 90%;
+    max-width: 600px;
+  }
+
+  .search-overlay__close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 32px;
+    cursor: pointer;
+    z-index: var(--z-modal) + 1;
+  }
+
+  .search-overlay__input {
+    width: 100%;
+    padding: var(--space-lg);
+    font-size: 18px;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    font-family: inherit;
+    margin-bottom: var(--space-lg);
+  }
+
+  .search-overlay__input:focus {
+    outline: none;
+    border-color: var(--color-accent-coral);
+  }
+
+  .search-results {
+    background-color: white;
+    border-radius: var(--radius-lg);
+    max-height: 500px;
+    overflow-y: auto;
+    display: none;
+  }
+
+  .search-results.active {
+    display: block;
+  }
+
+  .search-result {
+    padding: var(--space-md);
+    border-bottom: 1px solid var(--color-border);
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+  }
+
+  .search-result:hover {
+    background-color: var(--color-bg-secondary);
+  }
+
+  .search-result:last-child {
+    border-bottom: none;
+  }
+
+  .search-result__title {
+    font-weight: 600;
+    margin-bottom: var(--space-xs);
+  }
+
+  .search-result__price {
+    font-size: var(--font-size-small);
+    color: var(--color-text-secondary);
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .search-overlay.active {
+      padding-top: 20px;
+    }
+
+    .search-overlay__container {
+      width: 95%;
+    }
+
+    .search-overlay__input {
+      padding: var(--space-md);
+      font-size: 16px;
+    }
+  }
+{% endstylesheet %}
+
+<div class="search-overlay" id="search-overlay" role="dialog" aria-label="Search">
+  <button class="search-overlay__close" id="close-search" aria-label="Close search">×</button>
+
+  <div class="search-overlay__container">
+    <input
+      type="text"
+      class="search-overlay__input"
+      id="search-input"
+      placeholder="Search products, brands..."
+      aria-label="Search"
+    >
+    <div class="search-results" id="search-results"></div>
+  </div>
+</div>
+
+<script>
+  const searchOverlay = document.getElementById('search-overlay');
+  const closeSearchBtn = document.getElementById('close-search');
+  const searchInput = document.getElementById('search-input');
+  const searchResults = document.getElementById('search-results');
+  const searchBtn = document.querySelector('.header__search');
+
+  // Open search on header button click
+  if (searchBtn) {
+    searchBtn.addEventListener('click', () => {
+      searchOverlay.classList.add('active');
+      searchInput.focus();
+    });
+  }
+
+  // Close search
+  closeSearchBtn.addEventListener('click', () => {
+    searchOverlay.classList.remove('active');
+  });
+
+  searchOverlay.addEventListener('click', (e) => {
+    if (e.target === searchOverlay) {
+      searchOverlay.classList.remove('active');
+    }
+  });
+
+  // Search functionality
+  searchInput.addEventListener('input', async (e) => {
+    const query = e.target.value.trim();
+    if (query.length < 2) {
+      searchResults.classList.remove('active');
+      return;
+    }
+
+    try {
+      const response = await fetch(`/search/suggest.json?q=${encodeURIComponent(query)}&resources[type]=product&resources[limit]=5`);
+      const data = await response.json();
+
+      if (data.resources.results.products && data.resources.results.products.length > 0) {
+        searchResults.innerHTML = data.resources.results.products.map(product => `
+          <a href="${product.url}" class="search-result">
+            <div class="search-result__title">${product.title}</div>
+            <div class="search-result__price">€${(product.price / 100).toFixed(2)}</div>
+          </a>
+        `).join('');
+        searchResults.classList.add('active');
+      } else {
+        searchResults.innerHTML = '<div class="search-result" style="text-align: center; color: var(--color-text-secondary);">No products found</div>';
+        searchResults.classList.add('active');
+      }
+    } catch (error) {
+      console.error('Search error:', error);
+    }
+  });
+
+  // Close search on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && searchOverlay.classList.contains('active')) {
+      searchOverlay.classList.remove('active');
+    }
+  });
+</script>
