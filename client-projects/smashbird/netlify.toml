@@ -2,3 +2,20 @@
 [build]
   publish = "."
   command = ""
+
+# Form notifications — all submissions go to this email
+[[forms]]
+  name = "birthday-club"
+  notificationEmail = "westwingsgalway@gmail.com"
+
+[[forms]]
+  name = "catering"
+  notificationEmail = "westwingsgalway@gmail.com"
+
+[[forms]]
+  name = "contact"
+  notificationEmail = "westwingsgalway@gmail.com"
+
+[[forms]]
+  name = "signup"
+  notificationEmail = "westwingsgalway@gmail.com"
