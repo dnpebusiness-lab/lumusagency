@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="{{ shop.locale }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>{{ page_title }}</title>
+  <meta name="description" content="{{ page_description | escape }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="{{ 'favicon.svg' | asset_url }}">
+
+  <!-- Preload fonts -->
+  <link rel="preload" href="{{ 'georgia.woff2' | asset_url }}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ 'inter.woff2' | asset_url }}" as="font" type="font/woff2" crossorigin>
+
+  <!-- Stylesheets -->
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+
+  <!-- Meta tags -->
+  <meta property="og:title" content="{{ page_title }}">
+  <meta property="og:description" content="{{ page_description | escape }}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Shopify scripts -->
+  {{ content_for_header }}
+</head>
+<body>
+  <!-- Announcement bar -->
+  {% section 'announcement-bar' %}
+
+  <!-- Header / Navigation -->
+  {% section 'header' %}
+
+  <!-- Main content -->
+  <main id="main" role="main" class="main-content">
+    {{ content_for_layout }}
+  </main>
+
+  <!-- Footer -->
+  {% section 'footer' %}
+
+  <!-- Cart drawer -->
+  {% section 'cart-drawer' %}
+
+  <!-- Scripts -->
+  {{ 'theme.js' | asset_url | script_tag }}
+</body>
+</html>

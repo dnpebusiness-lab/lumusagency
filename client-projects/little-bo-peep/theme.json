@@ -1,0 +1,12 @@
+{
+  "name": "Little Bo Peep",
+  "id": 12345,
+  "role": "main",
+  "description": "Premium children's boutique theme for Spanish and designer childrenswear",
+  "author": "Lumus Agency",
+  "settings": {
+    "color_scheme": "light",
+    "favicon": "/cdn/shop/files/favicon.ico",
+    "logo_width": 200
+  }
+}
