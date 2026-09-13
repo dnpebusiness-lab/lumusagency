@@ -252,7 +252,7 @@ def esc(s):
 
 # ---------------------------------------------------------------- components
 
-def product_card(p, imgs, delay=0):
+def product_card(p, imgs, delay=0, attrs=""):
     handle = p["handle"]
     urls = imgs.get(handle, [])
     if not urls:
@@ -293,6 +293,7 @@ def product_card(p, imgs, delay=0):
         if in_stock else ""
     )
     d = f' data-delay="{delay}"' if delay else ""
+    d += attrs
 
     return f"""
           <article class="lbp-card lbp-reveal"{d}>
@@ -309,7 +310,7 @@ def product_card(p, imgs, delay=0):
               {quick}
             </div>
             <p class="lbp-card__brand">{esc(brand)}</p>
-            <h3 class="lbp-card__name"><a href="#">{esc(name)}</a></h3>
+            <h3 class="lbp-card__name"><a class="lbp-card__link" href="#">{esc(name)}</a></h3>
             <p class="lbp-card__price">{price_html}</p>
           </article>"""
 

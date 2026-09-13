@@ -153,18 +153,41 @@ Rules:
 4. **No horizontal scroll at any width**, 320px to 1920px. Enforced by
    `overflow-x: clip` on html and body, which contains the off-canvas drawers
    without breaking the sticky header.
-5. **44px minimum tap targets.** Verified, not assumed.
-6. Closed drawers carry `visibility: hidden` so they stay out of the tab order.
+5. **Tap targets: 44px on touch, never below 24px on pointer** (WCAG 2.5.8).
+   Verified by script at every breakpoint, not assumed.
+6. **Every colour pair meets contrast.** Measured, not eyeballed — which is why
+   terracotta exists in three steps. Re-measure before changing any token.
+7. Closed drawers carry `visibility: hidden` so they stay out of the tab order.
+8. `[hidden] { display: none !important; }` stays in the reset. Components set
+   their own `display`, which otherwise outranks the UA rule and makes
+   `el.hidden` a no-op — that silently broke collection filtering once already.
+9. `scroll-padding-top` must clear the sticky header, or anchor links land
+   section titles underneath it.
+10. **No browser `alert()` anywhere.** Validation is inline: the size selector
+    highlights and explains itself.
 
 ---
 
 ## 8. Preview build
 
-`preview/index.html` is **generated** — do not hand-edit it.
+The preview pages are **generated** — do not hand-edit the HTML.
 
 ```bash
-cd preview && python3 build.py
+cd preview
+python3 build.py          # index.html  (+ shareable single-file build)
+python3 build_pages.py    # product.html, collection.html
+python3 build.py --help   # add --embed to either for offline imagery
 ```
+
+| Page | What it proves |
+|---|---|
+| `index.html` | Design direction, IA, editorial sections |
+| `product.html` | Gallery, real variants with per-size stock, inline size validation, add-to-bag into the drawer, accordions, mobile sticky buy bar |
+| `collection.html` | Working facets (age, designer, price, availability), active-filter chips, sort, empty state, mobile filter drawer |
+
+Collection filtering and sorting run client-side over real product data so the
+interaction can be judged for real. In the Shopify theme this becomes native
+filtering on tagged data.
 
 It reads the real catalogue export and emits the homepage, so every product,
 price, brand, image and age-band count on the page is live store data.

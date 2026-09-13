@@ -80,7 +80,39 @@ and Shop by Age** instead. Those map to data that genuinely exists, and they
 happen to match how this boutique actually sells. Girls / Boys / Baby can be
 added the moment the products are tagged, without redesign.
 
-### 2.4 Size values are inconsistent
+### 2.4 Almost nothing has a description
+
+| | Products | Share |
+|---|---|---|
+| No description whatsoever | **667** | **96%** |
+| Description under 40 characters | 5 | 1% |
+| A usable description | 19 | 3% |
+
+This is the single largest commercial problem in the export, ahead of the
+missing `product_type`.
+
+**Consequence:** 667 product pages with nothing to read. On pieces costing
+€95–€490 the shopper cannot find out the fabric, the fit, whether the blouse is
+included in the set, or how the sizing runs. It also means those pages have no
+indexable text, so they compete for search on the title alone — and the titles
+are supplier codes (§2.6).
+
+The 19 that do have copy show what good looks like, in the shop's own voice:
+
+> "Sonata are famous for the classic puffball dresses. This beautiful blue
+> plumetti material dress, with baby pink smocking detail, frill neck…"
+
+**Design response:** the product page shows a Description panel **only when one
+exists**. Where there is none it does not fabricate filler — it leads with
+Delivery, Returns, Paying in instalments, and "Ask about this piece", which
+turns the gap into the boutique's real advantage (they will measure the actual
+garment for you). That is a holding pattern, not a fix.
+
+**Fix:** write descriptions, starting with the highest-priced and best-selling
+pieces. Two or three sentences each. This is the highest-return copy work
+available on the site.
+
+### 2.5 Size values are inconsistent
 
 The same age is expressed three different ways across the catalogue:
 
@@ -110,7 +142,7 @@ This is implemented in `preview/build.py` (`months_of`, `AGE_BANDS`) and
 carries over to the theme. It works today, but normalising at source is still
 worth doing.
 
-### 2.5 Product titles lead with supplier reference codes
+### 2.6 Product titles lead with supplier reference codes
 
 Real examples from the live store:
 
@@ -133,7 +165,7 @@ the product page. `7647,7554 Royal blue Naxos 3 piece suit` renders as
 This is presentation only. Correcting the titles at source is strongly
 recommended — it affects SEO, which the front end cannot fix.
 
-### 2.6 Smaller data issues
+### 2.7 Smaller data issues
 
 | Issue | Detail | Action |
 |---|---|---|
@@ -145,7 +177,7 @@ recommended — it affects SEO, which the front end cannot fix.
 | Instagram screenshot used as product photo | e.g. `baby-blue-girls-sa` | Replace |
 | Shop-floor phone snaps with price tags visible | several baby items | Replace — they sit beside location-shot Spanish imagery and the gap is obvious |
 
-### 2.7 Photo quality cannot be detected automatically — so the homepage must be curated
+### 2.8 Photo quality cannot be detected automatically — so the homepage must be curated
 
 Rendering the homepage from a plain "newest first" query puts two Babyfer coats
 photographed on a shop rail, swing tags still attached, directly beside Ceaser
@@ -180,16 +212,18 @@ homepage until they are reshot.
 
 ## 3. Recommended sequence
 
-1. **Set `product_type` and `vendor` on all 691 products.** Unlocks brand
+1. **Write product descriptions**, highest-priced first. 667 pages currently
+   have none, and it costs both conversion and search visibility.
+2. **Set `product_type` and `vendor` on all 691 products.** Unlocks brand
    navigation, category navigation and automated collections. Largest single
    return of anything in this list.
-2. **Normalise size option values and option names.** Enables a real size filter.
-3. **Rewrite product titles**, moving supplier codes to the SKU field.
-4. **Tag gender** where it applies.
-5. **Reshoot or remove** the shop-floor snaps and the Instagram screenshot.
-6. **Merge the duplicate collection**, decide the out-of-stock policy.
+3. **Normalise size option values and option names.** Enables a real size filter.
+4. **Rewrite product titles**, moving supplier codes to the SKU field.
+5. **Tag gender** where it applies.
+6. **Reshoot or remove** the shop-floor snaps and the Instagram screenshot.
+7. **Merge the duplicate collection**, decide the out-of-stock policy.
 
-Steps 1, 2 and 4 are bulk operations via CSV export/import or the Shopify
+Steps 2, 3 and 5 are bulk operations via CSV export/import or the Shopify
 Admin API — they are a data task, not a design task, and can run in parallel
 with the build.
 
