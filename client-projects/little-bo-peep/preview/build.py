@@ -57,20 +57,65 @@ def load_products():
     return json.load(open(SRC / "products.json"))
 
 
+# Offline mode: embed real photography sliced out of the contact sheets as
+# data URIs, so the page renders anywhere — including sandboxes that cannot
+# reach the Shopify CDN. The thumbnails are genuine product photographs but
+# only ~170px wide, so this build is for reviewing composition, not detail.
+EMBED = False
+IMG_INDEX = {}          # cdn url -> 1-based index in the contact sheets
+_thumb_cache = {}
+
+SHEETS = SRC / "contact_sheets"
+COLS, ROWS = 10, 10
+CELL_W, CELL_H, IMG_H = 170, 195, 160
+
+
 def load_images():
     """handle -> ordered list of CDN urls."""
     by_handle = defaultdict(list)
     with open(SRC / "image_manifest.csv") as fh:
         for row in csv.DictReader(fh):
-            if row.get("product_handle") and row.get("url"):
-                by_handle[row["product_handle"]].append(row["url"])
+            if not (row.get("product_handle") and row.get("url")):
+                continue
+            by_handle[row["product_handle"]].append(row["url"])
+            head = (row.get("filename") or "").split("_")[0]
+            if head.isdigit():
+                IMG_INDEX[row["url"]] = int(head)
     return by_handle
 
 
+def thumb_uri(url):
+    """Slice this image out of its contact sheet and return a data URI."""
+    if url in _thumb_cache:
+        return _thumb_cache[url]
+    idx = IMG_INDEX.get(url)
+    if not idx:
+        return ""
+    from base64 import b64encode
+    from io import BytesIO
+    from PIL import Image
+
+    sheet_no = (idx - 1) // (COLS * ROWS) + 1
+    pos = (idx - 1) % (COLS * ROWS)
+    r, c = divmod(pos, COLS)
+    path = SHEETS / f"contact_sheet_{sheet_no:02d}.jpg"
+    if not path.exists():
+        return ""
+    box = (c * CELL_W, r * CELL_H, c * CELL_W + CELL_W, r * CELL_H + IMG_H)
+    cell = Image.open(path).crop(box).convert("RGB")
+    buf = BytesIO()
+    cell.save(buf, "JPEG", quality=78, optimize=True)
+    uri = "data:image/jpeg;base64," + b64encode(buf.getvalue()).decode()
+    _thumb_cache[url] = uri
+    return uri
+
+
 def cdn(url, width):
-    """Ask the Shopify CDN for a sized rendition."""
+    """Ask the Shopify CDN for a sized rendition (or embed, in offline mode)."""
     if not url:
         return ""
+    if EMBED:
+        return thumb_uri(url)
     sep = "&" if "?" in url else "?"
     return f"{url}{sep}width={width}"
 
@@ -330,12 +375,34 @@ def main():
 
     # Editorial imagery: prefer products shot on location (many images means a
     # full lifestyle shoot rather than a single packshot).
+    # Art direction is a human call. Image count does not predict photo quality
+    # here — the best location shoots often carry a single frame, while some
+    # shop-floor phone snaps carry two. So the editorial slots name the shoots
+    # chosen by eye from the contact sheets, and fall back gracefully.
+    PREFERRED = ["7666-7646-7675", "7660-7641", "7625-naxos", "7613-red-cream",
+                 "abuela-tata", "7635-royal-blue", "7636-naxos"]
+
+    def preferred(pool, skip=()):
+        for key in PREFERRED:
+            if key in skip:
+                continue
+            for p in pool:
+                if key in p["handle"]:
+                    return p, key
+        return (pool[0], "") if pool else (None, "")
+
     lifestyle = sorted(with_img, key=lambda p: -len(imgs.get(p["handle"], [])))
-    hero_p = lifestyle[0]
-    story_p = lifestyle[4 % len(lifestyle)]
-    hero_img = pick_image(lifestyle, 0, 1) or pick_image(lifestyle, 0, 0)
-    band_img = pick_image(lifestyle, 2, 0)
-    story_img = pick_image(lifestyle, 4, 0)
+    hero_p, hero_key = preferred(with_img)
+    band_p, band_key = preferred(with_img, skip=(hero_key,))
+    story_p, _ = preferred(with_img, skip=(hero_key, band_key))
+
+    def first_img(p, i=0):
+        u = imgs.get(p["handle"], []) if p else []
+        return u[i % len(u)] if u else ""
+
+    hero_img = first_img(hero_p)
+    band_img = first_img(band_p)
+    story_img = first_img(story_p)
 
     # Captions and alt text are derived from the product actually shown — never
     # asserted. We do not know where a photograph was taken, so we do not say.
@@ -405,20 +472,26 @@ def main():
         smock_count=stats["smocks"],
         designer_count=stats["designers"],
     )
+    css = (Path(__file__).parent / "lbp-system.css").read_text(encoding="utf-8")
+    inlined = page.replace(
+        '<link rel="stylesheet" href="lbp-system.css">', f"<style>\n{css}\n</style>"
+    )
+
+    if EMBED:
+        # Offline build only — index.html stays wired to the CDN.
+        target = Path(__file__).parent / "little-bo-peep-embedded.html"
+        target.write_text(inlined, encoding="utf-8")
+        print(f"wrote {target}  ({target.stat().st_size/1024/1024:.1f} MB, "
+              f"{len(_thumb_cache)} embedded photographs)")
+        return
+
     OUT.write_text(page, encoding="utf-8")
     print(f"wrote {OUT}")
 
     # Single-file build for sharing: same page with the stylesheet inlined, so
     # it renders correctly when opened on its own. Generated, not committed.
-    css = (Path(__file__).parent / "lbp-system.css").read_text(encoding="utf-8")
     standalone = Path(__file__).parent / "little-bo-peep-homepage.html"
-    standalone.write_text(
-        page.replace(
-            '<link rel="stylesheet" href="lbp-system.css">',
-            f"<style>\n{css}\n</style>",
-        ),
-        encoding="utf-8",
-    )
+    standalone.write_text(inlined, encoding="utf-8")
     print(f"wrote {standalone}")
     print(f"  {stats['shown']}/{stats['total']} products have photography")
     print(f"  {stats['instock']} in stock · {stats['designers']} designers · {stats['smocks']} smocks")

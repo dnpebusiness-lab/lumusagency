@@ -145,6 +145,37 @@ recommended — it affects SEO, which the front end cannot fix.
 | Instagram screenshot used as product photo | e.g. `baby-blue-girls-sa` | Replace |
 | Shop-floor phone snaps with price tags visible | several baby items | Replace — they sit beside location-shot Spanish imagery and the gap is obvious |
 
+### 2.7 Photo quality cannot be detected automatically — so the homepage must be curated
+
+Rendering the homepage from a plain "newest first" query puts two Babyfer coats
+photographed on a shop rail, swing tags still attached, directly beside Ceaser
+Blanco and Deolinda location shoots. Side by side the difference is impossible
+to miss.
+
+The obvious heuristic does not work. Image count was tested as a proxy for
+"this product had a proper shoot" and it fails outright:
+
+| Product | Images | Photography |
+|---|---|---|
+| Boys Blue Ceaser Blanco Jumper, Shirt & Shorts | 1 | Location shoot |
+| Deolinda Dalmatian Pink Girls Skirt Set | 1 | Location shoot |
+| Burgandy Coat & Dress Set | 2 | Shop rail, phone, tags visible |
+| Chocolate Brown Coat, Dress, Hat & Bag | 1 | Shop rail, phone, tags visible |
+
+No field in the export distinguishes them, so no rule can. Two consequences,
+both deliberate:
+
+1. **Homepage product sections take a collection picker in the theme**, not an
+   automatic query. The merchant chooses what appears on the front page. This
+   is also how a premium Shopify theme should behave.
+2. **The editorial slots — hero, campaign band, brand story — name their shoots
+   explicitly** (`PREFERRED` in `preview/build.py`), chosen by eye from the
+   contact sheets. Art direction is a human decision; the code does not pretend
+   otherwise.
+
+The underlying fix is still to reshoot the weak items, or to keep them off the
+homepage until they are reshot.
+
 ---
 
 ## 3. Recommended sequence
