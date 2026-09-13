@@ -607,6 +607,12 @@ section {
   margin-bottom: var(--space-lg);
 }
 
+.brand-spotlight__content {
+  padding: var(--space-lg);
+  background: linear-gradient(135deg, var(--color-accent-blush) 0%, transparent 100%);
+  border-radius: var(--radius-lg);
+}
+
 .brand-spotlight__description {
   color: var(--color-text-secondary);
   margin-bottom: var(--space-lg);
@@ -617,6 +623,10 @@ section {
   .brand-spotlight {
     grid-template-columns: 1fr;
   }
+
+  .brand-spotlight__content {
+    padding: var(--space-md);
+  }
 }
 
 /* ============================================================================
@@ -624,7 +634,7 @@ section {
    ============================================================================ */
 
 .newsletter {
-  background-color: linear-gradient(135deg, var(--color-accent-blush) 0%, var(--color-bg-secondary) 100%);
+  background: linear-gradient(135deg, var(--color-accent-blush) 0%, var(--color-bg-secondary) 100%);
   text-align: center;
   padding: var(--space-3xl) var(--space-md);
 }
