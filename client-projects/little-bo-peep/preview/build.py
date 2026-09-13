@@ -407,6 +407,19 @@ def main():
     )
     OUT.write_text(page, encoding="utf-8")
     print(f"wrote {OUT}")
+
+    # Single-file build for sharing: same page with the stylesheet inlined, so
+    # it renders correctly when opened on its own. Generated, not committed.
+    css = (Path(__file__).parent / "lbp-system.css").read_text(encoding="utf-8")
+    standalone = Path(__file__).parent / "little-bo-peep-homepage.html"
+    standalone.write_text(
+        page.replace(
+            '<link rel="stylesheet" href="lbp-system.css">',
+            f"<style>\n{css}\n</style>",
+        ),
+        encoding="utf-8",
+    )
+    print(f"wrote {standalone}")
     print(f"  {stats['shown']}/{stats['total']} products have photography")
     print(f"  {stats['instock']} in stock · {stats['designers']} designers · {stats['smocks']} smocks")
     print(f"  age bands: {', '.join(f'{l} ({n})' for l, n in ages)}")
