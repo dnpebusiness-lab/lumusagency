@@ -148,10 +148,12 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
   <div class="lbp-drawer__body">
     <form class="lbp-search" action="{{ routes.search_url }}" method="get" role="search">
-      <input class="lbp-field" type="search" name="q" placeholder="Search products" value="{{ search.terms | escape }}" required autofocus>
+      <label class="lbp-sr" for="search-q">Search products</label>
+      <input class="lbp-field" id="search-q" type="search" name="q" placeholder="Search products" value="{{ search.terms | escape }}" required autofocus autocomplete="off" aria-expanded="false" aria-controls="predictive-results" role="combobox" aria-autocomplete="list">
       <input type="hidden" name="type" value="product">
       <button class="lbp-btn lbp-btn--solid lbp-btn--block" type="submit">Search</button>
     </form>
+    <div class="lbp-predictive" id="predictive-results" role="listbox" aria-label="Search suggestions" hidden></div>
   </div>
 </aside>
 

@@ -108,6 +108,12 @@
     item.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') { open(false); trigger.focus(); }
     });
+    /* Keyboard users: opening only on hover/click would skip every sub-link
+       when tabbing through the nav, so mirror the state on focus too. */
+    item.addEventListener('focusin', function () { open(true); });
+    item.addEventListener('focusout', function (e) {
+      if (!item.contains(e.relatedTarget)) { open(false); }
+    });
   });
   /* Close an open mega panel on outside click */
   document.addEventListener('click', function (e) {
@@ -148,6 +154,55 @@
   });
   if (scrim) scrim.addEventListener('click', closeAll);
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAll(); });
+
+  /* ---------- Predictive search ---------- */
+  var searchInput = document.getElementById('search-q');
+  var predictiveBox = document.getElementById('predictive-results');
+  if (searchInput && predictiveBox) {
+    var predTimer;
+    var escapeHtml = function (s) {
+      return String(s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    };
+    var renderPredictive = function (products, query) {
+      if (!products.length) {
+        predictiveBox.innerHTML = '<p class="lbp-predictive__empty">Nothing matches &ldquo;' + escapeHtml(query) + '&rdquo;.</p>';
+        predictiveBox.hidden = false;
+        return;
+      }
+      var html = products.map(function (p) {
+        var img = typeof p.image === 'string' ? p.image : (p.featured_image ? p.featured_image.url : '');
+        return '<a class="lbp-predictive__item" role="option" href="' + p.url + '">' +
+          '<span class="lbp-predictive__media">' + (img ? '<img src="' + img + '" alt="" loading="lazy">' : '') + '</span>' +
+          '<span class="lbp-predictive__body"><span class="lbp-predictive__name">' + escapeHtml(p.title) + '</span>' +
+          '<span class="lbp-predictive__price">' + escapeHtml(p.price) + '</span></span></a>';
+      }).join('');
+      html += '<a class="lbp-predictive__viewall" href="' + searchInput.form.action + '?q=' + encodeURIComponent(query) + '&type=product">View all results for &ldquo;' + escapeHtml(query) + '&rdquo;</a>';
+      predictiveBox.innerHTML = html;
+      predictiveBox.hidden = false;
+    };
+    searchInput.addEventListener('input', function () {
+      var q = searchInput.value.trim();
+      clearTimeout(predTimer);
+      if (q.length < 2) {
+        predictiveBox.hidden = true;
+        predictiveBox.innerHTML = '';
+        searchInput.setAttribute('aria-expanded', 'false');
+        return;
+      }
+      predTimer = setTimeout(function () {
+        fetch('/search/suggest.json?q=' + encodeURIComponent(q) + '&resources[type]=product&resources[limit]=6')
+          .then(function (r) { return r.json(); })
+          .then(function (data) {
+            var products = (data.resources && data.resources.results && data.resources.results.products) || [];
+            renderPredictive(products, q);
+            searchInput.setAttribute('aria-expanded', String(products.length > 0));
+          })
+          .catch(function () { predictiveBox.hidden = true; });
+      }, 250);
+    });
+  }
 
   /* ---------- Wishlist (visual only) ---------- */
   document.addEventListener('click', function (e) {
