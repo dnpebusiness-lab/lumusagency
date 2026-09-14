@@ -62,7 +62,7 @@
       {%- if product.variants.size > 1 or product.variants.first.title != 'Default Title' -%}
       <div class="lbp-sizehead">
         <span class="lbp-sizehead__label">Size</span>
-        <a class="lbp-sizehead__guide" href="{{ pages['size-guide'].url | default: '#' }}">Size guide</a>
+        {%- if pages['size-guide'] -%}<a class="lbp-sizehead__guide" href="{{ pages['size-guide'].url }}">Size guide</a>{%- endif -%}
       </div>
       <div class="lbp-sizes" id="sizes">
         {%- for v in product.variants -%}

@@ -22,11 +22,11 @@
       <li><a href="{{ collections['summer-sale'].url | default: routes.all_products_collection_url }}">Sale</a></li>
     </ul></div>
     <div><h2 class="lbp-footer__title">Help</h2><ul class="lbp-footer__list">
-      <li><a href="{{ pages.delivery.url | default: '#' }}">Delivery</a></li>
-      <li><a href="{{ pages.returns.url | default: '#' }}">Returns</a></li>
-      <li><a href="{{ pages['size-guide'].url | default: '#' }}">Size Guide</a></li>
-      <li><a href="{{ pages.faq.url | default: '#' }}">FAQ</a></li>
-      <li><a href="{{ pages.contact.url | default: '#' }}">Contact</a></li>
+      {%- if pages.delivery -%}<li><a href="{{ pages.delivery.url }}">Delivery</a></li>{%- endif -%}
+      {%- if pages.returns -%}<li><a href="{{ pages.returns.url }}">Returns</a></li>{%- endif -%}
+      {%- if pages['size-guide'] -%}<li><a href="{{ pages['size-guide'].url }}">Size Guide</a></li>{%- endif -%}
+      {%- if pages.faq -%}<li><a href="{{ pages.faq.url }}">FAQ</a></li>{%- endif -%}
+      {%- if pages.contact -%}<li><a href="{{ pages.contact.url }}">Contact</a></li>{%- endif -%}
     </ul></div>
     <div><h2 class="lbp-footer__title">About</h2><ul class="lbp-footer__list">
       <li><a href="{{ pages['our-story'].url | default: pages['about-us'].url | default: '#' }}">Our Story</a></li>
@@ -41,10 +41,10 @@
   <div class="lbp-footer__bottom">
     <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}, Spiddal.</p>
     <div class="lbp-footer__legal">
-      <a href="{{ pages['privacy-policy'].url | default: '#' }}">Privacy</a>
-      <a href="{{ pages['terms-of-service'].url | default: '#' }}">Terms</a>
-      <a href="{{ pages['shipping-policy'].url | default: '#' }}">Shipping</a>
-      <a href="{{ pages['refund-policy'].url | default: '#' }}">Returns Policy</a>
+      {%- if shop.policies.privacy_policy -%}<a href="{{ shop.policies.privacy_policy.url }}">Privacy</a>{%- endif -%}
+      {%- if shop.policies.terms_of_service -%}<a href="{{ shop.policies.terms_of_service.url }}">Terms</a>{%- endif -%}
+      {%- if shop.policies.shipping_policy -%}<a href="{{ shop.policies.shipping_policy.url }}">Shipping</a>{%- endif -%}
+      {%- if shop.policies.refund_policy -%}<a href="{{ shop.policies.refund_policy.url }}">Returns Policy</a>{%- endif -%}
     </div>
     <p class="lbp-footer__secure">Secure checkout &middot; Worldwide delivery</p>
   </div>
