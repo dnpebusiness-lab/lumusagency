@@ -1,0 +1,22 @@
+<div class="lbp-scrim" data-scrim></div>
+<aside class="lbp-drawer lbp-drawer--left" data-drawer="mnav" aria-label="Menu" aria-hidden="true">
+  <div class="lbp-drawer__head"><h2 class="lbp-drawer__title">Menu</h2>
+    <button class="lbp-iconbtn" type="button" aria-label="Close menu" data-close>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
+  <div class="lbp-drawer__body"><nav class="lbp-mnav" aria-label="Mobile">
+    <a class="lbp-mnav__link" href="{{ routes.all_products_collection_url }}?sort=new" data-close>New In <span aria-hidden="true">&rarr;</span></a>
+    <a class="lbp-mnav__link" href="{{ routes.all_products_collection_url }}" data-close>Designers <span aria-hidden="true">&rarr;</span></a>
+    <a class="lbp-mnav__link" href="/#smocks" data-close>Smocks <span aria-hidden="true">&rarr;</span></a>
+    <a class="lbp-mnav__link" href="/#occasion" data-close>Christening <span aria-hidden="true">&rarr;</span></a>
+    <a class="lbp-mnav__link" href="/#ages" data-close>Shop by age <span aria-hidden="true">&rarr;</span></a>
+    <a class="lbp-mnav__link" href="{{ collections['summer-sale'].url | default: routes.all_products_collection_url }}" data-close>Sale <span aria-hidden="true">&rarr;</span></a>
+    <a class="lbp-mnav__link" href="{{ routes.account_url }}" data-close>Account <span aria-hidden="true">&rarr;</span></a>
+  </nav></div>
+</aside>
+
+{% schema %}
+{
+  "name": "Mobile nav drawer",
+  "settings": []
+}
+{% endschema %}

@@ -1,39 +1,55 @@
-{% comment %}
-Snippet: Product Card
-Usage: {% include 'product-card', product: product %}
-{% endcomment %}
+{%- comment -%}
+  Usage: {% render 'product-card', product: product, delay: 1 %}
+  `delay` (0-3) staggers the scroll-reveal animation, capped at 4 steps.
+{%- endcomment -%}
+{%- capture brand -%}{% render 'brand-of', product: product %}{%- endcapture -%}
+{%- assign brand = brand | strip -%}
+{%- assign on_sale = false -%}
+{%- if product.compare_at_price > product.price -%}{%- assign on_sale = true -%}{%- endif -%}
+{%- assign age_list = '' -%}
+{%- for v in product.variants -%}
+  {%- capture band -%}{% render 'variant-age-band', variant: v %}{%- endcapture -%}
+  {%- assign age_list = age_list | append: band | strip | append: '|' -%}
+{%- endfor -%}
+{%- assign age_array = age_list | split: '|' | uniq -%}
 
-<div class="product-card" data-product-id="{{ product.id }}">
-  <div class="product-card__image">
-    <img
-      src="{{ product.featured_image.src | image_url: width: 500 }}"
-      alt="{{ product.featured_image.alt | escape }}"
-      loading="lazy"
-      width="400"
-      height="400"
-    >
-    {% if product.compare_at_price > product.price %}
-      <span class="badge badge--sale">Sale</span>
-    {% endif %}
-  </div>
-
-  <div class="product-card__content">
-    <p class="product-card__brand">{{ product.vendor }}</p>
-    <h3 class="product-card__title">{{ product.title }}</h3>
-
-    <div class="product-card__price">
-      {% if product.compare_at_price > product.price %}
-        <span class="price price--compare">€{{ product.compare_at_price | money_without_currency }}</span>
-      {% endif %}
-      <span class="price price--current">€{{ product.price | money_without_currency }}</span>
+<article class="lbp-card lbp-reveal"{% if delay %} data-delay="{{ delay }}"{% endif %}
+  data-brand="{{ brand | escape }}"
+  data-ages="{{ age_array | join: '|' | escape }}"
+  data-price="{{ product.price | money_without_currency | remove: ',' }}"
+  data-pband="{% if product.price < 5000 %}Under &euro;50{% elsif product.price < 10000 %}&euro;50 &ndash; &euro;100{% elsif product.price < 20000 %}&euro;100 &ndash; &euro;200{% else %}&euro;200+{% endif %}"
+  data-stock="{% if product.available %}in{% else %}out{% endif %}">
+  <div class="lbp-card__media">
+    <a class="lbp-card__medialink" href="{{ product.url }}" tabindex="-1" aria-hidden="true">
+      <img class="lbp-card__img" src="{{ product.featured_image | image_url: width: 700 }}"
+           alt="{{ product.featured_image.alt | default: product.title | escape }}" loading="lazy" decoding="async" width="700" height="875">
+      {%- if product.images.size > 1 -%}
+      <img class="lbp-card__img lbp-card__img--alt" src="{{ product.images[1] | image_url: width: 700 }}" alt="" loading="lazy" decoding="async" aria-hidden="true">
+      {%- endif -%}
+    </a>
+    {%- if on_sale or product.available == false -%}
+    <div class="lbp-card__flags">
+      {%- if on_sale %}<span class="lbp-flag lbp-flag--sale">Sale</span>{% endif -%}
+      {%- unless product.available %}<span class="lbp-flag lbp-flag--out">Out of stock</span>{% endunless -%}
     </div>
-
-    <button
-      class="button button--small button--add-to-cart"
-      data-product-id="{{ product.id }}"
-      aria-label="Add {{ product.title }} to cart"
-    >
-      Add to Bag
+    {%- endif -%}
+    <button class="lbp-card__wish" type="button" aria-label="Save {{ product.title | escape }}" data-wish data-product-id="{{ product.id }}">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+        <path d="M12 20.5S3.8 15 3.8 9.3a4.3 4.3 0 0 1 8.2-1.8 4.3 4.3 0 0 1 8.2 1.8c0 5.7-8.2 11.2-8.2 11.2Z"/>
+      </svg>
     </button>
+    {%- if product.available -%}
+    <button class="lbp-card__quick" type="button" data-quick-add data-product-id="{{ product.id }}" data-product-handle="{{ product.handle }}" data-product-url="{{ product.url }}">Quick add</button>
+    {%- endif -%}
   </div>
-</div>
+  <p class="lbp-card__brand">{{ brand }}</p>
+  <h3 class="lbp-card__name"><a class="lbp-card__link" href="{{ product.url }}">{{ product.title }}</a></h3>
+  <p class="lbp-card__price">
+    {%- if on_sale -%}
+    <span class="lbp-card__was lbp-num">{{ product.compare_at_price | money }}</span>
+    <span class="lbp-card__now lbp-card__now--sale lbp-num">{{ product.price | money }}</span>
+    {%- else -%}
+    <span class="lbp-card__now lbp-num">{{ product.price | money }}</span>
+    {%- endif -%}
+  </p>
+</article>

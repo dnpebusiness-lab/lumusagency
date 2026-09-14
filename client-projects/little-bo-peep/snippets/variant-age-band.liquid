@@ -1,0 +1,21 @@
+{%- comment -%}
+  Normalises a variant size title (3months, 24months, 3years, 3-4years) to
+  one of the four age bands used across the site. Ranges take the upper
+  bound. Usage: {% render 'variant-age-band', variant: variant %}
+{%- endcomment -%}
+{%- assign vt = variant.title | downcase -%}
+{%- if vt contains 'months' -%}
+  {%- assign parts = vt | remove: 'months' | split: '-' -%}
+  {%- assign months = parts.last | strip | plus: 0 -%}
+{%- elsif vt contains 'years' or vt contains 'year' -%}
+  {%- assign parts = vt | remove: 'years' | remove: 'year' | split: '-' -%}
+  {%- assign yrs = parts.last | strip | plus: 0 -%}
+  {%- assign months = yrs | times: 12 -%}
+{%- else -%}
+  {%- assign months = 0 -%}
+{%- endif -%}
+{%- if months <= 24 -%}Newborn &ndash; 2 years
+{%- elsif months <= 60 -%}2 &ndash; 5 years
+{%- elsif months <= 96 -%}5 &ndash; 8 years
+{%- else -%}8 years +
+{%- endif -%}

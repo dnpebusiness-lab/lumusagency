@@ -1,0 +1,151 @@
+<div class="lbp-container">
+
+  <nav class="lbp-crumb" aria-label="Breadcrumb">
+    <a href="{{ routes.root_url }}">Home</a><span class="lbp-crumb__sep">/</span>
+    <a href="{{ routes.all_products_collection_url }}">All products</a><span class="lbp-crumb__sep">/</span>
+    <span aria-current="page">{{ product.title }}</span>
+  </nav>
+
+  <div class="lbp-pdp">
+    <div class="lbp-gallery">
+      <figure class="lbp-gallery__main">
+        <img id="pdp-main" src="{{ product.featured_image | image_url: width: 1000 }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" fetchpriority="high">
+        <button class="lbp-gallery__zoom" type="button" aria-label="Zoom image">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6M11 8.5v5M8.5 11h5"/></svg>
+        </button>
+      </figure>
+      {%- if product.images.size > 1 -%}
+      <div class="lbp-gallery__strip">
+        {%- for image in product.images -%}
+        <figure><img src="{{ image | image_url: width: 800 }}" alt="{% if forloop.first %}{{ product.title | escape }}{% endif %}" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"></figure>
+        {%- endfor -%}
+      </div>
+      <div class="lbp-thumbs">
+        {%- for image in product.images -%}
+        <button class="lbp-thumb{% if forloop.first %} is-on{% endif %}" type="button" data-full="{{ image | image_url: width: 1000 }}" aria-label="View image {{ forloop.index }}">
+          <img src="{{ image | image_url: width: 200 }}" alt="">
+        </button>
+        {%- endfor -%}
+      </div>
+      {%- endif -%}
+    </div>
+
+    <div class="lbp-buy">
+      {%- capture brand -%}{% render 'brand-of', product: product %}{%- endcapture -%}
+      <p class="lbp-card__brand">{{ brand | strip }}</p>
+      <h1 class="lbp-h2 lbp-buy__title">{{ product.title }}</h1>
+      <p class="lbp-buy__price">
+        {%- if product.compare_at_price > product.price -%}
+        <span class="lbp-card__was lbp-num">{{ product.compare_at_price | money }}</span>
+        <span class="lbp-num" style="color:var(--accent)">{{ product.price | money }}</span>
+        {%- else -%}
+        <span class="lbp-num">{{ product.price | money }}</span>
+        {%- endif -%}
+      </p>
+      <p class="lbp-buy__tax">Taxes included. Shipping calculated at checkout.</p>
+
+      {%- assign available_count = 0 -%}
+      {%- for v in product.variants -%}{%- if v.available -%}{%- assign available_count = available_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
+      <p class="lbp-stock">
+        <span class="lbp-stock__dot"></span>
+        {% if product.available %}In stock{% else %}Out of stock{% endif %} &middot; {{ available_count }} of {{ product.variants.size }} sizes available
+      </p>
+
+      {%- if product.variants.size > 1 or product.variants.first.title != 'Default Title' -%}
+      <div class="lbp-sizehead">
+        <span class="lbp-sizehead__label">Size</span>
+        <a class="lbp-sizehead__guide" href="{{ pages['size-guide'].url | default: '#' }}">Size guide</a>
+      </div>
+      <div class="lbp-sizes" id="sizes">
+        {%- for v in product.variants -%}
+        <button class="lbp-size" type="button" data-size="{{ v.title | escape }}" data-variant-id="{{ v.id }}"{% unless v.available %} disabled{% endunless %}>{{ v.title }}</button>
+        {%- endfor -%}
+      </div>
+      <p class="lbp-sizenote" id="sizenote" hidden>Choose a size to add this to your bag.</p>
+      {%- else -%}
+      <input type="hidden" id="single-variant-id" value="{{ product.variants.first.id }}">
+      {%- endif -%}
+
+      <div class="lbp-buy__actions">
+        <button class="lbp-btn lbp-btn--solid" type="button" id="addbtn" data-product-id="{{ product.id }}"{% unless product.available %} disabled{% endunless %}>
+          {% if product.available %}Add to bag{% else %}Sold out{% endif %}
+        </button>
+        <button class="lbp-wishbtn" type="button" id="wish" aria-label="Save this piece" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+            <path d="M12 20.5S3.8 15 3.8 9.3a4.3 4.3 0 0 1 8.2-1.8 4.3 4.3 0 0 1 8.2 1.8c0 5.7-8.2 11.2-8.2 11.2Z"/></svg>
+        </button>
+      </div>
+
+      <div class="lbp-acc">
+        {%- if product.description != blank -%}
+        <div class="lbp-acc__item">
+          <button class="lbp-acc__btn" type="button" aria-expanded="true">Description
+            <span class="lbp-acc__icon" aria-hidden="true">+</span></button>
+          <div class="lbp-acc__panel is-open"><div class="lbp-acc__inner">{{ product.description }}</div></div>
+        </div>
+        {%- endif -%}
+        <div class="lbp-acc__item">
+          <button class="lbp-acc__btn" type="button" aria-expanded="{% if product.description == blank %}true{% else %}false{% endif %}">Delivery
+            <span class="lbp-acc__icon" aria-hidden="true">+</span></button>
+          <div class="lbp-acc__panel{% if product.description == blank %} is-open{% endif %}"><div class="lbp-acc__inner">
+            <p>Posted from the shop in Spiddal, Co Galway. Worldwide shipping available.</p>
+            <p>Preorder pieces are dispatched when the delivery lands with us &mdash; the month is shown in the product name.</p>
+          </div></div>
+        </div>
+        <div class="lbp-acc__item">
+          <button class="lbp-acc__btn" type="button" aria-expanded="false">Returns
+            <span class="lbp-acc__icon" aria-hidden="true">+</span></button>
+          <div class="lbp-acc__panel"><div class="lbp-acc__inner">
+            <p>Return within 14 days, unworn, odour free and with all tags attached. Include a note with your name and return address.</p>
+            <p>Footwear must come back in its original box, undamaged and inside outer packaging.</p>
+          </div></div>
+        </div>
+        <div class="lbp-acc__item">
+          <button class="lbp-acc__btn" type="button" aria-expanded="false">Paying in instalments
+            <span class="lbp-acc__icon" aria-hidden="true">+</span></button>
+          <div class="lbp-acc__panel"><div class="lbp-acc__inner">
+            <p>We offer simple payment plans to spread the cost of an occasion outfit. Ask us in the shop or by email.</p>
+          </div></div>
+        </div>
+        <div class="lbp-acc__item">
+          <button class="lbp-acc__btn" type="button" aria-expanded="false">Ask about this piece
+            <span class="lbp-acc__icon" aria-hidden="true">+</span></button>
+          <div class="lbp-acc__panel"><div class="lbp-acc__inner">
+            <p>Sizing runs differently between Spanish labels. If you are between sizes, ask us before you order and we will measure the actual garment.</p>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="lbp-section lbp-section--sand">
+  <div class="lbp-container">
+    <div class="lbp-sectionhead lbp-reveal">
+      <div><span class="lbp-eyebrow">You may also like</span>
+        <h2 class="lbp-h2 lbp-sectionhead__title">Seen with this</h2></div>
+      <a class="lbp-sectionhead__link" href="{{ routes.all_products_collection_url }}">View all</a>
+    </div>
+    <div class="lbp-grid">
+      {%- assign shown = 0 -%}
+      {%- for p in collections.all.products limit: 12 -%}
+        {%- if shown >= 4 -%}{%- break -%}{%- endif -%}
+        {%- if p.id != product.id -%}
+          {% render 'product-card', product: p, delay: shown %}
+          {%- assign shown = shown | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<div class="lbp-stickybuy" id="stickybuy">
+  <span class="lbp-stickybuy__price lbp-num">{{ product.price | money }}</span>
+  <button class="lbp-btn lbp-btn--solid" type="button" data-addproxy{% unless product.available %} disabled{% endunless %}>
+    {% if product.available %}Add to bag{% else %}Sold out{% endif %}
+  </button>
+</div>
+
+{% schema %}
+{ "name": "Main: Product", "settings": [] }
+{% endschema %}

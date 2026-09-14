@@ -1,0 +1,220 @@
+/* --------------------------------------------------------------------------
+   12. Category tiles — photography-led, text under image
+   -------------------------------------------------------------------------- */
+.lbp-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--sp-6);
+}
+@media (max-width: 860px) { .lbp-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-4); } }
+
+.lbp-tile { display: block; }
+.lbp-tile__media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  background: var(--sand);
+  margin-bottom: var(--sp-4);
+}
+.lbp-tile__media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform var(--d-edit) var(--e-out);
+}
+.lbp-tile:hover .lbp-tile__media img { transform: scale(1.035); }
+.lbp-tile__foot { display: flex; align-items: baseline; justify-content: space-between; gap: var(--sp-4); }
+.lbp-tile__name { font-family: var(--serif); font-size: var(--t-h3); line-height: 1.15; }
+.lbp-tile__arrow { transition: transform var(--d-micro) var(--e-out); color: var(--ink-soft); }
+.lbp-tile:hover .lbp-tile__arrow { transform: translateX(5px); color: var(--accent); }
+
+/* Asymmetric lead row: the first tile is wider, but every tile is the SAME
+   height so the captions sit on one baseline. Varying width reads as art
+   direction; varying baseline reads as a bug. */
+.lbp-tiles--lead { grid-template-columns: 1.6fr 1fr 1fr; }
+@media (min-width: 861px) {
+  .lbp-tiles--lead .lbp-tile__media {
+    aspect-ratio: auto;
+    height: clamp(340px, 31vw, 540px);
+  }
+}
+@media (max-width: 860px) {
+  .lbp-tiles--lead { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lbp-tiles--lead .lbp-tile:first-child { grid-column: 1 / -1; }
+  .lbp-tiles--lead .lbp-tile:first-child .lbp-tile__media { aspect-ratio: 16 / 10; }
+}
+
+/* --------------------------------------------------------------------------
+   13. Editorial split
+   -------------------------------------------------------------------------- */
+.lbp-editorial {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  gap: clamp(var(--sp-8), 6vw, var(--sp-12));
+}
+.lbp-editorial--flip .lbp-editorial__figure { order: 2; }
+.lbp-editorial__figure { overflow: hidden; aspect-ratio: 5 / 6; background: var(--sand); }
+.lbp-editorial__figure img { width: 100%; height: 100%; object-fit: cover; }
+.lbp-editorial__body { max-width: 52ch; }
+.lbp-editorial__title { margin: var(--sp-4) 0 var(--sp-5); }
+.lbp-editorial__text { margin-bottom: var(--sp-7); }
+
+@media (max-width: 900px) {
+  .lbp-editorial { grid-template-columns: 1fr; gap: var(--sp-7); }
+  .lbp-editorial--flip .lbp-editorial__figure { order: 0; }
+  .lbp-editorial__figure { aspect-ratio: 4 / 3; }
+}
+
+/* Full-bleed campaign band */
+.lbp-band { position: relative; min-height: min(78vh, 720px); display: grid; }
+.lbp-band__img { grid-area: 1 / 1; width: 100%; height: 100%; object-fit: cover; }
+.lbp-band__veil {
+  grid-area: 1 / 1;
+  background: linear-gradient(90deg, rgba(36,34,32,0.66) 0%, rgba(36,34,32,0.34) 46%, rgba(36,34,32,0.06) 100%);
+}
+.lbp-band__inner {
+  grid-area: 1 / 1;
+  display: flex; flex-direction: column; justify-content: center;
+  color: var(--ivory);
+  padding-block: var(--sp-10);
+}
+.lbp-band__body { max-width: 40ch; }
+.lbp-band .lbp-eyebrow { color: rgba(248, 245, 239, 0.8); }
+.lbp-band__title { margin: var(--sp-4) 0 var(--sp-5); }
+.lbp-band__text { color: rgba(248, 245, 239, 0.88); margin-bottom: var(--sp-7); }
+@media (max-width: 760px) {
+  .lbp-band__veil { background: linear-gradient(180deg, rgba(36,34,32,0.28) 0%, rgba(36,34,32,0.74) 62%); }
+  .lbp-band__inner { justify-content: flex-end; }
+}
+
+/* --------------------------------------------------------------------------
+   14. Designer index — typographic, because we hold no brand logos
+   -------------------------------------------------------------------------- */
+.lbp-designers {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+}
+@media (max-width: 900px) { .lbp-designers { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .lbp-designers { grid-template-columns: 1fr; } }
+
+.lbp-designer {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding: var(--sp-5) var(--sp-4) var(--sp-5) 0;
+  border-bottom: 1px solid var(--line);
+  transition: padding-left var(--d-micro) var(--e-out), color var(--d-micro) var(--e-out);
+}
+.lbp-designer:hover { padding-left: var(--sp-3); color: var(--accent); }
+.lbp-designer__name { font-family: var(--serif); font-size: 1.25rem; line-height: 1.2; }
+.lbp-designer__count { font-size: var(--t-xs); color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+
+/* --------------------------------------------------------------------------
+   15. Shop by age — typographic pills, genuine browse aid
+   -------------------------------------------------------------------------- */
+.lbp-ages { display: flex; flex-wrap: wrap; gap: var(--sp-3); }
+.lbp-age {
+  display: inline-flex;
+  align-items: center;
+  min-height: 46px;
+  padding: 0 var(--sp-6);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: var(--t-sm);
+  background: var(--ivory);
+  transition: border-color var(--d-micro) var(--e-out),
+              background-color var(--d-micro) var(--e-out),
+              color var(--d-micro) var(--e-out);
+}
+.lbp-age:hover { border-color: var(--charcoal); background: var(--charcoal); color: var(--ivory); }
+.lbp-age__n { margin-left: var(--sp-3); font-size: var(--t-xs); opacity: 0.62; font-variant-numeric: tabular-nums; }
+
+/* --------------------------------------------------------------------------
+   16. Trust row — quiet, typographic, never a badge strip
+   -------------------------------------------------------------------------- */
+.lbp-trust {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--sp-8);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding-block: var(--sp-8);
+}
+@media (max-width: 860px) { .lbp-trust { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-6); } }
+@media (max-width: 460px) { .lbp-trust { grid-template-columns: 1fr; } }
+.lbp-trust__title { font-size: var(--t-sm); font-weight: 500; margin-bottom: var(--sp-2); }
+.lbp-trust__text { font-size: var(--t-xs); color: var(--ink-soft); line-height: 1.6; }
+
+/* --------------------------------------------------------------------------
+   17. Newsletter
+   -------------------------------------------------------------------------- */
+.lbp-news { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(var(--sp-7), 5vw, var(--sp-11)); align-items: center; }
+@media (max-width: 860px) { .lbp-news { grid-template-columns: 1fr; gap: var(--sp-6); } }
+.lbp-news__title { margin: var(--sp-4) 0 var(--sp-4); }
+.lbp-news__form { display: flex; gap: var(--sp-3); flex-wrap: wrap; }
+.lbp-field {
+  flex: 1 1 240px;
+  min-height: 48px;
+  padding: 0 var(--sp-4);
+  background: var(--ivory);
+  border: 1px solid var(--field-line);
+  border-radius: var(--r-field);
+  transition: border-color var(--d-micro) var(--e-out);
+}
+.lbp-field::placeholder { color: var(--ink-soft); }
+.lbp-field:focus { outline: none; border-color: var(--charcoal); }
+.lbp-news__consent { margin-top: var(--sp-4); font-size: var(--t-xs); color: var(--ink-soft); }
+
+/* --------------------------------------------------------------------------
+   18. Footer
+   -------------------------------------------------------------------------- */
+.lbp-footer { background: var(--charcoal); color: var(--ivory); padding-block: var(--sp-11) var(--sp-7); }
+.lbp-footer__top {
+  display: grid;
+  grid-template-columns: 1.5fr repeat(3, minmax(0, 1fr));
+  gap: var(--sp-9);
+  padding-bottom: var(--sp-9);
+  border-bottom: 1px solid rgba(248, 245, 239, 0.16);
+}
+@media (max-width: 900px) { .lbp-footer__top { grid-template-columns: 1fr 1fr; gap: var(--sp-7); } }
+@media (max-width: 520px) { .lbp-footer__top { grid-template-columns: 1fr; } }
+
+.lbp-footer__brand { font-family: var(--serif); font-size: 1.5rem; margin-bottom: var(--sp-4); }
+.lbp-footer__blurb { font-size: var(--t-sm); color: rgba(248, 245, 239, 0.72); max-width: 38ch; line-height: 1.7; }
+.lbp-footer__title {
+  font-size: var(--t-eyebrow);
+  letter-spacing: var(--track-eyebrow);
+  text-transform: uppercase;
+  color: rgba(248, 245, 239, 0.6);
+  margin-bottom: var(--sp-5);
+}
+.lbp-footer__list { display: flex; flex-direction: column; gap: var(--sp-3); }
+.lbp-footer__list a {
+  display: flex;
+  align-items: center;
+  min-height: 28px;
+  font-size: var(--t-sm);
+  color: rgba(248, 245, 239, 0.82);
+  transition: color var(--d-micro) var(--e-out);
+}
+.lbp-footer__list a:hover { color: var(--ivory); }
+
+/* Touch: footer links are navigation, so give them a real target height and
+   drop the list gap so the column does not become unreadably tall. */
+@media (max-width: 900px) {
+  .lbp-footer__list { gap: 0; }
+  .lbp-footer__list a { display: flex; align-items: center; min-height: 44px; }
+}
+.lbp-footer__bottom {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: var(--sp-4);
+  padding-top: var(--sp-6);
+  font-size: var(--t-xs);
+  color: rgba(248, 245, 239, 0.55);
+}
+.lbp-footer .lbp-field { background: transparent; border-color: rgba(248,245,239,0.3); color: var(--ivory); }
+.lbp-footer .lbp-field::placeholder { color: rgba(248,245,239,0.5); }
+.lbp-footer .lbp-field:focus { border-color: var(--ivory); }
+

@@ -1,0 +1,70 @@
+{%- paginate collections.all.products by 96 -%}
+<div class="lbp-container">
+  <nav class="lbp-crumb" aria-label="Breadcrumb">
+    <a href="{{ routes.root_url }}">Home</a><span class="lbp-crumb__sep">/</span>
+    <span aria-current="page">All products</span>
+  </nav>
+
+  <div class="lbp-collhead">
+    <span class="lbp-eyebrow">The shop</span>
+    <h1 class="lbp-h1 lbp-collhead__title">All products</h1>
+    <p class="lbp-lead">Spanish and traditional childrenswear, newborn to twelve years. Filter by age, designer or price.</p>
+  </div>
+
+  <div class="lbp-toolbar">
+    <p class="lbp-toolbar__count"><span data-count>{{ collections.all.products.size }}</span> pieces</p>
+    <div class="lbp-toolbar__right">
+      <button class="lbp-btn lbp-btn--line lbp-filterbtn" type="button" data-open="filters">Filter</button>
+      <label class="lbp-sr" for="sort">Sort by</label>
+      <select class="lbp-select" id="sort">
+        <option value="featured">Featured</option>
+        <option value="low">Price, low to high</option>
+        <option value="high">Price, high to low</option>
+        <option value="az">Name, A&ndash;Z</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="lbp-coll">
+    <aside class="lbp-coll__aside" aria-label="Filters"><div id="facets"></div></aside>
+    <div>
+      <div class="lbp-chips" id="chips"></div>
+      <div class="lbp-grid" id="grid">
+        {%- assign d = 0 -%}
+        {%- for product in collections.all.products -%}
+          {% render 'product-card', product: product, delay: d %}
+          {%- assign d = d | plus: 1 -%}
+          {%- if d == 4 -%}{%- assign d = 0 -%}{%- endif -%}
+        {%- endfor -%}
+      </div>
+      <div class="lbp-noresults" id="noresults" hidden>
+        <p class="lbp-empty__title">Nothing matches all of those filters.</p>
+        <p class="lbp-empty__text">Try removing one &mdash; age and designer together narrow things quickly.</p>
+        <button class="lbp-btn lbp-btn--line" type="button" id="clearall">Clear filters</button>
+      </div>
+      {%- if paginate.pages > 1 -%}
+      <nav class="lbp-pager" aria-label="Pagination">
+        {%- if paginate.previous -%}<a class="lbp-btn lbp-btn--line" href="{{ paginate.previous.url }}">Previous</a>{%- endif -%}
+        <span class="lbp-pager__status">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+        {%- if paginate.next -%}<a class="lbp-btn lbp-btn--line" href="{{ paginate.next.url }}">Next</a>{%- endif -%}
+      </nav>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<aside class="lbp-drawer" data-drawer="filters" aria-label="Filters" aria-hidden="true">
+  <div class="lbp-drawer__head"><h2 class="lbp-drawer__title">Filter</h2>
+    <button class="lbp-iconbtn" type="button" aria-label="Close filters" data-close>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
+  <div class="lbp-drawer__body" id="facets-mobile"></div>
+  <div class="lbp-drawer__foot">
+    <button class="lbp-btn lbp-btn--solid lbp-btn--block" type="button" data-close>
+      Show <span data-count>{{ collections.all.products.size }}</span> pieces</button>
+  </div>
+</aside>
+{%- endpaginate -%}
+
+{% schema %}
+{ "name": "Main: Collection", "settings": [] }
+{% endschema %}

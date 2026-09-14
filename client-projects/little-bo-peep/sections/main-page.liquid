@@ -1,0 +1,17 @@
+<div class="lbp-container">
+  <nav class="lbp-crumb" aria-label="Breadcrumb">
+    <a href="{{ routes.root_url }}">Home</a><span class="lbp-crumb__sep">/</span>
+    <span aria-current="page">{{ page.title }}</span>
+  </nav>
+
+  <div class="lbp-page">
+    <h1 class="lbp-h1 lbp-page__title">{{ page.title }}</h1>
+    <div class="lbp-rte">
+      {{ page.content }}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Main: Page", "settings": [] }
+{% endschema %}

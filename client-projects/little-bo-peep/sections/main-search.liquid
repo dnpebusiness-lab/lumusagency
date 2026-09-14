@@ -1,0 +1,51 @@
+<div class="lbp-container">
+  <nav class="lbp-crumb" aria-label="Breadcrumb">
+    <a href="{{ routes.root_url }}">Home</a><span class="lbp-crumb__sep">/</span>
+    <span aria-current="page">Search</span>
+  </nav>
+
+  <div class="lbp-collhead">
+    <span class="lbp-eyebrow">Search</span>
+    <h1 class="lbp-h1 lbp-collhead__title">
+      {%- if search.performed -%}
+        Results for &ldquo;{{ search.terms }}&rdquo;
+      {%- else -%}
+        Search {{ shop.name }}
+      {%- endif -%}
+    </h1>
+    {%- if search.performed -%}
+    <p class="lbp-lead">{{ search.results_count }} result{% unless search.results_count == 1 %}s{% endunless %}.</p>
+    {%- endif -%}
+  </div>
+
+  <form class="lbp-search" action="{{ routes.search_url }}" method="get" role="search" style="max-width:480px;margin-bottom:var(--sp-8)">
+    <input class="lbp-field" type="search" name="q" placeholder="Search products" value="{{ search.terms | escape }}" required>
+    <input type="hidden" name="type" value="product">
+    <button class="lbp-btn lbp-btn--solid" type="submit">Search</button>
+  </form>
+
+  {%- if search.performed -%}
+    {%- if search.results.size > 0 -%}
+    <div class="lbp-grid">
+      {%- assign d = 0 -%}
+      {%- for item in search.results -%}
+        {%- if item.object_type == 'product' -%}
+          {% render 'product-card', product: item, delay: d %}
+          {%- assign d = d | plus: 1 -%}
+          {%- if d == 4 -%}{%- assign d = 0 -%}{%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+    {%- else -%}
+    <div class="lbp-empty">
+      <p class="lbp-empty__title">Nothing matches &ldquo;{{ search.terms }}&rdquo;.</p>
+      <p class="lbp-empty__text">Try a designer name or a piece type &mdash; smock, gown, christening.</p>
+      <a class="lbp-btn lbp-btn--line" href="{{ routes.all_products_collection_url }}">Browse all products</a>
+    </div>
+    {%- endif -%}
+  {%- endif -%}
+</div>
+
+{% schema %}
+{ "name": "Main: Search", "settings": [] }
+{% endschema %}

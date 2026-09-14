@@ -1,0 +1,70 @@
+<div class="lbp-container">
+  <nav class="lbp-crumb" aria-label="Breadcrumb">
+    <a href="{{ routes.root_url }}">Home</a><span class="lbp-crumb__sep">/</span>
+    <span aria-current="page">Your bag</span>
+  </nav>
+
+  <div class="lbp-collhead">
+    <span class="lbp-eyebrow">Order review</span>
+    <h1 class="lbp-h1 lbp-collhead__title">Your bag</h1>
+  </div>
+
+  {%- if cart.item_count > 0 -%}
+  <form action="{{ routes.cart_url }}" method="post" class="lbp-cartpage">
+    <div class="lbp-cartpage__list">
+      <table class="lbp-carttable">
+        <thead>
+          <tr><th>Item</th><th>Price</th><th>Quantity</th><th>Total</th><th><span class="lbp-sr">Remove</span></th></tr>
+        </thead>
+        <tbody>
+          {%- for item in cart.items -%}
+          <tr>
+            <td class="lbp-carttable__item">
+              <a class="lbp-bagitem__media" href="{{ item.url }}" style="width:80px">
+                <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.title | escape }}" width="80" height="100" loading="lazy">
+              </a>
+              <div>
+                <p class="lbp-bagitem__name"><a href="{{ item.url }}">{{ item.product.title }}</a></p>
+                {%- unless item.variant.title == 'Default Title' -%}
+                <p class="lbp-bagitem__variant">{{ item.variant.title }}</p>
+                {%- endunless -%}
+              </div>
+            </td>
+            <td class="lbp-num">{{ item.original_price | money }}</td>
+            <td>
+              <div class="lbp-qty" data-qty>
+                <button class="lbp-qty__btn" type="button" data-qty-down aria-label="Decrease quantity">&minus;</button>
+                <input class="lbp-qty__n lbp-num" type="number" min="0" name="updates[{{ item.key }}]" value="{{ item.quantity }}" aria-label="Quantity for {{ item.product.title | escape }}" style="width:40px;text-align:center;border:0;background:transparent">
+                <button class="lbp-qty__btn" type="button" data-qty-up aria-label="Increase quantity">+</button>
+              </div>
+            </td>
+            <td class="lbp-num">{{ item.final_line_price | money }}</td>
+            <td><a class="lbp-bagitem__remove" href="{{ item.url_to_remove }}" aria-label="Remove {{ item.product.title | escape }}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="m6 6 12 12M18 6 6 18"/></svg></a></td>
+          </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+      <button class="lbp-btn lbp-btn--line" type="submit" name="update">Update bag</button>
+    </div>
+
+    <div class="lbp-cartpage__summary">
+      <div class="lbp-bagfoot">
+        <div class="lbp-bagfoot__row"><span>Subtotal</span><span class="lbp-num">{{ cart.total_price | money }}</span></div>
+        <p class="lbp-bagfoot__note">Taxes included. Shipping calculated at checkout.</p>
+        <button class="lbp-btn lbp-btn--solid lbp-btn--block" type="submit" name="checkout">Checkout</button>
+      </div>
+    </div>
+  </form>
+  {%- else -%}
+  <div class="lbp-empty">
+    <p class="lbp-empty__title">Nothing in the bag yet.</p>
+    <p class="lbp-empty__text">Have a look at what came in this week.</p>
+    <a class="lbp-btn lbp-btn--line" href="{{ routes.all_products_collection_url }}?sort=new">Shop new in</a>
+  </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{ "name": "Main: Cart", "settings": [] }
+{% endschema %}

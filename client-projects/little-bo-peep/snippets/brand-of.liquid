@@ -1,0 +1,26 @@
+{%- comment -%}
+  Designer/label detection. Vendor is not a reliable field on this catalogue
+  (everything is set to the shop name), so the label is parsed from the
+  product title, matching the same designer list used across the site nav.
+  Usage: {% capture brand %}{% render 'brand-of', product: product %}{% endcapture %}
+{%- endcomment -%}
+{%- if product.title contains 'Ceaser Blanco' -%}Ceaser Blanco
+{%- elsif product.title contains 'Ela Confection' -%}Ela Confection
+{%- elsif product.title contains 'Lapin House' -%}Lapin House
+{%- elsif product.title contains 'Balloon Chic' -%}Balloon Chic
+{%- elsif product.title contains 'Abuela Tata' -%}Abuela Tata
+{%- elsif product.title contains 'Mitch & Son' -%}Mitch & Son
+{%- elsif product.title contains 'Little A' -%}Little A
+{%- elsif product.title contains 'Deolinda' -%}Deolinda
+{%- elsif product.title contains 'Babyfer' -%}Babyfer
+{%- elsif product.title contains 'Monnalisa' -%}Monnalisa
+{%- elsif product.title contains 'Sonata' -%}Sonata
+{%- elsif product.title contains 'Rahigo' -%}Rahigo
+{%- elsif product.title contains 'Miranda' -%}Miranda
+{%- elsif product.title contains 'Naxos' -%}Naxos
+{%- elsif product.title contains 'Adee' -%}Adee
+{%- elsif product.title contains 'Daga' -%}Daga
+{%- elsif product.title contains "Levi's" -%}Levi's
+{%- elsif product.title contains 'Gant' -%}Gant
+{%- else -%}Little Bo Peep
+{%- endif -%}
