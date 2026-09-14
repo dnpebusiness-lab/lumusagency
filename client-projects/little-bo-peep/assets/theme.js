@@ -26,24 +26,45 @@
     }
   }
 
-  /* ---------- First-order promo toast ---------- */
+  /* ---------- First-order promo modal ---------- */
   var promo = document.getElementById('promo');
   var promoDismissed = false;
   try { promoDismissed = sessionStorage.getItem('lbp_promo_dismissed') === '1'; } catch (err) {}
   if (promo && !promoDismissed) {
     var showPromo = function () {
       promo.hidden = false;
-      requestAnimationFrame(function () { promo.classList.add('is-visible'); });
+      document.body.style.overflow = 'hidden';
+      requestAnimationFrame(function () {
+        promo.classList.add('is-visible');
+        var closeBtn = promo.querySelector('.lbp-promo__close');
+        if (closeBtn) closeBtn.focus();
+      });
+    };
+    var hidePromo = function () {
+      promo.classList.remove('is-visible');
+      document.body.style.overflow = '';
+      try { sessionStorage.setItem('lbp_promo_dismissed', '1'); } catch (err) {}
+      setTimeout(function () { promo.hidden = true; }, 400);
     };
     window.addEventListener('scroll', function () {
       setTimeout(showPromo, 7000);
     }, { passive: true, once: true });
-    var promoClose = promo.querySelector('[data-promo-close]');
-    if (promoClose) {
-      promoClose.addEventListener('click', function () {
-        promo.classList.remove('is-visible');
-        try { sessionStorage.setItem('lbp_promo_dismissed', '1'); } catch (err) {}
-        setTimeout(function () { promo.hidden = true; }, 400);
+    promo.querySelectorAll('[data-promo-close]').forEach(function (el) {
+      el.addEventListener('click', hidePromo);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && promo.classList.contains('is-visible')) hidePromo();
+    });
+    var promoCopy = promo.querySelector('[data-promo-copy]');
+    if (promoCopy) {
+      promoCopy.addEventListener('click', function () {
+        var code = promoCopy.getAttribute('data-code') || '';
+        if (!navigator.clipboard || !code) return;
+        navigator.clipboard.writeText(code).then(function () {
+          var label = promoCopy.textContent;
+          promoCopy.textContent = 'Copied';
+          setTimeout(function () { promoCopy.textContent = label; }, 1600);
+        }).catch(function () {});
       });
     }
   }
