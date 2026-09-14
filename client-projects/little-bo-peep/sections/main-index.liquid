@@ -24,13 +24,12 @@
 {%- endcomment -%}
 {%- assign img_girls = '' -%}{%- assign img_boys = '' -%}{%- assign img_baby = '' -%}
 {%- assign img_christening = '' -%}{%- assign img_occasion = '' -%}{%- assign img_lbp = '' -%}
-{%- assign img_communion = '' -%}
 {%- assign lbp_img1 = '' -%}{%- assign lbp_img2 = '' -%}{%- assign lbp_img3 = '' -%}
 {%- assign lbp_url = routes.all_products_collection_url | append: '?brand=Little+Bo+Peep' -%}
 {%- assign cat_found = 0 -%}
 {%- assign lbp_found = 0 -%}
 {%- for p in collections.all.products limit: 200 -%}
-  {%- if cat_found >= 7 and lbp_found >= 3 -%}{%- break -%}{%- endif -%}
+  {%- if cat_found >= 6 and lbp_found >= 3 -%}{%- break -%}{%- endif -%}
   {%- capture g -%}{% render 'gender-of', product: p %}{%- endcapture -%}
   {%- capture o -%}{% render 'occasion-of', product: p %}{%- endcapture -%}
   {%- capture b -%}{% render 'brand-of', product: p %}{%- endcapture -%}
@@ -40,7 +39,6 @@
   {%- if img_baby == '' and g contains 'Baby' -%}{%- assign img_baby = p.featured_image -%}{%- assign cat_found = cat_found | plus: 1 -%}{%- endif -%}
   {%- if img_christening == '' and o contains 'Christening' -%}{%- assign img_christening = p.featured_image -%}{%- assign cat_found = cat_found | plus: 1 -%}{%- endif -%}
   {%- if img_occasion == '' and o contains 'Occasion' -%}{%- assign img_occasion = p.featured_image -%}{%- assign cat_found = cat_found | plus: 1 -%}{%- endif -%}
-  {%- if img_communion == '' and o contains 'Communion' -%}{%- assign img_communion = p.featured_image -%}{%- assign cat_found = cat_found | plus: 1 -%}{%- endif -%}
   {%- if b == 'Little Bo Peep' -%}
     {%- if img_lbp == '' -%}{%- assign img_lbp = p.featured_image -%}{%- assign cat_found = cat_found | plus: 1 -%}{%- endif -%}
     {%- if lbp_img1 == '' -%}{%- assign lbp_img1 = p.featured_image -%}
@@ -105,14 +103,10 @@
     <div class="lbp-sectionhead lbp-reveal">
       <div><span class="lbp-eyebrow">For the big days</span><h2 class="lbp-h2 lbp-sectionhead__title">Shop by occasion</h2></div>
     </div>
-    <div class="lbp-tiles">
+    <div class="lbp-tiles" style="grid-template-columns:repeat(2, minmax(0, 1fr))">
       <a class="lbp-tile lbp-reveal" href="{{ routes.all_products_collection_url }}?occasion=Christening">
         <div class="lbp-tile__media lbp-mask">{% if img_christening != blank %}<img src="{{ img_christening | image_url: width: 900 }}" alt="" loading="lazy" decoding="async">{% endif %}</div>
         <div class="lbp-tile__foot"><span class="lbp-tile__name">Christening</span><span class="lbp-tile__arrow" aria-hidden="true">&rarr;</span></div>
-      </a>
-      <a class="lbp-tile lbp-reveal" href="{{ routes.all_products_collection_url }}?occasion=Communion">
-        <div class="lbp-tile__media lbp-mask">{% if img_communion != blank %}<img src="{{ img_communion | image_url: width: 900 }}" alt="" loading="lazy" decoding="async">{% endif %}</div>
-        <div class="lbp-tile__foot"><span class="lbp-tile__name">Communion</span><span class="lbp-tile__arrow" aria-hidden="true">&rarr;</span></div>
       </a>
       <a class="lbp-tile lbp-reveal" href="{{ routes.all_products_collection_url }}?occasion=Occasion">
         <div class="lbp-tile__media lbp-mask">{% if img_occasion != blank %}<img src="{{ img_occasion | image_url: width: 900 }}" alt="" loading="lazy" decoding="async">{% endif %}</div>
