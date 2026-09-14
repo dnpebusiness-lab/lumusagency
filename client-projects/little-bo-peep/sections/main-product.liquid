@@ -41,6 +41,7 @@
       {%- capture brand -%}{% render 'brand-of', product: product %}{%- endcapture -%}
       <p class="lbp-card__brand">{{ brand | strip }}</p>
       <h1 class="lbp-h2 lbp-buy__title">{{ product.title }}</h1>
+      {{ product.metafields.judgeme.badge }}
       <p class="lbp-buy__price">
         {%- if product.compare_at_price > product.price -%}
         <span class="lbp-card__was lbp-num">{{ product.compare_at_price | money }}</span>
@@ -125,6 +126,12 @@
     </div>
   </div>
 </div>
+
+<section class="lbp-section--tight">
+  <div class="lbp-container">
+    <div class="jdgm-widget jdgm-review-widget" data-id="{{ product.id }}"></div>
+  </div>
+</section>
 
 <section class="lbp-section lbp-section--sand">
   <div class="lbp-container">
