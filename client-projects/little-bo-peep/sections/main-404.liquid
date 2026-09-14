@@ -1,0 +1,15 @@
+<div class="lbp-container">
+  <div class="lbp-collhead" style="text-align:center; max-width:52ch; margin-inline:auto;">
+    <span class="lbp-eyebrow">Page not found</span>
+    <h1 class="lbp-h1 lbp-collhead__title">We couldn't find that page.</h1>
+    <p class="lbp-lead" style="margin-inline:auto;">The link might be out of date, or the page has moved. Try one of these instead.</p>
+  </div>
+  <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:var(--sp-4); padding-block:var(--sp-8);">
+    <a class="lbp-btn lbp-btn--solid" href="{{ routes.all_products_collection_url }}?sort=new">Shop New Arrivals</a>
+    <a class="lbp-btn lbp-btn--line" href="{{ routes.root_url }}">Back to Home</a>
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Main: 404", "settings": [] }
+{% endschema %}
