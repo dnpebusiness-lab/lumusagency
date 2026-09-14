@@ -26,6 +26,28 @@
     }
   }
 
+  /* ---------- First-order promo toast ---------- */
+  var promo = document.getElementById('promo');
+  var promoDismissed = false;
+  try { promoDismissed = sessionStorage.getItem('lbp_promo_dismissed') === '1'; } catch (err) {}
+  if (promo && !promoDismissed) {
+    var showPromo = function () {
+      promo.hidden = false;
+      requestAnimationFrame(function () { promo.classList.add('is-visible'); });
+    };
+    window.addEventListener('scroll', function () {
+      setTimeout(showPromo, 7000);
+    }, { passive: true, once: true });
+    var promoClose = promo.querySelector('[data-promo-close]');
+    if (promoClose) {
+      promoClose.addEventListener('click', function () {
+        promo.classList.remove('is-visible');
+        try { sessionStorage.setItem('lbp_promo_dismissed', '1'); } catch (err) {}
+        setTimeout(function () { promo.hidden = true; }, 400);
+      });
+    }
+  }
+
   /* ---------- Scroll reveal ---------- */
   var revealItems = document.querySelectorAll('.lbp-reveal, .lbp-mask');
   if (reduce || !('IntersectionObserver' in window)) {

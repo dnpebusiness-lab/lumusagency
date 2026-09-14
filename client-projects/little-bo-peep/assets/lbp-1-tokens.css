@@ -340,3 +340,45 @@ h1, h2, h3, h4, p, figure { margin: 0; }
   border-bottom: 1px solid rgba(248, 245, 239, 0.5);
   padding-bottom: 1px;
 }
+
+/* --------------------------------------------------------------------------
+   6b. First-order promo toast — appears once, 7s after the visitor starts
+   scrolling; dismiss persists for the session.
+   -------------------------------------------------------------------------- */
+.lbp-promo {
+  position: fixed;
+  left: var(--sp-5);
+  bottom: var(--sp-5);
+  z-index: var(--z-drawer);
+  max-width: 360px;
+  background: var(--charcoal);
+  color: var(--ivory);
+  padding: var(--sp-5);
+  box-shadow: 0 20px 40px -20px rgba(36, 31, 27, 0.5);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity var(--d-drawer) var(--e-out), transform var(--d-drawer) var(--e-out);
+}
+.lbp-promo.is-visible { opacity: 1; transform: translateY(0); }
+.lbp-promo__body { display: flex; align-items: flex-start; gap: var(--sp-4); }
+.lbp-promo__text { font-size: var(--t-sm); line-height: 1.5; }
+.lbp-promo__text strong {
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid rgba(248, 245, 239, 0.5);
+  padding-bottom: 1px;
+}
+.lbp-promo__close {
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: rgba(248, 245, 239, 0.7);
+  transition: color var(--d-micro) var(--e-out);
+}
+.lbp-promo__close:hover { color: var(--ivory); }
+.lbp-promo__close svg { width: 16px; height: 16px; }
+@media (max-width: 480px) {
+  .lbp-promo { left: var(--sp-4); right: var(--sp-4); bottom: var(--sp-4); max-width: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lbp-promo { transition: opacity 200ms linear; transform: none; }
+}
