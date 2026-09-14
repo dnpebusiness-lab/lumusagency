@@ -117,6 +117,52 @@
 .lbp-navrow a:hover::after { transform: scaleX(1); }
 .lbp-navrow__lbp { color: var(--accent); }
 
+/* Mega-menu — one restrained panel: a link list plus a single editorial
+   image, never the crowded four-column version. Girls/Boys/Baby/Little Bo
+   Peep/Occasion only; New In, Brands and Sale stay flat links. */
+.lbp-navrow__item { position: relative; }
+.lbp-mega {
+  position: absolute; left: 0; right: 0; top: 100%;
+  background: var(--white);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity var(--d-menu) var(--e-out),
+              transform var(--d-menu) var(--e-out),
+              visibility 0s linear var(--d-menu);
+  z-index: var(--z-menu);
+}
+.lbp-navrow__item.is-open .lbp-mega {
+  opacity: 1; visibility: visible; transform: translateY(0); transition-delay: 0s;
+}
+.lbp-mega__inner {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: var(--sp-9);
+  padding-block: var(--sp-7) var(--sp-8);
+}
+.lbp-mega__title {
+  font-size: var(--t-eyebrow); letter-spacing: var(--track-eyebrow); text-transform: uppercase;
+  color: var(--ink-soft); padding-bottom: var(--sp-3); margin-bottom: var(--sp-4);
+  border-bottom: 1px solid var(--line);
+}
+.lbp-mega__list { display: flex; flex-direction: column; gap: var(--sp-2); }
+.lbp-mega__list a {
+  display: inline-flex; align-items: center; min-height: 32px;
+  font-size: var(--t-sm); color: var(--ink); font-weight: normal; letter-spacing: normal; text-transform: none;
+  transition: color var(--d-micro) var(--e-out), transform var(--d-micro) var(--e-out);
+}
+.lbp-mega__list a:hover { color: var(--accent); transform: translateX(3px); }
+.lbp-mega__feature { display: block; max-width: 340px; margin-left: auto; }
+.lbp-mega__figure {
+  overflow: hidden; aspect-ratio: 4 / 3; background: var(--sand);
+  margin-bottom: var(--sp-3); box-shadow: inset 0 0 0 1px var(--line);
+}
+.lbp-mega__figure img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--d-edit) var(--e-out); }
+.lbp-mega__feature:hover .lbp-mega__figure img { transform: scale(1.035); }
+
 @media (max-width: 900px) {
   .lbp-navrow { display: none; }
   .lbp-burger { display: inline-flex; }
@@ -221,7 +267,11 @@
   text-transform: uppercase;
 }
 .lbp-flag--sale { background: var(--terracotta-fill); color: var(--ivory); }
-.lbp-flag--out  { background: rgba(36, 34, 32, 0.82); color: var(--ivory); }
+.lbp-flag--out  { background: rgba(51, 42, 39, 0.85); color: var(--ivory); }
+.lbp-flag--pre  { background: var(--ivory); color: var(--charcoal); box-shadow: inset 0 0 0 1px var(--charcoal); }
+.lbp-flag--new  { background: var(--sage); color: var(--white); }
+.lbp-flag--exclusive { background: var(--charcoal); color: var(--ivory); }
+.lbp-flag--low  { background: var(--ivory); color: var(--terracotta-text); box-shadow: inset 0 0 0 1px var(--terracotta-text); }
 
 .lbp-card__wish {
   position: absolute;
@@ -295,6 +345,7 @@
   border-radius: 999px; padding: 3px 9px;
 }
 .lbp-card__was { color: var(--ink-soft); text-decoration: line-through; }
+.lbp-card__save { font-size: .68rem; letter-spacing: .04em; color: var(--terracotta-text); }
 .lbp-card__now--sale { color: var(--accent); }
 
 /* Touch devices: hover affordances would be unreachable, so pin them on. */

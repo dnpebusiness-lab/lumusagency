@@ -14,30 +14,29 @@
    1. Tokens
    -------------------------------------------------------------------------- */
 :root {
-  /* Ground — warmed and lightened for the premium-boutique direction:
-     less "printed catalogue", more soft/expensive white space. */
-  --ivory:        #FBF8F3;
-  --sand:         #F1E9DD;
-  --white:        #FFFFFF;
+  /* Ground — the brief's own palette: Warm Ivory / Soft Cream / Warm White.
+     Quiet-luxury European boutique, not "printed catalogue". */
+  --ivory:        #F7F4EF;   /* Warm Ivory — page ground */
+  --sand:         #EFE8DF;   /* Soft Cream — alternate section */
+  --white:        #FCFAF7;   /* Warm White — cards, drawers, flags */
+  --taupe:        #B6A89A;   /* Warm Taupe — decorative only, not text */
 
   /* Ink */
-  --charcoal:     #241F1B;
-  --warm-grey:    #6E6862;   /* 5.05:1 on ivory, 4.52:1 on sand */
-  --rule:         #E5DCCF;
+  --charcoal:     #332A27;   /* Deep Espresso */
+  --warm-grey:    #6B5D52;   /* 5.77:1 on ivory — secondary text, never pure black */
+  --rule:         #E3D9CC;
 
-  /* Accent — deepened terracotta, used sparingly. Photography and product
-     imagery carry the colour; this is for CTAs, links and small emphasis.
-     Three steps because one value cannot be accessible in every role.
-     Measured against both grounds (ivory and sand):
-       display  #A9694F  4.7:1  — large text (>=24px) and italic accents
-       text     #8C4B34  6.25 ivory / 5.50 sand — any text under 24px
-       fill     #9B5A3E  carries ivory text at 5.05:1
-     Rose and sage stay in the palette as tints; neither is used for text. */
-  --rose:         #C9A99A;
-  --sage:         #A7AF93;
-  --terracotta:         #A9694F;
-  --terracotta-text:    #8C4B34;
-  --terracotta-fill:    #9B5A3E;
+  /* Accent — Muted Rose, used sparingly (the brief is explicit: an accent,
+     not the identity). Two steps because the brief's rose (#C9AAA4) is too
+     light to carry text or a border reliably:
+       display  #C9AAA4  decorative fills, badges, backgrounds only
+       text     #8B5D54  5.05:1 on ivory — links, small emphasis, CTAs
+     Sage stays in the palette as a tint; it is not used for text. */
+  --rose:         #C9AAA4;
+  --sage:         #A7ADA0;
+  --terracotta:         #C9AAA4;
+  --terracotta-text:    #8B5D54;
+  --terracotta-fill:    #8B5D54;
 
   /* Semantic */
   --bg:           var(--ivory);
@@ -318,16 +317,26 @@ h1, h2, h3, h4, p, figure { margin: 0; }
   text-transform: uppercase;
 }
 .lbp-announce__track {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
   min-height: 40px;
   text-align: center;
 }
-.lbp-announce__item { padding-block: var(--sp-2); }
+.lbp-announce__item {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: var(--sp-8);
+  padding-block: var(--sp-2);
+  opacity: 0;
+  transition: opacity 500ms var(--e-out, ease);
+}
+.lbp-announce__item.is-active { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .lbp-announce__item { transition: none; }
+}
 .lbp-announce__code {
   border-bottom: 1px solid rgba(248, 245, 239, 0.5);
   padding-bottom: 1px;
 }
-
-/* --------------------------------------------------------------------------

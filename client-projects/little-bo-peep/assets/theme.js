@@ -11,6 +11,21 @@
     window.addEventListener('scroll', onScroll, { passive: true });
   }
 
+  /* ---------- Announcement bar rotator ---------- */
+  var announce = document.querySelector('[data-announce]');
+  if (announce) {
+    var slides = Array.prototype.slice.call(announce.querySelectorAll('.lbp-announce__item'));
+    if (slides.length > 1 && !reduce) {
+      var current = slides.findIndex(function (el) { return el.classList.contains('is-active'); });
+      if (current < 0) current = 0;
+      setInterval(function () {
+        slides[current].classList.remove('is-active');
+        current = (current + 1) % slides.length;
+        slides[current].classList.add('is-active');
+      }, 5000);
+    }
+  }
+
   /* ---------- Scroll reveal ---------- */
   var revealItems = document.querySelectorAll('.lbp-reveal, .lbp-mask');
   if (reduce || !('IntersectionObserver' in window)) {
@@ -28,20 +43,38 @@
 
   /* ---------- Mega menu ---------- */
   document.querySelectorAll('[data-mega]').forEach(function (item) {
-    var trigger = item.querySelector('.lbp-nav__link');
+    var trigger = item.querySelector('.lbp-navrow__trigger');
+    if (!trigger) return;
+    var closeTimer;
     var open = function (state) {
+      clearTimeout(closeTimer);
       item.classList.toggle('is-open', state);
       trigger.setAttribute('aria-expanded', String(state));
     };
     item.addEventListener('mouseenter', function () { open(true); });
-    item.addEventListener('mouseleave', function () { open(false); });
+    item.addEventListener('mouseleave', function () {
+      closeTimer = setTimeout(function () { open(false); }, 120);
+    });
     trigger.addEventListener('click', function (e) {
-      e.preventDefault();
-      open(!item.classList.contains('is-open'));
+      /* Small screens (no hover) get a normal link tap; desktop toggles the panel. */
+      if (window.matchMedia('(hover: hover)').matches) {
+        e.preventDefault();
+        open(!item.classList.contains('is-open'));
+      }
     });
     item.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') { open(false); trigger.focus(); }
     });
+  });
+  /* Close an open mega panel on outside click */
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('[data-mega]')) {
+      document.querySelectorAll('[data-mega].is-open').forEach(function (item) {
+        item.classList.remove('is-open');
+        var t = item.querySelector('.lbp-navrow__trigger');
+        if (t) t.setAttribute('aria-expanded', 'false');
+      });
+    }
   });
 
   /* ---------- Drawers ---------- */
@@ -264,15 +297,21 @@
     if (entryGender || entryOccasion) {
       var kept = cards.filter(function (c) {
         var ok = true;
-        if (entryGender) ok = ok && (c.getAttribute('data-gender') || '').split('|').indexOf(entryGender) > -1;
+        if (entryGender) {
+          /* comma-separated = AND, e.g. gender=Baby,Girls for "Baby Girls" */
+          var wanted = entryGender.split(',');
+          var have = (c.getAttribute('data-gender') || '').split('|');
+          ok = ok && wanted.every(function (w) { return have.indexOf(w) > -1; });
+        }
         if (entryOccasion) ok = ok && (c.getAttribute('data-occasion') || '').split('|').indexOf(entryOccasion) > -1;
         return ok;
       });
       cards.forEach(function (c) { if (kept.indexOf(c) === -1) c.remove(); });
       cards = kept;
       var heading = document.querySelector('.lbp-collhead__title');
-      var occasionLabel = { Christening: 'Christening', Occasion: 'Occasion Wear' };
-      if (heading) heading.textContent = entryGender || occasionLabel[entryOccasion] || entryOccasion;
+      var occasionLabel = { Christening: 'Christening', Communion: 'Communion', Occasion: 'Occasion Wear' };
+      var genderLabel = entryGender ? entryGender.split(',').join(' ') : '';
+      if (heading) heading.textContent = genderLabel || occasionLabel[entryOccasion] || entryOccasion;
     }
 
     var chips = document.getElementById('chips');
@@ -282,6 +321,7 @@
 
     var FACETS = [
       { key: 'brand', title: 'Designer', attr: 'brand', multi: false },
+      { key: 'type', title: 'Category', attr: 'type', multi: true },
       { key: 'sizes', title: 'Size', attr: 'sizes', multi: true },
       { key: 'ages', title: 'Age', attr: 'ages', multi: true },
       { key: 'colour', title: 'Colour', attr: 'colour', multi: false },
@@ -330,7 +370,7 @@
     renderFacetsInto(facetsDesktop);
     if (facetsMobile) facetsMobile.innerHTML = facetsDesktop.innerHTML;
 
-    var state = { ages: [], sizes: [], brand: [], colour: [], pband: [], stock: [] };
+    var state = { ages: [], sizes: [], brand: [], type: [], colour: [], pband: [], stock: [] };
 
     function sync(key, value, on) {
       document.querySelectorAll('input[data-facet="' + key + '"]').forEach(function (i) {
@@ -352,6 +392,10 @@
           ok = ok && state.sizes.some(function (v) { return sz.indexOf(v) > -1; });
         }
         if (state.brand.length) ok = ok && state.brand.indexOf(c.getAttribute('data-brand')) > -1;
+        if (state.type.length) {
+          var ty = (c.getAttribute('data-type') || '').split('|');
+          ok = ok && state.type.some(function (v) { return ty.indexOf(v) > -1; });
+        }
         if (state.colour.length) ok = ok && state.colour.indexOf(c.getAttribute('data-colour')) > -1;
         if (state.pband.length) ok = ok && state.pband.indexOf(c.getAttribute('data-pband')) > -1;
         if (state.stock.length) ok = ok && state.stock.indexOf(c.getAttribute('data-stock')) > -1;
@@ -421,6 +465,11 @@
       var brandVal = params.get('brand');
       state.brand.push(brandVal);
       sync('brand', brandVal, true);
+    }
+    if (params.get('type')) {
+      var typeVal = params.get('type');
+      state.type.push(typeVal);
+      sync('type', typeVal, true);
     }
     if (params.get('age') && ageMap[params.get('age')]) {
       var ageVal = ageMap[params.get('age')];

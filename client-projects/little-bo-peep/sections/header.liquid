@@ -20,12 +20,124 @@
   <nav class="lbp-navrow" aria-label="Primary">
     <ul>
       <li><a href="{{ routes.all_products_collection_url }}?sort=new">New In</a></li>
-      <li><a href="{{ routes.all_products_collection_url }}?gender=Girls">Girls</a></li>
-      <li><a href="{{ routes.all_products_collection_url }}?gender=Boys">Boys</a></li>
-      <li><a href="{{ routes.all_products_collection_url }}?gender=Baby">Baby</a></li>
-      <li><a href="{{ routes.all_products_collection_url }}?occasion=Christening">Christening</a></li>
-      <li><a href="{{ routes.all_products_collection_url }}?occasion=Occasion">Occasion Wear</a></li>
-      <li><a class="lbp-navrow__lbp" href="{{ routes.all_products_collection_url }}?brand=Little+Bo+Peep">Little Bo Peep Collection</a></li>
+
+      <li class="lbp-navrow__item" data-mega>
+        <a class="lbp-navrow__trigger" href="{{ routes.all_products_collection_url }}?gender=Girls" aria-haspopup="true" aria-expanded="false">Girls</a>
+        <div class="lbp-mega">
+          <div class="lbp-container"><div class="lbp-mega__inner">
+            <div class="lbp-mega__col">
+              <h2 class="lbp-mega__title">Shop Girls</h2>
+              <ul class="lbp-mega__list">
+                <li><a href="{{ routes.all_products_collection_url }}?gender=Girls&amp;type=Dresses">Dresses</a></li>
+                <li><a href="{{ routes.all_products_collection_url }}?gender=Girls&amp;type=Sets">Sets</a></li>
+                <li><a href="{{ routes.all_products_collection_url }}?gender=Girls&amp;type=Knitwear">Knitwear</a></li>
+                <li><a href="{{ routes.all_products_collection_url }}?gender=Girls&amp;occasion=Occasion">Occasionwear</a></li>
+                <li><a href="{{ routes.all_products_collection_url }}?gender=Girls&amp;occasion=Christening">Christening</a></li>
+                <li><a href="{{ routes.all_products_collection_url }}?gender=Girls&amp;type=Shoes">Shoes</a></li>
+                <li><a href="{{ routes.all_products_collection_url }}?gender=Girls&amp;type=Accessories">Accessories</a></li>
+              </ul>
+            </div>
+            <a class="lbp-mega__feature" href="{{ routes.all_products_collection_url }}?gender=Girls">
+              <div class="lbp-mega__figure"><img src="{{ 'IMG_2664.jpg' | file_img_url: '900x' }}" alt="" loading="lazy"></div>
+              <span class="lbp-eyebrow">Shop the edit</span>
+              <p class="lbp-h4">All Girls</p>
+            </a>
+          </div></div>
+        </div>
+      </li>
+
+      <li class="lbp-navrow__item" data-mega>
+        <a class="lbp-navrow__trigger" href="{{ routes.all_products_collection_url }}?gender=Boys" aria-haspopup="true" aria-expanded="false">Boys</a>
+        <div class="lbp-mega">
+          <div class="lbp-container"><div class="lbp-mega__inner">
+            <div class="lbp-mega__col">
+              <h2 class="lbp-mega__title">Shop Boys</h2>
+              <ul class="lbp-mega__list">
+                <li><a href="{{ routes.all_products_collection_url }}?gender=Boys&amp;type=Sets">Sets</a></li>
+                <li><a href="{{ routes.all_products_collection_url }}?gender=Boys&amp;type=Shirts">Shirts</a></li>
+                <li><a href="{{ routes.all_products_collection_url }}?gender=Boys&amp;type=Knitwear">Knitwear</a></li>
+                <li><a href="{{ routes.all_products_collection_url }}?gender=Boys&amp;occasion=Occasion">Occasionwear</a></li>
+                <li><a href="{{ routes.all_products_collection_url }}?gender=Boys&amp;occasion=Christening">Christening</a></li>
+                <li><a href="{{ routes.all_products_collection_url }}?gender=Boys&amp;type=Shoes">Shoes</a></li>
+                <li><a href="{{ routes.all_products_collection_url }}?gender=Boys&amp;type=Accessories">Accessories</a></li>
+              </ul>
+            </div>
+            <a class="lbp-mega__feature" href="{{ routes.all_products_collection_url }}?gender=Boys">
+              <div class="lbp-mega__figure"><img src="{{ 'IMG_7637_4425dfda-c77a-4bb7-b79d-96761940b6c0.jpg' | file_img_url: '900x' }}" alt="" loading="lazy"></div>
+              <span class="lbp-eyebrow">Shop the edit</span>
+              <p class="lbp-h4">All Boys</p>
+            </a>
+          </div></div>
+        </div>
+      </li>
+
+      <li class="lbp-navrow__item" data-mega>
+        <a class="lbp-navrow__trigger" href="{{ routes.all_products_collection_url }}?gender=Baby" aria-haspopup="true" aria-expanded="false">Baby</a>
+        <div class="lbp-mega">
+          <div class="lbp-container"><div class="lbp-mega__inner">
+            <div class="lbp-mega__col">
+              <h2 class="lbp-mega__title">Shop Baby</h2>
+              <ul class="lbp-mega__list">
+                <li><a href="{{ routes.all_products_collection_url }}?gender=Baby,Girls">Baby Girls</a></li>
+                <li><a href="{{ routes.all_products_collection_url }}?gender=Baby,Boys">Baby Boys</a></li>
+                <li><a href="{{ routes.all_products_collection_url }}?gender=Baby&amp;type=Rompers">Rompers</a></li>
+                <li><a href="{{ routes.all_products_collection_url }}?gender=Baby&amp;type=Sets">Sets</a></li>
+                <li><a href="{{ routes.all_products_collection_url }}?gender=Baby&amp;type=Knitwear">Knitwear</a></li>
+              </ul>
+            </div>
+            <a class="lbp-mega__feature" href="{{ routes.all_products_collection_url }}?gender=Baby">
+              <div class="lbp-mega__figure"><img src="{{ 'IMG_1922.jpg' | file_img_url: '900x' }}" alt="" loading="lazy"></div>
+              <span class="lbp-eyebrow">Shop the edit</span>
+              <p class="lbp-h4">All Baby</p>
+            </a>
+          </div></div>
+        </div>
+      </li>
+
+      <li class="lbp-navrow__item" data-mega>
+        <a class="lbp-navrow__trigger lbp-navrow__lbp" href="{{ routes.all_products_collection_url }}?brand=Little+Bo+Peep" aria-haspopup="true" aria-expanded="false">Little Bo Peep</a>
+        <div class="lbp-mega">
+          <div class="lbp-container"><div class="lbp-mega__inner">
+            <div class="lbp-mega__col">
+              <h2 class="lbp-mega__title">Our Signature Collection</h2>
+              <ul class="lbp-mega__list">
+                <li><a class="lbp-navrow__lbp" href="{{ routes.all_products_collection_url }}?brand=Little+Bo+Peep">Signature Smock Collection</a></li>
+                <li><a href="{{ routes.all_products_collection_url }}?brand=Little+Bo+Peep&amp;type=Dresses">Dresses</a></li>
+                <li><a href="{{ routes.all_products_collection_url }}?brand=Little+Bo+Peep&amp;type=Rompers">Rompers</a></li>
+                <li><a href="{{ routes.all_products_collection_url }}?brand=Little+Bo+Peep&amp;type=Pyjamas">Pyjamas</a></li>
+                <li><a href="{{ routes.all_products_collection_url }}?brand=Little+Bo+Peep&amp;type=Swimwear">Swimwear</a></li>
+              </ul>
+            </div>
+            <a class="lbp-mega__feature" href="{{ routes.all_products_collection_url }}?brand=Little+Bo+Peep">
+              <div class="lbp-mega__figure"><img src="{{ '433d28f9-7742-46c2-aadf-e78e345c23da.jpg' | file_img_url: '900x' }}" alt="" loading="lazy"></div>
+              <span class="lbp-eyebrow">Designed in Galway since 2017</span>
+              <p class="lbp-h4">Discover the Collection</p>
+            </a>
+          </div></div>
+        </div>
+      </li>
+
+      <li class="lbp-navrow__item" data-mega>
+        <a class="lbp-navrow__trigger" href="{{ routes.all_products_collection_url }}?occasion=Occasion" aria-haspopup="true" aria-expanded="false">Occasion</a>
+        <div class="lbp-mega">
+          <div class="lbp-container"><div class="lbp-mega__inner">
+            <div class="lbp-mega__col">
+              <h2 class="lbp-mega__title">Shop Occasion</h2>
+              <ul class="lbp-mega__list">
+                <li><a href="{{ routes.all_products_collection_url }}?occasion=Christening">Christening</a></li>
+                <li><a href="{{ routes.all_products_collection_url }}?occasion=Communion">Communion</a></li>
+                <li><a href="{{ routes.all_products_collection_url }}?occasion=Occasion">Special Occasions</a></li>
+              </ul>
+            </div>
+            <a class="lbp-mega__feature" href="{{ routes.all_products_collection_url }}?occasion=Occasion">
+              <div class="lbp-mega__figure"><img src="{{ 'IMG_2669.jpg' | file_img_url: '900x' }}" alt="" loading="lazy"></div>
+              <span class="lbp-eyebrow">The day itself</span>
+              <p class="lbp-h4">Shop Occasion</p>
+            </a>
+          </div></div>
+        </div>
+      </li>
+
       <li><a href="{{ routes.all_products_collection_url }}">Brands</a></li>
       <li><a href="{{ collections['summer-sale'].url | default: routes.all_products_collection_url }}">Sale</a></li>
     </ul>

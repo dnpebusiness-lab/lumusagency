@@ -6,6 +6,7 @@
 {%- assign brand = brand | strip -%}
 {%- capture gender -%}{% render 'gender-of', product: product %}{%- endcapture -%}
 {%- capture occasion -%}{% render 'occasion-of', product: product %}{%- endcapture -%}
+{%- capture ptype -%}{% render 'product-type-of', product: product %}{%- endcapture -%}
 {%- capture colour -%}{% render 'colour-of', product: product %}{%- endcapture -%}
 {%- assign colour = colour | strip -%}
 {%- capture cleaned -%}{% render 'clean-title', title: product.title %}{%- endcapture -%}
@@ -14,6 +15,11 @@
 {%- assign delivery_tag = clean_parts[1] -%}
 {%- assign on_sale = false -%}
 {%- if product.compare_at_price > product.price -%}{%- assign on_sale = true -%}{%- endif -%}
+{%- assign save_pct = 0 -%}
+{%- if on_sale -%}
+  {%- assign diff = product.compare_at_price | minus: product.price -%}
+  {%- assign save_pct = diff | times: 100 | divided_by: product.compare_at_price -%}
+{%- endif -%}
 {%- assign age_list = '' -%}
 {%- assign size_list = '' -%}
 {%- for v in product.variants -%}
@@ -28,6 +34,27 @@
 {%- assign age_array = age_list | split: '|' | uniq -%}
 {%- assign size_array = size_list | split: '|' | uniq -%}
 
+{%- comment -%} Real signals only — nothing here is invented. {%- endcomment -%}
+{%- assign is_preorder = false -%}
+{%- if product.tags contains 'Preorder' or product.tags contains 'Pre-order' or product.tags contains 'preorder' -%}{%- assign is_preorder = true -%}{%- endif -%}
+{%- assign is_exclusive = false -%}
+{%- if brand == 'Little Bo Peep' -%}{%- assign is_exclusive = true -%}{%- endif -%}
+{%- assign now_ts = 'now' | date: '%s' | plus: 0 -%}
+{%- assign created_ts = product.created_at | date: '%s' | plus: 0 -%}
+{%- assign age_days = now_ts | minus: created_ts | divided_by: 86400 -%}
+{%- assign is_new = false -%}
+{%- if age_days <= 21 -%}{%- assign is_new = true -%}{%- endif -%}
+{%- assign total_inventory = 0 -%}
+{%- assign inventory_tracked = false -%}
+{%- for v in product.variants -%}
+  {%- if v.inventory_management -%}
+    {%- assign inventory_tracked = true -%}
+    {%- assign total_inventory = total_inventory | plus: v.inventory_quantity -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- assign is_low_stock = false -%}
+{%- if inventory_tracked and product.available and total_inventory > 0 and total_inventory <= 3 -%}{%- assign is_low_stock = true -%}{%- endif -%}
+
 <article class="lbp-card lbp-reveal"{% if delay %} data-delay="{{ delay }}"{% endif %}
   data-brand="{{ brand | escape }}"
   data-ages="{{ age_array | join: '|' | escape }}"
@@ -35,6 +62,7 @@
   data-colour="{{ colour | escape }}"
   data-gender="{{ gender | strip | escape }}"
   data-occasion="{{ occasion | strip | escape }}"
+  data-type="{{ ptype | strip | escape }}"
   data-price="{{ product.price | money_without_currency | remove: ',' }}"
   data-pband="{% if product.price < 5000 %}Under &euro;50{% elsif product.price < 10000 %}&euro;50 &ndash; &euro;100{% elsif product.price < 20000 %}&euro;100 &ndash; &euro;200{% else %}&euro;200+{% endif %}"
   data-stock="{% if product.available %}in{% else %}out{% endif %}">
@@ -46,9 +74,15 @@
       <img class="lbp-card__img lbp-card__img--alt" src="{{ product.images[1] | image_url: width: 700 }}" alt="" loading="lazy" decoding="async" aria-hidden="true">
       {%- endif -%}
     </a>
-    {%- if on_sale or product.available == false -%}
+    {%- if on_sale or is_preorder or is_new or is_exclusive or is_low_stock or product.available == false -%}
     <div class="lbp-card__flags">
-      {%- if on_sale %}<span class="lbp-flag lbp-flag--sale">Sale</span>{% endif -%}
+      {%- comment -%} Restrained: sale/preorder take priority, then at most one more. {%- endcomment -%}
+      {%- if on_sale -%}<span class="lbp-flag lbp-flag--sale">Sale</span>
+      {%- elsif is_preorder -%}<span class="lbp-flag lbp-flag--pre">Pre-order</span>
+      {%- elsif is_new -%}<span class="lbp-flag lbp-flag--new">New</span>
+      {%- elsif is_exclusive -%}<span class="lbp-flag lbp-flag--exclusive">Exclusive</span>
+      {%- endif -%}
+      {%- if is_low_stock -%}<span class="lbp-flag lbp-flag--low">Low stock</span>{%- endif -%}
       {%- unless product.available %}<span class="lbp-flag lbp-flag--out">Out of stock</span>{% endunless -%}
     </div>
     {%- endif -%}
@@ -67,6 +101,7 @@
     {%- if on_sale -%}
     <span class="lbp-card__was lbp-num">{{ product.compare_at_price | money }}</span>
     <span class="lbp-card__now lbp-card__now--sale lbp-num">{{ product.price | money }}</span>
+    {%- if save_pct > 0 -%}<span class="lbp-card__save lbp-num">Save {{ save_pct }}%</span>{%- endif -%}
     {%- else -%}
     <span class="lbp-card__now lbp-num">{{ product.price | money }}</span>
     {%- endif -%}

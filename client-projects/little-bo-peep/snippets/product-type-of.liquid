@@ -1,0 +1,22 @@
+{%- comment -%}
+  Best-effort sub-category tags parsed from the title, for the mega-menu's
+  Dresses / Sets / Knitwear / Shirts / Shoes / Accessories / Rompers /
+  Pyjamas / Swimwear links. No structured product-type field exists on the
+  catalogue (CATALOGUE-AUDIT.md §2.2 — empty on all 691), so — same as
+  gender-of/occasion-of/colour-of — this reads real words in the title and
+  can miss products that don't use them. Pipe-joined, a product can match
+  more than one (e.g. "Jumper & Trouser Set" is both Knitwear and Sets).
+  Usage: {% capture ptype %}{% render 'product-type-of', product: product %}{% endcapture %}
+{%- endcomment -%}
+{%- assign t = product.title | downcase -%}
+{%- assign out = '' -%}
+{%- if t contains 'dress' -%}{%- assign out = out | append: 'Dresses|' -%}{%- endif -%}
+{%- if t contains 'set' -%}{%- assign out = out | append: 'Sets|' -%}{%- endif -%}
+{%- if t contains 'knit' or t contains 'jumper' or t contains 'cardigan' -%}{%- assign out = out | append: 'Knitwear|' -%}{%- endif -%}
+{%- if t contains 'shirt' -%}{%- assign out = out | append: 'Shirts|' -%}{%- endif -%}
+{%- if t contains 'shoe' or t contains 'boot' -%}{%- assign out = out | append: 'Shoes|' -%}{%- endif -%}
+{%- if t contains 'sock' or t contains 'tight' or t contains 'bag' or t contains 'hairband' or t contains 'headband' or t contains 'bonnet' -%}{%- assign out = out | append: 'Accessories|' -%}{%- endif -%}
+{%- if t contains 'romper' -%}{%- assign out = out | append: 'Rompers|' -%}{%- endif -%}
+{%- if t contains 'pj' or t contains 'pyjama' or t contains 'pajama' -%}{%- assign out = out | append: 'Pyjamas|' -%}{%- endif -%}
+{%- if t contains 'swim' -%}{%- assign out = out | append: 'Swimwear|' -%}{%- endif -%}
+{{- out -}}

@@ -2,13 +2,14 @@
   <div class="lbp-footer__top">
     <div>
       <p class="lbp-footer__brand">{{ shop.name }}</p>
-      <p class="lbp-footer__blurb">An independently run children's boutique in Spiddal, Co Galway, specialising in traditional and Spanish childrenswear.</p>
-      <form class="lbp-news__form" style="margin-top:32px" action="{{ routes.root_url }}" method="post">
-        <label class="lbp-sr" for="nl">Email address</label>
-        <input class="lbp-field" id="nl" name="contact[email]" type="email" placeholder="Email address" required>
+      <p class="lbp-footer__blurb">An independently run children's boutique in Spiddal, Co Galway, specialising in traditional and Spanish childrenswear &mdash; and home to our own signature smock collection, designed in Galway since 2017.</p>
+      <p class="lbp-footer__news-title">A little something lovely, delivered to your inbox.</p>
+      <form class="lbp-news__form" action="{{ routes.root_url }}" method="post">
+        <label class="lbp-sr" for="nl">Your email address</label>
+        <input class="lbp-field" id="nl" name="contact[email]" type="email" placeholder="Your email address" required>
         <input type="hidden" name="form_type" value="customer">
         <input type="hidden" name="utf8" value="&#x2713;">
-        <button class="lbp-btn lbp-btn--ondark" type="submit">Join</button>
+        <button class="lbp-btn lbp-btn--ondark" type="submit">Join Us</button>
       </form>
     </div>
     <div><h2 class="lbp-footer__title">Shop</h2><ul class="lbp-footer__list">
@@ -16,24 +17,37 @@
       <li><a href="{{ routes.all_products_collection_url }}?gender=Girls">Girls</a></li>
       <li><a href="{{ routes.all_products_collection_url }}?gender=Boys">Boys</a></li>
       <li><a href="{{ routes.all_products_collection_url }}?gender=Baby">Baby</a></li>
-      <li><a href="{{ routes.all_products_collection_url }}?occasion=Christening">Christening</a></li>
-      <li><a href="{{ routes.all_products_collection_url }}?occasion=Occasion">Occasion Wear</a></li>
-      <li><a href="{{ routes.all_products_collection_url }}?brand=Little+Bo+Peep">Little Bo Peep Collection</a></li>
+      <li><a href="{{ routes.all_products_collection_url }}?brand=Little+Bo+Peep">Little Bo Peep</a></li>
+      <li><a href="{{ routes.all_products_collection_url }}?occasion=Occasion">Occasionwear</a></li>
       <li><a href="{{ collections['summer-sale'].url | default: routes.all_products_collection_url }}">Sale</a></li>
     </ul></div>
     <div><h2 class="lbp-footer__title">Help</h2><ul class="lbp-footer__list">
       <li><a href="{{ pages.delivery.url | default: '#' }}">Delivery</a></li>
       <li><a href="{{ pages.returns.url | default: '#' }}">Returns</a></li>
-      <li><a href="{{ pages['size-guide'].url | default: '#' }}">Size guide</a></li>
-      <li><a href="{{ pages['payment-plans'].url | default: '#' }}">Payment plans</a></li>
+      <li><a href="{{ pages['size-guide'].url | default: '#' }}">Size Guide</a></li>
+      <li><a href="{{ pages.faq.url | default: '#' }}">FAQ</a></li>
+      <li><a href="{{ pages.contact.url | default: '#' }}">Contact</a></li>
     </ul></div>
-    <div><h2 class="lbp-footer__title">Visit</h2><ul class="lbp-footer__list">
-      <li><a href="https://maps.google.com/?q=Spiddal+Co+Galway" target="_blank" rel="noopener">Spiddal, Co Galway</a></li>
+    <div><h2 class="lbp-footer__title">About</h2><ul class="lbp-footer__list">
+      <li><a href="{{ pages['our-story'].url | default: pages['about-us'].url | default: '#' }}">Our Story</a></li>
+      <li><a href="https://maps.google.com/?q=Spiddal+Co+Galway" target="_blank" rel="noopener">Our Boutique</a></li>
+      <li><a href="{{ routes.all_products_collection_url }}">Brands</a></li>
+    </ul></div>
+    <div><h2 class="lbp-footer__title">Follow</h2><ul class="lbp-footer__list">
       <li><a href="https://instagram.com/little_bo_peep17" target="_blank" rel="noopener">Instagram</a></li>
       <li><a href="https://facebook.com/littlebopeep2017" target="_blank" rel="noopener">Facebook</a></li>
     </ul></div>
   </div>
-  <div class="lbp-footer__bottom"><p>&copy; {{ shop.name }}, Spiddal.</p><p>{{ 'now' | date: '%Y' }}</p></div>
+  <div class="lbp-footer__bottom">
+    <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}, Spiddal.</p>
+    <div class="lbp-footer__legal">
+      <a href="{{ pages['privacy-policy'].url | default: '#' }}">Privacy</a>
+      <a href="{{ pages['terms-of-service'].url | default: '#' }}">Terms</a>
+      <a href="{{ pages['shipping-policy'].url | default: '#' }}">Shipping</a>
+      <a href="{{ pages['refund-policy'].url | default: '#' }}">Returns Policy</a>
+    </div>
+    <p class="lbp-footer__secure">Secure checkout &middot; Worldwide delivery</p>
+  </div>
 </div></footer>
 
 {% schema %}
