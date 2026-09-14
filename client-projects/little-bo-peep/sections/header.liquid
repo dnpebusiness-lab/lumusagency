@@ -1,71 +1,36 @@
-<header class="lbp-header" id="header"><div class="lbp-container"><div class="lbp-header__bar">
-  <nav class="lbp-header__nav" aria-label="Primary"><ul class="lbp-nav">
-    <li class="lbp-nav__item"><a class="lbp-nav__link" href="{{ routes.all_products_collection_url }}?sort=new">New In</a></li>
-    <li class="lbp-nav__item" data-mega>
-      <a class="lbp-nav__link" href="{{ routes.all_products_collection_url }}" aria-haspopup="true" aria-expanded="false">Designers</a>
-      <div class="lbp-mega">
-        <div class="lbp-container">
-          <div class="lbp-mega__inner">
-            <div>
-              <h2 class="lbp-mega__title">Spanish labels</h2>
-              <ul class="lbp-mega__list">
-                <li><a class="lbp-mega__link" href="{{ routes.all_products_collection_url }}?brand=Sonata">Sonata</a></li>
-                <li><a class="lbp-mega__link" href="{{ routes.all_products_collection_url }}?brand=Monnalisa">Monnalisa</a></li>
-                <li><a class="lbp-mega__link" href="{{ routes.all_products_collection_url }}?brand=Adee">Adee</a></li>
-                <li><a class="lbp-mega__link" href="{{ routes.all_products_collection_url }}?brand=Rahigo">Rahigo</a></li>
-                <li><a class="lbp-mega__link" href="{{ routes.all_products_collection_url }}?brand=Daga">Daga</a></li>
-                <li><a class="lbp-mega__link" href="{{ routes.all_products_collection_url }}?brand=Miranda">Miranda</a></li>
-              </ul>
-            </div>
-            <div>
-              <h2 class="lbp-mega__title">Occasion</h2>
-              <ul class="lbp-mega__list">
-                <li><a class="lbp-mega__link" href="{{ collections['girls-christening'].url | default: routes.all_products_collection_url }}">Girls Christening</a></li>
-                <li><a class="lbp-mega__link" href="{{ collections['boys-christening'].url | default: routes.all_products_collection_url }}">Boys Christening</a></li>
-                <li><a class="lbp-mega__link" href="{{ routes.all_products_collection_url }}?brand=Little+Bo+Peep">Gowns &amp; Bonnets</a></li>
-                <li><a class="lbp-mega__link" href="{{ routes.all_products_collection_url }}">Communion</a></li>
-              </ul>
-            </div>
-            <div>
-              <h2 class="lbp-mega__title">Everyday</h2>
-              <ul class="lbp-mega__list">
-                <li><a class="lbp-mega__link" href="{{ collections['baby-sets-knits'].url | default: routes.all_products_collection_url }}">Baby Sets &amp; Knitwear</a></li>
-                <li><a class="lbp-mega__link" href="{{ collections['smocked-pjs'].url | default: routes.all_products_collection_url }}">Smocked PJs &amp; Swim</a></li>
-                <li><a class="lbp-mega__link" href="{{ collections['boots-and-shoes'].url | default: routes.all_products_collection_url }}">Boots &amp; Shoes</a></li>
-                <li><a class="lbp-mega__link" href="{{ collections['socks-tights-and-accessories'].url | default: routes.all_products_collection_url }}">Socks, Tights &amp; Accessories</a></li>
-              </ul>
-            </div>
-            <a class="lbp-mega__feature" href="/#smocks">
-              <div class="lbp-mega__figure"><img src="{{ 'IMG_2622.jpg' | file_img_url: '1400x' }}" alt="" loading="lazy"></div>
-              <span class="lbp-eyebrow">Exclusive to us</span>
-              <p class="lbp-h4">The Little Bo Peep Smock Collection</p>
-            </a>
-          </div>
-        </div>
-      </div>
-    </li>
-    <li class="lbp-nav__item"><a class="lbp-nav__link" href="/#smocks">Smocks</a></li>
-    <li class="lbp-nav__item"><a class="lbp-nav__link" href="/#occasion">Christening</a></li>
-    <li class="lbp-nav__item"><a class="lbp-nav__link" href="/#ages">Baby</a></li>
-    <li class="lbp-nav__item"><a class="lbp-nav__link" href="{{ collections['summer-sale'].url | default: routes.all_products_collection_url }}">Sale</a></li>
-  </ul></nav>
-  <button class="lbp-iconbtn lbp-burger" type="button" aria-label="Open menu" data-open="mnav">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-  </button>
-  <a class="lbp-logo" href="{{ routes.root_url }}">{{ shop.name }}<span class="lbp-logo__sub">Spiddal &middot; Co Galway</span></a>
-  <div class="lbp-header__tools">
-    <button class="lbp-iconbtn" type="button" aria-label="Search" data-open="search">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
+<header class="lbp-header" id="header">
+  <div class="lbp-headtop">
+    <button class="lbp-iconbtn lbp-burger" type="button" aria-label="Open menu" data-open="mnav">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
     </button>
-    <a class="lbp-iconbtn lbp-iconbtn--account" href="{{ routes.account_url }}" aria-label="Account">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="8" r="3.6"/><path d="M4.6 20a7.4 7.4 0 0 1 14.8 0"/></svg>
-    </a>
-    <button class="lbp-iconbtn" type="button" aria-label="Shopping bag" data-open="bag">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 7h14l1 13H4L5 7Z"/><path d="M8.5 7V5.6a3.5 3.5 0 0 1 7 0V7"/></svg>
-      <span class="lbp-bagcount" data-bagcount>{{ cart.item_count }}</span>
-    </button>
+    <a class="lbp-logo" href="{{ routes.root_url }}">{{ shop.name }}<span class="lbp-logo__sub">Spiddal &middot; Co Galway</span></a>
+    <div class="lbp-header__tools">
+      <button class="lbp-iconbtn" type="button" aria-label="Search" data-open="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
+      </button>
+      <a class="lbp-iconbtn lbp-iconbtn--account" href="{{ routes.account_url }}" aria-label="Account">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="8" r="3.6"/><path d="M4.6 20a7.4 7.4 0 0 1 14.8 0"/></svg>
+      </a>
+      <button class="lbp-iconbtn" type="button" aria-label="Shopping bag" data-open="bag">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 7h14l1 13H4L5 7Z"/><path d="M8.5 7V5.6a3.5 3.5 0 0 1 7 0V7"/></svg>
+        <span class="lbp-bagcount" data-bagcount>{{ cart.item_count }}</span>
+      </button>
+    </div>
   </div>
-</div></div></header>
+  <nav class="lbp-navrow" aria-label="Primary">
+    <ul>
+      <li><a href="{{ routes.all_products_collection_url }}?sort=new">New In</a></li>
+      <li><a href="{{ routes.all_products_collection_url }}?gender=Girls">Girls</a></li>
+      <li><a href="{{ routes.all_products_collection_url }}?gender=Boys">Boys</a></li>
+      <li><a href="{{ routes.all_products_collection_url }}?gender=Baby">Baby</a></li>
+      <li><a href="{{ routes.all_products_collection_url }}?occasion=Christening">Christening</a></li>
+      <li><a href="{{ routes.all_products_collection_url }}?occasion=Occasion">Occasion Wear</a></li>
+      <li><a class="lbp-navrow__lbp" href="{{ routes.all_products_collection_url }}?brand=Little+Bo+Peep">Little Bo Peep Collection</a></li>
+      <li><a href="{{ routes.all_products_collection_url }}">Brands</a></li>
+      <li><a href="{{ collections['summer-sale'].url | default: routes.all_products_collection_url }}">Sale</a></li>
+    </ul>
+  </nav>
+</header>
 
 <aside class="lbp-drawer" data-drawer="search" aria-label="Search" aria-hidden="true">
   <div class="lbp-drawer__head"><h2 class="lbp-drawer__title">Search</h2>

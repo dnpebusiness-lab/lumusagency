@@ -5,10 +5,13 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
   <div class="lbp-drawer__body"><nav class="lbp-mnav" aria-label="Mobile">
     <a class="lbp-mnav__link" href="{{ routes.all_products_collection_url }}?sort=new" data-close>New In <span aria-hidden="true">&rarr;</span></a>
-    <a class="lbp-mnav__link" href="{{ routes.all_products_collection_url }}" data-close>Designers <span aria-hidden="true">&rarr;</span></a>
-    <a class="lbp-mnav__link" href="/#smocks" data-close>Smocks <span aria-hidden="true">&rarr;</span></a>
-    <a class="lbp-mnav__link" href="/#occasion" data-close>Christening <span aria-hidden="true">&rarr;</span></a>
-    <a class="lbp-mnav__link" href="/#ages" data-close>Shop by age <span aria-hidden="true">&rarr;</span></a>
+    <a class="lbp-mnav__link" href="{{ routes.all_products_collection_url }}?gender=Girls" data-close>Girls <span aria-hidden="true">&rarr;</span></a>
+    <a class="lbp-mnav__link" href="{{ routes.all_products_collection_url }}?gender=Boys" data-close>Boys <span aria-hidden="true">&rarr;</span></a>
+    <a class="lbp-mnav__link" href="{{ routes.all_products_collection_url }}?gender=Baby" data-close>Baby <span aria-hidden="true">&rarr;</span></a>
+    <a class="lbp-mnav__link" href="{{ routes.all_products_collection_url }}?occasion=Christening" data-close>Christening <span aria-hidden="true">&rarr;</span></a>
+    <a class="lbp-mnav__link" href="{{ routes.all_products_collection_url }}?occasion=Occasion" data-close>Occasion Wear <span aria-hidden="true">&rarr;</span></a>
+    <a class="lbp-mnav__link" style="color:var(--accent)" href="{{ routes.all_products_collection_url }}?brand=Little+Bo+Peep" data-close>Little Bo Peep Collection <span aria-hidden="true">&rarr;</span></a>
+    <a class="lbp-mnav__link" href="{{ routes.all_products_collection_url }}" data-close>Brands <span aria-hidden="true">&rarr;</span></a>
     <a class="lbp-mnav__link" href="{{ collections['summer-sale'].url | default: routes.all_products_collection_url }}" data-close>Sale <span aria-hidden="true">&rarr;</span></a>
     <a class="lbp-mnav__link" href="{{ routes.account_url }}" data-close>Account <span aria-hidden="true">&rarr;</span></a>
   </nav></div>

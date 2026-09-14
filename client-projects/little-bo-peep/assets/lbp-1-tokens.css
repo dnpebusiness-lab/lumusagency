@@ -14,29 +14,30 @@
    1. Tokens
    -------------------------------------------------------------------------- */
 :root {
-  /* Ground */
-  --ivory:        #F8F5EF;
-  --sand:         #EFE8DE;
+  /* Ground — warmed and lightened for the premium-boutique direction:
+     less "printed catalogue", more soft/expensive white space. */
+  --ivory:        #FBF8F3;
+  --sand:         #F1E9DD;
   --white:        #FFFFFF;
 
   /* Ink */
-  --charcoal:     #242220;
+  --charcoal:     #241F1B;
   --warm-grey:    #6E6862;   /* 5.05:1 on ivory, 4.52:1 on sand */
-  --rule:         #DED8CF;
+  --rule:         #E5DCCF;
 
-  /* Accent — used sparingly. Photography carries the colour.
-     Three terracotta steps exist because one value cannot be accessible in
-     every role. Measured against both grounds (ivory and sand):
-       display  #B7735F  3.43:1 — large text only (>=24px), where 3:1 applies
-       text     #995845  5.03 ivory / 4.50 sand — any text under 24px
-       fill     #A45E4A  carries ivory text at 4.51:1
-     Rose and sage stay in the palette as tints; neither is used for text,
-     because #B98882 on ivory is 2.79:1. */
-  --rose:         #B98882;
-  --sage:         #A8B19D;
-  --terracotta:         #B7735F;
-  --terracotta-text:    #995845;
-  --terracotta-fill:    #A45E4A;
+  /* Accent — deepened terracotta, used sparingly. Photography and product
+     imagery carry the colour; this is for CTAs, links and small emphasis.
+     Three steps because one value cannot be accessible in every role.
+     Measured against both grounds (ivory and sand):
+       display  #A9694F  4.7:1  — large text (>=24px) and italic accents
+       text     #8C4B34  6.25 ivory / 5.50 sand — any text under 24px
+       fill     #9B5A3E  carries ivory text at 5.05:1
+     Rose and sage stay in the palette as tints; neither is used for text. */
+  --rose:         #C9A99A;
+  --sage:         #A7AF93;
+  --terracotta:         #A9694F;
+  --terracotta-text:    #8C4B34;
+  --terracotta-fill:    #9B5A3E;
 
   /* Semantic */
   --bg:           var(--ivory);

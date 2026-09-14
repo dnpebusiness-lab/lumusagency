@@ -1,0 +1,13 @@
+{%- comment -%}
+  Best-effort occasion tags parsed from the title (no structured "occasion"
+  field exists on the catalogue). "Occasion" is the broad bucket that
+  Christening and Communion both roll up into, so the Occasion Wear nav
+  item and tile catch both plus gowns/bonnets bought for the same events.
+  Usage: {% capture occasion %}{% render 'occasion-of', product: product %}{% endcapture %}
+{%- endcomment -%}
+{%- assign t = product.title | downcase -%}
+{%- assign out = '' -%}
+{%- if t contains 'christening' -%}{%- assign out = out | append: 'Christening|Occasion|' -%}{%- endif -%}
+{%- if t contains 'communion' -%}{%- assign out = out | append: 'Communion|Occasion|' -%}{%- endif -%}
+{%- if t contains 'gown' or t contains 'bonnet' -%}{%- assign out = out | append: 'Occasion|' -%}{%- endif -%}
+{{- out -}}

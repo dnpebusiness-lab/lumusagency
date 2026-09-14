@@ -132,6 +132,18 @@
 .lbp-age__n { margin-left: var(--sp-3); font-size: var(--t-xs); opacity: 0.62; font-variant-numeric: tabular-nums; }
 
 /* --------------------------------------------------------------------------
+   15b. Reviews — an honest, empty-until-connected slot
+   -------------------------------------------------------------------------- */
+.lbp-reviews { max-width: 720px; margin-inline: auto; text-align: center; }
+.lbp-stars { display: flex; gap: 4px; justify-content: center; margin-block: var(--sp-4); }
+.lbp-stars svg { width: 16px; height: 16px; color: var(--accent); }
+.lbp-reviewslot {
+  border: 1px dashed var(--field-line); border-radius: var(--r-field);
+  padding: var(--sp-6) var(--sp-5); margin-top: var(--sp-5);
+  font-size: var(--t-sm); color: var(--ink-soft); font-style: italic;
+}
+
+/* --------------------------------------------------------------------------
    16. Trust row — quiet, typographic, never a badge strip
    -------------------------------------------------------------------------- */
 .lbp-trust {

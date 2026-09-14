@@ -2,11 +2,11 @@
   <div class="lbp-hero__grid">
     <div class="lbp-hero__copy">
       <span class="lbp-eyebrow lbp-hero__eyebrow">Autumn / Winter</span>
-      <h1 class="lbp-display lbp-hero__title">Spanish clothes for christenings, communions <em>and Sunday best</em>.</h1>
-      <p class="lbp-lead lbp-hero__text">An independent boutique in Spiddal, twelve miles past Galway city, stocking the Spanish labels most Irish parents have to fly for. Newborn to twelve years.</p>
+      <h1 class="lbp-display lbp-hero__title">Spanish &amp; traditional childrenswear, <em>newborn to twelve</em>.</h1>
+      <p class="lbp-lead lbp-hero__text">An independent boutique in Spiddal, twelve miles along the coast from Galway city &mdash; dressing Irish children in the pieces made for christenings, communions and Sunday best, and in easy everyday wear too.</p>
       <div class="lbp-hero__actions">
-        <a class="lbp-btn lbp-btn--solid" href="{{ routes.all_products_collection_url }}?sort=new">Shop new in</a>
-        <a class="lbp-btn lbp-btn--line" href="#smocks">The smock collection</a>
+        <a class="lbp-btn lbp-btn--solid" href="{{ routes.all_products_collection_url }}?sort=new">Shop New Arrivals</a>
+        <a class="lbp-btn lbp-btn--line" href="{{ routes.all_products_collection_url }}?brand=Little+Bo+Peep">Shop the Little Bo Peep Collection</a>
       </div>
     </div>
     <figure class="lbp-hero__figure">
@@ -16,7 +16,64 @@
   </div>
 </section>
 
-<section class="lbp-section" id="new">
+{%- comment -%}
+  One real product photo per category, found in a single pass over the
+  catalogue (gender/occasion aren't structured fields — see
+  CATALOGUE-AUDIT.md §2.3 — so this is a best-effort keyword match, same
+  technique as the New In / Smock sections below).
+{%- endcomment -%}
+{%- assign img_girls = '' -%}{%- assign img_boys = '' -%}{%- assign img_baby = '' -%}
+{%- assign img_christening = '' -%}{%- assign img_occasion = '' -%}{%- assign img_lbp = '' -%}
+{%- assign cat_found = 0 -%}
+{%- for p in collections.all.products limit: 200 -%}
+  {%- if cat_found >= 6 -%}{%- break -%}{%- endif -%}
+  {%- capture g -%}{% render 'gender-of', product: p %}{%- endcapture -%}
+  {%- capture o -%}{% render 'occasion-of', product: p %}{%- endcapture -%}
+  {%- capture b -%}{% render 'brand-of', product: p %}{%- endcapture -%}
+  {%- assign b = b | strip -%}
+  {%- if img_girls == '' and g contains 'Girls' -%}{%- assign img_girls = p.featured_image -%}{%- assign cat_found = cat_found | plus: 1 -%}{%- endif -%}
+  {%- if img_boys == '' and g contains 'Boys' -%}{%- assign img_boys = p.featured_image -%}{%- assign cat_found = cat_found | plus: 1 -%}{%- endif -%}
+  {%- if img_baby == '' and g contains 'Baby' -%}{%- assign img_baby = p.featured_image -%}{%- assign cat_found = cat_found | plus: 1 -%}{%- endif -%}
+  {%- if img_christening == '' and o contains 'Christening' -%}{%- assign img_christening = p.featured_image -%}{%- assign cat_found = cat_found | plus: 1 -%}{%- endif -%}
+  {%- if img_occasion == '' and o contains 'Occasion' -%}{%- assign img_occasion = p.featured_image -%}{%- assign cat_found = cat_found | plus: 1 -%}{%- endif -%}
+  {%- if img_lbp == '' and b == 'Little Bo Peep' -%}{%- assign img_lbp = p.featured_image -%}{%- assign cat_found = cat_found | plus: 1 -%}{%- endif -%}
+{%- endfor -%}
+
+<section id="shop-by-category">
+  <div class="lbp-container">
+    <div class="lbp-sectionhead lbp-reveal">
+      <div><span class="lbp-eyebrow">Where to start</span><h2 class="lbp-h2 lbp-sectionhead__title">Shop by category</h2></div>
+    </div>
+    <div class="lbp-tiles">
+      <a class="lbp-tile lbp-reveal" href="{{ routes.all_products_collection_url }}?gender=Girls">
+        <div class="lbp-tile__media lbp-mask">{% if img_girls != blank %}<img src="{{ img_girls | image_url: width: 900 }}" alt="" loading="lazy" decoding="async">{% endif %}</div>
+        <div class="lbp-tile__foot"><span class="lbp-tile__name">Girls</span><span class="lbp-tile__arrow" aria-hidden="true">&rarr;</span></div>
+      </a>
+      <a class="lbp-tile lbp-reveal" href="{{ routes.all_products_collection_url }}?gender=Boys">
+        <div class="lbp-tile__media lbp-mask">{% if img_boys != blank %}<img src="{{ img_boys | image_url: width: 900 }}" alt="" loading="lazy" decoding="async">{% endif %}</div>
+        <div class="lbp-tile__foot"><span class="lbp-tile__name">Boys</span><span class="lbp-tile__arrow" aria-hidden="true">&rarr;</span></div>
+      </a>
+      <a class="lbp-tile lbp-reveal" href="{{ routes.all_products_collection_url }}?gender=Baby">
+        <div class="lbp-tile__media lbp-mask">{% if img_baby != blank %}<img src="{{ img_baby | image_url: width: 900 }}" alt="" loading="lazy" decoding="async">{% endif %}</div>
+        <div class="lbp-tile__foot"><span class="lbp-tile__name">Baby</span><span class="lbp-tile__arrow" aria-hidden="true">&rarr;</span></div>
+      </a>
+      <a class="lbp-tile lbp-reveal" href="{{ routes.all_products_collection_url }}?occasion=Christening">
+        <div class="lbp-tile__media lbp-mask">{% if img_christening != blank %}<img src="{{ img_christening | image_url: width: 900 }}" alt="" loading="lazy" decoding="async">{% endif %}</div>
+        <div class="lbp-tile__foot"><span class="lbp-tile__name">Christening</span><span class="lbp-tile__arrow" aria-hidden="true">&rarr;</span></div>
+      </a>
+      <a class="lbp-tile lbp-reveal" href="{{ routes.all_products_collection_url }}?occasion=Occasion">
+        <div class="lbp-tile__media lbp-mask">{% if img_occasion != blank %}<img src="{{ img_occasion | image_url: width: 900 }}" alt="" loading="lazy" decoding="async">{% endif %}</div>
+        <div class="lbp-tile__foot"><span class="lbp-tile__name">Occasion Wear</span><span class="lbp-tile__arrow" aria-hidden="true">&rarr;</span></div>
+      </a>
+      <a class="lbp-tile lbp-reveal" href="{{ routes.all_products_collection_url }}?brand=Little+Bo+Peep">
+        <div class="lbp-tile__media lbp-mask">{% if img_lbp != blank %}<img src="{{ img_lbp | image_url: width: 900 }}" alt="" loading="lazy" decoding="async">{% endif %}</div>
+        <div class="lbp-tile__foot"><span class="lbp-tile__name" style="color:var(--accent)">Little Bo Peep Collection</span><span class="lbp-tile__arrow" aria-hidden="true">&rarr;</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="lbp-section lbp-section--sand" id="new">
   <div class="lbp-container">
     <div class="lbp-sectionhead lbp-reveal">
       <div>
@@ -36,167 +93,43 @@
   </div>
 </section>
 
-<section class="lbp-section lbp-section--sand" id="shop">
-  <div class="lbp-container">
-    <div class="lbp-sectionhead lbp-reveal">
-      <div>
-        <span class="lbp-eyebrow">Where to start</span>
-        <h2 class="lbp-h2 lbp-sectionhead__title">Three ways to shop</h2>
-      </div>
-    </div>
-    <div class="lbp-tiles lbp-tiles--lead">
-      <a class="lbp-tile lbp-reveal" href="#smocks">
-        <div class="lbp-tile__media lbp-mask">
-          <img src="{{ 'IMG_1922.jpg' | file_img_url: '900x' }}" alt="" loading="lazy" decoding="async">
-        </div>
-        <div class="lbp-tile__foot">
-          <span class="lbp-tile__name">The Smock Collection</span>
-          <span class="lbp-tile__arrow" aria-hidden="true">&rarr;</span>
-        </div>
-      </a>
-      <a class="lbp-tile lbp-reveal" href="{{ collections['girls-christening'].url | default: routes.all_products_collection_url }}">
-        <div class="lbp-tile__media lbp-mask">
-          <img src="{{ 'IMG_2669.jpg' | file_img_url: '900x' }}" alt="" loading="lazy" decoding="async">
-        </div>
-        <div class="lbp-tile__foot">
-          <span class="lbp-tile__name">Christening</span>
-          <span class="lbp-tile__arrow" aria-hidden="true">&rarr;</span>
-        </div>
-      </a>
-      <a class="lbp-tile lbp-reveal" href="{{ routes.all_products_collection_url }}">
-        <div class="lbp-tile__media lbp-mask">
-          <img src="{{ 'IMG_2664.jpg' | file_img_url: '900x' }}" alt="" loading="lazy" decoding="async">
-        </div>
-        <div class="lbp-tile__foot">
-          <span class="lbp-tile__name">Spanish Labels</span>
-          <span class="lbp-tile__arrow" aria-hidden="true">&rarr;</span>
-        </div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<section class="lbp-band" id="occasion">
-  <img class="lbp-band__img" src="{{ 'IMG_2669.jpg' | file_img_url: '1800x' }}" alt="" loading="lazy" decoding="async">
-  <div class="lbp-band__veil"></div>
-  <div class="lbp-band__inner">
-    <div class="lbp-container">
-      <div class="lbp-band__body lbp-reveal">
-        <span class="lbp-eyebrow">Christening &amp; occasion</span>
-        <h2 class="lbp-h1 lbp-band__title">The outfit gets kept.</h2>
-        <p class="lbp-lead lbp-band__text">Gowns, bonnets, rompers and three-piece sets for the day itself &mdash; and for the box in the attic afterwards. Sized from one month.</p>
-        <div class="lbp-hero__actions">
-          <a class="lbp-btn lbp-btn--ondark" href="{{ collections['girls-christening'].url | default: routes.all_products_collection_url }}">Girls christening</a>
-          <a class="lbp-btn lbp-btn--lineondark" href="{{ collections['boys-christening'].url | default: routes.all_products_collection_url }}">Boys christening</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="lbp-section" id="smocks">
-  <div class="lbp-container">
-    <div class="lbp-sectionhead lbp-reveal">
-      <div>
-        <span class="lbp-eyebrow">Exclusive to Little Bo Peep</span>
-        <h2 class="lbp-h2 lbp-sectionhead__title">The smock collection</h2>
-      </div>
-      <a class="lbp-sectionhead__link" href="{{ routes.all_products_collection_url }}?brand=Little+Bo+Peep">All smocks</a>
-    </div>
-    <div class="lbp-grid">
-      {%- assign shown = 0 -%}
-      {%- for product in collections.all.products limit: 250 -%}
-        {%- if shown >= 4 -%}{%- break -%}{%- endif -%}
-        {%- if product.title contains 'Smock' -%}
-          {% render 'product-card', product: product, delay: shown %}
-          {%- assign shown = shown | plus: 1 -%}
-        {%- endif -%}
-      {%- endfor -%}
-    </div>
-  </div>
-</section>
-
-<section class="lbp-section lbp-section--tight" id="ages">
-  <div class="lbp-container">
-    <div class="lbp-sectionhead lbp-reveal">
-      <div>
-        <span class="lbp-eyebrow">Browse by size</span>
-        <h2 class="lbp-h2 lbp-sectionhead__title">Shop by age</h2>
-      </div>
-    </div>
-    <div class="lbp-ages lbp-reveal">
-      <a class="lbp-age" href="{{ routes.all_products_collection_url }}?age=Newborn">Newborn &ndash; 2 years</a>
-      <a class="lbp-age" href="{{ routes.all_products_collection_url }}?age=2-5">2 &ndash; 5 years</a>
-      <a class="lbp-age" href="{{ routes.all_products_collection_url }}?age=5-8">5 &ndash; 8 years</a>
-      <a class="lbp-age" href="{{ routes.all_products_collection_url }}?age=8plus">8 years +</a>
-    </div>
-  </div>
-</section>
-
-<section class="lbp-section lbp-section--sand">
+<section>
   <div class="lbp-container">
     <div class="lbp-editorial">
       <figure class="lbp-editorial__figure lbp-mask lbp-reveal">
         <img src="{{ 'IMG_2664.jpg' | file_img_url: '1100x' }}" alt="Naxos Floral Smock Dress" loading="lazy" decoding="async">
       </figure>
       <div class="lbp-editorial__body lbp-reveal" data-delay="1">
-        <span class="lbp-eyebrow">Spiddal, Co Galway</span>
+        <span class="lbp-eyebrow">Our story</span>
         <h2 class="lbp-h2 lbp-editorial__title">A small shop with a long buying list.</h2>
-        <p class="lbp-lead lbp-editorial__text">{{ shop.name }} is independently run, twelve miles outside Galway city. We buy traditional and Spanish childrenswear direct &mdash; Miranda, Rahigo, Sonata, Ela Confection, Ricittos &mdash; alongside shoes, boots and the accessories that finish an outfit. If you would rather spread the cost of an occasion outfit, we offer simple payment plans.</p>
-        <a class="lbp-tlink" href="{{ pages['about-us'].url | default: '#' }}">About the shop <span class="lbp-tlink__arrow" aria-hidden="true">&rarr;</span></a>
+        <p class="lbp-lead lbp-editorial__text">{{ shop.name }} is independently run from Spiddal, twelve miles along the coast road from Galway city. We buy traditional and Spanish childrenswear direct &mdash; Miranda, Rahigo, Sonata and more &mdash; alongside the shoes, boots and accessories that finish an outfit, and we design our own smock collection in-house. If you'd rather spread the cost of an occasion outfit, ask us about payment plans in the shop.</p>
+        <a class="lbp-tlink" href="{{ pages['about-us'].url | default: '#' }}">Read our story <span class="lbp-tlink__arrow" aria-hidden="true">&rarr;</span></a>
       </div>
     </div>
   </div>
 </section>
 
-<section class="lbp-section" id="designers">
+<section class="lbp-section--sand" style="padding-block:var(--section-y)">
   <div class="lbp-container">
-    <div class="lbp-sectionhead lbp-reveal">
-      <div>
-        <span class="lbp-eyebrow">Spanish &amp; traditional labels</span>
-        <h2 class="lbp-h2 lbp-sectionhead__title">Designers</h2>
+    <div class="lbp-reviews lbp-reveal">
+      <span class="lbp-eyebrow">In their words</span>
+      <h2 class="lbp-h2" style="margin-top:10px">Loved by families across Ireland</h2>
+      <div class="lbp-stars" aria-hidden="true">
+        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>
+        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>
+        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>
+        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>
+        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>
       </div>
-      <a class="lbp-sectionhead__link" href="{{ routes.all_products_collection_url }}">All designers</a>
-    </div>
-    <div class="lbp-designers lbp-reveal">
-      <a class="lbp-designer" href="{{ routes.all_products_collection_url }}?brand=Sonata"><span class="lbp-designer__name">Sonata</span></a>
-      <a class="lbp-designer" href="{{ routes.all_products_collection_url }}?brand=Monnalisa"><span class="lbp-designer__name">Monnalisa</span></a>
-      <a class="lbp-designer" href="{{ routes.all_products_collection_url }}?brand=Adee"><span class="lbp-designer__name">Adee</span></a>
-      <a class="lbp-designer" href="{{ routes.all_products_collection_url }}?brand=Rahigo"><span class="lbp-designer__name">Rahigo</span></a>
-      <a class="lbp-designer" href="{{ routes.all_products_collection_url }}?brand=Daga"><span class="lbp-designer__name">Daga</span></a>
-      <a class="lbp-designer" href="{{ collections['miranda-a-w19'].url | default: routes.all_products_collection_url }}"><span class="lbp-designer__name">Miranda</span></a>
-      <a class="lbp-designer" href="{{ routes.all_products_collection_url }}?brand=Babyfer"><span class="lbp-designer__name">Babyfer</span></a>
-      <a class="lbp-designer" href="{{ routes.all_products_collection_url }}?brand=Naxos"><span class="lbp-designer__name">Naxos</span></a>
-      <a class="lbp-designer" href="{{ routes.all_products_collection_url }}?brand=Ceaser+Blanco"><span class="lbp-designer__name">Ceaser Blanco</span></a>
-      <a class="lbp-designer" href="{{ routes.all_products_collection_url }}?brand=Deolinda"><span class="lbp-designer__name">Deolinda</span></a>
-      <a class="lbp-designer" href="{{ routes.all_products_collection_url }}?brand=Little+A"><span class="lbp-designer__name">Little A</span></a>
-      <a class="lbp-designer" href="{{ routes.all_products_collection_url }}?brand=Lapin+House"><span class="lbp-designer__name">Lapin House</span></a>
-      <a class="lbp-designer" href="{{ routes.all_products_collection_url }}?brand=Balloon+Chic"><span class="lbp-designer__name">Balloon Chic</span></a>
-      <a class="lbp-designer" href="{{ routes.all_products_collection_url }}?brand=Ela+Confection"><span class="lbp-designer__name">Ela Confection</span></a>
+      <div class="lbp-reviewslot">
+        Real customer reviews go here once connected &mdash; your Google Business reviews, or an app
+        like Judge.me or Loox. Nothing invented in the meantime.
+      </div>
     </div>
   </div>
 </section>
 
-<section class="lbp-section lbp-section--tight" id="sale">
-  <div class="lbp-container">
-    <div class="lbp-sectionhead lbp-reveal">
-      <div>
-        <span class="lbp-eyebrow">Reduced</span>
-        <h2 class="lbp-h2 lbp-sectionhead__title">Sale</h2>
-      </div>
-      <a class="lbp-sectionhead__link" href="{{ collections['summer-sale'].url | default: routes.all_products_collection_url }}">All sale</a>
-    </div>
-    <div class="lbp-grid">
-      {%- assign d = 0 -%}
-      {%- for product in collections['summer-sale'].products limit: 4 -%}
-        {% render 'product-card', product: product, delay: d %}
-        {%- assign d = d | plus: 1 -%}
-      {%- endfor -%}
-    </div>
-  </div>
-</section>
-
-<section class="lbp-section lbp-section--tight">
+<section class="lbp-section--tight" style="padding-block:calc(var(--section-y) * 0.6)">
   <div class="lbp-container">
     <div class="lbp-trust lbp-reveal">
       <div>

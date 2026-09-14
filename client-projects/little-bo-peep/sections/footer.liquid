@@ -12,9 +12,13 @@
       </form>
     </div>
     <div><h2 class="lbp-footer__title">Shop</h2><ul class="lbp-footer__list">
-      <li><a href="{{ routes.all_products_collection_url }}?sort=new">New in</a></li>
-      <li><a href="{{ routes.all_products_collection_url }}">Designers</a></li>
-      <li><a href="/#smocks">Smocks</a></li>
+      <li><a href="{{ routes.all_products_collection_url }}?sort=new">New In</a></li>
+      <li><a href="{{ routes.all_products_collection_url }}?gender=Girls">Girls</a></li>
+      <li><a href="{{ routes.all_products_collection_url }}?gender=Boys">Boys</a></li>
+      <li><a href="{{ routes.all_products_collection_url }}?gender=Baby">Baby</a></li>
+      <li><a href="{{ routes.all_products_collection_url }}?occasion=Christening">Christening</a></li>
+      <li><a href="{{ routes.all_products_collection_url }}?occasion=Occasion">Occasion Wear</a></li>
+      <li><a href="{{ routes.all_products_collection_url }}?brand=Little+Bo+Peep">Little Bo Peep Collection</a></li>
       <li><a href="{{ collections['summer-sale'].url | default: routes.all_products_collection_url }}">Sale</a></li>
     </ul></div>
     <div><h2 class="lbp-footer__title">Help</h2><ul class="lbp-footer__list">

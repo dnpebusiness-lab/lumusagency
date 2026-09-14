@@ -1,0 +1,35 @@
+{%- comment -%}
+  Finer-grained size bucket than variant-age-band (which only has 4 broad
+  bands). Normalises the three inconsistent size formats on the catalogue
+  (3months / 3-4years / 36months — see CATALOGUE-AUDIT.md §2.5) to one of
+  eleven standard labels, so the Size filter shows a clean, finite list
+  instead of every raw variant string on the catalogue.
+  Usage: {% render 'variant-size-label', variant: variant %}
+{%- endcomment -%}
+{%- assign vt = variant.title | downcase -%}
+{%- if vt contains 'months' -%}
+  {%- assign parts = vt | remove: 'months' | split: '-' -%}
+  {%- assign months = parts.last | strip | plus: 0 -%}
+{%- elsif vt contains 'years' or vt contains 'year' -%}
+  {%- assign parts = vt | remove: 'years' | remove: 'year' | split: '-' -%}
+  {%- assign yrs = parts.last | strip | plus: 0 -%}
+  {%- assign months = yrs | times: 12 -%}
+{%- else -%}
+  {%- assign months = -1 -%}
+{%- endif -%}
+{%- if months < 0 -%}
+{%- elsif months <= 3 -%}0&ndash;3 Months
+{%- elsif months <= 6 -%}3&ndash;6 Months
+{%- elsif months <= 12 -%}6&ndash;12 Months
+{%- elsif months <= 18 -%}12&ndash;18 Months
+{%- elsif months <= 24 -%}18&ndash;24 Months
+{%- elsif months <= 36 -%}2&ndash;3 Years
+{%- elsif months <= 48 -%}3&ndash;4 Years
+{%- elsif months <= 60 -%}4&ndash;5 Years
+{%- elsif months <= 72 -%}5&ndash;6 Years
+{%- elsif months <= 84 -%}6&ndash;7 Years
+{%- elsif months <= 96 -%}7&ndash;8 Years
+{%- elsif months <= 108 -%}8&ndash;9 Years
+{%- elsif months <= 120 -%}9&ndash;10 Years
+{%- else -%}10+ Years
+{%- endif -%}

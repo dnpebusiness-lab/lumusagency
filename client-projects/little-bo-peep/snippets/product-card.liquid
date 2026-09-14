@@ -4,25 +4,44 @@
 {%- endcomment -%}
 {%- capture brand -%}{% render 'brand-of', product: product %}{%- endcapture -%}
 {%- assign brand = brand | strip -%}
+{%- capture gender -%}{% render 'gender-of', product: product %}{%- endcapture -%}
+{%- capture occasion -%}{% render 'occasion-of', product: product %}{%- endcapture -%}
+{%- capture colour -%}{% render 'colour-of', product: product %}{%- endcapture -%}
+{%- assign colour = colour | strip -%}
+{%- capture cleaned -%}{% render 'clean-title', title: product.title %}{%- endcapture -%}
+{%- assign clean_parts = cleaned | strip | split: '::' -%}
+{%- assign clean_title = clean_parts[0] -%}
+{%- assign delivery_tag = clean_parts[1] -%}
 {%- assign on_sale = false -%}
 {%- if product.compare_at_price > product.price -%}{%- assign on_sale = true -%}{%- endif -%}
 {%- assign age_list = '' -%}
+{%- assign size_list = '' -%}
 {%- for v in product.variants -%}
   {%- capture band -%}{% render 'variant-age-band', variant: v %}{%- endcapture -%}
   {%- assign age_list = age_list | append: band | strip | append: '|' -%}
+  {%- capture size_label -%}{% render 'variant-size-label', variant: v %}{%- endcapture -%}
+  {%- assign size_label = size_label | strip -%}
+  {%- if size_label != '' -%}
+    {%- assign size_list = size_list | append: size_label | append: '|' -%}
+  {%- endif -%}
 {%- endfor -%}
 {%- assign age_array = age_list | split: '|' | uniq -%}
+{%- assign size_array = size_list | split: '|' | uniq -%}
 
 <article class="lbp-card lbp-reveal"{% if delay %} data-delay="{{ delay }}"{% endif %}
   data-brand="{{ brand | escape }}"
   data-ages="{{ age_array | join: '|' | escape }}"
+  data-sizes="{{ size_array | join: '|' | escape }}"
+  data-colour="{{ colour | escape }}"
+  data-gender="{{ gender | strip | escape }}"
+  data-occasion="{{ occasion | strip | escape }}"
   data-price="{{ product.price | money_without_currency | remove: ',' }}"
   data-pband="{% if product.price < 5000 %}Under &euro;50{% elsif product.price < 10000 %}&euro;50 &ndash; &euro;100{% elsif product.price < 20000 %}&euro;100 &ndash; &euro;200{% else %}&euro;200+{% endif %}"
   data-stock="{% if product.available %}in{% else %}out{% endif %}">
   <div class="lbp-card__media">
     <a class="lbp-card__medialink" href="{{ product.url }}" tabindex="-1" aria-hidden="true">
       <img class="lbp-card__img" src="{{ product.featured_image | image_url: width: 700 }}"
-           alt="{{ product.featured_image.alt | default: product.title | escape }}" loading="lazy" decoding="async" width="700" height="875">
+           alt="{{ product.featured_image.alt | default: clean_title | escape }}" loading="lazy" decoding="async" width="700" height="875">
       {%- if product.images.size > 1 -%}
       <img class="lbp-card__img lbp-card__img--alt" src="{{ product.images[1] | image_url: width: 700 }}" alt="" loading="lazy" decoding="async" aria-hidden="true">
       {%- endif -%}
@@ -33,7 +52,7 @@
       {%- unless product.available %}<span class="lbp-flag lbp-flag--out">Out of stock</span>{% endunless -%}
     </div>
     {%- endif -%}
-    <button class="lbp-card__wish" type="button" aria-label="Save {{ product.title | escape }}" data-wish data-product-id="{{ product.id }}">
+    <button class="lbp-card__wish" type="button" aria-label="Save {{ clean_title | escape }}" data-wish data-product-id="{{ product.id }}">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
         <path d="M12 20.5S3.8 15 3.8 9.3a4.3 4.3 0 0 1 8.2-1.8 4.3 4.3 0 0 1 8.2 1.8c0 5.7-8.2 11.2-8.2 11.2Z"/>
       </svg>
@@ -43,7 +62,7 @@
     {%- endif -%}
   </div>
   <p class="lbp-card__brand">{{ brand }}</p>
-  <h3 class="lbp-card__name"><a class="lbp-card__link" href="{{ product.url }}">{{ product.title }}</a></h3>
+  <h3 class="lbp-card__name"><a class="lbp-card__link" href="{{ product.url }}">{{ clean_title }}</a></h3>
   <p class="lbp-card__price">
     {%- if on_sale -%}
     <span class="lbp-card__was lbp-num">{{ product.compare_at_price | money }}</span>
@@ -51,5 +70,6 @@
     {%- else -%}
     <span class="lbp-card__now lbp-num">{{ product.price | money }}</span>
     {%- endif -%}
+    {%- if delivery_tag != blank -%}<span class="lbp-tag">{{ delivery_tag }}</span>{%- endif -%}
   </p>
 </article>

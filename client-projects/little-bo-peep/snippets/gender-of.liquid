@@ -1,0 +1,14 @@
+{%- comment -%}
+  Best-effort gender/life-stage tags parsed from the title, since the
+  catalogue has no reliable structured gender field (see CATALOGUE-AUDIT.md
+  §2.3 — 61% unknown). A product can carry more than one tag (e.g. "Baby
+  Girl ..." is both Baby and Girls) — output is pipe-joined, same pattern
+  as variant-age-band. Usage:
+  {% capture gender %}{% render 'gender-of', product: product %}{% endcapture %}
+{%- endcomment -%}
+{%- assign t = product.title | downcase -%}
+{%- assign out = '' -%}
+{%- if t contains 'baby' -%}{%- assign out = out | append: 'Baby|' -%}{%- endif -%}
+{%- if t contains 'girl' -%}{%- assign out = out | append: 'Girls|' -%}{%- endif -%}
+{%- if t contains 'boy' -%}{%- assign out = out | append: 'Boys|' -%}{%- endif -%}
+{{- out -}}

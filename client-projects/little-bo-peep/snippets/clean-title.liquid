@@ -1,0 +1,38 @@
+{%- comment -%}
+  Strips delivery-window / preorder info out of the product title so it
+  reads as a plain product name, and returns that trailing info separately
+  so the caller can show it as a small tag instead. No regex in Liquid, so
+  this covers the real patterns in the catalogue: a trailing parenthetical
+  ("... (October Delivery", "... ( 2/3 Week Wait)"), or a trailing
+  "Preorder" / "Pre-order" word with no parentheses.
+
+  Usage:
+    {% capture clean %}{% render 'clean-title', title: product.title %}{% endcapture %}
+    {% assign clean_parts = clean | strip | split: '::' %}
+    {% assign clean_title = clean_parts[0] %}
+    {% assign delivery_tag = clean_parts[1] %}
+{%- endcomment -%}
+{%- assign raw = title | strip -%}
+{%- assign paren_parts = raw | split: '(' -%}
+{%- assign clean_title = paren_parts[0] | strip -%}
+{%- assign delivery_tag = '' -%}
+{%- if paren_parts.size > 1 -%}
+  {%- assign delivery_tag = paren_parts[1] | remove: ')' | strip -%}
+{%- endif -%}
+{%- comment -%} trim a leftover trailing comma from the parenthetical split {%- endcomment -%}
+{%- assign last_char = clean_title | slice: -1 -%}
+{%- if last_char == ',' or last_char == '-' -%}
+  {%- assign trimmed_len = clean_title.size | minus: 1 -%}
+  {%- assign clean_title = clean_title | slice: 0, trimmed_len | strip -%}
+{%- endif -%}
+{%- if delivery_tag == '' -%}
+  {%- assign lower_title = clean_title | downcase -%}
+  {%- if lower_title contains 'preorder' -%}
+    {%- assign delivery_tag = 'Preorder' -%}
+    {%- assign clean_title = clean_title | remove: 'Preorder' | remove: 'preorder' | remove: 'PreOrder' | strip -%}
+  {%- elsif lower_title contains 'pre-order' -%}
+    {%- assign delivery_tag = 'Pre-order' -%}
+    {%- assign clean_title = clean_title | remove: 'Pre-order' | remove: 'pre-order' | remove: 'Pre-Order' | strip -%}
+  {%- endif -%}
+{%- endif -%}
+{{- clean_title -}}::{{- delivery_tag -}}

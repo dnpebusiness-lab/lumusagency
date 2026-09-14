@@ -1,0 +1,28 @@
+{%- comment -%}
+  Best-effort colour parsed from the title. No structured colour field
+  exists, so this only catches what's spelled out in the product name —
+  a real subset, not a guess at what the photo shows. Products with no
+  colour word simply don't appear in the colour filter.
+  Usage: {% capture colour %}{% render 'colour-of', product: product %}{% endcapture %}
+{%- endcomment -%}
+{%- assign t = product.title | downcase -%}
+{%- assign out = '' -%}
+{%- if t contains 'navy' -%}{%- assign out = 'Navy' -%}
+{%- elsif t contains 'burgandy' or t contains 'burgundy' -%}{%- assign out = 'Burgundy' -%}
+{%- elsif t contains 'chocolate' or t contains 'brown' -%}{%- assign out = 'Brown' -%}
+{%- elsif t contains 'beige' -%}{%- assign out = 'Beige' -%}
+{%- elsif t contains 'cream' or t contains 'ivory' -%}{%- assign out = 'Cream' -%}
+{%- elsif t contains 'white' -%}{%- assign out = 'White' -%}
+{%- elsif t contains 'black' -%}{%- assign out = 'Black' -%}
+{%- elsif t contains 'grey' or t contains 'gray' -%}{%- assign out = 'Grey' -%}
+{%- elsif t contains 'blue' -%}{%- assign out = 'Blue' -%}
+{%- elsif t contains 'red' -%}{%- assign out = 'Red' -%}
+{%- elsif t contains 'pink' -%}{%- assign out = 'Pink' -%}
+{%- elsif t contains 'green' or t contains 'emerald' -%}{%- assign out = 'Green' -%}
+{%- elsif t contains 'yellow' or t contains 'lemon' -%}{%- assign out = 'Yellow' -%}
+{%- elsif t contains 'purple' or t contains 'lilac' -%}{%- assign out = 'Purple' -%}
+{%- elsif t contains 'gold' -%}{%- assign out = 'Gold' -%}
+{%- elsif t contains 'silver' -%}{%- assign out = 'Silver' -%}
+{%- elsif t contains 'tartan' -%}{%- assign out = 'Tartan' -%}
+{%- endif -%}
+{{- out -}}
