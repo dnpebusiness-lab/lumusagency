@@ -485,8 +485,9 @@
     });
 
     var sortSel = document.getElementById('sort');
-    if (sortSel) sortSel.addEventListener('change', function () {
-      var v = this.value, s = cards.slice();
+    function applySort(v) {
+      var s = cards.slice();
+      if (v === 'new') s.sort(function (a, b) { return b.dataset.created - a.dataset.created; });
       if (v === 'low') s.sort(function (a, b) { return a.dataset.price - b.dataset.price; });
       if (v === 'high') s.sort(function (a, b) { return b.dataset.price - a.dataset.price; });
       if (v === 'az') s.sort(function (a, b) {
@@ -494,7 +495,8 @@
           .localeCompare(b.querySelector('.lbp-card__name').textContent.trim());
       });
       s.forEach(function (c) { grid.appendChild(c); });
-    });
+    }
+    if (sortSel) sortSel.addEventListener('change', function () { applySort(this.value); });
 
     /* Preselect from ?brand= / ?age= query params (mega menu, homepage links) */
     var params = new URLSearchParams(window.location.search);
@@ -520,7 +522,8 @@
       sync('ages', ageVal, true);
     }
     if (params.get('sort') === 'new' && sortSel) {
-      /* "new" mirrors the collection's default (manual/best-selling) order — no client resort needed */
+      sortSel.value = 'new';
+      applySort('new');
     }
 
     apply();

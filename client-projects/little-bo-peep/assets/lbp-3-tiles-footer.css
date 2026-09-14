@@ -175,6 +175,21 @@
   font-size: var(--t-sm); color: var(--ink-soft); font-style: italic;
 }
 
+/* Real reviews, once a merchant adds Review blocks in the Theme Editor */
+.lbp-reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--sp-9);
+  margin-top: var(--sp-8);
+}
+@media (max-width: 860px) { .lbp-reviews-grid { grid-template-columns: 1fr; gap: var(--sp-7); } }
+.lbp-review { max-width: 42ch; margin-inline: auto; text-align: center; }
+.lbp-review .lbp-stars { justify-content: center; margin-bottom: var(--sp-4); }
+.lbp-review .lbp-stars svg { color: var(--line); }
+.lbp-review .lbp-stars svg.is-on { color: var(--accent); }
+.lbp-review__quote { font-family: var(--serif); font-size: 1.1875rem; line-height: 1.5; margin-bottom: var(--sp-4); }
+.lbp-review__author { font-size: var(--t-xs); letter-spacing: var(--track-eyebrow); text-transform: uppercase; color: var(--ink-soft); }
+
 /* --------------------------------------------------------------------------
    16. Trust row — quiet, typographic, never a badge strip
    -------------------------------------------------------------------------- */

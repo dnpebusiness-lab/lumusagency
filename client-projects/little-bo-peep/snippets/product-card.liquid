@@ -64,6 +64,7 @@
   data-occasion="{{ occasion | strip | escape }}"
   data-type="{{ ptype | strip | escape }}"
   data-price="{{ product.price | money_without_currency | remove: ',' }}"
+  data-created="{{ product.created_at | date: '%s' }}"
   data-pband="{% if product.price < 5000 %}Under &euro;50{% elsif product.price < 10000 %}&euro;50 &ndash; &euro;100{% elsif product.price < 20000 %}&euro;100 &ndash; &euro;200{% else %}&euro;200+{% endif %}"
   data-stock="{% if product.available %}in{% else %}out{% endif %}">
   <div class="lbp-card__media">
