@@ -53,7 +53,7 @@
     <div class="lbp-sectionhead lbp-reveal">
       <div><span class="lbp-eyebrow">Where to start</span><h2 class="lbp-h2 lbp-sectionhead__title">Shop by category</h2></div>
     </div>
-    <div class="lbp-tiles lbp-tiles--four">
+    <div class="lbp-tiles{% if lbp_found > 0 %} lbp-tiles--four{% endif %}">
       <a class="lbp-tile lbp-reveal" href="{{ routes.all_products_collection_url }}?gender=Girls">
         <div class="lbp-tile__media lbp-mask">{% if img_girls != blank %}<img src="{{ img_girls | image_url: width: 900 }}" alt="" loading="lazy" decoding="async">{% endif %}</div>
         <div class="lbp-tile__foot"><span class="lbp-tile__name">Girls</span><span class="lbp-tile__arrow" aria-hidden="true">&rarr;</span></div>
@@ -66,14 +66,17 @@
         <div class="lbp-tile__media lbp-mask">{% if img_baby != blank %}<img src="{{ img_baby | image_url: width: 900 }}" alt="" loading="lazy" decoding="async">{% endif %}</div>
         <div class="lbp-tile__foot"><span class="lbp-tile__name">Baby</span><span class="lbp-tile__arrow" aria-hidden="true">&rarr;</span></div>
       </a>
+      {%- if lbp_found > 0 -%}
       <a class="lbp-tile lbp-reveal" href="{{ routes.all_products_collection_url }}?brand=Little+Bo+Peep">
         <div class="lbp-tile__media lbp-mask">{% if img_lbp != blank %}<img src="{{ img_lbp | image_url: width: 900 }}" alt="" loading="lazy" decoding="async">{% endif %}</div>
         <div class="lbp-tile__foot"><span class="lbp-tile__name" style="color:var(--accent)">Little Bo Peep Collection</span><span class="lbp-tile__arrow" aria-hidden="true">&rarr;</span></div>
       </a>
+      {%- endif -%}
     </div>
   </div>
 </section>
 
+{%- if lbp_found > 0 -%}
 <section class="lbp-section" id="signature">
   <div class="lbp-container">
     <div class="lbp-signature">
@@ -97,6 +100,7 @@
     </div>
   </div>
 </section>
+{%- endif -%}
 
 <section class="lbp-section lbp-section--sand" id="occasion">
   <div class="lbp-container">

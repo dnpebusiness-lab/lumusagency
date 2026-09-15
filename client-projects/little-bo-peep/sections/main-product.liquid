@@ -39,7 +39,7 @@
 
     <div class="lbp-buy">
       {%- capture brand -%}{% render 'brand-of', product: product %}{%- endcapture -%}
-      <p class="lbp-card__brand">{{ brand | strip }}</p>
+      {%- if brand != blank -%}<p class="lbp-card__brand">{{ brand | strip }}</p>{%- endif -%}
       <h1 class="lbp-h2 lbp-buy__title">{{ product.title }}</h1>
       {{ product.metafields.judgeme.badge }}
       <p class="lbp-buy__price">

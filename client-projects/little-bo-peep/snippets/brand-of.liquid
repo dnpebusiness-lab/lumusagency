@@ -1,10 +1,26 @@
 {%- comment -%}
   Designer/label detection. Vendor is not a reliable field on this catalogue
-  (everything is set to the shop name), so the label is parsed from the
-  product title, matching the same designer list used across the site nav.
+  (everything is set to the shop name), so external designers are parsed
+  from the product title, matching the known list used across the site nav.
+
+  "Little Bo Peep" is the in-house signature collection — it is NOT a
+  catch-all for "title didn't match a known designer". An earlier version of
+  this snippet used that as a fallback and it wrongly labelled ~74% of the
+  catalogue (488 of 655 products) as Little Bo Peep, since most products
+  simply don't name a designer in the title at all. That made "Shop the
+  Little Bo Peep Collection" show almost the entire store.
+
+  There is currently no real Shopify field (tag, vendor, type) marking which
+  products are genuinely the in-house line — confirmed by querying the
+  catalogue directly. Until the merchant tags their real Little Bo Peep
+  products (tag: "Little Bo Peep"), this correctly returns blank for
+  anything unmatched rather than guessing. Once that tag exists, every
+  Little Bo Peep link/section on the site starts working with no further
+  code changes.
   Usage: {% capture brand %}{% render 'brand-of', product: product %}{% endcapture %}
 {%- endcomment -%}
-{%- if product.title contains 'Ceaser Blanco' -%}Ceaser Blanco
+{%- if product.tags contains 'Little Bo Peep' -%}Little Bo Peep
+{%- elsif product.title contains 'Ceaser Blanco' -%}Ceaser Blanco
 {%- elsif product.title contains 'Ela Confection' -%}Ela Confection
 {%- elsif product.title contains 'Lapin House' -%}Lapin House
 {%- elsif product.title contains 'Balloon Chic' -%}Balloon Chic
@@ -22,5 +38,4 @@
 {%- elsif product.title contains 'Daga' -%}Daga
 {%- elsif product.title contains "Levi's" -%}Levi's
 {%- elsif product.title contains 'Gant' -%}Gant
-{%- else -%}Little Bo Peep
 {%- endif -%}

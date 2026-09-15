@@ -103,7 +103,7 @@
     <button class="lbp-card__quick" type="button" data-quick-add data-product-id="{{ product.id }}" data-product-handle="{{ product.handle }}" data-product-url="{{ product.url }}">Quick add</button>
     {%- endif -%}
   </div>
-  <p class="lbp-card__brand">{{ brand }}</p>
+  {%- if brand != blank -%}<p class="lbp-card__brand">{{ brand }}</p>{%- endif -%}
   <h3 class="lbp-card__name"><a class="lbp-card__link" href="{{ product.url }}">{{ clean_title }}</a></h3>
   <p class="lbp-card__price">
     {%- if on_sale -%}
