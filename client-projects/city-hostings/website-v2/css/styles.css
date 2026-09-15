@@ -2596,6 +2596,21 @@ h4 { font-size: var(--t-md);      font-weight: 600; }
   margin-top: 0.2rem;
   letter-spacing: 0.04em;
 }
+.room-card__img--soon {
+  background: var(--ground-mid);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  text-align: center;
+}
+.room-card__soon-label {
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-50);
+}
 @media (max-width: 900px) {
   .rooms__grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
 }
