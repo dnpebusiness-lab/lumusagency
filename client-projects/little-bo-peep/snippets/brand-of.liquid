@@ -1,41 +1,67 @@
 {%- comment -%}
-  Designer/label detection. Vendor is not a reliable field on this catalogue
-  (everything is set to the shop name), so external designers are parsed
-  from the product title, matching the known list used across the site nav.
+  Designer/label detection, two signals, title match first:
 
-  "Little Bo Peep" is the in-house signature collection — it is NOT a
-  catch-all for "title didn't match a known designer". An earlier version of
-  this snippet used that as a fallback and it wrongly labelled ~74% of the
-  catalogue (488 of 655 products) as Little Bo Peep, since most products
-  simply don't name a designer in the title at all. That made "Shop the
-  Little Bo Peep Collection" show almost the entire store.
+  1. Product title keyword match — works whenever the designer name is
+     literally in the title.
+  2. Real Shopify collection membership — used only when (1) finds nothing.
+     These are the actual designer collections from the live "Debut" theme's
+     own main-menu ("Designers" submenu, confirmed via the menus() API), the
+     same collections the merchant already curates by hand. Title-matching
+     alone significantly undercounts real designers because most products
+     don't repeat the designer name in every title — e.g. Adee/Little A:
+     title match finds ~8 products, the real `adee` collection has 59.
+     Comparing title-match counts against these real collection counts is
+     what surfaced the gap; collection membership is the more complete
+     signal, so it's used as the fallback rather than replacing title
+     matching (title still wins when both would apply, since it's more
+     specific about which of two combined designers a product actually is).
 
-  There is currently no real Shopify field (tag, vendor, type) marking which
-  products are genuinely the in-house line — confirmed by querying the
-  catalogue directly. Until the merchant tags their real Little Bo Peep
-  products (tag: "Little Bo Peep"), this correctly returns blank for
-  anything unmatched rather than guessing. Once that tag exists, every
-  Little Bo Peep link/section on the site starts working with no further
-  code changes.
+  "Little Bo Peep" and the old Babyfer/Ela Confection/Anafie-smock group have
+  NO working signal anywhere on Shopify — their own native collections
+  (`little-bo-peeps`, `babyfer`) are deleted, confirmed by direct query, so
+  even the live site's own nav links for these are currently broken. Nothing
+  here can fix that without the merchant re-tagging products or recreating
+  those collections. Until then this returns blank for both rather than
+  guessing.
   Usage: {% capture brand %}{% render 'brand-of', product: product %}{% endcapture %}
 {%- endcomment -%}
-{%- if product.tags contains 'Little Bo Peep' -%}Little Bo Peep
-{%- elsif product.title contains 'Ceaser Blanco' -%}Ceaser Blanco
-{%- elsif product.title contains 'Ela Confection' -%}Ela Confection
-{%- elsif product.title contains 'Lapin House' -%}Lapin House
-{%- elsif product.title contains 'Balloon Chic' -%}Balloon Chic
-{%- elsif product.title contains 'Abuela Tata' -%}Abuela Tata
-{%- elsif product.title contains 'Mitch & Son' -%}Mitch & Son
-{%- elsif product.title contains 'Little A' -%}Little A
-{%- elsif product.title contains 'Deolinda' -%}Deolinda
-{%- elsif product.title contains 'Babyfer' -%}Babyfer
-{%- elsif product.title contains 'Monnalisa' -%}Monnalisa
-{%- elsif product.title contains 'Sonata' -%}Sonata
-{%- elsif product.title contains 'Rahigo' -%}Rahigo
-{%- elsif product.title contains 'Miranda' -%}Miranda
-{%- elsif product.title contains 'Naxos' -%}Naxos
-{%- elsif product.title contains 'Adee' -%}Adee
-{%- elsif product.title contains 'Daga' -%}Daga
-{%- elsif product.title contains "Levi's" -%}Levi's
-{%- elsif product.title contains 'Gant' -%}Gant
+{%- assign found = '' -%}
+{%- if product.tags contains 'Little Bo Peep' -%}{%- assign found = 'Little Bo Peep' -%}
+{%- elsif product.title contains 'Ceaser Blanco' -%}{%- assign found = 'Ceaser Blanco' -%}
+{%- elsif product.title contains 'Ela Confection' -%}{%- assign found = 'Ela Confection' -%}
+{%- elsif product.title contains 'Lapin House' -%}{%- assign found = 'Lapin House' -%}
+{%- elsif product.title contains 'Balloon Chic' -%}{%- assign found = 'Balloon Chic' -%}
+{%- elsif product.title contains 'Abuela Tata' -%}{%- assign found = 'Abuela Tata' -%}
+{%- elsif product.title contains 'Mitch & Son' -%}{%- assign found = 'Mitch & Son' -%}
+{%- elsif product.title contains 'Little A' -%}{%- assign found = 'Little A' -%}
+{%- elsif product.title contains 'Deolinda' -%}{%- assign found = 'Deolinda' -%}
+{%- elsif product.title contains 'Babyfer' -%}{%- assign found = 'Babyfer' -%}
+{%- elsif product.title contains 'Monnalisa' -%}{%- assign found = 'Monnalisa' -%}
+{%- elsif product.title contains 'Sonata' -%}{%- assign found = 'Sonata' -%}
+{%- elsif product.title contains 'Rahigo' -%}{%- assign found = 'Rahigo' -%}
+{%- elsif product.title contains 'Miranda' -%}{%- assign found = 'Miranda' -%}
+{%- elsif product.title contains 'Naxos' -%}{%- assign found = 'Naxos' -%}
+{%- elsif product.title contains 'Adee' -%}{%- assign found = 'Adee' -%}
+{%- elsif product.title contains 'Daga' -%}{%- assign found = 'Daga' -%}
+{%- elsif product.title contains "Levi's" -%}{%- assign found = "Levi's" -%}
+{%- elsif product.title contains 'Gant' -%}{%- assign found = 'Gant' -%}
+{%- elsif product.title contains 'Giorgio' -%}{%- assign found = 'Giorgio Bambini' -%}
 {%- endif -%}
+{%- if found == '' -%}
+  {%- for c in product.collections -%}
+    {%- case c.handle -%}
+      {%- when 'miranda-a-w19' -%}{%- assign found = 'Miranda' -%}
+      {%- when 'adee' -%}{%- assign found = 'Adee & Little A' -%}
+      {%- when 'lolattes-aw20' -%}{%- assign found = 'Daga & Lapin House' -%}
+      {%- when 'balloon-chic-aw21' -%}{%- assign found = 'Balloon Chic & Abuela Tata' -%}
+      {%- when 'rahigo-aw21' -%}{%- assign found = 'Rahigo' -%}
+      {%- when 'mitch-and-son' -%}{%- assign found = "Mitch & Son & Levi's" -%}
+      {%- when 'ceaser-blanco' -%}{%- assign found = 'Ceaser Blanco & Naxos' -%}
+      {%- when 'monnalisa' -%}{%- assign found = 'Monnalisa' -%}
+      {%- when 'got-2' -%}{%- assign found = 'Giorgio Bambini' -%}
+      {%- when 'gant' -%}{%- assign found = 'Gant' -%}
+    {%- endcase -%}
+    {%- if found != '' -%}{%- break -%}{%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+{{- found -}}
