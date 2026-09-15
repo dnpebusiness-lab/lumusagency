@@ -136,7 +136,44 @@
         </div>
       </li>
 
-      <li><a href="{{ routes.all_products_collection_url }}">Brands</a></li>
+      <li class="lbp-navrow__item" data-mega>
+        <a class="lbp-navrow__trigger" href="{{ routes.all_products_collection_url }}" aria-haspopup="true" aria-expanded="false">Designers</a>
+        <div class="lbp-mega">
+          <div class="lbp-container"><div class="lbp-mega__inner">
+            <div class="lbp-mega__col">
+              <h2 class="lbp-mega__title">Shop by Designer</h2>
+              {%- comment -%}
+                Links go straight to the merchant's own real Shopify
+                collections — the same ones the live site uses — instead of
+                our own computed title-match filter, so these can never point
+                to the wrong products. Each is existence-checked so a
+                renamed/deleted collection just drops off the list instead of
+                producing a dead link.
+              {%- endcomment -%}
+              <ul class="lbp-mega__list">
+                {%- if collections['miranda-a-w19'] -%}<li><a href="{{ collections['miranda-a-w19'].url }}">Miranda</a></li>{%- endif -%}
+                {%- if collections['adee'] -%}<li><a href="{{ collections['adee'].url }}">Adee &amp; Little A</a></li>{%- endif -%}
+                {%- if collections['lolattes-aw20'] -%}<li><a href="{{ collections['lolattes-aw20'].url }}">Daga &amp; Lapin House</a></li>{%- endif -%}
+                {%- if collections['balloon-chic-aw21'] -%}<li><a href="{{ collections['balloon-chic-aw21'].url }}">Balloon Chic &amp; Abuela Tata</a></li>{%- endif -%}
+                {%- if collections['rahigo-aw21'] -%}<li><a href="{{ collections['rahigo-aw21'].url }}">Rahigo</a></li>{%- endif -%}
+                {%- if collections['mitch-and-son'] -%}<li><a href="{{ collections['mitch-and-son'].url }}">Mitch &amp; Son &amp; Levi's</a></li>{%- endif -%}
+                {%- if collections['ceaser-blanco'] -%}<li><a href="{{ collections['ceaser-blanco'].url }}">Ceaser Blanco &amp; Naxos</a></li>{%- endif -%}
+                {%- if collections['monnalisa'] -%}<li><a href="{{ collections['monnalisa'].url }}">Monnalisa</a></li>{%- endif -%}
+                {%- if collections['got-2'] -%}<li><a href="{{ collections['got-2'].url }}">Giorgio Bambini</a></li>{%- endif -%}
+                {%- if collections['gant'] -%}<li><a href="{{ collections['gant'].url }}">Gant</a></li>{%- endif -%}
+              </ul>
+            </div>
+            <a class="lbp-mega__feature" href="{{ routes.all_products_collection_url }}">
+              <div class="lbp-mega__figure"><img src="{{ 'IMG_2622.jpg' | file_img_url: '900x' }}" alt="" loading="lazy"></div>
+              <span class="lbp-eyebrow">Every label, one shop</span>
+              <p class="lbp-h4">Shop All Designers</p>
+            </a>
+          </div></div>
+        </div>
+      </li>
+
+      {%- if collections['baby-sets-knits'] -%}<li><a href="{{ collections['baby-sets-knits'].url }}">Baby Sets &amp; Knitwear</a></li>{%- endif -%}
+      {%- if collections['boots-and-shoes'] -%}<li><a href="{{ collections['boots-and-shoes'].url }}">Boots &amp; Shoes</a></li>{%- endif -%}
       <li><a href="{{ collections['summer-sale'].url | default: routes.all_products_collection_url }}">Sale</a></li>
     </ul>
   </nav>

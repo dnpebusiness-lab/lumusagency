@@ -1,18 +1,35 @@
-{%- paginate collections.all.products by 96 -%}
+{%- comment -%}
+  Renders whichever real Shopify collection the URL resolved to — `collection`
+  is that collection (the "All products" listing is itself just the `all`
+  collection). An earlier version hardcoded `collections.all.products`
+  everywhere, so every real designer/category collection (Miranda, Adee,
+  Boots & Shoes, etc.) silently rendered the entire 655-product catalogue
+  instead of its own products, with "All products" as the heading regardless
+  of which collection was actually requested.
+{%- endcomment -%}
+{%- paginate collection.products by 96 -%}
 <div class="lbp-container">
   <nav class="lbp-crumb" aria-label="Breadcrumb">
     <a href="{{ routes.root_url }}">Home</a><span class="lbp-crumb__sep">/</span>
-    <span aria-current="page">All products</span>
+    <span aria-current="page">{{ collection.title }}</span>
   </nav>
 
   <div class="lbp-collhead">
+    {%- if collection.handle == 'all' -%}
     <span class="lbp-eyebrow">The shop</span>
     <h1 class="lbp-h1 lbp-collhead__title">All products</h1>
     <p class="lbp-lead">Spanish and traditional childrenswear, newborn to twelve years. Filter by age, designer or price.</p>
+    {%- else -%}
+    <span class="lbp-eyebrow">Shop the collection</span>
+    <h1 class="lbp-h1 lbp-collhead__title">{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}
+    <p class="lbp-lead">{{ collection.description }}</p>
+    {%- endif -%}
+    {%- endif -%}
   </div>
 
   <div class="lbp-toolbar">
-    <p class="lbp-toolbar__count"><span data-count>{{ collections.all.products.size }}</span> pieces</p>
+    <p class="lbp-toolbar__count"><span data-count>{{ paginate.items }}</span> pieces</p>
     <div class="lbp-toolbar__right">
       <button class="lbp-btn lbp-btn--line lbp-filterbtn" type="button" data-open="filters">Filter</button>
       <label class="lbp-sr" for="sort">Sort by</label>
@@ -32,7 +49,7 @@
       <div class="lbp-chips" id="chips"></div>
       <div class="lbp-grid" id="grid">
         {%- assign d = 0 -%}
-        {%- for product in collections.all.products -%}
+        {%- for product in collection.products -%}
           {% render 'product-card', product: product, delay: d %}
           {%- assign d = d | plus: 1 -%}
           {%- if d == 4 -%}{%- assign d = 0 -%}{%- endif -%}
@@ -61,7 +78,7 @@
   <div class="lbp-drawer__body" id="facets-mobile"></div>
   <div class="lbp-drawer__foot">
     <button class="lbp-btn lbp-btn--solid lbp-btn--block" type="button" data-close>
-      Show <span data-count>{{ collections.all.products.size }}</span> pieces</button>
+      Show <span data-count>{{ paginate.items }}</span> pieces</button>
   </div>
 </aside>
 {%- endpaginate -%}

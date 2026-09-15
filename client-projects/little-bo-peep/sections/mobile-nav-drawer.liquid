@@ -10,7 +10,23 @@
     <a class="lbp-mnav__link" href="{{ routes.all_products_collection_url }}?occasion=Christening" data-close>Christening <span aria-hidden="true">&rarr;</span></a>
     <a class="lbp-mnav__link" href="{{ routes.all_products_collection_url }}?occasion=Occasion" data-close>Occasion Wear <span aria-hidden="true">&rarr;</span></a>
     <a class="lbp-mnav__link" style="color:var(--accent)" href="{{ routes.all_products_collection_url }}?brand=Little+Bo+Peep" data-close>Little Bo Peep Collection <span aria-hidden="true">&rarr;</span></a>
-    <a class="lbp-mnav__link" href="{{ routes.all_products_collection_url }}" data-close>Brands <span aria-hidden="true">&rarr;</span></a>
+    {%- comment -%}
+      Designer links point straight at the merchant's real Shopify
+      collections (same ones the live site uses), not our own computed
+      filter — see sections/header.liquid for the full explanation.
+    {%- endcomment -%}
+    {%- if collections['miranda-a-w19'] -%}<a class="lbp-mnav__link" href="{{ collections['miranda-a-w19'].url }}" data-close>Miranda <span aria-hidden="true">&rarr;</span></a>{%- endif -%}
+    {%- if collections['adee'] -%}<a class="lbp-mnav__link" href="{{ collections['adee'].url }}" data-close>Adee &amp; Little A <span aria-hidden="true">&rarr;</span></a>{%- endif -%}
+    {%- if collections['lolattes-aw20'] -%}<a class="lbp-mnav__link" href="{{ collections['lolattes-aw20'].url }}" data-close>Daga &amp; Lapin House <span aria-hidden="true">&rarr;</span></a>{%- endif -%}
+    {%- if collections['balloon-chic-aw21'] -%}<a class="lbp-mnav__link" href="{{ collections['balloon-chic-aw21'].url }}" data-close>Balloon Chic &amp; Abuela Tata <span aria-hidden="true">&rarr;</span></a>{%- endif -%}
+    {%- if collections['rahigo-aw21'] -%}<a class="lbp-mnav__link" href="{{ collections['rahigo-aw21'].url }}" data-close>Rahigo <span aria-hidden="true">&rarr;</span></a>{%- endif -%}
+    {%- if collections['mitch-and-son'] -%}<a class="lbp-mnav__link" href="{{ collections['mitch-and-son'].url }}" data-close>Mitch &amp; Son &amp; Levi's <span aria-hidden="true">&rarr;</span></a>{%- endif -%}
+    {%- if collections['ceaser-blanco'] -%}<a class="lbp-mnav__link" href="{{ collections['ceaser-blanco'].url }}" data-close>Ceaser Blanco &amp; Naxos <span aria-hidden="true">&rarr;</span></a>{%- endif -%}
+    {%- if collections['monnalisa'] -%}<a class="lbp-mnav__link" href="{{ collections['monnalisa'].url }}" data-close>Monnalisa <span aria-hidden="true">&rarr;</span></a>{%- endif -%}
+    {%- if collections['got-2'] -%}<a class="lbp-mnav__link" href="{{ collections['got-2'].url }}" data-close>Giorgio Bambini <span aria-hidden="true">&rarr;</span></a>{%- endif -%}
+    {%- if collections['gant'] -%}<a class="lbp-mnav__link" href="{{ collections['gant'].url }}" data-close>Gant <span aria-hidden="true">&rarr;</span></a>{%- endif -%}
+    {%- if collections['baby-sets-knits'] -%}<a class="lbp-mnav__link" href="{{ collections['baby-sets-knits'].url }}" data-close>Baby Sets &amp; Knitwear <span aria-hidden="true">&rarr;</span></a>{%- endif -%}
+    {%- if collections['boots-and-shoes'] -%}<a class="lbp-mnav__link" href="{{ collections['boots-and-shoes'].url }}" data-close>Boots &amp; Shoes <span aria-hidden="true">&rarr;</span></a>{%- endif -%}
     <a class="lbp-mnav__link" href="{{ collections['summer-sale'].url | default: routes.all_products_collection_url }}" data-close>Sale <span aria-hidden="true">&rarr;</span></a>
     <a class="lbp-mnav__link" href="{{ routes.account_url }}" data-close>Account <span aria-hidden="true">&rarr;</span></a>
   </nav></div>
