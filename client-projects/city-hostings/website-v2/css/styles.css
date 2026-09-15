@@ -1382,13 +1382,34 @@ h4 { font-size: var(--t-md);      font-weight: 600; }
   line-height: 1.09;
   color: var(--ink);
   margin-top: var(--sp-2);
-  margin-bottom: var(--sp-6);
+  margin-bottom: var(--sp-3);
+}
+/* Commercial value line — subordinate companion to the H1, not a second
+   heading: smaller, warmer, tighter leading, capped width so it reads as
+   one considered line rather than competing for the page's top billing. */
+.hero__value {
+  font-size: clamp(1.0625rem, 1.7vw, 1.3125rem);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  line-height: 1.35;
+  color: var(--warm-deep);
+  max-width: 32ch;
+  margin-bottom: var(--sp-4);
 }
 .hero__sub {
   font-size: var(--t-md);
   color: var(--ink-70);
   line-height: 1.7;
-  margin-bottom: var(--sp-8);
+  margin-bottom: var(--sp-6);
+}
+/* Conversion micro-copy directly above the CTA group — persuasive nudge,
+   deliberately small and close to the buttons so it reads as part of the
+   action, not another headline in the stack. */
+.hero__microcopy {
+  font-size: var(--t-sm);
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: var(--sp-3);
 }
 .hero__actions {
   display: flex;
@@ -1396,6 +1417,9 @@ h4 { font-size: var(--t-md);      font-weight: 600; }
   flex-wrap: wrap;
 }
 .hero__media { position: relative; }
+@media (max-width: 480px) {
+  .hero__actions .btn { white-space: normal; text-align: center; }
+}
 
 /* ─── Audience ──────────────────────────────────────────────── */
 .audience { background: var(--white); }
@@ -1464,24 +1488,18 @@ h4 { font-size: var(--t-md);      font-weight: 600; }
 .value-prop__cta { margin-top: var(--sp-10); }
 
 /* ─── Services (homepage) ───────────────────────────────────── */
+/* No number labels here (services.html already owns that device) — one
+   editorial "lead" row for the commercially primary service instead, so
+   this list doesn't read as a duplicate of the numbered Process section
+   just below it. */
 .services__header { margin-bottom: var(--sp-12); }
 .services__list { display: flex; flex-direction: column; }
 .services__item {
-  display: grid;
-  grid-template-columns: 3rem 1fr;
-  gap: var(--sp-6);
   padding-block: var(--sp-8);
   border-bottom: var(--rule);
-  align-items: start;
 }
 .services__item:first-child { border-top: var(--rule); }
-.services__num {
-  font-size: var(--t-xs);
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  color: var(--warm);
-  padding-top: 0.3em;
-}
+.services__content { max-width: 62ch; }
 .services__content h3 {
   font-size: var(--t-xl);
   font-weight: 500;
@@ -1493,6 +1511,15 @@ h4 { font-size: var(--t-md);      font-weight: 600; }
   color: var(--ink-70);
   line-height: 1.7;
   margin-bottom: var(--sp-4);
+}
+.services__item--lead { padding-block: var(--sp-10); }
+.services__item--lead .services__content { max-width: 68ch; }
+.services__item--lead .services__content h3 {
+  font-size: var(--t-2xl);
+  margin-bottom: var(--sp-4);
+}
+.services__item--lead .services__content p {
+  font-size: var(--t-md);
 }
 .services__link {
   font-size: var(--t-sm);
@@ -2568,9 +2595,6 @@ h4 { font-size: var(--t-md);      font-weight: 600; }
   color: var(--ink-50);
   margin-top: 0.2rem;
   letter-spacing: 0.04em;
-}
-.rooms__cta {
-  text-align: center;
 }
 @media (max-width: 900px) {
   .rooms__grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
