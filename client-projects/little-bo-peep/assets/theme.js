@@ -98,13 +98,9 @@
     item.addEventListener('mouseleave', function () {
       closeTimer = setTimeout(function () { open(false); }, 120);
     });
-    trigger.addEventListener('click', function (e) {
-      /* Small screens (no hover) get a normal link tap; desktop toggles the panel. */
-      if (window.matchMedia('(hover: hover)').matches) {
-        e.preventDefault();
-        open(!item.classList.contains('is-open'));
-      }
-    });
+    /* The trigger is a real link to that category (e.g. all Girls) — hover
+       already opens the panel for browsing sub-links, so a click just
+       follows the link normally instead of only toggling the panel. */
     item.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') { open(false); trigger.focus(); }
     });
