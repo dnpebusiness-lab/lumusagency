@@ -39,7 +39,7 @@
         <div class="lbp-bagfoot__row"><span>Subtotal</span><span class="lbp-num">{{ cart.total_price | money }}</span></div>
         <p class="lbp-bagfoot__note">Taxes included. Shipping calculated at checkout.</p>
         <a class="lbp-btn lbp-btn--solid lbp-btn--block" href="{{ routes.cart_url }}">View bag</a>
-        <a class="lbp-btn lbp-btn--line lbp-btn--block" href="{{ routes.cart_url }}?checkout" data-checkout>Checkout</a>
+        <a class="lbp-btn lbp-btn--line lbp-btn--block" href="{{ routes.root_url }}checkout">Checkout</a>
       </div>
     {% else %}
       <div class="lbp-empty"><p class="lbp-empty__title">Nothing in the bag yet.</p>
