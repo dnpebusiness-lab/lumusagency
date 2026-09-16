@@ -39,7 +39,7 @@
       "postalCode": "H91 AR24",
       "addressCountry": "IE"
     },
-    "areaServed": ["Galway City", "County Galway", "Connemara", "West of Ireland"],
+    "areaServed": ["Galway City", "County Galway", "Connemara", "West of Ireland", "Dublin"],
     "priceRange": "$$"
   }
   </script>
@@ -210,35 +210,37 @@
       </div>
     </section>
 
-    <!-- D: Services overview -->
-    <section class="services section-pad" aria-labelledby="services-heading">
+    <!-- D: Fees & maintenance -->
+    <section class="fees section-pad" aria-labelledby="fees-heading">
       <div class="wrap">
-        <div class="services__header reveal">
-          <p class="eyebrow">Our services</p>
-          <h2 id="services-heading" class="section-heading">Three ways we work<br>with property owners.</h2>
+        <div class="fees__header reveal">
+          <p class="eyebrow">What it costs</p>
+          <h2 id="fees-heading" class="section-heading">Simple, transparent<br>fees.</h2>
         </div>
-        <div class="services__list">
-          <article class="services__item services__item--lead reveal">
-            <div class="services__content">
-              <h3>Full management</h3>
-              <p>Complete management: listing management, guest communication, arrival, cleaning, maintenance, and monthly income reporting. The closest thing to a hands off investment.</p>
-              <a href="services.html#full-management" class="services__link">Learn more →</a>
+        <div class="fees__layout">
+          <div class="fees__list reveal reveal-d1">
+            <div class="bd-benefit">
+              <h3>Hassle-Free Maintenance</h3>
+              <p>Minor maintenance under &euro;150 is handled automatically, no back-and-forth needed. Anything above that, we'll contact you first for approval.</p>
             </div>
-          </article>
-          <article class="services__item reveal reveal-d1">
-            <div class="services__content">
-              <h3>Guest services only</h3>
-              <p>For owners who manage their own listings but need someone local to handle arrivals, guest contact, and property access.</p>
-              <a href="services.html#guest-services" class="services__link">Learn more →</a>
+            <div class="bd-benefit">
+              <h3>No Hidden Fees</h3>
+              <p>We charge a flat 20% of net revenue (after VAT), plus a small one-off onboarding fee after your first month. No ongoing charges, no surprises.</p>
             </div>
-          </article>
-          <article class="services__item reveal reveal-d2">
-            <div class="services__content">
-              <h3>Property assessment</h3>
-              <p>Not sure if your property is suitable for short term letting? We assess the property, the location, and the realistic income potential before any commitment.</p>
-              <a href="property-management.html#assessment" class="services__link">Request assessment →</a>
+          </div>
+          <div class="fees__cta reveal reveal-d2">
+            <div class="fees__cta-media">
+              <div class="photo-slot photo-slot--sq">
+                <img src="images/city-hosting-windowsill.jpg" alt="Interior detail in a City Hosting managed property" loading="lazy" width="800" height="800">
+              </div>
+              <div class="fees__badge">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8h3l2-2.5h6L17 8h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><circle cx="12" cy="14" r="3.4" stroke="currentColor" stroke-width="1.4"/></svg>
+                <span>We include <strong>free professional photography</strong> with every onboarding.</span>
+              </div>
             </div>
-          </article>
+            <p class="fees__cta-heading">Ready to see what your property could earn?</p>
+            <a href="property-management.html#enquiry" class="btn btn--dark">Get a free evaluation today</a>
+          </div>
         </div>
       </div>
     </section>
@@ -387,14 +389,15 @@
         <div class="local__text reveal reveal-d1">
           <p class="eyebrow">Where we work</p>
           <h2 id="local-heading" class="section-heading">We know Galway and<br>the West of Ireland.</h2>
-          <p class="local__body">City Hosting operates exclusively in Galway and the West of Ireland. We know the neighbourhoods, the seasonality, the quirks. That local knowledge is what makes the difference for both owners and guests.</p>
+          <p class="local__body">City Hosting is rooted in Galway and the West of Ireland. We know the neighbourhoods, the seasonality, the quirks. That local knowledge is what makes the difference for both owners and guests, and we now bring the same management standard to owners in Dublin.</p>
           <ul class="local__areas" role="list" aria-label="Areas we cover">
             <li>Galway City</li>
             <li>County Galway</li>
             <li>Connemara</li>
             <li>The West of Ireland</li>
+            <li>Dublin</li>
           </ul>
-          <p class="local__note">Additional western locations considered on assessment.</p>
+          <p class="local__note">Additional locations considered on assessment.</p>
           <a href="about.html" class="btn btn--outline-warm">About City Hosting</a>
         </div>
       </div>
@@ -405,7 +408,7 @@
       <div class="wrap faq__inner">
         <div class="faq__header reveal">
           <p class="eyebrow">Common questions</p>
-          <h2 id="faq-heading" class="section-heading">What owners usually<br>ask us first.</h2>
+          <h2 id="faq-heading" class="section-heading">Frequently Asked<br>Questions.</h2>
         </div>
         <div class="accordion faq__accordion" role="list">
           <div class="accordion-item" role="listitem">
@@ -461,6 +464,20 @@
             </h3>
             <div class="accordion-panel" id="faq-4" role="region">
               <p>Send us a message or call us directly. Tell us where your property is and what you're currently doing with it. That's enough for an initial conversation. We'll arrange a time to visit if there's a good fit.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item" role="listitem">
+            <h3>
+              <button class="accordion-trigger" aria-expanded="false" aria-controls="faq-5">
+                Is there a minimum commitment?
+                <svg class="accordion-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                  <path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </h3>
+            <div class="accordion-panel" id="faq-5" role="region">
+              <p>No. You can trial working with us for 4–6 months, and if you're happy with how it's going, we continue from there.</p>
             </div>
           </div>
         </div>
