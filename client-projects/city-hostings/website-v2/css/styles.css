@@ -1268,7 +1268,7 @@ h4 { font-size: var(--t-md);      font-weight: 600; }
   .search-bar { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 960px) {
-  .nav-primary, .hdr-actions { display: none; }
+  .nav-primary { display: none; }
   .nav-toggle { display: flex; }
   .nav-drawer { display: block; }
   .audience { grid-template-columns: 1fr; }
