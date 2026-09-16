@@ -253,16 +253,16 @@ h4 { font-size: var(--t-md);      font-weight: 600; }
   flex-shrink: 0;
 }
 .site-logo__mark {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 1.625rem;
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  white-space: nowrap;
+  display: flex;
+  align-items: center;
   flex-shrink: 0;
+  color: var(--ink);
 }
-.lm-c { color: #111111; }
-.lm-h { color: #7A5A3A; }
+.site-logo__mark-img {
+  display: block;
+  height: 28px;
+  width: auto;
+}
 .site-logo__text { display: flex; flex-direction: column; line-height: 1; }
 .site-logo__city {
   font-size: 0.9375rem;
@@ -1948,8 +1948,7 @@ h4 { font-size: var(--t-md);      font-weight: 600; }
 /* Footer logo (dark bg variant) */
 .footer-logo .site-logo__city  { color: var(--rev); }
 .footer-logo .site-logo__hosting { color: var(--rev-40); }
-.footer-logo .lm-c { color: var(--ground); }
-.footer-logo .lm-h { color: #C4976A; }
+.footer-logo .site-logo__mark-img { color: var(--rev); }
 
 /* ─── Page hero ─────────────────────────────────────────────── */
 .page-hero { background: var(--ground); }
