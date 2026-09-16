@@ -9,7 +9,17 @@
     <a class="lbp-mnav__link" href="{{ routes.all_products_collection_url }}?gender=Baby" data-close>Baby <span aria-hidden="true">&rarr;</span></a>
     <a class="lbp-mnav__link" href="{{ routes.all_products_collection_url }}?occasion=Christening" data-close>Christening <span aria-hidden="true">&rarr;</span></a>
     <a class="lbp-mnav__link" href="{{ routes.all_products_collection_url }}?occasion=Occasion" data-close>Occasion Wear <span aria-hidden="true">&rarr;</span></a>
-    <a class="lbp-mnav__link" style="color:var(--accent)" href="{{ routes.all_products_collection_url }}?brand=Little+Bo+Peep" data-close>Little Bo Peep Collection <span aria-hidden="true">&rarr;</span></a>
+    {%- comment -%}
+      Little Bo Peep: use the merchant's real collection if it exists —
+      same self-healing pattern as every other designer link. Falls back
+      to the computed ?brand= filter only if the real collection is
+      missing.
+    {%- endcomment -%}
+    {%- capture lbp_url -%}
+      {%- if collections['little-bo-peeps'] -%}{{ collections['little-bo-peeps'].url }}{%- else -%}{{ routes.all_products_collection_url }}?brand=Little+Bo+Peep{%- endif -%}
+    {%- endcapture -%}
+    {%- assign lbp_url = lbp_url | strip -%}
+    <a class="lbp-mnav__link" style="color:var(--accent)" href="{{ lbp_url }}" data-close>Little Bo Peep Collection <span aria-hidden="true">&rarr;</span></a>
     {%- comment -%}
       Designer links point straight at the merchant's real Shopify
       collections (same ones the live site uses), not our own computed
