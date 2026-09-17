@@ -7,8 +7,8 @@ const CITY_HOSTING = {
     phoneIntl: '+353 83 172 3722',
     phoneTel: 'tel:+353831723722',
     phoneWhatsApp: 'https://wa.me/353831723722',
-    email: 'info@cityhostings.com',
-    emailHref: 'mailto:info@cityhostings.com',
+    email: 'enquires@cityhostings.com',
+    emailHref: 'mailto:enquires@cityhostings.com',
   },
 
   address: {
